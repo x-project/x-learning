@@ -29,6 +29,11 @@
       this.open(context);
     },
 
+    '/page-upload': function (context) {
+      context.page = 'page-upload';
+      this.open(context);
+    },
+
     '*': function (context) {
       context.page = 'page-home';
       this.open(context);

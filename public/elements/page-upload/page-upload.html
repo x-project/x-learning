@@ -1,3 +1,5 @@
+<link rel="import" href="../../components/input-s3/input-s3.html">
+
 <dom-module id="page-upload">
   <template>
     <style>
@@ -6,14 +8,31 @@
       }
     </style>
 
-   <h1>x-learning</h1>
+   <h1>upload</h1>
+
+   <input-s3 collection="images" folder="images"
+    response="{{response}}" error="{{error}}" on-response="on_response">
+   </input-s3>
 
   </template>
 </dom-module>
 <script>
   Polymer({
 
-    is: 'page-upload'
+    is: 'page-upload',
+
+    properties: {
+      response: {
+        type: Object
+      },
+      error: {
+        type: Object
+      }
+    },
+
+    on_response: function (event) {
+      // console.log(this.response);
+    }
 
   });
 </script>

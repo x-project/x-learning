@@ -32,6 +32,9 @@
     "dataSource": "db",
     "public": false
   },
+  "Image": {
+    "dataSource": "mongo"
+  },
 
   "Object": {
     "dataSource": "mongo"

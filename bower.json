@@ -1,0 +1,28 @@
+{
+  "name": "x-learning",
+  "version": "0.0.1",
+  "homepage": "https://github.com/x-project/x-learning",
+  "authors": [
+    "alessandroRastelli <alessandro.rastelli89@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "dependencies": {
+    "polymer": "Polymer/Polymer",
+    "api-s3-upload": "x-element/api-s3-upload",
+    "app-container": "x-element/app-container",
+    "input-s3": "x-element/input-s3",
+    "superagent": "cvdlab/superagent",
+    "page": "visionmedia/page.js"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ]
+}
