@@ -1,0 +1,38 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../../components/app-container/app-container.html">
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../behavior-router/behavior-router.html">
+<link rel="import" href="../page-home/page-home.html">
+<dom-module id="app-boot">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-container id="app"></app-container>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'app-boot',
+
+    behaviors: [
+      Polymer.BehaviorRouter
+    ],
+
+    '/': function (context) {
+      context.page = 'page-home';
+      this.open(context);
+    },
+
+    '*': function (context) {
+      context.page = 'page-home';
+      this.open(context);
+    }
+
+  });
+</script>

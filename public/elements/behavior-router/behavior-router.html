@@ -1,0 +1,37 @@
+<script src="../../components/page/page.js"></script>
+<script>
+  Polymer.BehaviorRouter = {
+
+    attached: function () {
+      this.register();
+    },
+
+    register: function () {
+      var app = this;
+      Object.keys(app.constructor.prototype)
+        .filter(function (method) {
+          return method.indexOf('/') == 0;
+        })
+        .forEach(function (method) {
+          var handler = app[method].bind(this);
+          page(method, handler);
+        }, this);
+      page();
+    },
+
+    open: function (context) {
+      var container = this.querySelector('app-container');
+      var page = document.createElement(context.page);
+      var property;
+      for (property in context) {
+        page[property] = context[property];
+      }
+      container.open(page);
+    },
+
+    redirect: function (path) {
+      page(path);
+    }
+
+  };
+</script>

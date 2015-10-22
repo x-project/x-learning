@@ -1,0 +1,17 @@
+{
+  "name": "Object",
+  "plural": "objects",
+  "mongodb": {
+    "collection": "objects"
+  },
+  "base": "PersistedModel",
+  "properties": {
+    "code": {
+      "type": "String"
+    }
+  },
+  "relations": {},
+  "acls": [],
+  "methods": [],
+  "validations": []
+}
