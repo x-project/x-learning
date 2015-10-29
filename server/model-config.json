@@ -35,7 +35,12 @@
   "Image": {
     "dataSource": "mongo"
   },
-
+  "Video": {
+    "dataSource": "mongo"
+  },
+  "Test": {
+    "dataSource": "mongo"
+  },
   "Object": {
     "dataSource": "mongo"
   }

@@ -5,7 +5,7 @@
   },
   "mongo": {
     "name": "mongo",
-    "database": "x-catalog",
+    "database": "x-learning",
     "connector": "mongodb"
   }
 }

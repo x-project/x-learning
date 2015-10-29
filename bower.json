@@ -15,7 +15,8 @@
     "app-container": "x-element/app-container",
     "input-s3": "x-element/input-s3",
     "superagent": "cvdlab/superagent",
-    "page": "visionmedia/page.js"
+    "page": "visionmedia/page.js",
+    "async": "~1.5.0"
   },
   "ignore": [
     "**/.*",

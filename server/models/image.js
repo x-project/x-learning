@@ -19,13 +19,11 @@ module.exports = function (Image) {
       ContentType: file_type,
       ACL: 'public-read'
     };
-    console.log(s3_params);
     s3.getSignedUrl('putObject', s3_params, function (err, signed_url) {
       if (err) {
         callback(err);
         return;
       }
-      console.log(signed_url);
       callback(null, signed_url);
     });
   };

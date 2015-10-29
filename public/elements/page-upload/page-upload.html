@@ -10,7 +10,7 @@
 
    <h1>upload</h1>
 
-   <input-s3 collection="images" folder="images"
+   <input-s3 collection="videos" folder="images"
     response="{{response}}" error="{{error}}" on-response="on_response">
    </input-s3>
 
@@ -31,7 +31,7 @@
     },
 
     on_response: function (event) {
-      // console.log(this.response);
+       console.log("page upload : "+this.response);
     }
 
   });
