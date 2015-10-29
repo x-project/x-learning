@@ -11,30 +11,6 @@
     "collection": "videos"
   },
   "properties": {
-    "thumbs": {
-      "type": "array"
-    },
-    "description": {
-      "type": "string"
-    },
-    "caption": {
-      "type": "string"
-    },
-    "filename": {
-      "type": "string"
-    },
-    "extension": {
-      "type": "string"
-    },
-    "filetype": {
-      "type": "string"
-    },
-    "container": {
-      "type": "string"
-    },
-    "base_url": {
-      "type": "string"
-    }
   },
   "validations": [],
   "relations": {},

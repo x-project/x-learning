@@ -1,6 +1,6 @@
 var aws = require('aws-sdk');
 
-module.exports = function (Image) {
+module.exports = function (Video) {
 
   var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
   var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
@@ -12,7 +12,7 @@ module.exports = function (Image) {
   
   var s3 = new aws.S3();
 
-  Image.create_multiPart_upload = function (file_name,file_type,callback){
+  Video.create_multiPart_upload = function (file_name,file_type,callback){
     var s3_params = {
       Bucket: S3_BUCKET,
       Key: file_name,
@@ -32,7 +32,7 @@ module.exports = function (Image) {
     });
   };
   
-  Image.remoteMethod('create_multiPart_upload', {
+  Video.remoteMethod('create_multiPart_upload', {
     http: { verb: 'get' },
     accepts: [
       {arg: 'file_name', type: 'string'},
@@ -42,7 +42,7 @@ module.exports = function (Image) {
   });
 
 
-  Image.signed_upload_part = function(Key,PartNumber,UploadId,callback) {
+  Video.signed_upload_part = function(Key,PartNumber,UploadId,callback) {
     var s3_params = {
       Bucket: S3_BUCKET,
       Key: Key,
@@ -59,7 +59,7 @@ module.exports = function (Image) {
     });
   };
 
-  Image.remoteMethod('signed_upload_part', {
+  Video.remoteMethod('signed_upload_part', {
     http: { verb: 'get' },
     accepts: [
       {arg: 'Key', type: 'string'},
@@ -69,7 +69,7 @@ module.exports = function (Image) {
     returns: {arg: 'signed_url', type: 'string'}
   });
 
-  Image.complete_upload_part = function(Key, UploadId,Parts,callback) {
+  Video.complete_upload_part = function(Key, UploadId,Parts,callback) {
     var s3_params = {
       Bucket: S3_BUCKET,
       Key: Key,
@@ -89,7 +89,7 @@ module.exports = function (Image) {
     });
   };
 
-  Image.remoteMethod('complete_upload_part', {
+  Video.remoteMethod('complete_upload_part', {
     http: { verb: 'put' },
     accepts: [
       {arg: 'Key', type: 'string'},

@@ -32,13 +32,7 @@
     "dataSource": "db",
     "public": false
   },
-  "Image": {
-    "dataSource": "mongo"
-  },
   "Video": {
-    "dataSource": "mongo"
-  },
-  "Test": {
     "dataSource": "mongo"
   },
   "Object": {
