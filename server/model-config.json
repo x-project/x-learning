@@ -35,6 +35,9 @@
   "Video": {
     "dataSource": "mongo"
   },
+  "Transcoder": {
+    "dataSource": "mongo"
+  },
   "Object": {
     "dataSource": "mongo"
   }

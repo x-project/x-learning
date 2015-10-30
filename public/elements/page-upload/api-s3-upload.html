@@ -8,6 +8,8 @@
       last-response="{{response_get}}" on-response="on_response_get">
     </iron-ajax>
 
+    <button on-click="transcode">TRANSCODE</button>
+
   </template>
 </dom-module>
 <script>
@@ -52,7 +54,7 @@
       }
       this._compute_url('create_multiPart_upload');
       this._compute_params();
-      this.$.createPart.generateRequest();
+       this.$.createPart.generateRequest();
     },
     
     _compute_url: function (value) {
@@ -133,9 +135,30 @@
 
     },
 
+    start_trascoder: function(options,callback){
+      // options={};
+      var ajax = document.createElement('iron-ajax');
+      ajax.url = '/api/transcoders/createJob'
+      ajax.method = 'PUT';
+      ajax.body = options;
+      ajax.contentType = 'application/json';
+      ajax.handleAs = 'json';
+      
+      ajax.addEventListener('response', function (event) {
+        callback(null, ajax.lastResponse);
+      });
+
+      ajax.addEventListener('error', function (event) {
+        callback(ajax.lastError, null);
+      });
+
+      ajax.generateRequest();      
+
+    },
+
     on_response_get: function (event) {
 
-      //Upload
+      // //Upload
       var partNum = 0;
       var partSize = 1024 * 1024 * 5;
       
@@ -212,11 +235,30 @@
               console.log(err)
             }
 
-          });
+            //start transcode
+            var options = {
+              file_name: fileName
+            };
+            this.start_trascoder(options, function (err) {
+              if (err) {
+                console.log(err)
+              }
+             });
+
+          }.bind(this));
 
       }.bind(this));
       
-    }
+    },
+
+    // transcode: function () {
+    //   this.start_trascoder({}, function (err) {
+    //     if (err) {
+    //       console.log(err)
+    //     }
+
+    //   });
+    // }
 
   });
 
