@@ -1,5 +1,7 @@
 <link rel="import" href="../../components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../components/promise-polyfill/promise-polyfill.html">
 <script src="../../components/async/lib/async.js"></script>
+
 
 <dom-module id="api-s3-upload">
   <template>
@@ -68,87 +70,91 @@
       this.params = params;
     },
 
-    get_signed_url: function (options, callback) {
-      var ajax = document.createElement('iron-ajax');
-      ajax.url = '/api/' + this.collection + '/signed_upload_part';
-      ajax.method = 'GET';
-      ajax.params = options;
+    get_signed_url: function (options) {
+      var self = this;
+      return new Promise(function (resolve, reject){
+        var ajax = document.createElement('iron-ajax');
+        ajax.url = '/api/' + self.collection + '/signed_upload_part';
+        ajax.method = 'GET';
+        ajax.params = options;
 
-      ajax.addEventListener('response', function (event) {
-        callback(null, ajax.lastResponse);
-      });
-
-      ajax.addEventListener('error', function (event) {
-        callback(ajax.lastError, null);
-      });
-
-      ajax.generateRequest();
-    },
-
-    upload_part: function (url, options, callback) {
-
-      var ajax = document.createElement('iron-ajax');
-
-      ajax.url = url;
-      ajax.method = 'PUT';
-      ajax.body = options.Body;
-
-      ajax.addEventListener('response', function (event) {
-
-            var xhr = event.detail.xhr;
-            var etag = xhr.getResponseHeader('ETag');
-
-            var response = { etag: etag };
-
-            callback(null, response);
+        ajax.addEventListener('response', function (event) {
+          resolve(ajax.lastResponse);
         });
 
         ajax.addEventListener('error', function (event) {
-          callback(ajax.lastError, null);
+          reject(ajax.lastError);
         });
-      ajax.generateRequest();   
+
+        ajax.generateRequest();
+      });
+    },
+
+    upload_part: function (url, options) {
+      return new Promise(function(resolve,reject){
+        var ajax = document.createElement('iron-ajax');
+        ajax.url = url;
+        ajax.method = 'PUT';
+        ajax.body = options.Body;
+
+        ajax.addEventListener('response', function (event) {
+          var xhr = event.detail.xhr;
+          var etag = xhr.getResponseHeader('ETag');
+          var response = { etag: etag };
+          resolve(response);
+        });
+
+        ajax.addEventListener('error', function (event) {
+          rejcet(ajax.lastError);
+        });
+        
+        ajax.generateRequest();   
+      });
+    },
+
+    complete_upload: function (options){
+      var self=this;
+      return new Promise(function(resolve,reject){
+        var ajax = document.createElement('iron-ajax');
+        self._compute_url('complete_upload_part');
+        ajax.url = self.url;
+        ajax.method = 'PUT';
+        ajax.body = options;
+        ajax.contentType = 'application/json';
+        ajax.handleAs = 'json';
+        
+        ajax.addEventListener('response', function (event) {
+          resolve(ajax.lastResponse);
+        });
+
+        ajax.addEventListener('error', function (event) {
+          reject(ajax.lastError);
+        });
+
+        ajax.generateRequest();      
+      });
 
     },
 
-    complete_upload: function (options, callback){
-      var ajax = document.createElement('iron-ajax');
-      this._compute_url('complete_upload_part');
-      ajax.url = this.url;
-      ajax.method = 'PUT';
-      ajax.body = options;
-      ajax.contentType = 'application/json';
-      ajax.handleAs = 'json';
-      
-      ajax.addEventListener('response', function (event) {
-        callback(null, ajax.lastResponse);
-      });
+    start_trascoder: function(options){
+      return new Promise(function(resolve,reject){
+        var ajax = document.createElement('iron-ajax');
+        ajax.url = '/api/transcoders/createJob'
+        ajax.method = 'PUT';
+        ajax.body = options;
+        ajax.contentType = 'application/json';
+        ajax.handleAs = 'json';
+        
+        ajax.addEventListener('response', function (event) {
+          resolve(ajax.lastResponse);
+        });
 
-      ajax.addEventListener('error', function (event) {
-        callback(ajax.lastError, null);
-      });
+        ajax.addEventListener('error', function (event) {
+          reject(ajax.lastError);
+        });
 
-      ajax.generateRequest();      
-
-    },
-
-    start_trascoder: function(options,callback){
-      var ajax = document.createElement('iron-ajax');
-      ajax.url = '/api/transcoders/createJob'
-      ajax.method = 'PUT';
-      ajax.body = options;
-      ajax.contentType = 'application/json';
-      ajax.handleAs = 'json';
-      
-      ajax.addEventListener('response', function (event) {
-        callback(null, ajax.lastResponse);
-      });
-
-      ajax.addEventListener('error', function (event) {
-        callback(ajax.lastError, null);
-      });
-
-      ajax.generateRequest();      
-
+        ajax.generateRequest();      
+        });
     },
 
     on_response_get: function (event) {
@@ -179,6 +185,8 @@
         chunks.push(chunk)
       }
 
+      var self = this;
+
       async.eachSeries(chunks, function (chunk, done) {
         var options = {
           Key: fileName,
@@ -186,55 +194,41 @@
           UploadId: uploadId,
         };
 
+
         //CHIEDO URL PER UPLOAD PART
-        this.get_signed_url(options, function (err, data) {
-          var signed_url = data.signed_url;
-
-          options.Body=chunk.chunk_file;
-
-          //LANCIO UPLOAD PART 
-          this.upload_part(signed_url, options, function (err, data) {
-            if (err){
-              console.log('multiErr, upload part error:', err);
-              return;
-            }
+        self.get_signed_url(options)
+          .then(function (res) {
+            options.Body=chunk.chunk_file;
+            return self.upload_part(res.signed_url, options);
+          })
+          .then(function (res) {
             multipartMap.Parts.push({
-              ETag: data.etag,
+              ETag: res.etag,
               PartNumber: options.PartNumber
             });
-
             async.setImmediate(done);
-            
-          }.bind(this));
+          })
+          .catch(function (err) {
+            console.log(err);
+          })
 
-        }.bind(this));
+        },function(err){
+          
+          var options_part = {
+            Key: fileName,
+            UploadId: uploadId,
+            Parts: multipartMap.Parts
+          };        
+       
+          self.complete_upload(options_part)
+            .then(function (res) {
+             var options = {
+                file_name: fileName
+              };
+              return self.start_trascoder(options);
+            });
+      });            
 
-      }.bind(this), function (err) {
-
-        var options_part = {
-          Key: fileName,
-          UploadId: uploadId,
-          Parts: multipartMap.Parts
-        };        
-     
-          this.complete_upload(options_part, function (err) {
-            if(err){
-              console.log(err)
-            }
-
-            //start transcode
-            var options = {
-              file_name: fileName
-            };
-            this.start_trascoder(options, function (err) {
-              if (err) {
-                console.log(err)
-              }
-             });
-
-          }.bind(this));
-
-      }.bind(this));
       
     },
 
