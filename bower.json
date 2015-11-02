@@ -16,7 +16,11 @@
     "input-s3": "x-element/input-s3",
     "superagent": "cvdlab/superagent",
     "page": "visionmedia/page.js",
-    "async": "~1.5.0"
+    "async": "~1.5.0",
+    "video.js": "^4.12.13",
+    "videojs-contrib-media-sources": "^1.0.0",
+    "videojs-swf": "^4.7.0",
+    "pkcs7": "^0.2.2"
   },
   "ignore": [
     "**/.*",

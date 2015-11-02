@@ -3,6 +3,8 @@
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../behavior-router/behavior-router.html">
 <link rel="import" href="../page-home/page-home.html">
+<link rel="import" href="../page-course/part-course-video.html">
+
 <dom-module id="app-boot">
   <template>
     <style>
@@ -33,6 +35,11 @@
       context.page = 'page-upload';
       this.open(context);
     },
+
+    '/courses/:id': function (context) {
+      context.page = 'part-course-video';
+      this.open(context);
+    },    
 
     '*': function (context) {
       context.page = 'page-home';
