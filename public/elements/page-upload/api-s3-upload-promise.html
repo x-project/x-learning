@@ -1,6 +1,7 @@
 <link rel="import" href="../../components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../components/promise-polyfill/promise-polyfill.html">
 <script src="../../components/async/lib/async.js"></script>
+<script src="../../components/forEachPromise.js"></script>
 
 
 <dom-module id="api-s3-upload">
@@ -158,18 +159,18 @@
     },
 
     on_response_get: function (event) {
-
-      // //Upload
-      var partNum = 0;
-      var partSize = 1024 * 1024 * 5;
+      var fileName = this.file.name;
+      var uploadId = this.response_get.dataId.UploadId;
+      var self = this;
       
-      var chunks = [];
+      // //Upload
       var multipartMap = {
         Parts: []
       };
 
-      var fileName = this.file.name;
-      var uploadId = this.response_get.dataId.UploadId;
+      var partNum = 0;
+      var partSize = 1024 * 1024 * 5;      
+      var chunks = [];
 
       //creo chunks
       for (var rangeStart = 0; rangeStart < this.file_size; rangeStart += partSize) {
@@ -178,25 +179,21 @@
        
         chunk = {
           chunk_file: this.file.slice(rangeStart, end),
-          file_name: fileName,
-          partNum: partNum,
-          uploadId: uploadId
+          partNum: partNum
         }        
         chunks.push(chunk)
       }
 
-      var self = this;
 
-      async.eachSeries(chunks, function (chunk, done) {
+      forEachPromise(chunks, function(chunk){
         var options = {
           Key: fileName,
           PartNumber: chunk.partNum,
           UploadId: uploadId,
         };
 
-
         //CHIEDO URL PER UPLOAD PART
-        self.get_signed_url(options)
+        return self.get_signed_url(options)
           .then(function (res) {
             options.Body=chunk.chunk_file;
             return self.upload_part(res.signed_url, options);
@@ -206,14 +203,14 @@
               ETag: res.etag,
               PartNumber: options.PartNumber
             });
-            async.setImmediate(done);
+            console.log(options.PartNumber);
           })
           .catch(function (err) {
             console.log(err);
           })
 
-        },function(err){
-          
+        })
+        .then(function(res){
           var options_part = {
             Key: fileName,
             UploadId: uploadId,
@@ -222,13 +219,12 @@
        
           self.complete_upload(options_part)
             .then(function (res) {
-             var options = {
+              var options = {
                 file_name: fileName
               };
               return self.start_trascoder(options);
             });
-      });            
-
+        });
       
     },
 
