@@ -1,4 +1,9 @@
+<link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../page-upload/page-upload.html">
+<link rel="import" href="../page-course/page-course-video.html">
+<link rel="import" href="../page-home/part-home-category-list.html">
+<link rel="import" href="part-home-sub-category-list.html">
+
 
 <dom-module id="page-home">
   <template>
@@ -9,14 +14,35 @@
     </style>
 
     <h1>x-learning</h1>
+    <!-- inserisci header -->
 
-    <page-upload></page-upload>
+    <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>
+
+    <part-home-category-list categories="{{categories}}" selected="{{category_selected}}"></part-home-category-list>
+
+    <part-home-sub-category-list category="{{category_selected}}"></part-home-sub-category-list>
+
+    <part-home-courses-list> 
+      <h1>LIST COURSES</h1>
+    </part-home-courses-list>
+    <!-- <part-course-video></part-course-video> -->
+
+    <!-- <page-upload></page-upload> -->
+
+    
+
   </template>
 </dom-module>
 <script>
   Polymer({
 
-    is: 'page-home'
+    is: 'page-home',
+
+    attached: function(){
+      this.$.find.send();
+    },
+
+
 
   });
 </script>

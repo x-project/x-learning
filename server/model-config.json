@@ -38,7 +38,7 @@
   "Transcoder": {
     "dataSource": "mongo"
   },
-  "Object": {
+  "Category": {
     "dataSource": "mongo"
   }
 }

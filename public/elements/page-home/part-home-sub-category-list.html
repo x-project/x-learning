@@ -1,0 +1,39 @@
+<dom-module id="part-home-sub-category-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <ul>  
+      <template id="category" is="dom-repeat" items="{{category.subCategory}}" as="category" >
+        <li>
+          {{category.name}}
+        </li> 
+      </template>
+    </ul>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-home-sub-category-list',
+
+    properties: {
+      category:{
+        type: Object,
+        value: function(){
+          return 
+        }
+      }
+    },
+
+    attached: function(){
+      
+    },
+
+
+  });
+</script>

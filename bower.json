@@ -20,7 +20,7 @@
     "video.js": "^4.12.13",
     "videojs-contrib-media-sources": "^1.0.0",
     "videojs-swf": "^4.7.0",
-    "pkcs7": "^0.2.2"
+    "api-model": "x-element/api-model"
   },
   "ignore": [
     "**/.*",
