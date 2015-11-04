@@ -23,7 +23,8 @@ module.exports = function (Transcoder) {
       Output: { 
         Key: file_name+'.m3u8', 
         PresetId: PRESET_ID, // specifies the output video format
-        SegmentDuration: '5'
+        SegmentDuration: '5',
+        ThumbnailPattern:'image/' + file_name + '-{count}'//modifica preset per determinare il numero di immagini
       },
 
     };
