@@ -9,6 +9,7 @@ module.exports = function (Image) {
 
   aws.config.update({accessKeyId: AWS_ACCESS_KEY , secretAccessKey: AWS_SECRET_KEY });
   aws.config.update({region: S3_REGION , signatureVersion: 'v4' });
+  // aws.config.update({region: S3_REGION });
 
   Image.signed_put = function(file_name, file_type, callback) {
     var s3 = new aws.S3();
