@@ -1,0 +1,60 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
+
+<dom-module id="part-home-courses-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .image {
+        height: 200px;
+        width: 200px;
+      }
+    </style>
+    
+    <h1>List courses</h1>
+    <api-model-find id="find" collection="categories" response="{{courses}}"></api-model-find>
+
+    <template id="course" is="dom-repeat" items="{{courses}}" as="course" >
+      
+      <iron-image class="image" on-click="on_click" preload src="http://www.asroma.it/images/wallpaper/wallpaper1920x1080.jpg" sizing="contain"></iron-image>   
+      
+       <!-- <iron-image class="image" on-click="on_click" src="{{course.image}}" sizing="contain"></iron-image> -->
+    </template>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-home-courses-list',
+
+    properties: {
+      category:{
+        category: String,
+        objId: String,
+        subCategory: Array
+      },
+      selected: {
+        type: Object,
+        notify: true
+      }
+    },
+
+    attached: function(){
+      this.$.find.send();
+    },
+
+    on_click: function(event){
+      var item = this.$.course.itemForElement(event.target)
+
+      page.id = item.id;
+      // page('/courses/:' + item.id);
+      page('/courses/');
+      
+    },
+
+
+  });
+</script>
