@@ -1,0 +1,32 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../../components/app-link/app-link.html">
+<dom-module id="part-home-categories">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>
+    
+    <h2>Categories</h2>  
+    <template id="category" is="dom-repeat" items="{{categories}}" as="category">
+      <div>
+        <a is="app-link" href="/categories/{{category.id}}">{{category.title}}</a>
+      </div>
+    </template>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-home-categories',
+
+    attached: function(){
+      this.$.find.send();
+    }
+
+  });
+</script>

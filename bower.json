@@ -1,6 +1,6 @@
 {
   "name": "x-learning",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/x-project/x-learning",
   "authors": [
     "alessandroRastelli <alessandro.rastelli89@gmail.com>"
@@ -13,6 +13,7 @@
     "polymer": "Polymer/Polymer",
     "api-s3-upload": "x-element/api-s3-upload",
     "app-container": "x-element/app-container",
+    "app-link": "x-element/app-link",
     "input-s3": "x-element/input-s3",
     "iron-image": "PolymerElements/iron-image#^1.0",
     "page": "visionmedia/page.js",

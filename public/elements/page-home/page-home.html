@@ -1,11 +1,5 @@
-<link rel="import" href="../../components/api-model/api-model.html">
-<!-- 
-<link rel="import" href="../page-upload/page-upload.html">
-<link rel="import" href="../page-course/page-course-video.html"> 
--->
-<link rel="import" href="part-home-category-list.html">
-<link rel="import" href="part-home-sub-category-list.html">
-<link rel="import" href="part-home-courses-list.html">
+<link rel="import" href="part-home-categories.html">
+<link rel="import" href="part-home-courses.html">
 
 <dom-module id="page-home">
   <template>
@@ -16,27 +10,18 @@
     </style>
 
     <h1>x-learning</h1>
-    <!-- inserisci header -->
-
-    <part-home-category-list selected="{{category_selected}}"></part-home-category-list>
-
-    <part-home-sub-category-list category="{{category_selected}}"></part-home-sub-category-list>
-
-    <part-home-courses-list></part-home-courses-list>
-    
-    <!-- <part-course-video></part-course-video> -->
-    <!-- <page-upload></page-upload> -->
+    <part-home-categories></part-home-categories>
+    <part-home-courses></part-home-courses>
 
   </template>
 </dom-module>
+
 <script>
   Polymer({
 
     is: 'page-home',
 
-    attached: function(){
-      
-    },
+    attached: function () {}
 
   });
 </script>

@@ -1,0 +1,32 @@
+<link rel="import" href="part-course-lecture.html">
+
+<dom-module id="part-course-lectures">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <h2>Lectures</h2>  
+    <template id="course" is="dom-repeat" items="{{lectures}}" as="lecture">      
+      <part-course-lecture lecture="{{lecture}}"></part-course-lecture>
+    </template>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-course-lectures',
+
+    properties: {
+      lectures: {
+        type: Array,
+        value: function () { return []; }
+      }
+    }
+
+  });
+</script>

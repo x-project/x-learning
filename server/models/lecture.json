@@ -1,8 +1,8 @@
 {
-  "name": "Category",
-  "plural": "categories",
+  "name": "Lecture",
+  "plural": "lectures",
   "mongodb": {
-    "collection": "categories"
+    "collection": "lectures"
   },
   "base": "PersistedModel",
   "properties": {
@@ -13,7 +13,13 @@
       "type": "String"
     }
   },
-  "relations": {},
+  "relations": {
+    "video": {
+      "type": "hasOne",
+      "model": "Video",
+      "foreignKey": "video_id"
+    }
+  },
   "acls": [],
   "methods": [],
   "validations": []

@@ -1,7 +1,4 @@
 <link rel="import" href="../../components/iron-ajax/iron-ajax.html">
-<script src="../../components/async/lib/async.js"></script>
-<script src="../../components/forEachPromise.js"></script>
-
 
 <dom-module id="api-s3-upload">
   <template>
@@ -12,6 +9,8 @@
 
   </template>
 </dom-module>
+
+<script src="promise-for-each.js"></script>
 <script>
   Polymer({
 
@@ -183,7 +182,6 @@
         chunks.push(chunk)
       }
 
-
       forEachPromise(chunks, function(chunk){
         var options = {
           Key: fileName,
@@ -223,9 +221,8 @@
               };
               return self.start_trascoder(options);
             });
-        });
-      
-    },
+        }); 
+    }
 
   });
 

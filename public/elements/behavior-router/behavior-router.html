@@ -1,3 +1,5 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+
 <script src="../../components/page/page.js"></script>
 <script>
   Polymer.BehaviorRouter = {
@@ -31,6 +33,22 @@
 
     redirect: function (path) {
       page(path);
+    },
+
+    get_model: function (params) {
+      var request = document.createElement('api-model-get');
+      request.collection = params.collection;
+      request.modelId = params.modelId;
+      request.include = params.include || [];
+      return new Promise(function (resolve, reject) {
+        request.addEventListener('response', function (event) {
+          resolve(request.response);
+        });
+        request.addEventListener('error', function (event) {
+          reject(request.error);
+        });
+        request.send();
+      });
     }
 
   };

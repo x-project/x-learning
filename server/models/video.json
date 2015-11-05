@@ -11,6 +11,9 @@
     "collection": "videos"
   },
   "properties": {
+    "url": {
+      "type": "String"
+    }
   },
   "validations": [],
   "relations": {},

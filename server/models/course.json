@@ -1,0 +1,42 @@
+{
+  "name": "Course",
+  "plural": "courses",
+  "mongodb": {
+    "collection": "courses"
+  },
+  "base": "PersistedModel",
+  "properties": {
+    "title": {
+      "type": "String"
+    },
+    "description": {
+      "type": "String"
+    },
+    "date": {
+      "type": "Date"
+    },
+    "cover": {
+      "type": "String"
+    }
+  },
+  "relations": {
+    "category": {
+      "type": "belongsTo",
+      "model": "Category",
+      "foreignKey": "category_id"
+    },
+    "teacher": {
+      "type": "belongsTo",
+      "model": "User",
+      "foreignKey": "teacher_id"
+    },
+    "lectures": {
+      "type": "hasMany",
+      "model": "Lecture",
+      "foreignKey": "course_id"
+    }
+  },
+  "acls": [],
+  "methods": [],
+  "validations": []
+}

@@ -1,4 +1,6 @@
-<dom-module id="page-category">
+<link rel="import" href="part-course-video.html">
+
+<dom-module id="page-lecture">
   <template>
     <style>
       :host {
@@ -6,16 +8,18 @@
       }
     </style>
 
-    <h1>{{category.name}}</h1>
+    <h1>{{course.title}}</h1> 
 
-       
+    <part-course-video></part-course-video>       
+
+    
 
   </template>
 </dom-module>
 <script>
   Polymer({
 
-    is: 'page-category',
+    is: 'page-lecture',
 
     attached: function () {
       
