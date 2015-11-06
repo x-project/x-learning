@@ -7,6 +7,8 @@
 <link rel="import" href="../page-lecture/page-lecture.html">
 <link rel="import" href="../page-profile/page-profile.html">
 <link rel="import" href="../page-upload/page-upload.html">
+<link rel="import" href="../page-login/page-login.html">
+<link rel="import" href="../page-signup/page-signup.html">
 
 <dom-module id="app-boot">
   <template>
@@ -16,7 +18,7 @@
       }
     </style>
 
-    <app-container id="app"></app-container>
+    <app-container id="app" on-login="on_login"></app-container>
 
   </template>
 </dom-module>
@@ -30,10 +32,17 @@
       Polymer.BehaviorRouter
     ],
 
+    on_login:function(event){
+      var response = event.detail;
+      if(response.id!=null)
+        page('/home');
+    },
+
     '/': function (context) {
-      context.page = 'page-home';
+      context.page = 'page-login';
       this.open(context);
     },
+
 
     '/admin/upload': function (context) {
       context.page = 'page-upload';
@@ -66,6 +75,11 @@
       context.page = 'page-lecture';
       this.open(context);
     },
+    
+    '/home': function (context) {
+      context.page = 'page-home';
+      this.open(context);
+    },
 
     '/profile/:member_id': function (context) {
       this.get_model({
@@ -82,6 +96,11 @@
       .catch(function (error) {
         this.redirect('/404');
       }.bind(this));
+    },
+
+    '/signup': function (context) {
+      context.page = 'page-signup';
+      this.open(context);
     },
 
     '/404': function (context) {
