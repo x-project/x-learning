@@ -1,0 +1,43 @@
+{
+  "name": "Member",
+  "plural": "members",
+  "mongodb": {
+    "collection": "members"
+  },
+  "base": "User",
+  "properties": {
+    "name": {
+      "type": "String"
+    },
+    "last_name": {
+      "type": "String"
+    },
+    "email": {
+      "type": "String"
+    },
+    "password": {
+      "type": "String"
+    },
+    "photo": {
+      "type": "String"
+    },
+    "location": {
+      "type": "String"
+    }
+  },
+  "relations": {
+    "follow": {
+      "type": "hasMany",
+      "model": "Course",
+      "foreignKey": "follow_course_id"
+    },
+    "course_offered": {
+      "type": "hasMany",
+      "model": "Course",
+      "foreignKey": "offered_course_id"
+    }
+  },
+  "acls": [],
+  "methods": [],
+  "validations": []
+}

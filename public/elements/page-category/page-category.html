@@ -1,3 +1,6 @@
+<link rel="import" href="part-category-course.html">
+<link rel="import" href="../deck-courses/deck-courses.html">
+
 <dom-module id="page-category">
   <template>
     <style>
@@ -6,9 +9,10 @@
       }
     </style>
 
-    <h1>{{category.name}}</h1>
+    <api-model-find id="find" collection="courses" where="{{where}}" 
+      response="{{courses}}"></api-model-find>
 
-       
+    <deck-courses courses="{{courses}}"></deck-courses>
 
   </template>
 </dom-module>
@@ -18,7 +22,10 @@
     is: 'page-category',
 
     attached: function () {
-      
+      this.where = {
+        category_id: this.params.category_id
+      };
+      this.$.find.send();
     },
 
   });

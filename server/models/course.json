@@ -27,7 +27,7 @@
     },
     "teacher": {
       "type": "belongsTo",
-      "model": "User",
+      "model": "Member",
       "foreignKey": "teacher_id"
     },
     "lectures": {

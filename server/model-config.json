@@ -40,6 +40,9 @@
   "Lecture": {
     "dataSource": "mongo"
   },  
+  "Member":{
+    "dataSource": "mongo"
+  },
   "Transcoder": {
     "dataSource": "mongo"
   },

@@ -5,6 +5,7 @@
 <link rel="import" href="../page-course/page-course.html">
 <link rel="import" href="../page-home/page-home.html">
 <link rel="import" href="../page-lecture/page-lecture.html">
+<link rel="import" href="../page-profile/page-profile.html">
 <link rel="import" href="../page-upload/page-upload.html">
 
 <dom-module id="app-boot">
@@ -38,6 +39,11 @@
       context.page = 'page-upload';
       this.open(context);
     },
+    
+    '/categories/:category_id': function (context) {
+      context.page = 'page-category';
+      this.open(context);
+    },
 
     '/courses/:course_id': function (context) {
       this.get_model({
@@ -61,10 +67,11 @@
       this.open(context);
     },
 
-    '/categories/:category_id': function (context) {
-      context.page = 'page-category';
+    '/profile/:member_id': function (context) {
+      context.page = 'page-profile';
       this.open(context);
     },
+
 
     '/404': function (context) {
       context.page = 'page-404';

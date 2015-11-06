@@ -42,6 +42,20 @@ faker.model.Lecture = function () {
   };
 };
 
+faker.model.Member = function () {
+  return {
+    name: faker.name.firstName(),
+    last_name: faker.lorem.sentence(),
+    email: faker.internet.email(),
+    password: '123',
+    photo: 'http://www.caos.museum/wp-content/uploads/2015/05/narciso.jpg',
+    location: faker.address.streetAddress(),
+    follow_course_id: faker.random.model('Course').id,
+    offered_course_id: faker.random.model('Course').id
+    // teacher_id: faker.random.model('User').id
+  };
+};
+
 faker.model.Video = function () {
   return {
     url: 'http://d1s3yn3kxq96sy.cloudfront.net/bigbuckbunny/index.m3u8'
@@ -145,11 +159,13 @@ function start () {
     .then(destroy('Category'))
     .then(destroy('Video'))
     .then(destroy('Course'))
+    .then(destroy('Member'))
     .then(destroy('Lecture'))
     .then(fake('Category', 10))
     .then(fake('Video', 5))
-    .then(fake('Course', 30))
-    .then(fake('Lecture', 50))
+    .then(fake('Course', 20))
+    .then(fake('Member', 10))
+    .then(fake('Lecture', 80))
     .then(function () {
       console.log('yeah!');
     })

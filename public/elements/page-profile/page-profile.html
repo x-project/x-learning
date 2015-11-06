@@ -1,0 +1,27 @@
+<link rel="import" href="part-home-follow.html">
+<link rel="import" href="part-home-offered.html">
+
+<dom-module id="page-profile">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h1>x-Profile</h1>
+    <part-home-follow></part-home-follow>
+    <part-home-offered></part-home-offered>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-profile',
+
+    attached: function () {}
+
+  });
+</script>
