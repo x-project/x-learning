@@ -26,18 +26,44 @@
     }
   },
   "relations": {
-    "follow": {
-      "type": "hasMany",
+    "learning": {
+      "type": "hasAndBelongsToMany",
       "model": "Course",
-      "foreignKey": "follow_course_id"
+      "through": "MemberCourse",
+      "foreignKey": "member_id"
     },
-    "course_offered": {
+    "teaching": {
       "type": "hasMany",
       "model": "Course",
-      "foreignKey": "offered_course_id"
+      "foreignKey": "teacher_id"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__get__learning"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__get__teaching"
+    }
+  ],
   "methods": [],
   "validations": []
 }

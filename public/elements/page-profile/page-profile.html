@@ -1,5 +1,6 @@
-<link rel="import" href="part-home-follow.html">
-<link rel="import" href="part-home-offered.html">
+<link rel="import" href="part-profile-info.html">
+<link rel="import" href="part-profile-learning.html">
+<link rel="import" href="part-profile-teaching.html">
 
 <dom-module id="page-profile">
   <template>
@@ -9,9 +10,11 @@
       }
     </style>
 
-    <h1>x-Profile</h1>
-    <part-home-follow></part-home-follow>
-    <part-home-offered></part-home-offered>
+    <h1>x-learning</h1>
+    <h2>Profile</h2>  
+    <part-profile-info member="{{data.member}}"></part-profile-info>
+    <part-profile-learning courses="{{data.member.learning}}"></part-profile-learning>
+    <part-profile-teaching courses="{{data.member.teaching}}"></part-profile-teaching>
 
   </template>
 </dom-module>
@@ -21,7 +24,12 @@
 
     is: 'page-profile',
 
-    attached: function () {}
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
 
   });
 </script>

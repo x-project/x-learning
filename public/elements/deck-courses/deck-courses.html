@@ -8,8 +8,6 @@
       }
     </style>
 
-    <h2>Courses</h2>  
-
     <template id="course" is="dom-repeat" items="{{courses}}" as="course">      
       <card-course course="{{course}}"></card-course>
     </template>
@@ -21,7 +19,12 @@
 
     is: 'deck-courses',
 
-    attached: function () {},
+    properties: {
+      courses: {
+        type: Array,
+        value: function () { return []; }
+      }
+    }
 
   });
 </script>

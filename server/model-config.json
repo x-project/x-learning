@@ -43,6 +43,9 @@
   "Member":{
     "dataSource": "mongo"
   },
+  "MemberCourse":{
+    "dataSource": "mongo"
+  },
   "Transcoder": {
     "dataSource": "mongo"
   },

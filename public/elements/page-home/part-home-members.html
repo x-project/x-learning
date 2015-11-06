@@ -1,0 +1,31 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../../components/app-link/app-link.html">
+<dom-module id="part-home-members">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <api-model-find id="find" collection="members" response="{{members}}"></api-model-find>
+
+    <h2>Members</h2>
+    <template is="dom-repeat" items="{{members}}" as="member">
+      <a is="app-link" href="/profile/{{member.id}}">{{member.name}}</a>
+    </template>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-home-members',
+
+    attached: function () {
+      this.$.find.send();
+    }
+
+  });
+</script>

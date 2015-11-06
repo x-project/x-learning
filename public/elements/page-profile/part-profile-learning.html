@@ -1,0 +1,31 @@
+<link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="../deck-courses/deck-courses.html">
+
+<dom-module id="part-profile-learning">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h3>Learning</h3>  
+    <deck-courses courses="{{courses}}"></deck-courses>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-profile-learning',
+
+    properties: {
+      courses: {
+        type: Array,
+        value: function () { return []; }
+      }
+    }
+
+  });
+</script>

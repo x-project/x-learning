@@ -1,7 +1,7 @@
 <link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../deck-courses/deck-courses.html">
 
-<dom-module id="part-home-offered">
+<dom-module id="part-profile-teaching">
   <template>
     <style>
       :host {
@@ -9,9 +9,8 @@
       }
     </style>
     
-    <api-model-find id="find" collection="courses" response="{{courses}}"></api-model-find>
-
-   <deck-courses courses="{{courses}}"></deck-courses>
+    <h3>Teaching</h3>  
+    <deck-courses courses="{{courses}}"></deck-courses>
 
   </template>
 </dom-module>
@@ -19,10 +18,13 @@
 <script>
   Polymer({
 
-    is: 'part-home-offered',
+    is: 'part-profile-teaching',
 
-    attached: function(){
-      this.$.find.send();
+    properties: {
+      courses: {
+        type: Array,
+        value: function () { return []; }
+      }
     }
 
   });

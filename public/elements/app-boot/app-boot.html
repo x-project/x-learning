@@ -68,10 +68,21 @@
     },
 
     '/profile/:member_id': function (context) {
-      context.page = 'page-profile';
-      this.open(context);
+      this.get_model({
+        collection: 'members',
+        modelId: context.params.member_id,
+        include: ['teaching', 'learning']
+      })
+      .then(function (model) {
+        context.page = 'page-profile';
+        context.data = {};
+        context.data.member = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
     },
-
 
     '/404': function (context) {
       context.page = 'page-404';
