@@ -71,9 +71,22 @@
       }.bind(this));
     },
 
-    '/courses/:course_id/lectures/:lecture_id': function (context) {
-      context.page = 'page-lecture';
-      this.open(context);
+    '/courses/lectures/:lecture_id': function (context) {
+      this.get_model({
+        collection: 'lectures',
+        modelId: context.params.lecture_id
+      })
+      .then(function (model) {
+        context.page = 'page-lecture';
+        context.data = {};
+        context.data.lecture = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
+      // context.page = 'page-lecture';
+      // this.open(context);
     },
     
     '/home': function (context) {

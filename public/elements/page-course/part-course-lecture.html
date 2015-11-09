@@ -1,14 +1,30 @@
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="../page-lecture/page-lecture.html">
+
 <dom-module id="part-course-lecture">
   <template>
     <style>
       :host {
         display: block;
       }
+      .image {
+        background-color: #eee;
+        height: 200px;
+        width: 200px;
+      }
     </style>
 
-    <h4>{{lecture.title}}</h4>      
-    <p>{{lecture.description}}</p>
-
+     <a is="app-link" href="/courses/lectures/{{lecture.id}}">      
+      <div>
+        <h4>{{lecture.title}}</h4>      
+        <p>{{lecture.description}}</p>
+      </div>
+      <div>
+        <iron-image class="image" preload src="http://www.si24.it/wp-content/uploads/2015/05/Schermata-2015-05-25-alle-20.41.30.png" sizing="contain"></iron-image>   
+      </div>
+    </a> 
+   
   </template>
 </dom-module>
 
@@ -20,7 +36,8 @@
     properties: {
       lecture: {
         type: Object,
-        value: function () { return {}; }
+        value: function () { 
+          return {}; }
       }
     }
 

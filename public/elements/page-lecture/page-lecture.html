@@ -1,4 +1,4 @@
-<link rel="import" href="part-course-video.html">
+<link rel="import" href="../deck-video/deck-video.html">
 
 <dom-module id="page-lecture">
   <template>
@@ -7,10 +7,10 @@
         display: block;
       }
     </style>
-
-    <h1>{{course.title}}</h1> 
-
-    <part-course-video></part-course-video>       
+    <h1>LECTURE</h1>
+    <h1>{{data.lecture.title}}</h1> 
+    <p>{{data.lecture.description}}</p> 
+    <deck-video></deck-video>       
 
     
 
@@ -22,7 +22,7 @@
     is: 'page-lecture',
 
     attached: function () {
-      
+      console.log("ok")
     },
 
   });
