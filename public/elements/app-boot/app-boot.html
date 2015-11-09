@@ -3,6 +3,8 @@
 <link rel="import" href="../page-404/page-404.html">
 <link rel="import" href="../page-category/page-category.html">
 <link rel="import" href="../page-course/page-course.html">
+<link rel="import" href="../page-create-course/page-create-course.html">
+<link rel="import" href="../page-create-lecture/page-create-lecture.html">
 <link rel="import" href="../page-home/page-home.html">
 <link rel="import" href="../page-lecture/page-lecture.html">
 <link rel="import" href="../page-profile/page-profile.html">
@@ -18,7 +20,7 @@
       }
     </style>
 
-    <app-container id="app" on-login="on_login"></app-container>
+    <app-container id="app" on-login="on_login" on-logout="on_logout"></app-container>
 
   </template>
 </dom-module>
@@ -32,83 +34,130 @@
       Polymer.BehaviorRouter
     ],
 
-    on_login:function(event){
+    on_login: function (event) {
       var response = event.detail;
-      if(response.id!=null)
+      if (response.id != null) {
+        this.session.set('user', event.detail.user);
+        this.session.set('token', event.detail.id);
         page('/home');
+      }
+
+    },
+
+    on_logout: function () {
+      this.session.unset('user');
+      this.session.unset('token');
+      page('/');
     },
 
     '/': function (context) {
+      this.init(context);
       context.page = 'page-login';
       this.open(context);
     },
 
 
-    '/admin/upload': function (context) {
+    '/upload': function (context) {
+      this.init(context);
+      if (!context.session.token) {
+        page('/');
+        return;
+      }
       context.page = 'page-upload';
       this.open(context);
     },
-    
+
     '/categories/:category_id': function (context) {
+      this.init(context);
       context.page = 'page-category';
+      this.open(context);
+    },
+
+    '/courses/new':function(context){
+      context.page = 'page-create-course';
       this.open(context);
     },
 
     '/courses/:course_id': function (context) {
       this.get_model({
-        collection: 'courses',
-        modelId: context.params.course_id,
-        include: ['lectures']
-      })
-      .then(function (model) {
-        context.page = 'page-course';
-        context.data = {};
-        context.data.course = model;
-        this.open(context);
-      }.bind(this))
-      .catch(function (error) {
-        this.redirect('/404');
-      }.bind(this));
+          collection: 'courses',
+          modelId: context.params.course_id,
+          include: ['lectures']
+        })
+        .then(function (model) {
+          context.page = 'page-course';
+          context.data = {};
+          context.data.course = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
     },
+
+    '/courses/:course_id/lecture/new': function (context) {
+      this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id,
+          include: ['lectures']
+        })
+        .then(function (model) {
+          context.page = 'page-create-lecture';
+          context.data = {};
+          context.data.course = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
 
     '/courses/lectures/:lecture_id': function (context) {
       this.get_model({
-        collection: 'lectures',
-        modelId: context.params.lecture_id
-      })
-      .then(function (model) {
-        context.page = 'page-lecture';
-        context.data = {};
-        context.data.lecture = model;
-        this.open(context);
-      }.bind(this))
-      .catch(function (error) {
-        this.redirect('/404');
-      }.bind(this));
+          collection: 'lectures',
+          modelId: context.params.lecture_id
+        })
+        .then(function (model) {
+          context.page = 'page-lecture';
+          context.data = {};
+          context.data.lecture = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
       // context.page = 'page-lecture';
       // this.open(context);
     },
-    
+
+
     '/home': function (context) {
       context.page = 'page-home';
       this.open(context);
     },
 
-    '/profile/:member_id': function (context) {
+
+    '/profile': function (context) {
+      this.init(context);
+      if (!context.session.token) {
+        page('/');
+        return;
+      }
       this.get_model({
-        collection: 'members',
-        modelId: context.params.member_id,
-        include: ['teaching', 'learning']
-      })
-      .then(function (model) {
-        context.page = 'page-profile';
-        context.data = {};
-        context.data.member = model;
-        this.open(context);
-      }.bind(this))
-      .catch(function (error) {
-        this.redirect('/404');
-      }.bind(this));
+          collection: 'members',
+          modelId: this.session.get('user').id,
+          include: ['teaching', 'learning']
+        })
+        .then(function (model) {
+          context.page = 'page-profile';
+          context.data = {};
+          context.data.member = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
     },
 
     '/signup': function (context) {
@@ -118,7 +167,7 @@
 
     '/404': function (context) {
       context.page = 'page-404';
-      this.open(context);      
+      this.open(context);
     }
 
   });

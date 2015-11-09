@@ -2,6 +2,10 @@
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/api-user-signup/api-user-signup.html">
 <link rel="import" href="form-signup.html">
+<link rel="import" href="../layout-client/layout-client.html">
+<link rel="import" href="../style-page/style-page.html">
+
+
 <dom-module id="page-signup">
   <style>
     :host {
@@ -16,20 +20,26 @@
     }
   </style>
   <template>
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+      </part-jumbotron>
+      <div class="container">
+      <api-user-signup id="signup" credentials="{{credentials}}" collection="members"
+        response="{{response}}" error="{{error}}"
+        on-response="on_signup" on-error="on_error">
+      </api-user-signup>
 
-    <api-user-signup id="signup" credentials="{{credentials}}" collection="members"
-      response="{{response}}" error="{{error}}"
-      on-response="on_signup" on-error="on_error">
-    </api-user-signup>
-
-    <div id="panel" class="container">
-      <a is="app-link" href="/">&larr;</a>
-      <h3>Signup</h3>
-      <form-signup id="form" on-submit="on_submit"></form-signup>
-      <template is="dom-if" if="{{error_occurs}}">
-        <div class="error-box">Error! <span>{{response.message}}</span></div>
-      </template>
-    </div>
+      <div id="panel" class="container">
+        <a is="app-link" href="/">&larr;</a>
+        <h3>Signup</h3>
+        <form-signup id="form" on-submit="on_submit"></form-signup>
+        <template is="dom-if" if="{{error_occurs}}">
+          <div class="error-box">Error! <span>{{response.message}}</span></div>
+        </template>
+      </div>
+    
+      </div>
+    </layout-client>
 
   </template>
 </dom-module>

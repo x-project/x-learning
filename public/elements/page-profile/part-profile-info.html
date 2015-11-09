@@ -6,11 +6,15 @@
       :host {
         display: block;
       }
+      .image {
+        background-color: #eee;
+        height: 100px;
+        width: 100px;
+      }
     </style>
 
     <h3>Info</h3>  
-    <div>{{member.name}}</div>
-    <iron-image class="image" preload src="{{follow.photo}}" sizing="contain"></iron-image> 
+    <iron-image class="image" preload src="{{member.photo}}" sizing="contain"></iron-image> 
 
   </template>
 </dom-module>

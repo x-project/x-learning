@@ -1,0 +1,33 @@
+<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../style-page/style-page.html">
+
+<dom-module id="page-create-course">
+  <template>
+    <style include="style-page"></style>
+
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+      </part-jumbotron>
+      <div class="container">
+       <h1>Create course</h1>
+
+      </div>
+    </layout-client>
+      
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-create-course',
+
+    properties: {
+      courses: {
+        type: Array,
+        value: function () { return []; }
+      }
+    }
+
+  });
+</script>

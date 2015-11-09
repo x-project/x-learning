@@ -1,10 +1,13 @@
 <link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../../components/app-session/app-session.html">
 
 <script src="../../components/page/page.js"></script>
 <script>
   Polymer.BehaviorRouter = {
 
     attached: function () {
+      this.setup();
+
       this.register();
     },
 
@@ -21,6 +24,20 @@
       page();
     },
 
+    setup: function () {
+      this.session = document.createElement('app-session');
+      // this.find_models({
+      //     collection: 'stores',
+      //     one: true
+      //   })
+      //   .then(function (store) {
+      //     this.store = store;
+      //   }.bind(this))
+      //   .catch(function (error) {
+      //     console.warn(error);
+      //   });
+    },
+
     open: function (context) {
       var container = this.querySelector('app-container');
       var page = document.createElement(context.page);
@@ -29,10 +46,6 @@
         page[property] = context[property];
       }
       container.open(page);
-    },
-
-    redirect: function (path) {
-      page(path);
     },
 
     get_model: function (params) {
@@ -49,7 +62,19 @@
         });
         request.send();
       });
+    },
+
+    init: function (context) {
+      context.session = {};
+      context.session.user = this.session.get('user');
+      context.session.token = this.session.get('token');
+      context.data = context.data || {};
+      context.data.store = this.store;
+      return new Promise(function (resolve, reject) {
+        resolve(context);
+      });
     }
+
 
   };
 </script>

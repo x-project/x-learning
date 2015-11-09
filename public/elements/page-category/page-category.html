@@ -1,18 +1,22 @@
 <link rel="import" href="part-category-course.html">
 <link rel="import" href="../deck-courses/deck-courses.html">
+<link rel="import" href="../style-page/style-page.html">
+
 
 <dom-module id="page-category">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+    <style include="style-page"></style>
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+      </part-jumbotron>
+      <div class="container">
+        <h1>Category Page</h1>
+        <api-model-find id="find" collection="courses" where="{{where}}" 
+          response="{{courses}}"></api-model-find>
 
-    <api-model-find id="find" collection="courses" where="{{where}}" 
-      response="{{courses}}"></api-model-find>
-
-    <deck-courses courses="{{courses}}"></deck-courses>
+        <deck-courses courses="{{courses}}"></deck-courses>
+      </div>
+    </layout-client>
 
   </template>
 </dom-module>

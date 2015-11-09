@@ -2,23 +2,33 @@
 <link rel="import" href="../../components/layout-grid/layout-grid.html">
 <link rel="import" href="../layout-empty/layout-empty.html">
 <link rel="import" href="form-login.html">
+<link rel="import" href="../layout-client/layout-client.html">
+<link rel="import" href="../style-page/style-page.html">
+
 <dom-module id="page-login">
+<style include="style-page"></style>
   <template>
-    <style include="layout-empty"></style>
+   <layout-client>
+      <part-jumbotron class="jumbotron">
+      </part-jumbotron>
+      <div class="container">
+        <style include="layout-empty"></style>
 
-    <api-user-login id="login" credentials="{{credentials}}" collection="members"
-      response="{{response}}" on-response="on_login" on-error="on_error">
-    </api-user-login>
+        <api-user-login id="login" credentials="{{credentials}}" collection="members"
+          response="{{response}}" on-response="on_login" on-error="on_error">
+        </api-user-login>
 
-    <layout-empty>
-      <div class="center">
-        <div class="panel">
-          <a is="app-link" href="/">&larr;</a>
-          <h3>Login</h3>
-          <form-login id="form" on-submit="on_submit"></form-login>
-        </div>
+        <layout-empty>
+          <div class="center">
+            <div class="panel">
+              <a is="app-link" href="/">&larr;</a>
+              <h3>Login</h3>
+              <form-login id="form" on-submit="on_submit"></form-login>
+            </div>
+          </div>
+        </layout-empty>
       </div>
-    </layout-empty>
+    </layout-client>
 
   </template>
 </dom-module>

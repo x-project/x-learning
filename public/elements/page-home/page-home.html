@@ -1,20 +1,23 @@
 <link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="part-home-categories.html">
 <link rel="import" href="part-home-courses.html">
-<link rel="import" href="part-home-members.html">
+<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../style-page/style-page.html">
 
 <dom-module id="page-home">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+    <style include="style-page"></style>
 
-    <h1>x-learning</h1>
-    <part-home-members></part-home-members>
-    <part-home-categories></part-home-categories>
-    <part-home-courses></part-home-courses>
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+      </part-jumbotron>
+      <div class="container">
+        <part-home-categories></part-home-categories>
+        <part-home-courses></part-home-courses>
+      </div>
+    </layout-client>
+
 
   </template>
 </dom-module>

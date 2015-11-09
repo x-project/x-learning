@@ -1,20 +1,24 @@
 <link rel="import" href="part-course-lectures.html">
 <link rel="import" href="../deck-video/deck-video.html">
+<link rel="import" href="../style-page/style-page.html">
 
 <dom-module id="page-course">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+<style include="style-page"></style>
 
-    <h1>{{data.course.title}}</h1> 
-    <p>{{data.course.description}}</p> 
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+      </part-jumbotron>
+      <div class="container">
+        <h1>{{data.course.title}}</h1> 
+        <p>{{data.course.description}}</p> 
 
-    <deck-video></deck-video>       
+        <deck-video></deck-video>       
 
-    <part-course-lectures lectures="{{data.course.lectures}}"></part-course-lectures>
+        <part-course-lectures lectures="{{data.course.lectures}}"></part-course-lectures>
+    
+      </div>
+    </layout-client>
 
   </template>
 </dom-module>
