@@ -10,10 +10,11 @@
   "moduleType": [],
   "license": "MIT",
   "dependencies": {
+    "async": "~1.5.0",
     "polymer": "Polymer/Polymer",
     "iron-image": "PolymerElements/iron-image#^1.0",
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^1.0.0",
     "page": "visionmedia/page.js",
-    "async": "~1.5.0",
     "video.js": "^4.12.13",
     "videojs-contrib-media-sources": "^1.0.0",
     "videojs-swf": "^4.7.0",

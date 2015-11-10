@@ -37,6 +37,9 @@
   "Course": {
     "dataSource": "mongo"
   },
+  "Image": {
+    "dataSource": "mongo"
+  }, 
   "Lecture": {
     "dataSource": "mongo"
   },  

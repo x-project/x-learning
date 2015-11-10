@@ -1,5 +1,4 @@
-<link rel="import" href="../page-upload/api-s3-upload.html">
-
+<link rel="import" href="api-s3-upload.html">
 <dom-module id="input-s3">
   <template>
     <style>
@@ -8,17 +7,13 @@
       }
     </style>
 
-    <api-s3-upload id="upload" collection="{{collection}}"
-      folder="{{folder}}" file-name="{{fileName}}"
-      response="{{response}}" error="{{error}}"
-      on-response="on_response">
+    <api-s3-upload id="upload" collection="{{collection}}" folder="{{folder}}">
     </api-s3-upload>
 
     <input type="file" on-change="on_change">
 
   </template>
 </dom-module>
-
 <script>
   Polymer({
 
@@ -29,10 +24,8 @@
         type: String
       },
       folder: {
-        type: String
-      },
-      fileName: {
-        type: String
+        type: String,
+        value: ''
       },
       response: {
         type: Object,
@@ -46,12 +39,8 @@
 
     on_change: function (event) {
       var file = event.target.files[0];
+      this.file
       this.$.upload.send(file);
-    },
-
-    on_response: function (event) {
-      event.stopPropagation();
-      this.fire('response', this.response);
     }
 
   });

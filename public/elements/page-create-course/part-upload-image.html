@@ -1,0 +1,25 @@
+<link rel="import" href="../deck-upload-image/input-s3.html">
+
+<dom-module id="part-upload-image">
+  <template>
+    <input-s3 collection="images" folder="image">
+    </input-s3>
+    
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-upload-image',
+
+    properties: {
+      response: {
+        type: Object
+      },
+      error: {
+        type: Object
+      }
+    }
+
+  });
+</script>
