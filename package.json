@@ -7,14 +7,15 @@
     "pretest": "jshint ."
   },
   "dependencies": {
-    "aws-sdk": "^2.2.4",
+    "aws-sdk": "^2.2.14",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "loopback": "^2.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^2.1.0",
     "loopback-connector-mongodb": "^1.13.0",
-    "loopback-datasource-juggler": "^2.39.0",
+    "loopback-datasource-juggler": "^2.41.1",
+    "mongojs": "^1.4.1",
     "node-env-file": "^0.1.7",
     "serve-favicon": "^2.0.1"
   },

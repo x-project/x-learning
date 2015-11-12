@@ -32,11 +32,13 @@
     "dataSource": "db",
     "public": false
   },
-  "Image": {
+  "Video": {
     "dataSource": "mongo"
   },
-
-  "Object": {
+  "Transcoder": {
+    "dataSource": "mongo"
+  },
+  "Category": {
     "dataSource": "mongo"
   }
 }

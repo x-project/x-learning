@@ -1,14 +1,17 @@
 {
-  "name": "Object",
-  "plural": "objects",
+  "name": "Category",
+  "plural": "categories",
   "mongodb": {
-    "collection": "objects"
+    "collection": "categories"
   },
   "base": "PersistedModel",
   "properties": {
-    "code": {
+    "name": {
       "type": "String"
-    }
+      },
+      "subCategory": {
+        "type": "array"
+      }
   },
   "relations": {},
   "acls": [],

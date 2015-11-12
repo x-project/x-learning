@@ -1,0 +1,19 @@
+{
+  "name": "Video",
+  "plural": "videos",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "mongodb": {
+    "collection": "videos"
+  },
+  "properties": {
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}
