@@ -1,0 +1,47 @@
+<link rel="import" href="api-s3-upload.html">
+<dom-module id="input-s3">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+    </style>
+
+    <api-s3-upload id="upload" collection="{{collection}}" folder="{{folder}}">
+    </api-s3-upload>
+
+    <input type="file" on-change="on_change">
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'input-s3',
+
+    properties: {
+      collection: {
+        type: String
+      },
+      folder: {
+        type: String,
+        value: ''
+      },
+      response: {
+        type: Object,
+        notify: true
+      },
+      error: {
+        type: Object,
+        notify: true
+      }
+    },
+
+    on_change: function (event) {
+      var file = event.target.files[0];
+      this.file
+      this.$.upload.send(file);
+    }
+
+  });
+</script>

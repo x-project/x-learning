@@ -1,8 +1,19 @@
 <link rel="import" href="../../components/app-container/app-container.html">
-<link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../behavior-router/behavior-router.html">
+<link rel="import" href="../page-404/page-404.html">
+<link rel="import" href="../page-category/page-category.html">
+<link rel="import" href="../page-course/page-course.html">
+<link rel="import" href="../page-course-create/page-course-create.html">
+<link rel="import" href="../page-course-manage/page-course-manage.html">
+<link rel="import" href="../page-lecture-create/page-lecture-create.html">
 <link rel="import" href="../page-home/page-home.html">
-<link rel="import" href="../page-course/part-course-video.html">
+<link rel="import" href="../page-lecture/page-lecture.html">
+<link rel="import" href="../page-login/page-login.html">
+<link rel="import" href="../page-profile/page-profile.html">
+<link rel="import" href="../page-signup/page-signup.html">
+<link rel="import" href="../page-upload/page-upload.html">
+<link rel="import" href="../page-settings/page-settings.html">
+
 
 <dom-module id="app-boot">
   <template>
@@ -12,10 +23,11 @@
       }
     </style>
 
-    <app-container id="app"></app-container>
+    <app-container id="app" on-login="on_login" on-logout="on_logout"></app-container>
 
   </template>
 </dom-module>
+
 <script>
   Polymer({
 
@@ -25,23 +37,193 @@
       Polymer.BehaviorRouter
     ],
 
+    on_login: function (event) {
+      var response = event.detail;
+      if (response.id != null) {
+        this.session.set('user', event.detail.user);
+        this.session.set('token', event.detail.id);
+        page('/home');
+      }
+
+    },
+
+    on_logout: function () {
+      this.session.unset('user');
+      this.session.unset('token');
+      page('/');
+    },
+
     '/': function (context) {
-      context.page = 'page-home';
+      this.init(context);
+      context.page = 'page-login';
       this.open(context);
     },
 
-    '/page-upload': function (context) {
+
+    '/upload': function (context) {
+      this.init(context);
+      if (!context.session.token) {
+        page('/');
+        return;
+      }
       context.page = 'page-upload';
       this.open(context);
     },
 
-    '/courses/:id': function (context) {
-      context.page = 'part-course-video';
+    '/categories/:category_id': function (context) {
+      this.init(context);
+      context.page = 'page-category';
       this.open(context);
+    },
+
+    '/courses/new':function(context){
+      context.page = 'page-course-create';
+      this.open(context);
+    },
+
+    '/courses/:course_id': function (context) {
+      this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id,
+          include: ['lectures'],
+        })
+        .then(function (model) {
+          context.page = 'page-course';
+          context.data = {};
+          context.data.course = model;
+          
+          if(context.data.course.lectures.length!=0){
+            this.get_model({
+              collection: 'lectures',
+              modelId: context.data.course.lectures[0].id,
+              include: ['video'],
+            })
+            .then(function (model2) {
+              context.data.lecture = model2;
+              this.open(context);
+            }.bind(this))
+            
+          }else{
+            this.open(context);
+          }
+
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
+    '/courses/:course_id/course_manage': function (context) {
+      this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id,
+          include: ['lectures']
+        })
+        .then(function (model) {
+          context.page = 'page-course-manage';
+          context.data = {};
+          context.data.course = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
+    '/courses/:course_id/course_manage/lecture/new': function (context) {
+      this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id,
+          include: ['lectures']
+        })
+        .then(function (model) {
+          context.page = 'page-lecture-create';
+          context.data = {};
+          context.data.course = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
+
+    '/courses/lectures/:lecture_id': function (context) {
+      this.get_model({
+          collection: 'lectures',
+          modelId: context.params.lecture_id,
+          include: ['video']
+        })
+        .then(function (model) {
+          context.page = 'page-lecture';
+          context.data = {};
+          context.data.lecture = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+      // context.page = 'page-lecture';
+      // this.open(context);
+    },
+
+
+    '/home': function (context) {
+      context.page = 'page-home';
+      this.open(context);
+    },
+
+
+    '/profile': function (context) {
+      this.init(context);
+      if (!context.session.token) {
+        page('/');
+        return;
+      }
+      this.get_model({
+          collection: 'members',
+          modelId: this.session.get('user').id,
+          include: ['teaching', 'learning']
+        })
+        .then(function (model) {
+          context.page = 'page-profile';
+          context.data = {};
+          context.data.member = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
+    '/settings': function (context) {
+      this.init(context);
+      if (!context.session.token) {
+        page('/');
+        return;
+      }
+      this.get_model({
+          collection: 'members',
+          modelId: this.session.get('user').id
+        })
+        .then(function (model) {
+          context.page = 'page-settings';
+          context.data = {};
+          context.data.member = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
     },    
 
-    '*': function (context) {
-      context.page = 'page-home';
+    '/signup': function (context) {
+      context.page = 'page-signup';
+      this.open(context);
+    },
+
+    '/404': function (context) {
+      context.page = 'page-404';
       this.open(context);
     }
 

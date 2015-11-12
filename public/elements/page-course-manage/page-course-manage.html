@@ -1,0 +1,39 @@
+<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../../components/app-link/app-link.html">
+
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="../style-panel/style-panel.html">
+<link rel="import" href="part-course-manage-information.html">
+
+<dom-module id="page-course-manage">
+  <template>
+    <style include="style-page"></style>
+    <style include="style-panel"></style>
+     <layout-client>
+      <part-jumbotron class="jumbotron">
+       <h1>Course Manage</h1>
+      </part-jumbotron>
+      <div class="container">       
+        <layout-admin data="{{data}}">
+          <div class="panel">
+          <h1>{{data.course.title}}</h1>
+          <part-course-manage-information></part-course-manage-information>
+          </div>
+        </layout-admin>
+      </div>     
+    </layout-client>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-course-manage',
+
+    properties: {},
+
+
+  });
+</script>

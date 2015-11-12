@@ -29,39 +29,29 @@
 
 <script src="../../src/bin-utils.js"></script>
 
-<dom-module id="part-course-video">
+<dom-module id="deck-video">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <h1>part-course-video</h1>
-    <div>
       
-    <video id="video"
-    class="video-js vjs-default-skin"
-           height="300"
-           width="600"
-           controls>
-      <source
-         src="http://d1s3yn3kxq96sy.cloudfront.net/bigbuckbunny/index.m3u8"
-         type="application/x-mpegURL">
+    <video id="video" class="video-js vjs-default-skin" height="300" width="600" controls>
+      <source type="application/x-mpegURL" src="{{src}}">
     </video>
-    
-    </div>
-    
+        
   </template>
 </dom-module>
 
 <script>
   Polymer({
 
-    is: 'part-course-video',
+    is: 'deck-video',
 
     attached: function(){
-      var player = videojs('video');
-      // player.play();
+      this.player = videojs('video');
+      //this.player.play();
     }
   });
 

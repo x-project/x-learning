@@ -26,7 +26,6 @@ module.exports = function (Video) {
         callback(err);
         return;
       }else{
-        //console.log(data);
         callback(null, data);
       }
     });
@@ -80,7 +79,7 @@ module.exports = function (Video) {
     };
     s3.completeMultipartUpload(s3_params, function (err, signed_url) {
       if (err) {
-        console.log('ERROREEEEEEEEE: ' + err);
+        console.log('ERRORE COMPLETE: ' + err);
         callback(err);
         return;
       }

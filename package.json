@@ -1,7 +1,7 @@
 {
   "name": "x-learning",
   "description": "x-learning",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "server/server.js",
   "scripts": {
     "pretest": "jshint ."
@@ -10,6 +10,7 @@
     "aws-sdk": "^2.2.14",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "faker": "3.0.1",
     "loopback": "^2.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^2.1.0",
@@ -17,7 +18,8 @@
     "loopback-datasource-juggler": "^2.41.1",
     "mongojs": "^1.4.1",
     "node-env-file": "^0.1.7",
-    "serve-favicon": "^2.0.1"
+    "serve-favicon": "^2.0.1",
+    "superagent": "1.4.0"
   },
   "devDependencies": {
     "jshint": "^2.5.6"

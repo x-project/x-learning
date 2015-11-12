@@ -1,0 +1,43 @@
+<!-- <link rel="import" href="../../components/input-s3/input-s3.html"> -->
+<link rel="import" href="input-video-s3.html">
+<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../style-page/style-page.html">
+
+<dom-module id="page-upload">
+  <template>
+    <style include="style-page"></style>
+
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+      </part-jumbotron>
+      <div class="container">
+       <h1>Create course</h1>
+
+       <input-video-s3 collection="videos" folder="videos"
+        response="{{response}}" error="{{error}}" on-response="on_response">
+       </input-video-s3>
+      </div>
+    </layout-client>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-upload',
+
+    properties: {
+      response: {
+        type: Object
+      },
+      error: {
+        type: Object
+      }
+    },
+
+    on_response: function (event) {
+       console.log("page upload : "+this.response);
+    }
+
+  });
+</script>

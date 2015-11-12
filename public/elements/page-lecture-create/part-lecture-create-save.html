@@ -1,0 +1,24 @@
+<dom-module id="part-lecture-create-save">
+  <template>
+    <style include="style-page"></style>
+
+    <button on-click="on_try_save">save</button>
+    
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-lecture-create-save',
+
+    properties: {},
+
+    on_try_save:function(event){
+      event.stopPropagation();
+      this.fire('try-save-lecture');
+    }
+
+
+  });
+</script>

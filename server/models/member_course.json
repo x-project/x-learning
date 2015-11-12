@@ -1,15 +1,15 @@
 {
-  "name": "Category",
-  "plural": "categories",
+  "name": "MemberCourse",
+  "plural": "members_courses",
   "mongodb": {
-    "collection": "categories"
+    "collection": "members_courses"
   },
   "base": "PersistedModel",
   "properties": {
-    "title": {
+    "member_id": {
       "type": "String"
     },
-    "description": {
+    "course_id": {
       "type": "String"
     }
   },

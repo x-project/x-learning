@@ -13,9 +13,7 @@
       "./mixins"
     ]
   },
-  "User": {
-    "dataSource": "db"
-  },
+
   "AccessToken": {
     "dataSource": "db",
     "public": false
@@ -32,13 +30,33 @@
     "dataSource": "db",
     "public": false
   },
-  "Video": {
+
+  "Category": {
+    "dataSource": "mongo"
+  },
+  "Course": {
+    "dataSource": "mongo"
+  },
+  "Image": {
+    "dataSource": "mongo"
+  }, 
+  "Lecture": {
+    "dataSource": "mongo"
+  },  
+  "Member":{
+    "dataSource": "mongo"
+  },
+  "MemberCourse":{
     "dataSource": "mongo"
   },
   "Transcoder": {
     "dataSource": "mongo"
   },
-  "Category": {
+  "User": {
+    "dataSource": "mongo"
+  },
+  "Video": {
     "dataSource": "mongo"
   }
+
 }

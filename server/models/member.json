@@ -1,0 +1,88 @@
+{
+  "name": "Member",
+  "plural": "members",
+  "mongodb": {
+    "collection": "members"
+  },
+  "base": "User",
+  "properties": {
+    "name": {
+      "type": "String"
+    },
+    "last_name": {
+      "type": "String"
+    },   
+    "birthday": {
+      "type": "Date"
+    },
+    "email": {
+      "type": "String"
+    },
+    "gender": {
+      "type": "String"
+    },
+    "password": {
+      "type": "String"
+    },
+    "photo": {
+      "type": "String"
+    },
+    "location": {
+      "type": "String"
+    }
+  },
+  "relations": {
+    "learning": {
+      "type": "hasAndBelongsToMany",
+      "model": "Course",
+      "through": "MemberCourse",
+      "foreignKey": "member_id"
+    },
+    "teaching": {
+      "type": "hasMany",
+      "model": "Course",
+      "foreignKey": "teacher_id"
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "updateAttributes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__get__learning"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__get__teaching"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__create__teaching"
+    }
+
+  ],
+  "methods": [],
+  "validations": []
+}

@@ -1,6 +1,6 @@
 {
   "name": "x-learning",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/x-project/x-learning",
   "authors": [
     "alessandroRastelli <alessandro.rastelli89@gmail.com>"
@@ -10,17 +10,18 @@
   "moduleType": [],
   "license": "MIT",
   "dependencies": {
-    "polymer": "Polymer/Polymer",
-    "api-s3-upload": "x-element/api-s3-upload",
-    "app-container": "x-element/app-container",
-    "input-s3": "x-element/input-s3",
-    "superagent": "cvdlab/superagent",
-    "page": "visionmedia/page.js",
     "async": "~1.5.0",
+    "polymer": "Polymer/Polymer",
+    "iron-image": "PolymerElements/iron-image#^1.0",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^1.0.0",
+    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#~1.0.2",
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^1.0.0",
+    "page": "visionmedia/page.js",
     "video.js": "^4.12.13",
     "videojs-contrib-media-sources": "^1.0.0",
     "videojs-swf": "^4.7.0",
-    "api-model": "x-element/api-model"
+    "x-element": "x-element/x-element",
+    "paper-radio-button": "PolymerElements/paper-radio-button#^1.0.0"
   },
   "ignore": [
     "**/.*",

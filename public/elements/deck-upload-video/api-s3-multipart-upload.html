@@ -1,9 +1,7 @@
 <link rel="import" href="../../components/iron-ajax/iron-ajax.html">
-<script src="../../components/async/lib/async.js"></script>
-<script src="../../components/forEachPromise.js"></script>
+<link rel="import" href="../../components/api-model/api-model.html">
 
-
-<dom-module id="api-s3-upload">
+<dom-module id="api-s3-multipart-upload">
   <template>
 
     <iron-ajax id="createMultiPart" method="GET" url="{{url}}" params="{{params}}"
@@ -12,10 +10,12 @@
 
   </template>
 </dom-module>
+
+<script src="promise-for-each.js"></script>
 <script>
   Polymer({
 
-    is: 'api-s3-upload',
+    is: 'api-s3-multipart-upload',
 
     properties: {
       file: {
@@ -28,8 +28,7 @@
         type: String
       },
       folder: {
-        type: String,
-        value: ''
+        type: String
       },
       fileName: {
         type: String
@@ -56,13 +55,13 @@
       this._compute_params();
       this.$.createMultiPart.generateRequest();
     },
-    
+
     _compute_url: function (value) {
       var url = '/api/' + this.collection + '/'+ value;
       url = url.replace(/\/\/+/, '/');
       this.url = url;
     },
-    
+
     _compute_params: function () {
       var params = {};
       params.file_name = this.file.name;
@@ -96,6 +95,7 @@
         ajax.url = url;
         ajax.method = 'PUT';
         ajax.body = options.Body;
+        ajax.handleAs='json';
 
         ajax.addEventListener('response', function (event) {
           var xhr = event.detail.xhr;
@@ -107,8 +107,8 @@
         ajax.addEventListener('error', function (event) {
           rejcet(ajax.lastError);
         });
-        
-        ajax.generateRequest();   
+
+        ajax.generateRequest();
       });
     },
 
@@ -122,8 +122,9 @@
         ajax.body = options;
         ajax.contentType = 'application/json';
         ajax.handleAs = 'json';
-        
+
         ajax.addEventListener('response', function (event) {
+          self.fire('complete', ajax.lastResponse);
           resolve(ajax.lastResponse);
         });
 
@@ -131,7 +132,8 @@
           reject(ajax.lastError);
         });
 
-        ajax.generateRequest();      
+
+        ajax.generateRequest();
       });
 
     },
@@ -144,7 +146,7 @@
         ajax.body = options;
         ajax.contentType = 'application/json';
         ajax.handleAs = 'json';
-        
+
         ajax.addEventListener('response', function (event) {
           resolve(ajax.lastResponse);
         });
@@ -153,7 +155,7 @@
           reject(ajax.lastError);
         });
 
-        ajax.generateRequest();      
+        ajax.generateRequest();
         });
     },
 
@@ -161,28 +163,27 @@
       var fileName = this.file.name;
       var uploadId = this.response_get.dataId.UploadId;
       var self = this;
-      
+
       // //Upload
       var multipartMap = {
         Parts: []
       };
 
       var partNum = 0;
-      var partSize = 1024 * 1024 * 5;      
+      var partSize = 1024 * 1024 * 5;
       var chunks = [];
 
       //creo chunks
       for (var rangeStart = 0; rangeStart < this.file_size; rangeStart += partSize) {
         partNum++;
         var end = Math.min(rangeStart + partSize, this.file_size);
-       
+
         chunk = {
           chunk_file: this.file.slice(rangeStart, end),
           partNum: partNum
-        }        
+        }
         chunks.push(chunk)
       }
-
 
       forEachPromise(chunks, function(chunk){
         var options = {
@@ -214,18 +215,17 @@
             Key: fileName,
             UploadId: uploadId,
             Parts: multipartMap.Parts
-          };        
-       
+          };
+
           self.complete_upload(options_part)
             .then(function (res) {
               var options = {
                 file_name: fileName
               };
-              return self.start_trascoder(options);
+              // return self.start_trascoder(options);
             });
         });
-      
-    },
+    }
 
   });
 
