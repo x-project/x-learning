@@ -15,18 +15,16 @@
       }
 
       .sidebar {
-        /*width: 280px;*/
         @apply(--layout-col-3);
       }
 
       .main {
         @apply(--layout-col-9);
-        /*@apply(--layout-flex);*/
       }
     </style>
 
     <div class="page">
-      <div class="container">      
+      <div class="container">
           <part-sidebar class="sidebar" data="{{data}}"></part-sidebar>
         <div class="main">
           <content></content>

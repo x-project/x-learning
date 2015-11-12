@@ -6,26 +6,41 @@
     <style>
       :host {
         display: inline-block;
-        width: 20%;
+        padding: 5px;
+      }
+
+      .card {
+        color: #333;
+        text-decoration: none;
       }
 
       .image {
         background-color: #eee;
         height: 200px;
-        width: 200px;
+        width: 100%;
+      }
+
+      .title {
+        margin: 0;
+      }
+      .description {
+        margin: 6px 0px;
+      }
+      .link {
+        display: block;
       }
     </style>
-    
-    <a is="app-link" href="/courses/{{course.id}}">      
+
+    <a class="card" is="app-link" href="/courses/{{course.id}}">
       <div>
-        <iron-image class="image" preload src="{{course.cover}}" sizing="contain"></iron-image>   
+        <iron-image class="image" preload src="{{course.cover}}" sizing="contain"></iron-image>
       </div>
       <div>
-        <h4>{{course.title}}</h4>
-        <h5>{{course.description}}</h5>
-        <a is="app-link" href="/courses/{{course.id}}/course_manage">edit</a>
+        <h4 class="title">{{course.title}}</h4>
+        <p class="description">{{course.description}}</p>
+        <a class="link" is="app-link" href="/courses/{{course.id}}/course_manage">edit</a>
       </div>
-    </a> 
+    </a>
 
   </template>
 </dom-module>

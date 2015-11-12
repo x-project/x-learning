@@ -8,16 +8,19 @@
 <dom-module id="page-home">
   <template>
     <style include="style-page"></style>
+    <style include="layout-admin"></style>
 
     <layout-client>
-      <part-jumbotron class="jumbotron">
-      </part-jumbotron>
+      <part-jumbotron class="jumbotron"></part-jumbotron>
       <div class="container">
-        <part-home-categories></part-home-categories>
-        <part-home-courses></part-home-courses>
+        <div class="sidebar">
+          <part-home-categories></part-home-categories>
+        </div>
+        <div class="main">
+          <part-home-courses></part-home-courses>
+        </div>
       </div>
     </layout-client>
-
 
   </template>
 </dom-module>

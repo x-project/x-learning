@@ -1,4 +1,5 @@
 <link rel="import" href="../../components/app-container/app-container.html">
+<link rel="import" href="../app-theme/app-theme.html">
 <link rel="import" href="../behavior-router/behavior-router.html">
 <link rel="import" href="../page-404/page-404.html">
 <link rel="import" href="../page-category/page-category.html">
@@ -91,7 +92,7 @@
           context.page = 'page-course';
           context.data = {};
           context.data.course = model;
-          
+
           if(context.data.course.lectures.length!=0){
             this.get_model({
               collection: 'lectures',
@@ -102,7 +103,7 @@
               context.data.lecture = model2;
               this.open(context);
             }.bind(this))
-            
+
           }else{
             this.open(context);
           }
@@ -215,7 +216,7 @@
         .catch(function (error) {
           this.redirect('/404');
         }.bind(this));
-    },    
+    },
 
     '/signup': function (context) {
       context.page = 'page-signup';
