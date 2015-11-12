@@ -1,0 +1,62 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../../components/api-user/api-user.html">
+<link rel="import" href="../input-s3/input-s3.html">
+<link rel="import" href="../input-s3-video/input-s3-video.html">
+<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="form-lecture.html">
+<link rel="import" href="part-lecture-actions.html">
+<dom-module id="page-lecture">
+  <template>
+    <style include="style-page"></style>
+
+    <iron-ajax id="create" method="POST"
+      content-type="application/json" on-error="on_error" on-response="on_response"
+      last-response="{{lecture}}">
+    </iron-ajax>
+
+    <iron-ajax id="edit" method="PUT"
+      content-type="application/json">
+    </iron-ajax>
+
+    <layout-admin>
+      <div class="container">
+        <h1>Edit lecture</h1>
+        <part-lecture-actions on-try-save="on_try_save"></part-lecture-actions>
+        <form-lecture-create lecture="{{lecture}}"></form-lecture-create>
+
+        <h3>Video</h3>
+        <input-s3-video collection="videos" folder="videos"
+          response="{{video}}" error="{{error}}" on-upload-video="on_upload_video">
+        </input-s3-video>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-lecture-create',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_upload_video: function (event) {
+      console.log(event);
+    },
+
+    on_response: function (event) {
+      console.log(event);
+    },
+
+    on_error: function (event) {
+      console.log(event);
+    }
+
+  });
+</script>

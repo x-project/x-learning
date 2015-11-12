@@ -1,0 +1,42 @@
+<link rel="import" href="../input-s3/input-s3.html">
+
+<dom-module id="page-test">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h1>upload</h1>
+
+    <input-s3 collection="videos" folder="images"
+      response="{{response}}" error="{{error}}" on-response="on_response">
+    </input-s3>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-test',
+
+    properties: {
+      response: {
+        type: Object
+      },
+      error: {
+        type: Object
+      }
+    },
+
+    on_response: function (event) {
+      // console.log(this.response);
+    },
+
+    on_error: function (event) {
+       console.log("page upload : "+this.response);
+    }
+
+  });
+</script>

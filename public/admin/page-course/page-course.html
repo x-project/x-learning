@@ -1,0 +1,57 @@
+<link rel="import" href="../../components/api-user/api-user.html">
+<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="part-course-actions.html">
+<link rel="import" href="form-course-info.html">
+<link rel="import" href="form-course-image.html">
+<dom-module id="page-course">
+  <template>
+    <style include="style-page"></style>
+
+    <iron-ajax id="ajax_put_member_teaching" method="POST"
+     content-type="application/json" on-error="on_error" on-response="on_response"
+     last-response="{{course}}">
+    </iron-ajax>
+
+    <layout-client>
+      <div class="container">
+        <part-course-actions on-try-save="on_try_save"></part-course-actions>
+        <form-course-info course="{{data.course}}"></form-course-info>
+        <form-course-image on-response="on_upload"></form-course-image>
+      </div>
+    </layout-client>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-course',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      },
+    },
+
+    on_try_save:function(event){
+      event.stopPropagation();
+      this.course.date = Date();
+      this.$.ajax_put_member_teaching.url = '/api/members/' + this.$.session.get('user').id + '/teaching';
+      this.$.ajax_put_member_teaching.body = JSON.stringify(this.course);
+      this.$.ajax_put_member_teaching.generateRequest();
+    },
+
+    on_response:function(event){
+      console.log(this.course);
+      // page('/courses/'+ this.course.id +'/lecture/new');
+      page('/courses/'+ this.course.id +'/course_manage');
+    },
+
+    on_upload:function(event){
+      var url = event.detail.split("?")[0];
+      this.course.cover=url;
+    }
+
+  });
+</script>
