@@ -1,0 +1,56 @@
+<link rel="import" href="../style-panel/style-panel.html">
+
+<dom-module id="part-sidebar">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      nav {
+        padding: 20px;
+      }
+
+      h3 {
+        margin-top: 0;
+      }
+
+      .links {
+        list-style: none;
+        padding: 0;
+      }
+
+      .links .link {
+        text-decoration: none;
+      }
+    </style>
+    <style include="style-panel"></style>
+    <div class="panel">
+      <nav role="navigation">
+
+        <h3 class="title"><a href="/home">x-learning</a></h3>
+        <ul class="links">
+          <li><a is="app-link" class="link" href="/courses/{{data.course.id}}">Information</a></li>
+          <li><a is="app-link" class="link" href="/courses/{{data.course.id}}/course_manage/lecture/new">New lecture</a></li>
+          <li><a is="app-link" class="link" href="/admin/team">New image</a></li>
+        </ul>
+        <ul class="links">
+          <li><a is="app-link" class="link" href="/admin/products">Privacy</a></li>
+          <li><a is="app-link" class="link" href="/admin/products">Price</a></li>
+          <li><a is="app-link" class="link" href="/admin/coupons">Coupon</a></li>
+        </ul>
+      </nav>
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-sidebar',
+
+    data:{
+      type: Object
+    }
+
+  });
+</script>

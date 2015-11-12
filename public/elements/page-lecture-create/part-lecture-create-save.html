@@ -1,4 +1,4 @@
-<dom-module id="part-create-course-save">
+<dom-module id="part-lecture-create-save">
   <template>
     <style include="style-page"></style>
 
@@ -10,13 +10,13 @@
 <script>
   Polymer({
 
-    is: 'part-create-course-save',
+    is: 'part-lecture-create-save',
 
     properties: {},
 
     on_try_save:function(event){
       event.stopPropagation();
-      this.fire('try-save');
+      this.fire('try-save-lecture');
     }
 
 

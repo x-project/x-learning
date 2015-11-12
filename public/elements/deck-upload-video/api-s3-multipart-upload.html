@@ -95,6 +95,7 @@
         ajax.url = url;
         ajax.method = 'PUT';
         ajax.body = options.Body;
+        ajax.handleAs='json';
 
         ajax.addEventListener('response', function (event) {
           var xhr = event.detail.xhr;
@@ -123,8 +124,8 @@
         ajax.handleAs = 'json';
 
         ajax.addEventListener('response', function (event) {
+          self.fire('complete', ajax.lastResponse);
           resolve(ajax.lastResponse);
-          // self.confirmUpload();
         });
 
         ajax.addEventListener('error', function (event) {
@@ -136,14 +137,6 @@
       });
 
     },
-
-    // confirmUpload: function(options){
-    //   var api = document.createElement('api-model-create');
-    //   api.collection = 'videos';
-
-    //   api.send();
-
-    // },
 
     start_trascoder: function(options){
       return new Promise(function(resolve,reject){

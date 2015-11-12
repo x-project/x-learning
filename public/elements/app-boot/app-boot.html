@@ -3,14 +3,17 @@
 <link rel="import" href="../page-404/page-404.html">
 <link rel="import" href="../page-category/page-category.html">
 <link rel="import" href="../page-course/page-course.html">
-<link rel="import" href="../page-create-course/page-create-course.html">
-<link rel="import" href="../page-create-lecture/page-create-lecture.html">
+<link rel="import" href="../page-course-create/page-course-create.html">
+<link rel="import" href="../page-course-manage/page-course-manage.html">
+<link rel="import" href="../page-lecture-create/page-lecture-create.html">
 <link rel="import" href="../page-home/page-home.html">
 <link rel="import" href="../page-lecture/page-lecture.html">
 <link rel="import" href="../page-login/page-login.html">
 <link rel="import" href="../page-profile/page-profile.html">
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-upload/page-upload.html">
+<link rel="import" href="../page-settings/page-settings.html">
+
 
 <dom-module id="app-boot">
   <template>
@@ -74,7 +77,7 @@
     },
 
     '/courses/new':function(context){
-      context.page = 'page-create-course';
+      context.page = 'page-course-create';
       this.open(context);
     },
 
@@ -82,10 +85,42 @@
       this.get_model({
           collection: 'courses',
           modelId: context.params.course_id,
-          include: ['lectures']
+          include: ['lectures'],
         })
         .then(function (model) {
           context.page = 'page-course';
+          context.data = {};
+          context.data.course = model;
+          
+          if(context.data.course.lectures.length!=0){
+            this.get_model({
+              collection: 'lectures',
+              modelId: context.data.course.lectures[0].id,
+              include: ['video'],
+            })
+            .then(function (model2) {
+              context.data.lecture = model2;
+              this.open(context);
+            }.bind(this))
+            
+          }else{
+            this.open(context);
+          }
+
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
+    '/courses/:course_id/course_manage': function (context) {
+      this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id,
+          include: ['lectures']
+        })
+        .then(function (model) {
+          context.page = 'page-course-manage';
           context.data = {};
           context.data.course = model;
           this.open(context);
@@ -95,14 +130,14 @@
         }.bind(this));
     },
 
-    '/courses/:course_id/lecture/new': function (context) {
+    '/courses/:course_id/course_manage/lecture/new': function (context) {
       this.get_model({
           collection: 'courses',
           modelId: context.params.course_id,
           include: ['lectures']
         })
         .then(function (model) {
-          context.page = 'page-create-lecture';
+          context.page = 'page-lecture-create';
           context.data = {};
           context.data.course = model;
           this.open(context);
@@ -116,7 +151,8 @@
     '/courses/lectures/:lecture_id': function (context) {
       this.get_model({
           collection: 'lectures',
-          modelId: context.params.lecture_id
+          modelId: context.params.lecture_id,
+          include: ['video']
         })
         .then(function (model) {
           context.page = 'page-lecture';
@@ -159,6 +195,27 @@
           this.redirect('/404');
         }.bind(this));
     },
+
+    '/settings': function (context) {
+      this.init(context);
+      if (!context.session.token) {
+        page('/');
+        return;
+      }
+      this.get_model({
+          collection: 'members',
+          modelId: this.session.get('user').id
+        })
+        .then(function (model) {
+          context.page = 'page-settings';
+          context.data = {};
+          context.data.member = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },    
 
     '/signup': function (context) {
       context.page = 'page-signup';

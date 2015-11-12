@@ -14,13 +14,9 @@
         <h1>LECTURE</h1>
         <h1>{{data.lecture.title}}</h1> 
         <p>{{data.lecture.description}}</p> 
-        <deck-video></deck-video>       
+        <deck-video src="{{data.lecture.video.url}}"></deck-video>       
       </div>
     </layout-client>
-
-
-
-    
 
   </template>
 </dom-module>
@@ -28,10 +24,6 @@
   Polymer({
 
     is: 'page-lecture',
-
-    attached: function () {
-      console.log("ok")
-    },
 
   });
 </script>

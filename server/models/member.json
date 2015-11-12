@@ -11,8 +11,14 @@
     },
     "last_name": {
       "type": "String"
+    },   
+    "birthday": {
+      "type": "Date"
     },
     "email": {
+      "type": "String"
+    },
+    "gender": {
       "type": "String"
     },
     "password": {
@@ -55,6 +61,12 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
+      "property": "updateAttributes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
       "property": "__get__learning"
     },
     {
@@ -62,7 +74,14 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "__get__teaching"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__create__teaching"
     }
+
   ],
   "methods": [],
   "validations": []

@@ -2,7 +2,7 @@
 <link rel="import" href="/components/iron-input/iron-input.html">
 <link rel="import" href="../style-form/style-form.html">
 
-<dom-module id="form-create-course">
+<dom-module id="form-course-create">
   <template>
     <style include="style-form"></style>
       <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>
@@ -40,7 +40,7 @@
 <script>
   Polymer({
 
-    is: 'form-create-course',
+    is: 'form-course-create',
 
     properties: {
       course: {

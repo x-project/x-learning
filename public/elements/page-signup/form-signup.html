@@ -30,7 +30,17 @@
     properties: {
       credentials: {
         type: Object,
-        value: function () { return {email: 'alexx@ale.com',password:'aaa'}; },
+        value: function () { return {
+          email: 'alexx@ale.com',
+          password:'aaa',
+          name:'',
+          lastname:'',
+          photo:'',
+          location:'',
+          birthday:Date(),
+          gender:'',
+
+        }; },
         notify: true
       }
     },
