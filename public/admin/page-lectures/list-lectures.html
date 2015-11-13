@@ -1,0 +1,25 @@
+<link rel="import" href="../../components/app-link/app-link.html">
+<dom-module id="list-lectures">
+  <template>
+
+    <template is="dom-repeat" items="{{course.lectures}}" as="lecture">
+      <a href="/admin/courses/{{course.id}}/lectures/{{lecture.id}}"
+        is="app-link">{{lecture.title}}</a>
+    </template>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'list-lectures',
+
+    properties: {
+      courses: {
+        type: Object,
+        value: function () { return []; }
+      }
+    }
+
+  });
+</script>

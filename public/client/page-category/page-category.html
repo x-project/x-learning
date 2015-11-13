@@ -10,14 +10,13 @@
     <style include="layout-admin"></style>
 
     <layout-client>
-      <part-jumbotron class="jumbotron">
-        <h1>Category {{data.category.title}}</h1>
-      </part-jumbotron>
+      <part-jumbotron class="jumbotron"></part-jumbotron>
       <div class="container">
         <div class="sidebar">
           <part-home-categories></part-home-categories>
         </div>
         <div class="main">
+          <h2>Courses in {{data.category.title}}</h2>
           <deck-courses courses="{{data.courses}}"></deck-courses>
         </div>
       </div>

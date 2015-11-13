@@ -6,23 +6,35 @@
         display: block;
       }
 
-      #form {
+      .form {
         margin-bottom: 10px;
       }
 
-      #form .field {
+      .form .field {
         margin-bottom: 4px;
       }
 
-      #form .field .input {
+      .form .field .input {
         height: 24px;
         padding: 4px;
         font-family: sans-serif;
         font-size: 14px;
       }
 
-      #form .field .input:focus {
+      .form .field .label {
+        display: block;
+      }
+
+      .form .field .input:focus {
         outline: none;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 2px;
+        padding: .4em .8em;
+        font-size: inherit;
+        background-color: #efefef;
       }
     </style>
   </template>

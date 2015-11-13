@@ -1,10 +1,7 @@
+<link rel="import" href="../style-nav/style-nav.html">
 <dom-module id="part-sidebar">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+    <style include="style-nav"></style>
 
     <h1>x-learning</h1>
     <ul class="nav">
@@ -13,6 +10,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/admin/courses">Courses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">&larr; home</a>
       </li>
     </ul>
 

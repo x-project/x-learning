@@ -1,8 +1,7 @@
 <link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="/components/iron-input/iron-input.html">
 <link rel="import" href="../style-form/style-form.html">
-
-<dom-module id="form-lecture-create">
+<dom-module id="form-lecture-info">
   <template>
     <style include="style-form"></style>
 
@@ -20,15 +19,14 @@
         </div>
         <input-errors property="description" error="{{error.details}}"></input-errors>
       </div>
-
     </form>
-    
+
   </template>
 </dom-module>
 <script>
   Polymer({
 
-    is: 'form-lecture-create',
+    is: 'form-lecture-info',
 
     properties: {
       lecture: {

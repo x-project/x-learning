@@ -1,23 +1,38 @@
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
-<link rel="import" href="part-course-actions.html">
+<link rel="import" href="../style-panel/style-panel.html">
+<link rel="import" href="form-course-actions.html">
 <link rel="import" href="form-course-info.html">
 <link rel="import" href="form-course-image.html">
+<link rel="import" href="list-course-lectures.html">
 <dom-module id="page-course">
   <template>
     <style include="style-page"></style>
+    <style include="style-panel"></style>
 
-    <iron-ajax id="ajax_put_member_teaching" method="POST"
-     content-type="application/json" on-error="on_error" on-response="on_response"
-     last-response="{{course}}">
-    </iron-ajax>
+    <api-model-update id="update" collection="courses" model-id="{{course.id}}"
+      data="{{data.course}}" response="{{response}}" error="{{error}}">
+    </api-model-update>
 
     <layout-admin>
       <div class="container">
-        <part-course-actions on-try-save="on_try_save"></part-course-actions>
-        <form-course-info course="{{data.course}}"></form-course-info>
-        <form-course-image on-response="on_upload"></form-course-image>
+        <h1>Edit course {{course.title}}</h1>
+        <div>
+          <form-course-actions on-try-save="on_try_save"></form-course-actions>
+        </div>
+        <div class="panel">
+          <h3>Info</h3>
+          <form-course-info course="{{data.course}}" error="{{error}}"></form-course-info>
+        </div>
+        <div class="panel">
+          <h3>Image</h3>
+          <form-course-image course="{{data.course}}" error="{{error}}"></form-course-image>
+        </div>
+        <div class="panel">
+          <h3>Lectures</h3>
+          <list-course-lectures course="{{data.course}}"></list-course-lectures>
+        </div>
       </div>
     </layout-admin>
 
@@ -35,23 +50,9 @@
       },
     },
 
-    on_try_save:function(event){
+    on_try_save: function (event) {
       event.stopPropagation();
-      this.course.date = Date();
-      this.$.ajax_put_member_teaching.url = '/api/members/' + this.$.session.get('user').id + '/teaching';
-      this.$.ajax_put_member_teaching.body = JSON.stringify(this.course);
-      this.$.ajax_put_member_teaching.generateRequest();
-    },
-
-    on_response:function(event){
-      console.log(this.course);
-      // page('/courses/'+ this.course.id +'/lecture/new');
-      page('/courses/'+ this.course.id +'/course_manage');
-    },
-
-    on_upload:function(event){
-      var url = event.detail.split("?")[0];
-      this.course.cover=url;
+      this.$.update.send();
     }
 
   });

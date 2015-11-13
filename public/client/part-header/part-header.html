@@ -31,7 +31,7 @@
       padding: 2em 1em;
       color: white;
       text-transform: uppercase;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 600;
     }
     #brand a.link {
@@ -49,21 +49,19 @@
 
     <div id="header" class="container">
       <div id="brand">
-        <a is="app-link" class="link" href="/home">X-LEARNING</a>
+        <a is="app-link" class="link" href="/">x-learning</a>
       </div>
       <nav id="navbar">
         <template is="dom-if" if="{{!token}}">
           <ul class="links">
-            <li><a is="app-link" class="link" href="/home">Home</a></li>
             <li><a is="app-link" class="link" href="/signup">signup</a></li>
-            <li><a is="app-link" class="link" href="/">login</a></li>
-
+            <li><a is="app-link" class="link" href="/login">login</a></li>
           </ul>
         </template>
         <template is="dom-if" if="{{token}}">
           <ul class="links">
-            <li><a is="app-link" class="link" href="/settings">Setting</a></li>
-            <li><a is="app-link" class="link" href="/profile">Profile</a></li>
+            <li><a is="app-link" class="link" href="/settings">setting</a></li>
+            <li><a is="app-link" class="link" href="/profile">profile</a></li>
             <li><a class="link" on-click="on_click_logout">logout</a></li>
           </ul>
         </template>

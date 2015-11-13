@@ -1,11 +1,9 @@
 <link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="/components/iron-input/iron-input.html">
 <link rel="import" href="../style-form/style-form.html">
-
-<dom-module id="form-course-create">
+<dom-module id="form-course-info">
   <template>
     <style include="style-form"></style>
-      <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>
 
     <form id="form" class="form" on-submit="on_submit">
       <div class="field">
@@ -21,37 +19,17 @@
         </div>
         <input-errors property="description" error="{{error.details}}"></input-errors>
       </div>
-      <div class="field">
-        <label class="label">Categories</label>
-        <input class="input" id="input" type="text" is="iron-input" bind-value="{{categories.title}}"
-          on-keypress="on_search_categories" on-focus="on_search_categories">
-      </div>
-
     </form>
-    <div class="item">
-      <template id="categories" is="dom-repeat" items="{{categories}}">
-        <div class="item" on-click="on_category_selected">
-          <span>{{item.title}}</span>
-        </div>
-      </template>
-    </div>
+
   </template>
 </dom-module>
 <script>
   Polymer({
 
-    is: 'form-course-create',
+    is: 'form-course-info',
 
     properties: {
       course: {
-        type: Object,
-        value: function () { return {}; }
-      },
-      categories: {
-        type: Array,
-        value: function () { return []; }
-      },
-      category: {
         type: Object,
         value: function () { return {}; }
       },
@@ -59,23 +37,6 @@
         type: Object,
         value: function () { return {}; }
       }
-    },
-    on_search_categories:  function (event) {
-      event.stopPropagation();
-      this.$.find.send();
-    },
-
-    on_category_selected: function (event) {
-      event.stopPropagation();
-      var category = this.$.categories.itemForElement(event.target);
-      this.$.input.value = category.title;
-      this.categories = [];
-      this.course.category_id=category.id;
-    },
-
-    on_submit: function (event) {
-      event.preventDefault();
-      event.stopPropagation();
     }
 
   });

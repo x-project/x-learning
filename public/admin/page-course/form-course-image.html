@@ -1,23 +1,24 @@
-<link rel="import" href="../deck-upload-image/input-s3.html">
-
-<dom-module id="part-course-create-upload-image">
+<link rel="import" href="../input-s3/input-s3.html">
+<dom-module id="form-course-image">
   <template>
-    <input-s3 collection="images" folder="image">
-    </input-s3>
-    
+
+    <input-s3 collection="images" folder="image"></input-s3>
+
   </template>
 </dom-module>
 <script>
   Polymer({
 
-    is: 'part-course-create-upload-image',
+    is: 'form-course-image',
 
     properties: {
-      response: {
-        type: Object
+      course: {
+        type: Object,
+        value: function () { return {}; }
       },
       error: {
-        type: Object
+        type: Object,
+        value: function () { return {}; }
       }
     }
 

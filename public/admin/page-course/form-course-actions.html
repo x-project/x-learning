@@ -1,7 +1,11 @@
-<dom-module id="part-lecture-actions">
+<link rel="import" href="../style-form/style-form.html">
+<dom-module id="form-course-actions">
   <template>
+    <style include="style-form"></style>
 
-    <button on-click="on_click">save</button>
+    <form class="form">
+      <button class="btn" on-click="on_click">save</button>
+    </form>
 
   </template>
 </dom-module>
@@ -9,7 +13,7 @@
 <script>
   Polymer({
 
-    is: 'part-lecture-actions',
+    is: 'form-course-actions',
 
     properties: {
       lecture: {

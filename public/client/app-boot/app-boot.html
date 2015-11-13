@@ -11,7 +11,6 @@
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-upload/page-upload.html">
 <link rel="import" href="../page-settings/page-settings.html">
-
 <dom-module id="app-boot">
   <template>
     <style>
@@ -24,7 +23,6 @@
 
   </template>
 </dom-module>
-
 <script>
   Polymer({
 
@@ -39,7 +37,7 @@
       if (response.id != null) {
         this.session.set('user', event.detail.user);
         this.session.set('token', event.detail.id);
-        page('/home');
+        page('/');
       }
     },
 
@@ -55,7 +53,6 @@
     },
 
     '/home': function (context) {
-      console.log('home');
       context.page = 'page-home';
       this.open(context);
     },
