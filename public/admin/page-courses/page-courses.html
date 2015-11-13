@@ -1,12 +1,18 @@
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="list-courses.html">
 <dom-module id="page-courses">
   <template>
     <style include="style-page"></style>
 
+    <api-model-find id="find" collection="courses"
+      response="{{courses}}">
+    </api-model-find>
+
     <layout-admin>
       <div class="container">
         <h1>Courses</h1>
+        <list-courses courses="{{courses}}"></list-courses>
       </div>
     </layout-admin>
 
@@ -21,7 +27,11 @@
       data: {
         type: Object,
         value: function () { return {}; }
-      },
+      }
+    },
+
+    attached: function () {
+      this.$.find.send();
     }
 
   });
