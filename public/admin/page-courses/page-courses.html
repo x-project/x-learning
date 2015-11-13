@@ -1,0 +1,28 @@
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="../style-page/style-page.html">
+<dom-module id="page-courses">
+  <template>
+    <style include="style-page"></style>
+
+    <layout-admin>
+      <div class="container">
+        <h1>Courses</h1>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-courses',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      },
+    }
+
+  });
+</script>

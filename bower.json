@@ -21,6 +21,7 @@
     "videojs-contrib-media-sources": "^1.0.0",
     "videojs-swf": "^4.7.0",
     "x-element": "x-element/x-element",
+    "paper-radio-group": "PolymerElements/paper-radio-group#^1.0.0",
     "paper-radio-button": "PolymerElements/paper-radio-button#^1.0.0"
   },
   "ignore": [

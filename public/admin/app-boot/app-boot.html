@@ -2,6 +2,8 @@
 <link rel="import" href="../app-theme/app-theme.html">
 <link rel="import" href="../behavior-router/behavior-router.html">
 <link rel="import" href="../page-404/page-404.html">
+<link rel="import" href="../page-courses/page-courses.html">
+<link rel="import" href="../page-settings/page-settings.html">
 <link rel="import" href="../page-home/page-home.html">
 <dom-module id="app-boot">
   <template>
@@ -31,6 +33,16 @@
 
     '/admin/home': function (context) {
       context.page = 'page-home';
+      this.open(context);
+    },
+
+    '/admin/courses': function (context) {
+      context.page = 'page-courses';
+      this.open(context);
+    },
+
+    '/admin/profile': function (context) {
+      context.page = 'page-settings';
       this.open(context);
     },
 

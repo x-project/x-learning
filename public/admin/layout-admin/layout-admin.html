@@ -1,3 +1,4 @@
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../components/layout-grid/layout-grid.html">
 <link rel="import" href="../part-sidebar/part-sidebar.html">
 
@@ -15,17 +16,19 @@
       }
 
       .sidebar {
-        @apply(--layout-col-3);
+        @apply(--layout-col-2);
       }
 
       .main {
-        @apply(--layout-col-9);
+        @apply(--layout-col-10);
       }
     </style>
 
     <div class="page">
       <div class="container">
-          <part-sidebar class="sidebar" data="{{data}}"></part-sidebar>
+        <div class="sidebar">
+          <part-sidebar></part-sidebar>
+        </div>
         <div class="main">
           <content></content>
         </div>
