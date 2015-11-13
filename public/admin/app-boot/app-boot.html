@@ -41,6 +41,21 @@
       this.open(context);
     },
 
+    '/admin/courses/:course_id': function (context) {
+      context.page = 'page-course';
+      this.open(context);
+    },
+
+    '/admin/courses/:course_id/lectures': function (context) {
+      context.page = 'page-lectures';
+      this.open(context);
+    },
+
+    '/admin/courses/:course_id/lectures/:lecture_id': function (context) {
+      context.page = 'page-lecture';
+      this.open(context);
+    },
+
     '/admin/profile': function (context) {
       context.page = 'page-settings';
       this.open(context);
