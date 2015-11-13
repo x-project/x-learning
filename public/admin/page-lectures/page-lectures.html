@@ -1,8 +1,13 @@
+<link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
 <dom-module id="page-lectures">
   <template>
     <style include="style-page"></style>
+
+    <api-model-get id="ajax" collection="courses" model-id="{{params.course_id}}"
+      include='["lectures"]' response="{{course}}">
+    </api-model-get>
 
     <layout-admin>
       <div class="container">
@@ -18,10 +23,14 @@
     is: 'page-lectures',
 
     properties: {
-      data: {
+      course: {
         type: Object,
         value: function () { return {}; }
       },
+    },
+
+    attached: function () {
+      this.$.ajax.send();
     }
 
   });
