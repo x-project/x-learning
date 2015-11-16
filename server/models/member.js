@@ -11,7 +11,7 @@ module.exports = function (Member) {
 
   Member.change_email = function (confirm, email, password, callback) {
     if (confirm !== email) {
-      cb(new Error('email not confirmed'), null);
+      callback(new Error('email not confirmed'), null);
       return;
     }
 
@@ -57,7 +57,7 @@ module.exports = function (Member) {
     returns: { arg: 'changed', type: 'boolean' }
   });
 
-  Member.change_password = function (new_password, confirm_password, password, callback) {
+  Member.change_password = function (new_password, confirm_password, old_password, callback) {
     if (new_password !== confirm_password) {
       callback(new Error('password not confirmed'), null);
       return;
@@ -72,7 +72,7 @@ module.exports = function (Member) {
         return;
       }
       user = instance;
-      user.hasPassword(password, on_match_password);
+      user.hasPassword(old_password, on_match_password);
     };
 
     var on_match_password = function (err, match) {
@@ -99,7 +99,7 @@ module.exports = function (Member) {
     accepts: [
       { arg: 'new_password', type: 'string' },
       { arg: 'confirm_password', type: 'string' },
-      { arg: 'password', type: 'string' }
+      { arg: 'old_password', type: 'string' }
     ],
     returns: { arg: 'changed', type: 'boolean' }
   });

@@ -74,7 +74,6 @@
 
     update: function () {
       var ajax = this.$.ajax;
-      console.log(this.$.session.get('token'))
       ajax.headers = { Authorization: this.$.session.get('token') };
       ajax.body = JSON.stringify(this.input);
       ajax.generateRequest();

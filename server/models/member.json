@@ -86,6 +86,12 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "change_email"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "change_password"
     }
 
   ],
