@@ -1,9 +1,12 @@
 <link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../../components/iron-input/iron-input.html">
+<link rel="import" href="../../components/app-session/app-session.html">
 <link rel="import" href="../style-form/style-form.html">
 <dom-module id="form-settings-email">
   <template>
     <style include="style-form"></style>
+
+    <app-session id="session"></app-session>
 
     <iron-ajax id="ajax" method="POST" url="/api/members/change_email"
       content-type="application/json" handle-as="json"
@@ -71,7 +74,8 @@
 
     update: function () {
       var ajax = this.$.ajax;
-      ajax.headers = { Authorization: this.session.token };
+      console.log(this.$.session.get('token'))
+      ajax.headers = { Authorization: this.$.session.get('token') };
       ajax.body = JSON.stringify(this.input);
       ajax.generateRequest();
     },

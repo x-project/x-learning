@@ -80,6 +80,12 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "__create__teaching"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "change_email"
     }
 
   ],
