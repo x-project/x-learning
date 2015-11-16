@@ -1,4 +1,3 @@
-<link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
@@ -7,20 +6,22 @@
 <link rel="import" href="form-course-info.html">
 <link rel="import" href="form-course-image.html">
 <link rel="import" href="list-course-lectures.html">
+<link rel="import" href="components/app-session/app-session.html">
 
 <dom-module id="page-course">
   <template>
     <style include="style-page"></style>
     <style include="style-panel"></style>
+    
+    <app-session id="session"></app-session>
+
+
+    <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{course}}" on-response="on_response_create"> </iron-ajax>
 
     <api-model-update id="update" collection="courses" model-id="{{course.id}}"
       data="{{course}}" response="{{response}}" error="{{error}}">
     </api-model-update>
 
-    <api-model-create id="create" collection="courses"
-      data="{{course}}" response="{{response}}" error="{{error}}"
-      on-response="on_response_create">
-    </api-model-create>
 
     <layout-admin>
       <div class="container">
@@ -34,7 +35,7 @@
         </div>
         <div class="panel">
           <h3>Image</h3>
-          <form-course-image course="{{course}}" error="{{error}}"></form-course-image>
+          <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
         </div>
         <div class="panel">
           <h3>Lectures</h3>
@@ -59,7 +60,6 @@
 
     attached:function(){
       this.course = this.data.course;
-      console.log(this.data);
     },
 
     on_try_save: function (event) {
@@ -68,13 +68,24 @@
         this.$.update.send();
       }
       else{
-        this.$.create.send();
+        this.$.ajax_put.body=JSON.stringify(this.course);
+        this.$.ajax_put.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
+        this.$.ajax_put.generateRequest();
       }
     },
 
     on_response_create: function (event) {
-      console.log(this.response);
-      page('/admin/courses/'+ this.response.id)
+      page('/admin/courses/'+ this.course.id)
+    },
+
+    on_response: function(event){
+      var url = event.detail.split("?")[0];
+      this.course.cover = url;
+      console.log(this.course);
+
+      if(this.course.id){
+        this.on_try_save(event);
+      }
     }
 
   });

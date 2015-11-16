@@ -35,6 +35,7 @@
     },
 
     attached: function () {
+      console.log(this.$.session.get('user').id)
       this.$.ajax_find.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
       this.$.ajax_find.generateRequest();
     },
