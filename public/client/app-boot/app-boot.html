@@ -10,7 +10,7 @@
 <link rel="import" href="../page-profile/page-profile.html">
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-upload/page-upload.html">
-<link rel="import" href="../page-settings/page-settings.html">
+
 <dom-module id="app-boot">
   <template>
     <style>
@@ -105,27 +105,6 @@
         })
         .then(function (model) {
           context.page = 'page-profile';
-          context.data = {};
-          context.data.member = model;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
-    },
-
-    '/settings': function (context) {
-      this.init(context);
-      if (!context.session.token) {
-        page('/');
-        return;
-      }
-      this.get_model({
-          collection: 'members',
-          modelId: this.session.get('user').id
-        })
-        .then(function (model) {
-          context.page = 'page-settings';
           context.data = {};
           context.data.member = model;
           this.open(context);
