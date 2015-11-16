@@ -40,17 +40,39 @@
     },
 
     '/admin/courses': function (context) {
-      context.page = 'page-courses';
-      this.open(context);
+        context.page = 'page-courses';
+        this.open(context);
+    },
+
+    '/admin/courses/new': function (context) {
+        context.page = 'page-course';
+        context.data = { course:{} };
+        this.open(context);
     },
 
     '/admin/courses/:course_id': function (context) {
-      context.page = 'page-course';
-      this.open(context);
+        this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id
+        })
+        .then(function (model) {
+          context.page = 'page-course';
+          context.data = {};
+          context.data.course = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
     },
 
     '/admin/courses/:course_id/lectures': function (context) {
       context.page = 'page-lectures';
+      this.open(context);
+    },
+
+    '/admin/courses/:course_id/lectures/new': function (context) {
+      context.page = 'page-lecture';
       this.open(context);
     },
 

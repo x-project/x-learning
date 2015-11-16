@@ -1,11 +1,15 @@
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
 <link rel="import" href="list-courses.html">
+<link rel="import" href="components/app-session/app-session.html">
 <dom-module id="page-courses">
   <template>
     <style include="style-page"></style>
+    <app-session id="session"></app-session>
 
-    <api-model-find id="find" collection="courses"
+    <iron-ajax id="ajax_find" handle-as="json" last-response="{{courses}}" on-response="on_response"> </iron-ajax>
+
+    <api-model-find id="find" collection="members" where="{teacher_id:}"
       response="{{courses}}">
     </api-model-find>
 
@@ -31,7 +35,12 @@
     },
 
     attached: function () {
-      this.$.find.send();
+      this.$.ajax_find.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
+      this.$.ajax_find.generateRequest();
+    },
+
+    on_response:function(event){
+      console.log(this.courses);
     }
 
   });

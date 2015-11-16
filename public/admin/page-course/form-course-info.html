@@ -37,6 +37,11 @@
         type: Object,
         value: function () { return {}; }
       }
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
     }
 
   });

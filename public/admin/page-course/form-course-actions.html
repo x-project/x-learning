@@ -3,7 +3,7 @@
   <template>
     <style include="style-form"></style>
 
-    <form class="form">
+    <form class="form" on-submit="on_submit">
       <button class="btn" on-click="on_click">save</button>
     </form>
 
@@ -25,6 +25,11 @@
     on_click: function (event){
       event.stopPropagation();
       this.fire('try-save');
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
     }
 
   });

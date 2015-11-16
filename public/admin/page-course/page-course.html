@@ -1,3 +1,4 @@
+<link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
@@ -6,14 +7,20 @@
 <link rel="import" href="form-course-info.html">
 <link rel="import" href="form-course-image.html">
 <link rel="import" href="list-course-lectures.html">
+
 <dom-module id="page-course">
   <template>
     <style include="style-page"></style>
     <style include="style-panel"></style>
 
     <api-model-update id="update" collection="courses" model-id="{{course.id}}"
-      data="{{data.course}}" response="{{response}}" error="{{error}}">
+      data="{{course}}" response="{{response}}" error="{{error}}">
     </api-model-update>
+
+    <api-model-create id="create" collection="courses"
+      data="{{course}}" response="{{response}}" error="{{error}}"
+      on-response="on_response_create">
+    </api-model-create>
 
     <layout-admin>
       <div class="container">
@@ -23,15 +30,15 @@
         </div>
         <div class="panel">
           <h3>Info</h3>
-          <form-course-info course="{{data.course}}" error="{{error}}"></form-course-info>
+          <form-course-info course="{{course}}" error="{{error}}"></form-course-info>
         </div>
         <div class="panel">
           <h3>Image</h3>
-          <form-course-image course="{{data.course}}" error="{{error}}"></form-course-image>
+          <form-course-image course="{{course}}" error="{{error}}"></form-course-image>
         </div>
         <div class="panel">
           <h3>Lectures</h3>
-          <list-course-lectures course="{{data.course}}"></list-course-lectures>
+          <list-course-lectures course="{{course}}"></list-course-lectures>
         </div>
       </div>
     </layout-admin>
@@ -50,9 +57,24 @@
       },
     },
 
+    attached:function(){
+      this.course = this.data.course;
+      console.log(this.data);
+    },
+
     on_try_save: function (event) {
       event.stopPropagation();
-      this.$.update.send();
+      if(this.course.id){
+        this.$.update.send();
+      }
+      else{
+        this.$.create.send();
+      }
+    },
+
+    on_response_create: function (event) {
+      console.log(this.response);
+      page('/admin/courses/'+ this.response.id)
     }
 
   });
