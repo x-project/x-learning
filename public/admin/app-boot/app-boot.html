@@ -60,8 +60,19 @@
     },
 
     '/admin/profile': function (context) {
-      context.page = 'page-settings';
-      this.open(context);
+      this.get_model({
+          collection: 'members',
+          modelId: this.session.get('user').id
+        })
+        .then(function (model) {
+          context.page = 'page-settings';
+          context.data = {};
+          context.data.user = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
     },
 
     '/admin/404': function (context) {

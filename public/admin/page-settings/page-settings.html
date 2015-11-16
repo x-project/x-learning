@@ -10,9 +10,9 @@
     <layout-admin>
       <div class="container">
         <h1>Profile settings</h1>
-        <panel-settings-profile user="{{data.member}}" ></panel-settings-profile>
-        <panel-settings-email user="{{data.member}}"></panel-settings-email>
-        <panel-settings-password user="{{data.member}}"></panel-settings-password>
+        <panel-settings-profile user="{{data.user}}" ></panel-settings-profile>
+        <panel-settings-email user="{{data.user}}"></panel-settings-email>
+        <panel-settings-password user="{{data.user}}"></panel-settings-password>
       </div>
     </layout-admin>
 
@@ -28,6 +28,9 @@
         type: Object,
         value: function () { return {}; }
       }
+    },
+    attached:function(){
+      console.log(this.data.user)
     }
 
   });
