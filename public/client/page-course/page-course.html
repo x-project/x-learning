@@ -13,9 +13,9 @@
       </part-jumbotron>
       <div class="container">
         <p class="description">{{data.course.description}}</p>
-        <deck-video src="{{data.lecture.video.url}}"></deck-video>
+        <deck-video src="{{data.video.url}}"></deck-video>
         <h3>Lectures</h3>
-        <part-course-lectures course="{{data.course}}" lectures="{{data.course.lectures}}"></part-course-lectures>
+        <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
       </div>
     </layout-client>
 
@@ -31,6 +31,9 @@
         type: Object,
         value: function () { return {}; }
       }
+    },
+    attached:function(event){
+      console.log(this.data)
     }
 
   });

@@ -76,21 +76,43 @@
     },
 
     '/courses/:course_id': function (context) {
-      this.get_model({
-          collection: 'courses',
-          modelId: context.params.course_id,
-          include: ['lectures'],
-        })
+      this.find_model({
+         collection: 'lectures',
+          where: { course_id: context.params.course_id },
+          include:['course','video']
+          })
         .then(function (model) {
           context.page = 'page-course';
-          context.data = {};
-          context.data.course = model;
+          context.data= { course: model[0].course};
+          context.data.video = model[0].video;
+          context.data.lectures = model;
+
+          // context.data = { lecture: model};
+          // context.data.course = model.course;
+          // context.data.video = model.video;
           this.open(context);
         }.bind(this))
         .catch(function (error) {
           this.redirect('/404');
         }.bind(this));
     },
+
+    //     '/courses/:course_id': function (context) {
+    //   this.get_model({
+    //       collection: 'courses',
+    //       modelId: context.params.course_id,
+    //       include: ['lectures'],
+    //     })
+    //     .then(function (model) {
+    //       context.page = 'page-course';
+    //       context.data = {};
+    //       context.data.course = model;
+    //       this.open(context);
+    //     }.bind(this))
+    //     .catch(function (error) {
+    //       this.redirect('/404');
+    //     }.bind(this));
+    // },
 
     '/courses/:course_id/lectures/:lecture_id': function (context) {
       this.get_model({
