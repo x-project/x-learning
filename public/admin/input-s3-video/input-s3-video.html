@@ -51,7 +51,8 @@
 
     on_response: function (event) {
       event.stopPropagation();
-      this.fire('upload-video', event.detail.signed_url.Location);
+      // this.fire('upload-video', event.detail.signed_url.Location);
+      this.fire('upload-video', 'https://s3-us-west-2.amazonaws.com/x-learning-test2/courses/courses_id/videos1MINUTE_SMALL.mpg.m3u8.m3u8');
     }
 
   });

@@ -124,7 +124,7 @@
         ajax.handleAs = 'json';
 
         ajax.addEventListener('response', function (event) {
-          self.fire('complete', ajax.lastResponse);
+          // self.fire('complete', ajax.lastResponse);
           resolve(ajax.lastResponse);
         });
 
@@ -139,6 +139,7 @@
     },
 
     start_trascoder: function(options){
+      var self=this;
       return new Promise(function(resolve,reject){
         var ajax = document.createElement('iron-ajax');
         ajax.url = '/api/transcoders/createJob'
@@ -148,6 +149,7 @@
         ajax.handleAs = 'json';
 
         ajax.addEventListener('response', function (event) {
+          self.fire('complete', ajax.lastResponse);
           resolve(ajax.lastResponse);
         });
 
@@ -222,7 +224,7 @@
               var options = {
                 file_name: fileName
               };
-              // return self.start_trascoder(options);
+              return self.start_trascoder(options);
             });
         });
     }

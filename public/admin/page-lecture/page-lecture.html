@@ -72,21 +72,18 @@
     },
 
     on_upload_video: function(event){
-      console.log(this.data);
       this.video = this.data.video;
       this.video.url = event.detail;
-      console.log(this.video);
-
       //http://d1s3yn3kxq96sy.cloudfront.net/bigbuckbunny/index.m3u8
       this.$.ajax_video_post.body=this.data.video;
       this.$.ajax_video_post.url='/api/lectures/'+ this.data.lecture.id +'/video';
       this.$.ajax_video_post.generateRequest();
-      // page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
+      page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
     },
 
     on_response_create: function(event){
       console.log(this.data)
-      // page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
+      page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
     }
 
   });
