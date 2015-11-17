@@ -19,6 +19,11 @@
         </div>
         <input-errors property="description" error="{{error.details}}"></input-errors>
       </div>
+      <div class="field">
+        <label class="label">Cost</label>
+        <input class="input" id="cost" type="text" is="iron-input" bind-value="{{course.cost}}">
+        <input-errors property="cost" error="{{error.details}}"></input-errors>
+      </div>
     </form>
 
   </template>
