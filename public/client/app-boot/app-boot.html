@@ -86,10 +86,6 @@
           context.data= { course: model[0].course};
           context.data.video = model[0].video;
           context.data.lectures = model;
-
-          // context.data = { lecture: model};
-          // context.data.course = model.course;
-          // context.data.video = model.video;
           this.open(context);
         }.bind(this))
         .catch(function (error) {
