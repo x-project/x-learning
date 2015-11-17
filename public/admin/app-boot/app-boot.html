@@ -53,7 +53,8 @@
     '/admin/courses/:course_id': function (context) {
         this.get_model({
           collection: 'courses',
-          modelId: context.params.course_id
+          modelId: context.params.course_id,
+          include: ['lectures']
         })
         .then(function (model) {
           context.page = 'page-course';
@@ -72,13 +73,38 @@
     },
 
     '/admin/courses/:course_id/lectures/new': function (context) {
-      context.page = 'page-lecture';
-      this.open(context);
+        this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id
+        })
+        .then(function (model) {
+          context.page = 'page-lecture';
+          context.data = { lecture: {},
+          video:{} };
+          context.data.course = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
     },
 
     '/admin/courses/:course_id/lectures/:lecture_id': function (context) {
-      context.page = 'page-lecture';
-      this.open(context);
+        this.get_model({
+          collection: 'lectures',
+          modelId: context.params.lecture_id,
+          include:['course','video']
+          })
+        .then(function (model) {
+          context.page = 'page-lecture';
+          context.data = { lecture: model};
+          context.data.course = model.course;
+          context.data.video = model.video || { video:{} } ;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
     },
 
     '/admin/profile': function (context) {

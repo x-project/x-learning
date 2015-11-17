@@ -3,7 +3,9 @@
   <template>
 
     <template is="dom-repeat" items="{{courses}}" as="course">
-      <a is="app-link" href="/admin/courses/{{course.id}}">{{course.title}}</a>
+      <div>  
+       <a is="app-link" href="/admin/courses/{{course.id}}">{{course.title}}</a>
+      </div>
     </template>
 
   </template>

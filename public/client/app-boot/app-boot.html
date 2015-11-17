@@ -92,6 +92,24 @@
         }.bind(this));
     },
 
+    '/courses/:course_id/lectures/:lecture_id': function (context) {
+      this.get_model({
+          collection: 'lectures',
+          modelId: context.params.lecture_id,
+          include:['course','video']
+          })
+        .then(function (model) {
+          context.page = 'page-lecture';
+          context.data = { lecture: model};
+          context.data.course = model.course;
+          context.data.video = model.video;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
     '/profile': function (context) {
       this.init(context);
       if (!context.session.token) {

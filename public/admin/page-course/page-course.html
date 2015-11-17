@@ -1,4 +1,6 @@
 <link rel="import" href="../../components/api-user/api-user.html">
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../../components/app-session/app-session.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
 <link rel="import" href="../style-panel/style-panel.html">
@@ -6,7 +8,7 @@
 <link rel="import" href="form-course-info.html">
 <link rel="import" href="form-course-image.html">
 <link rel="import" href="list-course-lectures.html">
-<link rel="import" href="components/app-session/app-session.html">
+
 
 <dom-module id="page-course">
   <template>
@@ -38,6 +40,7 @@
           <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
         </div>
         <div class="panel">
+          <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
           <h3>Lectures</h3>
           <list-course-lectures course="{{course}}"></list-course-lectures>
         </div>
@@ -60,6 +63,7 @@
 
     attached:function(){
       this.course = this.data.course;
+      console.log(this.course)
     },
 
     on_try_save: function (event) {
@@ -83,9 +87,8 @@
       this.course.cover = url;
       console.log(this.course);
 
-      if(this.course.id){
+      if(this.course.id)
         this.on_try_save(event);
-      }
     }
 
   });

@@ -1,7 +1,7 @@
+<link rel="import" href="components/app-session/app-session.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
 <link rel="import" href="list-courses.html">
-<link rel="import" href="components/app-session/app-session.html">
 <dom-module id="page-courses">
   <template>
     <style include="style-page"></style>
@@ -35,7 +35,6 @@
     },
 
     attached: function () {
-      console.log(this.$.session.get('user').id)
       this.$.ajax_find.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
       this.$.ajax_find.generateRequest();
     },
