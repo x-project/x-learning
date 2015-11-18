@@ -29,7 +29,7 @@
       <div class="container">
         <h1>Edit course {{course.title}}</h1>
         <div>
-          <form-course-actions on-try-save="on_try_save"></form-course-actions>
+          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish"></form-course-actions>
         </div>
         <div class="panel">
           <h3>Info</h3>
@@ -75,6 +75,15 @@
         this.$.ajax_put.body=JSON.stringify(this.course);
         this.$.ajax_put.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
         this.$.ajax_put.generateRequest();
+      }
+    },
+
+    on_try_publish: function (event) {
+      event.stopPropagation();
+      if(this.course.id){
+        this.course.publish = !this.course.publish;
+        console.log(this.course)
+        this.$.update.send();
       }
     },
 
