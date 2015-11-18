@@ -5,7 +5,7 @@
     <style include="style-form"></style>
 
     <form class="form">
-      <input-s3-video collection="videos" folder="videos"
+      <input-s3-video collection="videos" folder="videos" data="{{data}}"
         response="{{video}}" error="{{error}}">
       </input-s3-video>
     </form>
@@ -16,7 +16,7 @@
 <script>
   Polymer({
 
-    is: 'form-lecture-video'
+    is: 'form-lecture-video',
 
   });
 </script>

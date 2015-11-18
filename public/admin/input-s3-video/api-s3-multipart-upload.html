@@ -42,6 +42,9 @@
         notify: true
       }
     },
+    attached:function(){
+      console.log(this.data)
+    },
 
     send: function (file) {
       if (file) {
@@ -222,7 +225,8 @@
           self.complete_upload(options_part)
             .then(function (res) {
               var options = {
-                file_name: fileName
+                file_name: fileName,
+                courses_id: self.data.course.id
               };
               return self.start_trascoder(options);
             });

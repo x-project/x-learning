@@ -31,7 +31,7 @@
         </div>
         <div class="panel">
           <template is="dom-if" if="{{!data.video.id}}">
-            <form-lecture-video lecture="{{data.lecture}}" on-upload-video="on_upload_video"></form-lecture-video>
+            <form-lecture-video data="{{data}}" on-upload-video="on_upload_video"></form-lecture-video>
           </template>
            <template is="dom-if" if="{{data.video.id}}">
            <h3>Video lecture already exist with id: {{data.video.id}}</h3>
@@ -78,7 +78,7 @@
       this.$.ajax_video_post.body=this.data.video;
       this.$.ajax_video_post.url='/api/lectures/'+ this.data.lecture.id +'/video';
       this.$.ajax_video_post.generateRequest();
-      page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
+      // page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
     },
 
     on_response_create: function(event){
