@@ -9,7 +9,7 @@
       }
     </style>
     
-    <api-model-find id="find" collection="courses" response="{{courses}}"></api-model-find>
+    <api-model-find id="find" collection="courses" where='{"publish": true}'response="{{courses}}"></api-model-find>
 
     <h2>Courses</h2>  
     <deck-courses courses="{{courses}}"></deck-courses>
