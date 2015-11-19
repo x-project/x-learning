@@ -1,0 +1,48 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+
+<dom-module id="part-course-info">
+  <template>
+    <api-model-find id="find" collection="courses" on-response="on_response"response="{{courses}}"></api-model-find>
+  <div>
+    ${{data.course.cost}}
+    Language: {{data.course.language}}
+    Followers: {{follow}}
+    Lectures: {{lectures}}
+    Teacher: {{teacher.name}}
+  </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-course-info',
+
+    properties: {
+      follow:{
+        type:Number
+      },
+      lectures:{
+        type:Number
+      },
+      teacher:{
+        type:String
+      }
+    },
+
+    attached:function (event) {
+      console.log(this.data.lectures)
+      this.$.find.where={"id" : this.data.course.id};
+      this.$.find.include.push("follow");
+      this.$.find.include.push("teacher");
+      this.$.find.send();
+    },
+
+    on_response:function(event){
+      this.teacher = this.courses[0].teacher
+      this.follow=this.courses[0].follow.length;
+      this.lectures=this.data.lectures.length
+    }
+
+  });
+</script>
