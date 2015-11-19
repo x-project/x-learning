@@ -1,12 +1,12 @@
 <link rel="import" href="../style-form/style-form.html">
+<link rel="import" href="part-course-lecture.html">
 <dom-module id="list-course-lectures">
   <template>
     <style include="style-form"></style>
 
     <div class="list">
       <template is="dom-repeat" items="{{course.lectures}}" as="lecture">
-        <a href="/admin/courses/{{course.id}}/lectures/{{lecture.id}}"
-          is="app-link">{{lecture.title}}</a>
+        <part-course-lecture class="strip" course="{{course}}" lecture="{{lecture}}" index="{{index}}"></part-course-lecture>
       </template>
     </div>
 

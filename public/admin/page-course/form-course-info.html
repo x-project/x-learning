@@ -21,13 +21,18 @@
         </div>
         <input-errors property="description" error="{{error.details}}"></input-errors>
       </div>
-       <div class="field">
-        <search-course-category course="{{course}}" on-try-save-categories="on_try_save_categories" on-try-delete-category="on_try_delete_category"></search-course-category>
+      <div class="field">
+        <label class="label">Language</label>
+        <input class="input" id="language" type="text" is="iron-input" bind-value="{{course.language}}">
+        <input-errors property="title" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
         <label class="label">Cost</label>
         <input class="input" id="cost" type="text" is="iron-input" bind-value="{{course.cost}}">
         <input-errors property="cost" error="{{error.details}}"></input-errors>
+      </div>
+       <div class="field">
+        <search-course-category course="{{course}}" on-try-save-categories="on_try_save_categories" on-try-delete-category="on_try_delete_category"></search-course-category>
       </div>
     </form>
 

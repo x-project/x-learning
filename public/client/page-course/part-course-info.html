@@ -4,7 +4,7 @@
   <template>
     <api-model-find id="find" collection="courses" on-response="on_response"response="{{courses}}"></api-model-find>
   <div>
-    ${{data.course.cost}}
+    $: {{data.course.cost}}
     Language: {{data.course.language}}
     Followers: {{follow}}
     Lectures: {{lectures}}
