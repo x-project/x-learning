@@ -1,0 +1,20 @@
+{
+  "name": "MemberCourse",
+  "plural": "members_courses",
+  "mongodb": {
+    "collection": "members_courses"
+  },
+  "base": "PersistedModel",
+  "properties": {
+    "member_id": {
+      "type": "String"
+    },
+    "course_id": {
+      "type": "String"
+    }
+  },
+  "relations": {},
+  "acls": [],
+  "methods": [],
+  "validations": []
+}

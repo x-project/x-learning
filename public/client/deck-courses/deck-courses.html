@@ -1,0 +1,44 @@
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../components/layout-grid/layout-grid.html">
+<link rel="import" href="card-course.html">
+
+<dom-module id="deck-courses">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .deck {
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+      }
+
+      .card {
+        @apply(--layout-col-3);
+        box-sizing: border-box;
+      }
+    </style>
+
+    <div class="deck">
+      <template id="course" is="dom-repeat" items="{{courses}}" as="course">
+        <card-course class="card" course="{{course}}"></card-course>
+      </template>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'deck-courses',
+
+    properties: {
+      courses: {
+        type: Array,
+        value: function () { return []; }
+      }
+    }
+
+  });
+</script>

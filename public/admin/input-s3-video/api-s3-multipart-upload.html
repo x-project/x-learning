@@ -1,0 +1,238 @@
+<link rel="import" href="../../components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../components/api-model/api-model.html">
+
+<dom-module id="api-s3-multipart-upload">
+  <template>
+
+    <iron-ajax id="createMultiPart" method="GET" url="{{url}}" params="{{params}}"
+      last-response="{{response_get}}" on-response="on_response_get">
+    </iron-ajax>
+
+  </template>
+</dom-module>
+
+<script src="promise-for-each.js"></script>
+<script>
+  Polymer({
+
+    is: 'api-s3-multipart-upload',
+
+    properties: {
+      file: {
+        type: Object
+      },
+      fileSize:{
+        type : Number
+      },
+      collection: {
+        type: String
+      },
+      folder: {
+        type: String
+      },
+      fileName: {
+        type: String
+      },
+      response: {
+        type: Object,
+        notify: true
+      },
+      error: {
+        type: Object,
+        notify: true
+      }
+    },
+    attached:function(){
+      console.log(this.data)
+    },
+
+    send: function (file) {
+      if (file) {
+        this.file = file;
+        this.file_size = file.size;
+      }
+      if (!this.file) {
+        return;
+      }
+      this._compute_url('create_multiPart_upload');
+      this._compute_params();
+      this.$.createMultiPart.generateRequest();
+    },
+
+    _compute_url: function (value) {
+      var url = '/api/' + this.collection + '/'+ value;
+      url = url.replace(/\/\/+/, '/');
+      this.url = url;
+    },
+
+    _compute_params: function () {
+      var params = {};
+      params.file_name = this.file.name;
+      params.file_type = this.file.type;
+      this.params = params;
+    },
+
+    get_signed_url: function (options) {
+      var self = this;
+      return new Promise(function (resolve, reject){
+        var ajax = document.createElement('iron-ajax');
+        ajax.url = '/api/' + self.collection + '/signed_upload_part';
+        ajax.method = 'GET';
+        ajax.params = options;
+
+        ajax.addEventListener('response', function (event) {
+          resolve(ajax.lastResponse);
+        });
+
+        ajax.addEventListener('error', function (event) {
+          reject(ajax.lastError);
+        });
+
+        ajax.generateRequest();
+      });
+    },
+
+    upload_part: function (url, options) {
+      return new Promise(function(resolve,reject){
+        var ajax = document.createElement('iron-ajax');
+        ajax.url = url;
+        ajax.method = 'PUT';
+        ajax.body = options.Body;
+        ajax.handleAs='json';
+
+        ajax.addEventListener('response', function (event) {
+          var xhr = event.detail.xhr;
+          var etag = xhr.getResponseHeader('ETag');
+          var response = { etag: etag };
+          resolve(response);
+        });
+
+        ajax.addEventListener('error', function (event) {
+          rejcet(ajax.lastError);
+        });
+
+        ajax.generateRequest();
+      });
+    },
+
+    complete_upload: function (options){
+      var self=this;
+      return new Promise(function(resolve,reject){
+        var ajax = document.createElement('iron-ajax');
+        self._compute_url('complete_upload_part');
+        ajax.url = self.url;
+        ajax.method = 'PUT';
+        ajax.body = options;
+        ajax.contentType = 'application/json';
+        ajax.handleAs = 'json';
+
+        ajax.addEventListener('response', function (event) {
+          // self.fire('complete', ajax.lastResponse);
+          resolve(ajax.lastResponse);
+        });
+
+        ajax.addEventListener('error', function (event) {
+          reject(ajax.lastError);
+        });
+
+
+        ajax.generateRequest();
+      });
+
+    },
+
+    start_trascoder: function(options){
+      var self=this;
+      return new Promise(function(resolve,reject){
+        var ajax = document.createElement('iron-ajax');
+        ajax.url = '/api/transcoders/createJob'
+        ajax.method = 'PUT';
+        ajax.body = options;
+        ajax.contentType = 'application/json';
+        ajax.handleAs = 'json';
+
+        ajax.addEventListener('response', function (event) {
+          self.fire('complete', ajax.lastResponse);
+          resolve(ajax.lastResponse);
+        });
+
+        ajax.addEventListener('error', function (event) {
+          reject(ajax.lastError);
+        });
+
+        ajax.generateRequest();
+        });
+    },
+
+    on_response_get: function (event) {
+      var fileName = this.file.name;
+      var uploadId = this.response_get.dataId.UploadId;
+      var self = this;
+
+      // //Upload
+      var multipartMap = {
+        Parts: []
+      };
+
+      var partNum = 0;
+      var partSize = 1024 * 1024 * 5;
+      var chunks = [];
+
+      //creo chunks
+      for (var rangeStart = 0; rangeStart < this.file_size; rangeStart += partSize) {
+        partNum++;
+        var end = Math.min(rangeStart + partSize, this.file_size);
+
+        chunk = {
+          chunk_file: this.file.slice(rangeStart, end),
+          partNum: partNum
+        }
+        chunks.push(chunk)
+      }
+
+      forEachPromise(chunks, function(chunk){
+        var options = {
+          Key: fileName,
+          PartNumber: chunk.partNum,
+          UploadId: uploadId,
+        };
+
+        //CHIEDO URL PER UPLOAD PART
+        return self.get_signed_url(options)
+          .then(function (res) {
+            options.Body=chunk.chunk_file;
+            return self.upload_part(res.signed_url, options);
+          })
+          .then(function (res) {
+            multipartMap.Parts.push({
+              ETag: res.etag,
+              PartNumber: options.PartNumber
+            });
+            console.log(options.PartNumber);
+          })
+          .catch(function (err) {
+            console.log(err);
+          })
+
+        })
+        .then(function(res){
+          var options_part = {
+            Key: fileName,
+            UploadId: uploadId,
+            Parts: multipartMap.Parts
+          };
+
+          self.complete_upload(options_part)
+            .then(function (res) {
+              var options = {
+                file_name: fileName,
+                courses_id: self.data.course.id
+              };
+              return self.start_trascoder(options);
+            });
+        });
+    }
+
+  });
+
+</script>

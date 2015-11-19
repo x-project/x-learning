@@ -1,0 +1,39 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="list-lectures.html">
+<dom-module id="page-lectures">
+  <template>
+    <style include="style-page"></style>
+
+    <api-model-get id="ajax" collection="courses" model-id="{{params.course_id}}"
+      include='["lectures"]' response="{{course}}">
+    </api-model-get>
+
+    <layout-admin>
+      <div class="container">
+        <h1>Course {{course.title}}</h1>
+        <list-lectures course="{{course}}"></list-lectures>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-lectures',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      },
+    },
+
+    attached: function () {
+      this.$.ajax.send();
+    }
+
+  });
+</script>

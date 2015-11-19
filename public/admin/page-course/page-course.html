@@ -1,0 +1,103 @@
+<link rel="import" href="../../components/api-user/api-user.html">
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../style-panel/style-panel.html">
+<link rel="import" href="form-course-actions.html">
+<link rel="import" href="form-course-info.html">
+<link rel="import" href="form-course-image.html">
+<link rel="import" href="list-course-lectures.html">
+
+<dom-module id="page-course">
+  <template>
+    <style include="style-page"></style>
+    <style include="style-panel"></style>
+    
+    <app-session id="session"></app-session>
+
+
+    <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{course}}" on-response="on_response_create"> </iron-ajax>
+
+    <api-model-update id="update" collection="courses" model-id="{{course.id}}"
+      data="{{course}}" response="{{response}}" error="{{error}}">
+    </api-model-update>
+
+
+    <layout-admin>
+      <div class="container">
+        <h1>Edit course {{course.title}}</h1>
+        <div>
+          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" published="{{data.course.publish}}"></form-course-actions>
+        </div>
+        <div class="panel">
+          <h3>Info</h3>
+          <form-course-info course="{{course}}" error="{{error}}"></form-course-info>
+        </div>
+        <div class="panel">
+          <h3>Image</h3>
+          <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
+        </div>
+        <div class="panel">
+          <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
+          <h3>Lectures</h3>
+          <list-course-lectures course="{{course}}"></list-course-lectures>
+        </div>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-course',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      },
+    },
+
+    attached:function(){
+      console.log(this.data.course.publish)
+      this.course = this.data.course;
+    },
+
+    on_try_save: function (event) {
+      event.stopPropagation();
+      if(this.course.id){
+        this.$.update.send();
+      }
+      else{
+        this.$.ajax_put.body=JSON.stringify(this.course);
+        this.$.ajax_put.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
+        this.$.ajax_put.generateRequest();
+      }
+    },
+
+    on_try_publish: function (event) {
+      event.stopPropagation();
+      if(this.course.id){
+        this.course.publish = !this.course.publish;
+        console.log(this.course)
+        this.$.update.send();
+      }
+    },
+
+    on_response_create: function (event) {
+      page('/admin/courses/'+ this.course.id)
+    },
+
+    on_response: function(event){
+      var url = event.detail.split("?")[0];
+      this.course.cover = url;
+      console.log(this.course);
+
+      if(this.course.id)
+        this.on_try_save(event);
+    }
+
+  });
+</script>

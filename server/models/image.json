@@ -1,0 +1,43 @@
+{
+  "name": "Image",
+  "plural": "images",
+  "mongodb": {
+    "collection": "images"
+  },
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "thumbs": {
+      "type": "array"
+    },
+    "description": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "extension": {
+      "type": "string"
+    },
+    "filetype": {
+      "type": "string"
+    },
+    "container": {
+      "type": "string"
+    },
+    "base_url": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

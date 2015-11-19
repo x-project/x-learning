@@ -37,9 +37,18 @@
   "Course": {
     "dataSource": "mongo"
   },
+  "Image": {
+    "dataSource": "mongo"
+  }, 
   "Lecture": {
     "dataSource": "mongo"
   },  
+  "Member":{
+    "dataSource": "mongo"
+  },
+  "MemberCourse":{
+    "dataSource": "mongo"
+  },
   "Transcoder": {
     "dataSource": "mongo"
   },

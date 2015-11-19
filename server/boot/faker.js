@@ -4,7 +4,7 @@ var fs = require('fs');
 
 module.exports = function (server) {
 
-var START = true;
+var START = false;
 
 var models = {};
 
@@ -20,6 +20,15 @@ faker.model.Category = function () {
     title: faker.commerce.department(),
     description: faker.lorem.paragraph()
   };
+};
+
+faker.model.MemberCourse = function () {
+  var pair = {
+    member_id: faker.random.model('Member').id,
+    course_id: faker.random.model('Course').id
+  };
+  console.log(pair);
+  return pair;
 };
 
 faker.model.Course = function () {
@@ -39,6 +48,19 @@ faker.model.Lecture = function () {
     description: faker.lorem.paragraph(),
     course_id: faker.random.model('Course').id,
     video_id: faker.random.model('Video').id
+  };
+};
+
+var i = 1;
+
+faker.model.Member = function () {
+  return {
+    name: faker.name.firstName(),
+    last_name: faker.lorem.sentence(),
+    email: 'a'+ (i++) + '@email.com',
+    password: '123',
+    photo: 'http://www.caos.museum/wp-content/uploads/2015/05/narciso.jpg',
+    location: faker.address.streetAddress()
   };
 };
 
@@ -146,10 +168,14 @@ function start () {
     .then(destroy('Video'))
     .then(destroy('Course'))
     .then(destroy('Lecture'))
-    .then(fake('Category', 10))
+    .then(destroy('Member'))
+    .then(destroy('MemberCourse'))
+    .then(fake('Category', 5))
     .then(fake('Video', 5))
     .then(fake('Course', 30))
-    .then(fake('Lecture', 50))
+    .then(fake('Lecture', 80))
+    .then(fake('Member', 2))
+    .then(fake('MemberCourse', 40))
     .then(function () {
       console.log('yeah!');
     })

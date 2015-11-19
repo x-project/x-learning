@@ -1,0 +1,36 @@
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../layout-client/layout-client.html">
+<link rel="import" href="part-home-categories.html">
+<link rel="import" href="part-home-courses.html">
+<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../style-page/style-page.html">
+
+<dom-module id="page-home">
+  <template>
+    <style include="style-page"></style>
+    <style include="layout-admin"></style>
+
+    <layout-client>
+      <part-jumbotron class="jumbotron"></part-jumbotron>
+      <div class="container">
+        <div class="sidebar">
+          <part-home-categories></part-home-categories>
+        </div>
+        <div class="main">
+          <part-home-courses></part-home-courses>
+        </div>
+      </div>
+    </layout-client>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-home',
+
+    attached: function () {}
+
+  });
+</script>

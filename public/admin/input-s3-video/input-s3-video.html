@@ -1,0 +1,59 @@
+<link rel="import" href="../input-s3-video/api-s3-multipart-upload.html">
+
+<dom-module id="input-s3-video">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+    </style>
+
+    <api-s3-multipart-upload id="upload" collection="{{collection}}"
+      folder="{{folder}}" file-name="{{fileName}}" data="{{data}}"
+      response="{{response}}" error="{{error}}"
+      on-complete="on_response">
+    </api-s3-multipart-upload>
+
+    <input type="file" on-change="on_change">
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'input-s3-video',
+
+    properties: {
+      collection: {
+        type: String
+      },
+      folder: {
+        type: String
+      },
+      fileName: {
+        type: String
+      },
+      response: {
+        type: Object,
+        notify: true
+      },
+      error: {
+        type: Object,
+        notify: true
+      }
+    },
+
+    on_change: function (event) {
+      var file = event.target.files[0];
+      this.$.upload.send(file);
+    },
+
+    on_response: function (event) {
+      event.stopPropagation();
+      // this.fire('upload-video', event.detail.signed_url.Location);
+      this.fire('upload-video', 'https://s3-us-west-2.amazonaws.com/x-learning-test2/courses/courses_id/videos1MINUTE_SMALL.mpg.m3u8.m3u8');
+    }
+
+  });
+</script>

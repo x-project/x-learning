@@ -1,0 +1,51 @@
+<link rel="import" href="part-course-lectures.html">
+<link rel="import" href="part-course-buy.html">
+<link rel="import" href="part-course-info.html">
+<link rel="import" href="../deck-video/deck-video.html">
+<link rel="import" href="../layout-client/layout-client.html">
+<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../components/app-session.html">
+
+<dom-module id="page-course">
+  <template>
+    <style include="style-page"></style>
+    <app-session id="session"></app-session>
+    <iron-ajax id="ajax_purchased_post" method="PUT" handle-as="json" content-type="application/json" last-response="{{purchased}}" on-response="on_response_create"> </iron-ajax>
+
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+        <h1>Course {{data.course.title}}</h1>
+      </part-jumbotron>
+      <div class="container">
+        <p class="description">Description: {{data.course.description}}</p>
+        <deck-video src="{{data.video.url}}"></deck-video>
+        <part-course-buy on-try-buy="on_try_buy"></part-course-buy>
+        <part-course-info data="{{data}}"></part-course-info>
+        <h3>Lectures</h3>
+        <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
+      </div>
+    </layout-client>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-course',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_try_buy:function(event){
+      console.log(this.$.session.get('user'))
+      this.$.ajax_purchased_post.body={};
+      this.$.ajax_purchased_post.url='/api/courses/' + this.data.course.id + '/follow/rel/' +this.$.session.get('user').id;
+      this.$.ajax_purchased_post.generateRequest();
+    }
+
+  });
+</script>

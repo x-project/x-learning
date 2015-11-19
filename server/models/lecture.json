@@ -14,10 +14,15 @@
     }
   },
   "relations": {
+    "course": {
+      "type": "belongsTo",
+      "model": "Course",
+      "foreignKey": "course_id"
+    },
     "video": {
       "type": "hasOne",
       "model": "Video",
-      "foreignKey": "video_id"
+      "foreignKey": "lecture_video_id"
     }
   },
   "acls": [],

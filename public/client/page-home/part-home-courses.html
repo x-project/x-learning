@@ -1,0 +1,30 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../deck-courses/deck-courses.html">
+
+<dom-module id="part-home-courses">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <api-model-find id="find" collection="courses" where='{"publish": true}'response="{{courses}}"></api-model-find>
+
+    <h2>Courses</h2>  
+    <deck-courses courses="{{courses}}"></deck-courses>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-home-courses',
+
+    attached: function(){
+      this.$.find.send();
+    }
+
+  });
+</script>

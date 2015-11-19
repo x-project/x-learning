@@ -1,0 +1,51 @@
+<link rel="import" href="../style-form/style-form.html">
+<dom-module id="form-course-actions">
+  <template>
+    <style include="style-form"></style>
+
+    <form class="form">
+      <button class="btn" on-click="on_click">save</button>
+    </form>
+    <template is="dom-if" if="{{!published}}">
+      <form class="form">
+        <button class="btn" on-click="on_click_publish">publish</button>
+      </form>
+    </template>
+    <template is="dom-if" if="{{published}}">
+      <form class="form">
+        <button class="btn" on-click="on_click_publish">no-publish</button>
+      </form>
+    </template>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'form-course-actions',
+
+    properties: {
+      lecture: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_click: function (event){
+      event.stopPropagation();
+      this.fire('try-save');
+    },
+
+    on_click_publish: function (event){
+      event.stopPropagation();
+      this.fire('try-publish');
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+
+  });
+</script>

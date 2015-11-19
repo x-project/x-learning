@@ -1,0 +1,28 @@
+<link rel="import" href="../style-form/style-form.html">
+<link rel="import" href="part-course-lecture.html">
+<dom-module id="list-course-lectures">
+  <template>
+    <style include="style-form"></style>
+
+    <div class="list">
+      <template is="dom-repeat" items="{{course.lectures}}" as="lecture">
+        <part-course-lecture class="strip" course="{{course}}" lecture="{{lecture}}" index="{{index}}"></part-course-lecture>
+      </template>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'list-course-lectures',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>

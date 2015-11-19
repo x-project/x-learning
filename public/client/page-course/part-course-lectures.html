@@ -1,0 +1,39 @@
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../components/layout-grid/layout-grid.html">
+<link rel="import" href="part-course-lecture.html">
+
+<dom-module id="part-course-lectures">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <div class="strips">
+      <template id="course" is="dom-repeat" items="{{lectures}}" as="lecture">
+        <part-course-lecture class="strip" course="{{course}}" lecture="{{lecture}}" index="{{index}}"></part-course-lecture>
+      </template>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-course-lectures',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      lectures: {
+        type: Array,
+        value: function () { return []; }
+      }
+    }
+
+  });
+</script>

@@ -1,0 +1,90 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../../components/api-user/api-user.html">
+<link rel="import" href="../input-s3/input-s3.html">
+<link rel="import" href="../input-s3-video/input-s3-video.html">
+<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../style-panel/style-panel.html">
+<link rel="import" href="form-lecture-actions.html">
+<link rel="import" href="form-lecture-info.html">
+<link rel="import" href="form-lecture-video.html">
+<dom-module id="page-lecture">
+  <template>
+    <style include="style-page"></style>
+    <style include="style-panel"></style>
+
+     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
+
+    <iron-ajax id="ajax_video_post" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
+
+    <api-model-update id="update" collection="lectures" model-id="{{data.lecture.id}}"
+      data="{{data.lecture}}" response="{{response}}" error="{{error}}">
+    </api-model-update>
+
+    <layout-admin>
+      <div class="container">
+        <h1>Edit course: {{data.course.title}} lecture: {{data.lecture.title}}</h1>
+        <div>
+          <form-lecture-actions on-try-save="on_try_save"></form-lecture-actions>
+        </div>
+        <div class="panel">
+          <form-lecture-info lecture="{{data.lecture}}"></form-lecture-info>
+        </div>
+        <div class="panel">
+          <template is="dom-if" if="{{!data.video.id}}">
+            <form-lecture-video data="{{data}}" on-upload-video="on_upload_video"></form-lecture-video>
+          </template>
+           <template is="dom-if" if="{{data.video.id}}">
+           <h3>Video lecture already exist with id: {{data.video.id}}</h3>
+           </template>
+        </div>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-lecture',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      video: {
+        type: Object
+      }
+    },
+    on_try_save: function(event){
+      console.log(this.data)
+      event.stopPropagation();
+      if(this.data.lecture.id){
+        this.$.update.send();
+      }
+      else{
+        console.log(this.data.course.id)
+        this.$.ajax_put.body=JSON.stringify(this.data.lecture);
+        this.$.ajax_put.url='/api/courses/'+ this.data.course.id +'/lectures';
+        this.$.ajax_put.generateRequest();
+      }
+    },
+
+    on_upload_video: function(event){
+      this.video = this.data.video;
+      this.video.url = event.detail;
+      //http://d1s3yn3kxq96sy.cloudfront.net/bigbuckbunny/index.m3u8
+      this.$.ajax_video_post.body=this.data.video;
+      this.$.ajax_video_post.url='/api/lectures/'+ this.data.lecture.id +'/video';
+      this.$.ajax_video_post.generateRequest();
+      // page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
+    },
+
+    on_response_create: function(event){
+      console.log(this.data)
+      page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
+    }
+
+  });
+</script>

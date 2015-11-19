@@ -27,13 +27,18 @@
     },
     "teacher": {
       "type": "belongsTo",
-      "model": "User",
+      "model": "Member",
       "foreignKey": "teacher_id"
     },
     "lectures": {
       "type": "hasMany",
       "model": "Lecture",
       "foreignKey": "course_id"
+    },
+    "follow": {
+      "type": "hasAndBelongsToMany",
+      "model": "Member",
+      "through": "MemberCourse"
     }
   },
   "acls": [],

@@ -1,0 +1,47 @@
+<link rel="import" href="components/app-session/app-session.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="list-courses.html">
+<dom-module id="page-courses">
+  <template>
+    <style include="style-page"></style>
+    <app-session id="session"></app-session>
+
+    <iron-ajax id="ajax_find" handle-as="json" last-response="{{courses}}" on-response="on_response"> </iron-ajax>
+
+    <api-model-find id="find" collection="members" where="{teacher_id:}"
+      response="{{courses}}">
+    </api-model-find>
+
+    <layout-admin>
+      <div class="container">
+        <h1>Courses</h1>
+        <list-courses courses="{{courses}}"></list-courses>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-courses',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached: function () {
+      this.$.ajax_find.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
+      this.$.ajax_find.generateRequest();
+    },
+
+    on_response:function(event){
+      console.log(this.courses);
+    }
+
+  });
+</script>

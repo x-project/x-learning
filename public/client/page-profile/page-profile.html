@@ -1,0 +1,42 @@
+<link rel="import" href="part-profile-info.html">
+<link rel="import" href="part-profile-learning.html">
+<link rel="import" href="part-profile-teaching.html">
+<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../style-page/style-page.html">
+
+<dom-module id="page-profile">
+  <template>
+    <style include="style-page">
+    </style>
+
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+      <h1><span>Hello </span> <span>{{data.member.name}}</span> <span>{{data.member.last_name}}</span></h1>
+      </part-jumbotron>
+      <div class="container">
+        <a is="app-link" class="link" href="/admin/courses/new">Create new course</a>
+
+        <part-profile-info member="{{data.member}}"></part-profile-info>
+        <part-profile-teaching courses="{{data.member.teaching}}"></part-profile-teaching>
+        <part-profile-learning courses="{{data.member.learning}}"></part-profile-learning>
+       
+      </div>
+    </layout-client>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-profile',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>

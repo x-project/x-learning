@@ -16,7 +16,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "lecture": {
+      "type": "belongsTo",
+      "model": "Lecture",
+      "foreignKey": "lecture_video_id"
+    }
+  },
   "acls": [],
   "methods": []
 }
