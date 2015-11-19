@@ -60,7 +60,7 @@
     '/categories/:category_id': function (context) {
       this.find_model({
         collection: 'courses',
-        where: { category_id: context.params.category_id },
+        where: { and: [{category_id: context.params.category_id},{ publish: true }]},
         include: ['lectures', 'category']
       })
       .then(function (models) {

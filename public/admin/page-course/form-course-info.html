@@ -1,6 +1,8 @@
 <link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="/components/iron-input/iron-input.html">
 <link rel="import" href="../style-form/style-form.html">
+<link rel="import" href="search-course-category.html">
+
 <dom-module id="form-course-info">
   <template>
     <style include="style-form"></style>
@@ -18,6 +20,9 @@
           </iron-autogrow-textarea>
         </div>
         <input-errors property="description" error="{{error.details}}"></input-errors>
+      </div>
+       <div class="field">
+        <search-course-category course="{{course}}" on-try-save-categories="on_try_save_categories" on-try-delete-category="on_try_delete_category"></search-course-category>
       </div>
       <div class="field">
         <label class="label">Cost</label>
@@ -47,7 +52,15 @@
     on_submit: function (event) {
       event.stopPropagation();
       event.preventDefault();
-    }
+    },
+
+    on_try_save_categories: function (event) {
+      event.stopPropagation();
+      console.log(event);
+      this.course.category_id=event.detail;
+      // this.collection = event.detail.collection;
+      // this.save_prod_type();
+    },
 
   });
 </script>
