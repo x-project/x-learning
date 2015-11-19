@@ -6,9 +6,16 @@
     <form class="form">
       <button class="btn" on-click="on_click">save</button>
     </form>
-    <form class="form">
-      <button class="btn" on-click="on_click_publish">publish</button>
-    </form>
+    <template is="dom-if" if="{{!published}}">
+      <form class="form">
+        <button class="btn" on-click="on_click_publish">publish</button>
+      </form>
+    </template>
+    <template is="dom-if" if="{{published}}">
+      <form class="form">
+        <button class="btn" on-click="on_click_publish">no-publish</button>
+      </form>
+    </template>
 
   </template>
 </dom-module>

@@ -9,7 +9,6 @@
 <link rel="import" href="form-course-image.html">
 <link rel="import" href="list-course-lectures.html">
 
-
 <dom-module id="page-course">
   <template>
     <style include="style-page"></style>
@@ -29,7 +28,7 @@
       <div class="container">
         <h1>Edit course {{course.title}}</h1>
         <div>
-          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish"></form-course-actions>
+          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" published="{{data.course.publish}}"></form-course-actions>
         </div>
         <div class="panel">
           <h3>Info</h3>
@@ -62,6 +61,7 @@
     },
 
     attached:function(){
+      console.log(this.data.course.publish)
       this.course = this.data.course;
     },
 
