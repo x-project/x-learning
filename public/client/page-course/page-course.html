@@ -35,24 +35,13 @@
       data: {
         type: Object,
         value: function () { return {}; }
-      },
-      purchased:{
-        type:Object,
-        value: function () { return {}; }
       }
-    },
-    attached:function(event){
-      console.log(this.data)
     },
 
     on_try_buy:function(event){
       console.log(this.$.session.get('user'))
-      // this.purchased.member_id = this.$.session.get('user').id;
-      // this.purchased.course_id = this.data.course.id;
-      this.$.ajax_purchased_post.body=this.purchased;
-      // this.$.ajax_purchased_post.url='/api/members/' + this.$.session.get('user').id + '/learning';
+      this.$.ajax_purchased_post.body={};
       this.$.ajax_purchased_post.url='/api/courses/' + this.data.course.id + '/follow/rel/' +this.$.session.get('user').id;
-      // this.$.ajax_purchased_post.url='/api/members_courses';
       this.$.ajax_purchased_post.generateRequest();
     }
 
