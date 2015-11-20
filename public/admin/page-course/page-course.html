@@ -36,7 +36,7 @@
       <div class="container">
         <h1>Edit course {{course.title}}</h1>
         <div>
-          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" published="{{data.course.publish}}"></form-course-actions>
+          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" on-try-preview="on_try_preview" published="{{data.course.publish}}"></form-course-actions>
         </div>
         <div class="panel">
           <h3>Info</h3>
@@ -76,7 +76,6 @@
 
     attached:function(){
       this.course = this.data.course;
-      console.log(this.course)
     },
 
     on_try_save: function (event) {
@@ -98,6 +97,11 @@
         console.log(this.course)
         this.$.update.send();
       }
+    },
+
+    on_try_preview: function (event) {
+      event.stopPropagation();
+      page('/courses/' + this.course.id)
     },
 
     on_response_create: function (event) {
