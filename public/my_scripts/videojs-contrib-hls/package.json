@@ -1,0 +1,90 @@
+{
+  "name": "videojs-contrib-hls",
+  "version": "0.17.9",
+  "engines": {
+    "node": ">= 0.10.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/videojs/videojs-contrib-hls.git"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "grunt test",
+    "prepublish": "if [ -z \"$TRAVIS\" ]; then grunt; fi"
+  },
+  "keywords": [
+    "videojs",
+    "videojs-plugin"
+  ],
+  "devDependencies": {
+    "chg": "^0.2.0",
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "0.4.3",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-connect": "~0.6.0",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt-github-releaser": "^0.1.17",
+    "grunt-karma": "~0.6.2",
+    "grunt-open": "0.2.3",
+    "grunt-protractor-runner": "^2.1.0",
+    "grunt-shell": "0.6.1",
+    "grunt-version": "^1.0.0",
+    "karma": "~0.10.0",
+    "karma-chrome-launcher": "~0.1.2",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-ie-launcher": "~0.1.1",
+    "karma-opera-launcher": "~0.1.0",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-qunit": "~0.1.1",
+    "karma-safari-launcher": "~0.1.1",
+    "karma-sauce-launcher": "~0.1.8",
+    "qunitjs": "^1.15.0",
+    "sinon": "1.10.2",
+    "video.js": "^4.12.13"
+  },
+  "dependencies": {
+    "pkcs7": "^0.2.2",
+    "videojs-contrib-media-sources": "^1.0.0",
+    "videojs-swf": "^4.7.0"
+  },
+  "gitHead": "cb7fd45b4b317546a7197579669c86bc929fd596",
+  "description": "A video.js tech that plays HLS video on platforms that don't support it but have Flash.",
+  "bugs": {
+    "url": "https://github.com/videojs/videojs-contrib-hls/issues"
+  },
+  "homepage": "https://github.com/videojs/videojs-contrib-hls#readme",
+  "_id": "videojs-contrib-hls@0.17.9",
+  "_shasum": "b0741c6c6628b5549aa535a76ce80f1490e37a17",
+  "_from": "videojs-contrib-hls@>=0.17.9 <0.18.0",
+  "_npmVersion": "2.11.1",
+  "_nodeVersion": "0.10.5",
+  "_npmUser": {
+    "name": "dmlap",
+    "email": "dlapalomento@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "dmlap",
+      "email": "dlapalomento@gmail.com"
+    },
+    {
+      "name": "gkatsev",
+      "email": "me@gkatsev.com"
+    },
+    {
+      "name": "imbcmdth",
+      "email": "jon.carlos.rivera@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "b0741c6c6628b5549aa535a76ce80f1490e37a17",
+    "tarball": "http://registry.npmjs.org/videojs-contrib-hls/-/videojs-contrib-hls-0.17.9.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/videojs-contrib-hls/-/videojs-contrib-hls-0.17.9.tgz",
+  "readme": "ERROR: No README data found!"
+}
