@@ -1,6 +1,7 @@
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
 <link rel="import" href="../style-panel/style-panel.html">
@@ -11,6 +12,13 @@
 
 <dom-module id="page-course">
   <template>
+    <style>
+        .image {
+        background-color: #eee;
+        height: 100px;
+        width: 20%;
+      }
+    </style>
     <style include="style-page"></style>
     <style include="style-panel"></style>
     
@@ -36,7 +44,13 @@
         </div>
         <div class="panel">
           <h3>Image</h3>
-          <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
+          <template is="dom-if" if="{{!course.cover}}">
+            <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
+          </template>
+          <template is="dom-if" if="{{course.cover}}">
+            <iron-image class="image" preload src="{{course.cover}}" sizing="contain"></iron-image>
+            Change course image<form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
+          </template>
         </div>
         <div class="panel">
           <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
@@ -61,8 +75,8 @@
     },
 
     attached:function(){
-      console.log(this.data.course.publish)
       this.course = this.data.course;
+      console.log(this.course)
     },
 
     on_try_save: function (event) {
