@@ -19,7 +19,9 @@
         <button class="btn" on-click="on_click_publish">no-publish</button>
       </form>
     </template>
-
+      <form class="form" on-submit="on_submit">
+        <button class="btn" on-click="on_click_delete">Delete course</button>
+      </form>
   </template>
 </dom-module>
 
@@ -48,6 +50,11 @@
     on_click_preview: function (event){
       event.stopPropagation();
       this.fire('try-preview');
+    },
+
+    on_click_delete:function(event){
+      event.stopPropagation();
+      this.fire('try-delete');
     },
 
     on_submit: function (event) {

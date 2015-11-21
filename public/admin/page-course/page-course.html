@@ -31,12 +31,13 @@
       data="{{course}}" response="{{response}}" error="{{error}}">
     </api-model-update>
 
+     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
 
     <layout-admin>
       <div class="container">
         <h1>Edit course {{course.title}}</h1>
         <div>
-          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" on-try-preview="on_try_preview" published="{{data.course.publish}}"></form-course-actions>
+          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" on-try-preview="on_try_preview" on-try-delete="on_try_delete" published="{{data.course.publish}}"></form-course-actions>
         </div>
         <div class="panel">
           <h3>Info</h3>
@@ -76,6 +77,8 @@
 
     attached:function(){
       this.course = this.data.course;
+      if(!this.course.publish)
+        this.course.publish=false;
     },
 
     on_try_save: function (event) {
@@ -102,6 +105,17 @@
     on_try_preview: function (event) {
       event.stopPropagation();
       page('/courses/' + this.course.id)
+    },
+
+    on_try_delete: function (event) {
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/follow';
+      this.$.ajax_delete.generateRequest();
+      this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/lectures';
+      this.$.ajax_delete.generateRequest();
+      this.$.ajax_delete.url='/api/courses/'+ this.course.id ;
+      this.$.ajax_delete.generateRequest();
+      page('/admin/courses')
     },
 
     on_response_create: function (event) {
