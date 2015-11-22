@@ -99,7 +99,7 @@
           context.page = 'page-lecture';
           context.data = { lecture: model};
           context.data.course = model.course;
-          context.data.video = model.video || { video:{} } ;
+          context.data.video = model.video || {} ;
           this.open(context);
         }.bind(this))
         .catch(function (error) {
