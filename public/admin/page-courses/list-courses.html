@@ -2,9 +2,13 @@
 <dom-module id="list-courses">
   <template>
 
-    <template is="dom-repeat" items="{{courses}}" as="course">
+    <template id='course' is="dom-repeat" items="{{courses}}" as="course">
       <div>  
        <a is="app-link" href="/admin/courses/{{course.id}}">{{course.title}}</a>
+    
+        <form class="form" on-submit="on_submit">
+          <button class="btn" on-click="on_click_delete">Delete course</button>
+        </form>
       </div>
     </template>
 
@@ -20,6 +24,15 @@
         type: Object,
         value: function () { return []; }
       }
+    },
+
+    on_click_delete:function(event){
+      this.fire('try-delete',this.$.course.itemForElement(event.target))
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
     }
 
   });
