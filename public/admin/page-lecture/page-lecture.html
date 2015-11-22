@@ -11,8 +11,10 @@
   <template>
     <style include="style-page"></style>
     <style include="style-panel"></style>
+     
+    <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
 
-     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
+    <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
 
     <iron-ajax id="ajax_video_post" method="POST" handle-as="json" content-type="application/json" last-response="{{data.video}}" on-response="on_response_create"> </iron-ajax>
 
@@ -24,7 +26,7 @@
       <div class="container">
         <h1>Edit course: {{data.course.title}} lecture: {{data.lecture.title}}</h1>
         <div>
-          <form-lecture-actions on-try-save="on_try_save"></form-lecture-actions>
+          <form-lecture-actions on-try-save="on_try_save" on-try-delete-lecture='on_try_delete_lecture'></form-lecture-actions>
         </div>
         <div class="panel">
           <form-lecture-info lecture="{{data.lecture}}"></form-lecture-info>
@@ -66,6 +68,16 @@
       }
       //test
       this.on_upload_video(event);
+    },
+
+    on_try_delete_lecture: function (event) {
+      console.log(event)
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id + '/video';
+      this.$.ajax_delete.generateRequest();
+      this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id;
+      this.$.ajax_delete.generateRequest();
+      page('/admin/courses/'+ this.data.course.id);
     },
 
     on_upload_video: function(event){

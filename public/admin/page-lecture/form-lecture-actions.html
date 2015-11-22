@@ -6,6 +6,9 @@
     <form class="form" on-submit="on_submit">
       <button class="btn" on-click="on_click">save</button>
     </form>
+    <form class="form" on-submit="on_submit">
+      <button class="btn" on-click="on_click_delete">Delete Lecture</button>
+    </form>
 
   </template>
 </dom-module>
@@ -26,6 +29,11 @@
       event.stopPropagation();
       this.fire('try-save');
     },
+
+    on_click_delete:function(event){
+      this.fire('try-delete-lecture')
+    },
+    
      on_submit: function (event) {
       event.preventDefault();
       event.stopPropagation();
