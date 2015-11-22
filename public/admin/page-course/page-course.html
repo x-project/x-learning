@@ -56,7 +56,7 @@
         <div class="panel">
           <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
           <h3>Lectures</h3>
-          <list-course-lectures course="{{course}}"></list-course-lectures>
+          <list-course-lectures course="{{course}}" on-try-delete-lecture="on_try_delete_lecture"></list-course-lectures>
         </div>
       </div>
     </layout-admin>
@@ -116,6 +116,15 @@
       this.$.ajax_delete.url='/api/courses/'+ this.course.id ;
       this.$.ajax_delete.generateRequest();
       page('/admin/courses')
+    },
+
+    on_try_delete_lecture: function (event) {
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/lectures/'+ event.detail.id + '/video';
+      this.$.ajax_delete.generateRequest();
+      this.$.ajax_delete.url='/api/lectures/'+ event.detail.id;
+      this.$.ajax_delete.generateRequest();
+      page('/admin/courses/' + this.course.id);
     },
 
     on_response_create: function (event) {
