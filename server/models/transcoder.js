@@ -27,7 +27,7 @@ module.exports = function (Transcoder) {
       PipelineId: PIPELINE_ID, // specifies output/input buckets in S3 
       OutputKeyPrefix: 'courses/' + courses_id + '/',
       Output: { 
-        Key: file_name+'.m3u8', 
+        Key: file_name, 
         PresetId: PRESET_ID, // specifies the output video format
         SegmentDuration: '5',
         ThumbnailPattern:'image/' + file_name + '-{count}'//modifica preset per determinare il numero di immagini
