@@ -48,6 +48,8 @@
     },
 
     '/': function (context) {
+      if(context.state[0])
+        context.data= { courses: context.state};
       context.page = 'page-home';
       this.open(context);
     },
@@ -75,12 +77,6 @@
       }.bind(this));
     },
 
-    '/courses/result': function (context) {
-      context.data= { courses: context.state};
-      context.page = 'page-home';
-      this.open(context);
-    },
-
     '/courses/:course_id': function (context) {
       this.find_model({
          collection: 'lectures',
@@ -98,23 +94,6 @@
           this.redirect('/404');
         }.bind(this));
     },
-
-    //     '/courses/:course_id': function (context) {
-    //   this.get_model({
-    //       collection: 'courses',
-    //       modelId: context.params.course_id,
-    //       include: ['lectures'],
-    //     })
-    //     .then(function (model) {
-    //       context.page = 'page-course';
-    //       context.data = {};
-    //       context.data.course = model;
-    //       this.open(context);
-    //     }.bind(this))
-    //     .catch(function (error) {
-    //       this.redirect('/404');
-    //     }.bind(this));
-    // },
 
     '/courses/:course_id/lectures/:lecture_id': function (context) {
       this.get_model({
