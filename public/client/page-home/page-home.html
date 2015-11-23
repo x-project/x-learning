@@ -1,7 +1,10 @@
 <link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../../components/iron-input/iron-input.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="part-home-categories.html">
 <link rel="import" href="part-home-courses.html">
+<link rel="import" href="part-home-find.html">
 <link rel="import" href="../part-jumbotron/part-jumbotron.html">
 <link rel="import" href="../style-page/style-page.html">
 
@@ -9,15 +12,20 @@
   <template>
     <style include="style-page"></style>
     <style include="layout-admin"></style>
-
+    
+    <api-model-find id="ajax_find" collection="courses"
+      on-response="on_response" on-error="on_error">
+    </api-model-find>
     <layout-client>
-      <part-jumbotron class="jumbotron"></part-jumbotron>
+      <part-jumbotron class="jumbotron">
+        <part-home-find on-try-find="on_try_find"></part-home-find>
+      </part-jumbotron>
       <div class="container">
         <div class="sidebar">
           <part-home-categories></part-home-categories>
         </div>
         <div class="main">
-          <part-home-courses></part-home-courses>
+          <part-home-courses courses="{{data.courses}}"></part-home-courses>
         </div>
       </div>
     </layout-client>
@@ -30,7 +38,27 @@
 
     is: 'page-home',
 
-    attached: function () {}
+
+    properties: {
+      courses:{
+        type:Object
+      }
+    },
+
+    attached: function () {},
+
+    on_try_find:function(event){
+      this.$.ajax_find.where={"title" : {"like": event.detail} };
+      this.$.ajax_find.send();
+    },
+
+    on_response:function(event){
+      // console.log(event.detail[0])
+      this.courses=event.detail;
+      page('/',event.detail);
+    }
+
+
 
   });
 </script>

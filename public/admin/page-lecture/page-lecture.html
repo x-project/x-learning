@@ -11,10 +11,12 @@
   <template>
     <style include="style-page"></style>
     <style include="style-panel"></style>
+     
+    <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
 
-     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
+    <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
 
-    <iron-ajax id="ajax_video_post" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
+    <iron-ajax id="ajax_video_post" method="POST" handle-as="json" content-type="application/json" last-response="{{data.video}}" on-response="on_response_create"> </iron-ajax>
 
     <api-model-update id="update" collection="lectures" model-id="{{data.lecture.id}}"
       data="{{data.lecture}}" response="{{response}}" error="{{error}}">
@@ -24,7 +26,7 @@
       <div class="container">
         <h1>Edit course: {{data.course.title}} lecture: {{data.lecture.title}}</h1>
         <div>
-          <form-lecture-actions on-try-save="on_try_save"></form-lecture-actions>
+          <form-lecture-actions on-try-save="on_try_save" on-try-delete-lecture='on_try_delete_lecture'></form-lecture-actions>
         </div>
         <div class="panel">
           <form-lecture-info lecture="{{data.lecture}}"></form-lecture-info>
@@ -52,37 +54,42 @@
       data: {
         type: Object,
         value: function () { return {}; }
-      },
-      video: {
-        type: Object
       }
     },
     on_try_save: function(event){
-      console.log(this.data)
       event.stopPropagation();
       if(this.data.lecture.id){
         this.$.update.send();
       }
       else{
-        console.log(this.data.course.id)
         this.$.ajax_put.body=JSON.stringify(this.data.lecture);
         this.$.ajax_put.url='/api/courses/'+ this.data.course.id +'/lectures';
         this.$.ajax_put.generateRequest();
       }
+      //test
+      this.on_upload_video(event);
+    },
+
+    on_try_delete_lecture: function (event) {
+      console.log(event)
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id + '/video';
+      this.$.ajax_delete.generateRequest();
+      this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id;
+      this.$.ajax_delete.generateRequest();
+      page('/admin/courses/'+ this.data.course.id);
     },
 
     on_upload_video: function(event){
-      this.video = this.data.video;
-      this.video.url = event.detail;
-      //http://d1s3yn3kxq96sy.cloudfront.net/bigbuckbunny/index.m3u8
-      this.$.ajax_video_post.body=this.data.video;
+      //test
+      // this.video.url = event.detail;
+      this.data.video.url='http://d1s3yn3kxq96sy.cloudfront.net/bigbuckbunny/index.m3u8';
+      this.$.ajax_video_post.body = this.data.video;
       this.$.ajax_video_post.url='/api/lectures/'+ this.data.lecture.id +'/video';
       this.$.ajax_video_post.generateRequest();
-      // page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
     },
 
     on_response_create: function(event){
-      console.log(this.data)
       page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
     }
 

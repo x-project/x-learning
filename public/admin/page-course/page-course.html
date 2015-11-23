@@ -1,6 +1,7 @@
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../style-page/style-page.html">
 <link rel="import" href="../style-panel/style-panel.html">
@@ -11,6 +12,13 @@
 
 <dom-module id="page-course">
   <template>
+    <style>
+        .image {
+        background-color: #eee;
+        height: 100px;
+        width: 20%;
+      }
+    </style>
     <style include="style-page"></style>
     <style include="style-panel"></style>
     
@@ -23,12 +31,13 @@
       data="{{course}}" response="{{response}}" error="{{error}}">
     </api-model-update>
 
+     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
 
     <layout-admin>
       <div class="container">
         <h1>Edit course {{course.title}}</h1>
         <div>
-          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" published="{{data.course.publish}}"></form-course-actions>
+          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" on-try-preview="on_try_preview" on-try-delete="on_try_delete" published="{{data.course.publish}}"></form-course-actions>
         </div>
         <div class="panel">
           <h3>Info</h3>
@@ -36,12 +45,18 @@
         </div>
         <div class="panel">
           <h3>Image</h3>
-          <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
+          <template is="dom-if" if="{{!course.cover}}">
+            <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
+          </template>
+          <template is="dom-if" if="{{course.cover}}">
+            <iron-image class="image" preload src="{{course.cover}}" sizing="contain"></iron-image>
+            Change course image<form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
+          </template>
         </div>
         <div class="panel">
           <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
           <h3>Lectures</h3>
-          <list-course-lectures course="{{course}}"></list-course-lectures>
+          <list-course-lectures course="{{course}}" on-try-delete-lecture="on_try_delete_lecture"></list-course-lectures>
         </div>
       </div>
     </layout-admin>
@@ -61,8 +76,9 @@
     },
 
     attached:function(){
-      console.log(this.data.course.publish)
       this.course = this.data.course;
+      if(!this.course.publish)
+        this.course.publish=false;
     },
 
     on_try_save: function (event) {
@@ -84,6 +100,31 @@
         console.log(this.course)
         this.$.update.send();
       }
+    },
+
+    on_try_preview: function (event) {
+      event.stopPropagation();
+      page('/courses/' + this.course.id)
+    },
+
+    on_try_delete: function (event) {
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/follow';
+      this.$.ajax_delete.generateRequest();
+      this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/lectures';
+      this.$.ajax_delete.generateRequest();
+      this.$.ajax_delete.url='/api/courses/'+ this.course.id ;
+      this.$.ajax_delete.generateRequest();
+      page('/admin/courses')
+    },
+
+    on_try_delete_lecture: function (event) {
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/lectures/'+ event.detail.id + '/video';
+      this.$.ajax_delete.generateRequest();
+      this.$.ajax_delete.url='/api/lectures/'+ event.detail.id;
+      this.$.ajax_delete.generateRequest();
+      page('/admin/courses/' + this.course.id);
     },
 
     on_response_create: function (event) {

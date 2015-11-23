@@ -1,0 +1,70 @@
+{
+  "name": "videojs-contrib-media-sources",
+  "version": "1.0.0",
+  "description": "A Media Source Extensions plugin for video.js",
+  "main": "videojs-media-sources.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/videojs/video-js-media-sources.git"
+  },
+  "keywords": [
+    "video.js",
+    "mse",
+    "media",
+    "source",
+    "extensions",
+    "video",
+    "html",
+    "flash",
+    "video"
+  ],
+  "author": {
+    "name": "Brightcove"
+  },
+  "license": "Apache 2",
+  "gitHead": "3374dc863816b74f90a62275c42ff3f1aca0a523",
+  "devDependencies": {
+    "grunt": "^0.4.1",
+    "grunt-contrib-connect": "^0.7.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-qunit": "^0.4.0",
+    "qunitjs": "^1.14.0",
+    "video.js": "^4.7.3"
+  },
+  "bugs": {
+    "url": "https://github.com/videojs/video-js-media-sources/issues"
+  },
+  "homepage": "https://github.com/videojs/video-js-media-sources",
+  "_id": "videojs-contrib-media-sources@1.0.0",
+  "_shasum": "508b7ff7a605adce66ba506f5d28daef7a7dbe5b",
+  "_from": "videojs-contrib-media-sources@*",
+  "_npmVersion": "2.0.0",
+  "_npmUser": {
+    "name": "dmlap",
+    "email": "dlapalomento@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "bclwhitaker",
+      "email": "lwhitaker@brightcove.com"
+    },
+    {
+      "name": "dmlap",
+      "email": "dlapalomento@gmail.com"
+    },
+    {
+      "name": "gkatsev",
+      "email": "me@gkatsev.com"
+    }
+  ],
+  "dist": {
+    "shasum": "508b7ff7a605adce66ba506f5d28daef7a7dbe5b",
+    "tarball": "http://registry.npmjs.org/videojs-contrib-media-sources/-/videojs-contrib-media-sources-1.0.0.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/videojs-contrib-media-sources/-/videojs-contrib-media-sources-1.0.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

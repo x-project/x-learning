@@ -22,8 +22,15 @@
 
     is: 'part-home-courses',
 
+    properties:{
+      courses:{
+        type: Object
+      }
+    },
+
     attached: function(){
-      this.$.find.send();
+      if(!this.courses)
+        this.$.find.send();
     }
 
   });
