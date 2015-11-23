@@ -48,7 +48,7 @@
     attached: function () {},
 
     on_try_find:function(event){
-      this.$.ajax_find.where={"title" : {"like": event.detail} };
+      this.$.ajax_find.where={"title" : {"like": event.detail ,"options":"i"} };
       this.$.ajax_find.send();
     },
 
