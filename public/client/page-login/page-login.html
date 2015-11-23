@@ -1,4 +1,5 @@
 <link rel="import" href="../../components/api-user-login/api-user-login.html">
+<link rel="import" href="../../components/button-connect-google/button-connect-google.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../style-page/style-page.html">
 <link rel="import" href="form-login.html">
@@ -11,10 +12,16 @@
       response="{{response}}" on-response="on_login" on-error="on_error">
     </api-user-login>
 
+
     <layout-client>
       <part-jumbotron class="jumbotron"></part-jumbotron>
       <div class="container">
         <a is="app-link" href="/">&larr;</a>
+
+        <button-connect-google client_id="{{clientId}}"
+          on-response="on_connect" on-error="on_error">
+        </button-connect-google>
+        
         <h3>Login</h3>
         <form-login id="form" on-submit="on_submit"></form-login>
       </div>
@@ -28,6 +35,16 @@
 
     is: 'page-login',
 
+    properties: {
+      clientId: {
+        type: String,
+        value: '766830066511-g6lj5malq8sheq8uq46et2qpkjel8g63.apps.googleusercontent.com'
+        // value: '665881914089-84qldqqvbr9qr7od4f46ssrgnnloti9k.apps.googleusercontent.com'
+        // value: '989154659952-r3lfvshi4s0fcbesie408bm5iip1occg.apps.googleusercontent.com'
+      }
+    },
+
+
     on_submit: function (event) {
       this.credentials = event.detail;
       this.$.login.send();
@@ -40,6 +57,11 @@
 
     on_error: function (event) {
       console.warn(event);
+    },
+
+    on_connect:function(event){
+      console.log(event.detail);
+      // this.fire('login', event.detail);
     }
 
   });
