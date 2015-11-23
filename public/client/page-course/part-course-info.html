@@ -31,7 +31,6 @@
     },
 
     attached:function (event) {
-      console.log(this.data.lectures)
       this.$.find.where={"id" : this.data.course.id};
       this.$.find.include.push("follow");
       this.$.find.include.push("teacher");
