@@ -2,6 +2,7 @@ var loopback = require('loopback');
 var boot = require('loopback-boot');
 var path = require('path');
 var env = require('node-env-file');
+var auth = require('./auth/auth');
 
 var app = module.exports = loopback();
 
@@ -24,6 +25,9 @@ app.start = function() {
 // Sub-apps like REST API are mounted via boot scripts.
 boot(app, __dirname, function(err) {
   if (err) throw err;
+
+  auth(app);
+
 
   app.use(loopback.static(path.resolve(__dirname, '../public')));
 
