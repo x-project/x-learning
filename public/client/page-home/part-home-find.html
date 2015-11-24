@@ -3,10 +3,8 @@
     <div class="field">
       <label class="label">Find course</label>
       <input class="input" is="iron-input" type="text" bind-value="{{course}}">
-    </div>
-    <form class="form" on-submit="on_submit">
       <button class="btn" on-click="on_click">Find</button>
-    </form>
+    </div>
   </template>
 </dom-module>
 
@@ -25,11 +23,6 @@
 
     on_click:function(event){
       this.fire("try-find", this.course)
-    },
-
-    on_submit: function (event) {
-      event.stopPropagation();
-      event.preventDefault();
     }
 
   });
