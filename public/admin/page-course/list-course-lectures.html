@@ -3,7 +3,6 @@
 <dom-module id="list-course-lectures">
   <template>
     <style include="style-form"></style>
-
     <div class="list">
       <template is="dom-repeat" id='lecture' items="{{course.lectures}}" as="lecture">
         <part-course-lecture class="strip" course="{{course}}" lecture="{{lecture}}" index="{{index}}"></part-course-lecture>
