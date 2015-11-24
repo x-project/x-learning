@@ -38,12 +38,9 @@
     properties: {
       clientId: {
         type: String,
-        value: '766830066511-g6lj5malq8sheq8uq46et2qpkjel8g63.apps.googleusercontent.com'
-        // value: '665881914089-84qldqqvbr9qr7od4f46ssrgnnloti9k.apps.googleusercontent.com'
-        // value: '989154659952-r3lfvshi4s0fcbesie408bm5iip1occg.apps.googleusercontent.com'
+        value: '766830066511-sh61ne68dpnoc1q1n896br3qkp6nnfu2.apps.googleusercontent.com'
       }
     },
-
 
     on_submit: function (event) {
       this.credentials = event.detail;
@@ -60,8 +57,7 @@
     },
 
     on_connect:function(event){
-      console.log(event.detail);
-      // this.fire('login', event.detail);
+      this.fire('login', event.detail);
     }
 
   });
