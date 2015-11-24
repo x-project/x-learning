@@ -12,6 +12,7 @@
 <link rel="import" href="../page-profile/page-profile.html">
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-upload/page-upload.html">
+<link rel="import" href="../page-payment/page-payment.html">
 
 <dom-module id="app-boot">
   <template>
@@ -87,6 +88,11 @@
       .catch(function (error) {
         this.redirect('/404');
       }.bind(this));
+    },
+
+    '/courses/:course_id/payment': function (context) {
+      context.page = 'page-payment';
+      this.open(context);
     },
 
     '/courses/:course_id': function (context) {

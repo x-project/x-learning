@@ -41,10 +41,11 @@
     },
 
     on_try_buy:function(event){
-      console.log(this.$.session.get('user'))
-      this.$.ajax_purchased_post.body={};
-      this.$.ajax_purchased_post.url='/api/courses/' + this.data.course.id + '/follow/rel/' +this.$.session.get('user').id;
-      this.$.ajax_purchased_post.generateRequest();
+      page(this.data.course.id + '/payment');
+      // console.log(this.$.session.get('user'))
+      // this.$.ajax_purchased_post.body={};
+      // this.$.ajax_purchased_post.url='/api/courses/' + this.data.course.id + '/follow/rel/' +this.$.session.get('user').id;
+      // this.$.ajax_purchased_post.generateRequest();
     }
 
   });

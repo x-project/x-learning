@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.2.14",
+    "braintree": "1.29.0",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "faker": "3.0.1",
