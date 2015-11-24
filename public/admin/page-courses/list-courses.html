@@ -26,6 +26,10 @@
     },
 
     on_click_delete:function(event){
+      if (!confirm('are you sure?')) {
+        return;
+      }
+
       this.fire('try-delete',this.$.course.itemForElement(event.target))
     }
 
