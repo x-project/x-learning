@@ -1,4 +1,4 @@
-<link rel="import" href="/components/form-braintree/form-braintree.html">
+<link rel="import" href="../payment-braintree/payment-braintree.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../part-date/part-date.html">
 <link rel="import" href="../part-jumbotron/part-jumbotron.html">
@@ -9,13 +9,14 @@
     <style include="style-page"></style>
 
     <app-session id="session"></app-session>
+    <iron-ajax id="ajax_purchased_post" method="PUT" handle-as="json" content-type="application/json" last-response="{{purchased}}" on-response="on_response_create"> </iron-ajax>
 
     <layout-client>
       <part-jumbotron class="jumbotron">
         <h1>payment</h1>
       </part-jumbotron>
       <div class="container">
-        <form-braintree order="{{data.order}}"></form-braintree>
+        <payment-braintree id="braintree" on-success="on_success_pay" course="{{data}}"></payment-braintree> 
       </div>
     </layout-client>
 
@@ -26,7 +27,15 @@
 
     is: 'page-payment',
 
-    properties: {}
+    properties: {},
+
+    attached:function(){
+      // console.log(this.data)
+    },
+
+    on_success_pay:function(event){
+      page('/courses/'+this.data.id)
+    }
 
   });
 </script>

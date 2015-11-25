@@ -97,6 +97,18 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "__create__learning"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "get_client_token"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "checkout_braintree"
     }
 
   ],

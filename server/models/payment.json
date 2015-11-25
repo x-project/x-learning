@@ -1,0 +1,26 @@
+{
+  "name": "Payment",
+  "plural": "payments",
+  "mongodb": {
+    "collection": "payments"
+  },
+  "base": "PersistedModel",
+  "properties": {
+    "payment_method": {
+      "type": "String"
+    },
+    "member_id": {
+      "type": "String"
+    },
+    "course_id": {
+      "type": "String"
+    },
+    "payment": {
+      "type": "Object"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}
