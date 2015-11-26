@@ -73,6 +73,7 @@
 
     on_click_begin: function (event) {
       var call = this.peer.call(this.callto_id, this.local_stream);
+      this.stream(call);
     },
 
     on_click_end: function (event) {
@@ -112,18 +113,15 @@
 
     on_open: function (id) {
       this.set('peer_id', this.peer.id); 
-      console.log('open', this.peer.id, id);
     },
 
     on_call: function (call) {
-      console.log('call', call, this.peer.id);
 
       var self = this;
 
       call.answer(self.local_stream);
 
       call.on('stream', function (stream) {
-        console.log(call.peer, 'stream', stream)
         call.stream = URL.createObjectURL(stream);
         self.push('others', call);
 
@@ -134,6 +132,13 @@
       call.on('close', function () {
         var index = self.others.indexOf(call);
         self.splice('others', index, 1);
+      });
+    },
+
+    stream: function(call){
+      var self =this;
+      call.on('stream', function (stream) {
+        self.my_stream = URL.createObjectURL(stream);
       });
     },
 
