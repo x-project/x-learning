@@ -13,6 +13,8 @@
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-upload/page-upload.html">
 <link rel="import" href="../page-payment/page-payment.html">
+<link rel="import" href="../page-realtime/page-realtime.html">
+
 
 <dom-module id="app-boot">
   <template>
@@ -69,6 +71,11 @@
 
     '/home': function (context) {
       context.page = 'page-home';
+      this.open(context);
+    },
+
+    '/realtime': function (context) {
+      context.page = 'page-realtime';
       this.open(context);
     },
 

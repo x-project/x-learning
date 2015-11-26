@@ -1,0 +1,157 @@
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../../components/iron-input/iron-input.html">
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
+<script src="../../components/peerjs/peer.js"></script>
+<dom-module id="page-realtime">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      video {
+        width: 300px;
+        height: auto;
+      }
+
+      #container {
+        @apply(--layout-horizontal);
+      }
+
+      #videos {
+        @apply(--layout-flex);
+      }
+      
+      #actions {
+        @apply(--layout-flex);
+      }
+    </style>
+  
+    <h2>Realtime</h2>   
+
+    <div id="container">
+      <div id="videos">
+        <video src="{{their_stream}}" autoplay></video>
+        <video src="{{my_stream}}" muted="true" autoplay></video>
+      </div>
+
+      <div id="actions">
+        <template is="dom-if" if="{{step_1}}">
+          <p>Failed to access the webcam and microphone.</p>
+          <button class="btn btn-warning" on-click="on_click_retry">retry call</button>
+        </template>
+
+        <template is="dom-if" if="{{step_2}}">
+          <p>Your id {{my_id}}</p>
+          <div class="pure-form">
+            <input type="text" is="iron-input" bind-value="{{callto_id}}" placeholder="Call id">
+            <button class="btn btn-success" on-click="on_click_begin">begin call</button>
+          </div>
+        </template>
+
+        <template is="dom-if" if="{{step_3}}">
+          <p>Currently in call with {{their_id}}</p>
+          <button class="btn btn-danger" on-click="on_click_end">end call</button>
+        </div>
+      </template>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-realtime',
+
+    on_click_begin: function (event) {
+      console.log(this.callto_id);
+      var call = this.peer.call(this.callto_id, window.localStream);
+      this.step3(call);
+    },
+
+    on_click_end: function (event) {
+      window.existingCall.close();
+      this.step2();
+    },
+
+    on_click_retry: function (event) {
+      // $('#step1-error').hide();
+      this.step1();
+    },
+
+    attached: function () {
+      // Compatibility shim
+      navigator.getUserMedia = navigator.getUserMedia 
+        || navigator.webkitGetUserMedia 
+        || navigator.mozGetUserMedia;
+   
+      var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
+      var self = this;
+
+      peer.on('open', function () {
+        self.my_id = peer.id;
+      });
+
+      peer.on('call', function (call) {
+        call.answer(window.localStream);
+        self.step3(call);
+      });
+
+      peer.on('error', function(err){
+        alert(err.message);
+        // Return to step 2 if error occurs
+        self.step2();
+      });
+
+      // Click handlers setup
+      this.step1();
+    },
+
+    step1: function () {
+      var self = this;
+
+      self.step_1 = true;
+      self.step_2 = false;
+      self.step_3 = false;
+      
+      // Get audio/video stream
+      navigator.getUserMedia({audio: true, video: true}, function (stream) {
+        // Set your video displays
+        self.my_stream = URL.createObjectURL(stream);
+        window.localStream = stream;
+        self.step2();
+      }, function () { 
+        // $('#step1-error').show(); 
+      });
+    },
+
+    step2: function () {
+      var self = this;
+      self.step_1 = false;
+      self.step_2 = true;
+      self.step_3 = false;
+    },
+
+    step3: function (call) {
+      var self = this;
+      self.step_1 = false;
+      self.step_2 = false;
+      self.step_3 = true;
+
+      // Hang up on an existing call if present
+      if (window.existingCall) {
+        window.existingCall.close();
+      }
+      // Wait for stream on the call, then set peer video display
+      call.on('stream', function (stream) {
+        self.their_stream = URL.createObjectURL(stream);
+      });
+
+      // UI stuff
+      window.existingCall = call;
+      self.their_id = call.peer;
+      call.on('close', this.step2);
+    }
+
+  });
+</script>

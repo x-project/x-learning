@@ -20,7 +20,8 @@
     "x-element": "x-element/x-element",
     "paper-radio-group": "PolymerElements/paper-radio-group#^1.0.0",
     "paper-radio-button": "PolymerElements/paper-radio-button#^1.0.0",
-    "video.js": "videojs#~5.2.1"
+    "video.js": "videojs#~5.2.1",
+    "peerjs": "~0.3.14"
   },
   "ignore": [
     "**/.*",
