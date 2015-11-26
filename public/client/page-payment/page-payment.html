@@ -16,7 +16,7 @@
         <h1>payment</h1>
       </part-jumbotron>
       <div class="container">
-        <payment-braintree id="braintree" on-success="on_success_pay" course="{{data}}"></payment-braintree> 
+        <payment-braintree id="braintree" on-success="on_success_pay" on-error="on_error_pay" course="{{data}}"></payment-braintree> 
       </div>
     </layout-client>
 
@@ -35,6 +35,10 @@
 
     on_success_pay:function(event){
       page('/courses/'+this.data.id)
+    },
+
+    on_error_pay:function(event){
+      console.log(event)
     }
 
   });

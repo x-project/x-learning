@@ -1,5 +1,6 @@
 <link rel="import" href="../input-errors/input-errors.html">
 <link rel="import" href="../style-panel/style-panel.html">
+<link rel="import" href="../style-alert/style-alert.html">
 <link rel="import" href="form-braintree.html">
 <dom-module id="payment-braintree">
   <template>
@@ -59,7 +60,8 @@
         
         if (!res.result.success) {
           console.log(res);
-          custom_error.details.messages.payment.push('error on payment');
+          // custom_error.details.messages.payment.push(res.result.error.message);
+          custom_error.details.messages.payment.push('error: Credit card number is invalid');
           this.set('error', custom_error);
         }
         return;
