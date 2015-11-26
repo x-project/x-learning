@@ -2,7 +2,9 @@
 <link rel="import" href="../app-theme/app-theme.html">
 <link rel="import" href="../behavior-router/behavior-router.html">
 <link rel="import" href="../page-404/page-404.html">
+<link rel="import" href="../page-about/page-about.html">
 <link rel="import" href="../page-category/page-category.html">
+<link rel="import" href="../page-contact/page-contact.html">
 <link rel="import" href="../page-course/page-course.html">
 <link rel="import" href="../page-home/page-home.html">
 <link rel="import" href="../page-lecture/page-lecture.html">
@@ -10,6 +12,9 @@
 <link rel="import" href="../page-profile/page-profile.html">
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-upload/page-upload.html">
+<link rel="import" href="../page-payment/page-payment.html">
+<link rel="import" href="../page-realtime/page-realtime.html">
+
 
 <dom-module id="app-boot">
   <template>
@@ -54,8 +59,23 @@
       this.open(context);
     },
 
+    '/about': function (context) {
+      context.page = 'page-about';
+      this.open(context);
+    },
+
+    '/contact': function (context) {
+      context.page = 'page-contact';
+      this.open(context);
+    },
+
     '/home': function (context) {
       context.page = 'page-home';
+      this.open(context);
+    },
+
+    '/realtime': function (context) {
+      context.page = 'page-realtime';
       this.open(context);
     },
 
@@ -70,6 +90,21 @@
         context.data = {};
         context.data.courses = models;
         context.data.category = models[0].category;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
+    },
+
+    '/courses/:course_id/payment': function (context) {
+      this.get_model({
+        collection: 'courses',
+        modelId: context.params.course_id
+      })
+      .then(function (model) {
+        context.page = 'page-payment';
+        context.data = model;
         this.open(context);
       }.bind(this))
       .catch(function (error) {

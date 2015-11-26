@@ -5,6 +5,7 @@
 <link rel="import" href="part-home-categories.html">
 <link rel="import" href="part-home-courses.html">
 <link rel="import" href="part-home-find.html">
+<link rel="import" href="part-home-realtime.html">
 <link rel="import" href="../part-jumbotron/part-jumbotron.html">
 <link rel="import" href="../style-page/style-page.html">
 
@@ -25,6 +26,7 @@
           <part-home-categories></part-home-categories>
         </div>
         <div class="main">
+        <part-home-realtime></part-home-realtime>
           <part-home-courses courses="{{data.courses}}"></part-home-courses>
         </div>
       </div>
@@ -38,7 +40,6 @@
 
     is: 'page-home',
 
-
     properties: {
       courses:{
         type:Object
@@ -48,17 +49,14 @@
     attached: function () {},
 
     on_try_find:function(event){
-      this.$.ajax_find.where={"title" : {"like": event.detail} };
+      this.$.ajax_find.where={"title" : {"like": event.detail ,"options":"i"} };
       this.$.ajax_find.send();
     },
 
     on_response:function(event){
-      // console.log(event.detail[0])
       this.courses=event.detail;
       page('/',event.detail);
     }
-
-
 
   });
 </script>

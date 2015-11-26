@@ -17,6 +17,7 @@
   "auth": {
   },
   "parse": {
+    "body-parser#json": {}
   },
   "routes": {
     "loopback#rest": {

@@ -10,7 +10,7 @@
 *.swp
 *.tgz
 *.xml
-*.env
+*.env*
 .DS_Store
 .idea
 .project

@@ -1,0 +1,45 @@
+<link rel="import" href="../payment-braintree/payment-braintree.html">
+<link rel="import" href="../layout-client/layout-client.html">
+<link rel="import" href="../part-date/part-date.html">
+<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../style-page/style-page.html">
+
+<dom-module id="page-payment">
+  <template>
+    <style include="style-page"></style>
+
+    <app-session id="session"></app-session>
+    <iron-ajax id="ajax_purchased_post" method="PUT" handle-as="json" content-type="application/json" last-response="{{purchased}}" on-response="on_response_create"> </iron-ajax>
+
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+        <h1>payment</h1>
+      </part-jumbotron>
+      <div class="container">
+        <payment-braintree id="braintree" on-success="on_success_pay" on-error="on_error_pay" course="{{data}}"></payment-braintree> 
+      </div>
+    </layout-client>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-payment',
+
+    properties: {},
+
+    attached:function(){
+      // console.log(this.data)
+    },
+
+    on_success_pay:function(event){
+      page('/courses/'+this.data.id)
+    },
+
+    on_error_pay:function(event){
+      console.log(event)
+    }
+
+  });
+</script>

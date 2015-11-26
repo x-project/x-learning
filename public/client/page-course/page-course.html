@@ -4,13 +4,10 @@
 <link rel="import" href="../deck-video/deck-video.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../style-page/style-page.html">
-<link rel="import" href="../components/app-session.html">
 
 <dom-module id="page-course">
   <template>
     <style include="style-page"></style>
-    <app-session id="session"></app-session>
-    <iron-ajax id="ajax_purchased_post" method="PUT" handle-as="json" content-type="application/json" last-response="{{purchased}}" on-response="on_response_create"> </iron-ajax>
 
     <layout-client>
       <part-jumbotron class="jumbotron">
@@ -41,10 +38,11 @@
     },
 
     on_try_buy:function(event){
-      console.log(this.$.session.get('user'))
-      this.$.ajax_purchased_post.body={};
-      this.$.ajax_purchased_post.url='/api/courses/' + this.data.course.id + '/follow/rel/' +this.$.session.get('user').id;
-      this.$.ajax_purchased_post.generateRequest();
+      page(this.data.course.id + '/payment');
+      // console.log(this.$.session.get('user'))
+      // this.$.ajax_purchased_post.body={};
+      // this.$.ajax_purchased_post.url='/api/courses/' + this.data.course.id + '/follow/rel/' +this.$.session.get('user').id;
+      // this.$.ajax_purchased_post.generateRequest();
     }
 
   });

@@ -3,13 +3,11 @@
 <dom-module id="list-course-lectures">
   <template>
     <style include="style-form"></style>
-
     <div class="list">
       <template is="dom-repeat" id='lecture' items="{{course.lectures}}" as="lecture">
         <part-course-lecture class="strip" course="{{course}}" lecture="{{lecture}}" index="{{index}}"></part-course-lecture>
-        <form class="form" on-submit="on_submit">
-          <button class="btn" on-click="on_click_delete">Delete course</button>
-        </form>
+       
+        <button class="btn" on-click="on_click_delete">Delete course</button>
       </template>
     </div>
 

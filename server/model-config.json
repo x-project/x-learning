@@ -49,6 +49,12 @@
   "MemberCourse":{
     "dataSource": "mongo"
   },
+  "Payment": {
+    "dataSource": "mongo"
+  },
+  "Task": {
+    "dataSource": "mongo"
+  },
   "Transcoder": {
     "dataSource": "mongo"
   },
@@ -58,5 +64,4 @@
   "Video": {
     "dataSource": "mongo"
   }
-
 }
