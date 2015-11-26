@@ -31,29 +31,30 @@
 
     <div id="container">
       <div id="videos">
-        <video src="{{their_stream}}" autoplay></video>
         <video src="{{my_stream}}" muted="true" autoplay></video>
       </div>
 
       <div id="actions">
-        <template is="dom-if" if="{{step_1}}">
+        <!-- <template is="dom-if" if="{{error}}"> -->
           <p>Failed to access the webcam and microphone.</p>
           <button class="btn btn-warning" on-click="on_click_retry">retry call</button>
-        </template>
+        <!-- </template> -->
 
-        <template is="dom-if" if="{{step_2}}">
-          <p>Your id {{my_id}}</p>
+        <!-- <template is="dom-if" if="{{step_2}}"> -->
+          <p>Your id {{peer_id}}</p>
           <div class="pure-form">
             <input type="text" is="iron-input" bind-value="{{callto_id}}" placeholder="Call id">
             <button class="btn btn-success" on-click="on_click_begin">begin call</button>
           </div>
-        </template>
+        <!-- </template> -->
 
-        <template is="dom-if" if="{{step_3}}">
-          <p>Currently in call with {{their_id}}</p>
-          <button class="btn btn-danger" on-click="on_click_end">end call</button>
+        <div>
+          <template id="others" is="dom-repeat" items="{{others}}" as="other">
+            <p>Other id {{other.peer}}</p>
+            <video src="{{other.stream}}" autoplay></video>
+            <button class="btn btn-danger" on-click="on_click_end">end call</button>
+          </template>
         </div>
-      </template>
     </div>
 
   </template>
@@ -63,94 +64,81 @@
 
     is: 'page-realtime',
 
+    properties: {
+      others: {
+        type: Array,
+        value: function () { return []; }
+      }
+    },
+
     on_click_begin: function (event) {
-      console.log(this.callto_id);
-      var call = this.peer.call(this.callto_id, window.localStream);
-      this.step3(call);
+      var call = this.peer.call(this.callto_id, this.local_stream);
     },
 
     on_click_end: function (event) {
-      window.existingCall.close();
-      this.step2();
+      var other = this.$.others.itemForElement(event.target);
+      other.close();
     },
 
     on_click_retry: function (event) {
-      // $('#step1-error').hide();
-      this.step1();
+      this.start();
     },
 
     attached: function () {
-      // Compatibility shim
       navigator.getUserMedia = navigator.getUserMedia 
         || navigator.webkitGetUserMedia 
         || navigator.mozGetUserMedia;
    
       var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
-      var self = this;
 
-      peer.on('open', function () {
-        self.my_id = peer.id;
-      });
+      peer.on('open', this.on_open.bind(this));
+      peer.on('call', this.on_call.bind(this));
+      peer.on('error', this.on_error.bind(this));
 
-      peer.on('call', function (call) {
-        call.answer(window.localStream);
-        self.step3(call);
-      });
-
-      peer.on('error', function(err){
-        alert(err.message);
-        // Return to step 2 if error occurs
-        self.step2();
-      });
-
-      // Click handlers setup
-      this.step1();
+      this.start();
     },
 
-    step1: function () {
+    start: function () {
       var self = this;
 
-      self.step_1 = true;
-      self.step_2 = false;
-      self.step_3 = false;
-      
-      // Get audio/video stream
       navigator.getUserMedia({audio: true, video: true}, function (stream) {
         // Set your video displays
         self.my_stream = URL.createObjectURL(stream);
-        window.localStream = stream;
-        self.step2();
-      }, function () { 
-        // $('#step1-error').show(); 
+        self.local_stream = stream;
+      }, function (error) { 
+        console.error(error);
       });
     },
 
-    step2: function () {
-      var self = this;
-      self.step_1 = false;
-      self.step_2 = true;
-      self.step_3 = false;
+    on_open: function (id) {
+      this.set('peer_id', this.peer.id); 
+      console.log('open', this.peer.id, id);
     },
 
-    step3: function (call) {
-      var self = this;
-      self.step_1 = false;
-      self.step_2 = false;
-      self.step_3 = true;
+    on_call: function (call) {
+      console.log('call', call, this.peer.id);
 
-      // Hang up on an existing call if present
-      if (window.existingCall) {
-        window.existingCall.close();
-      }
-      // Wait for stream on the call, then set peer video display
+      var self = this;
+
+      call.answer(self.local_stream);
+
       call.on('stream', function (stream) {
-        self.their_stream = URL.createObjectURL(stream);
+        console.log(call.peer, 'stream', stream)
+        call.stream = URL.createObjectURL(stream);
+        self.push('others', call);
+
+        window.streams = {};
+        window.streams[call.peer] = call.stream;
       });
 
-      // UI stuff
-      window.existingCall = call;
-      self.their_id = call.peer;
-      call.on('close', this.step2);
+      call.on('close', function () {
+        var index = self.others.indexOf(call);
+        self.splice('others', index, 1);
+      });
+    },
+
+    on_error: function (error) {
+      alert(error.message);
     }
 
   });
