@@ -232,6 +232,14 @@ module.exports = function (Member) {
 
   Member.allow_member_course = function(data){
     return function (next) {
+      if(!data.payment_status) {
+        next();
+        return;
+      }
+      if(data.payment_status.transaction.status !== 'submitted_for_settlement') {
+        next();
+        return;
+      }
       if(data.payment_status.transaction.status === 'submitted_for_settlement') {
         var member_course = {
           memberId: data.member.id
@@ -241,9 +249,6 @@ module.exports = function (Member) {
           setImmediate(next, err);
           return;
         });
-      }else{
-        next();
-        return;
       }
     }
   };
