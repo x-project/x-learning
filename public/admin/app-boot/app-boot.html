@@ -8,6 +8,9 @@
 <link rel="import" href="../page-lectures/page-lectures.html">
 <link rel="import" href="../page-settings/page-settings.html">
 <link rel="import" href="../page-home/page-home.html">
+<link rel="import" href="../page-realtime/page-realtime.html">
+<link rel="import" href="../page-realtime/part-realtime-video.html">
+
 <dom-module id="app-boot">
   <template>
     <style>
@@ -116,6 +119,26 @@
           context.page = 'page-settings';
           context.data = {};
           context.data.user = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
+    '/admin/realtime': function (context) {
+      context.page = 'page-realtime';
+      this.open(context);
+    },
+
+    '/admin/realtime/:lecture_id/publish': function (context) {
+        this.get_model({
+          collection: 'realtime_lectures',
+          modelId: context.params.lecture_id
+          })
+        .then(function (model) {
+          context.page = 'part-realtime-video';
+          context.data = model
           this.open(context);
         }.bind(this))
         .catch(function (error) {

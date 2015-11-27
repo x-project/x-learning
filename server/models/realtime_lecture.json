@@ -1,0 +1,21 @@
+{
+  "name": "RealtimeLecture",
+  "plural": "realtime_lectures",
+  "mongodb": {
+    "collection": "realtime_lectures"
+  },
+  "base": "PersistedModel",
+  "properties": {
+    "title": {
+      "type": "String"
+    },
+    "description": {
+      "type": "String"
+    }
+  },
+  "relations": {
+  },
+  "acls": [],
+  "methods": [],
+  "validations": []
+}

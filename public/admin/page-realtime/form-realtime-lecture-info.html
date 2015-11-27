@@ -1,0 +1,75 @@
+<link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="/components/iron-input/iron-input.html">
+<link rel="import" href="../style-form/style-form.html">
+<link rel="import" href="search-course-category.html">
+
+<dom-module id="form-realtime-lecture-info">
+  <template>
+    <style include="style-form"></style>
+
+    <form id="form" class="form" on-submit="on_submit">
+      <div class="field">
+        <label class="label">Title</label>
+        <input class="input" id="title" type="text" is="iron-input" bind-value="{{lecture.title}}">
+        <input-errors property="title" error="{{error.details}}"></input-errors>
+      </div>
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="detail">
+          <iron-autogrow-textarea is="iron-input" bind-value="{{lecture.description}}" rows="4">
+          </iron-autogrow-textarea>
+        </div>
+        <input-errors property="description" error="{{error.details}}"></input-errors>
+      </div>
+      <div class="field">
+        <label class="label">Language</label>
+        <input class="input" id="language" type="text" is="iron-input" bind-value="{{lecture.language}}">
+        <input-errors property="title" error="{{error.details}}"></input-errors>
+      </div>
+      <div class="field">
+        <label class="label">Cost</label>
+        <input class="input" id="cost" type="text" is="iron-input" bind-value="{{lecture.cost}}">
+        <input-errors property="cost" error="{{error.details}}"></input-errors>
+      </div>
+       <div class="field">
+        <search-course-category course="{{lecture}}" on-try-save-categories="on_try_save_categories" on-try-delete-category="on_try_delete_category"></search-course-category>
+      </div>
+    </form>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'form-realtime-lecture-info',
+
+    properties: {
+      lecture: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached:function(){
+      console.log(this.lecture)
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    },
+
+    on_try_save_categories: function (event) {
+      event.stopPropagation();
+      console.log(event);
+      this.lecture.category_id=event.detail;
+      // this.collection = event.detail.collection;
+      // this.save_prod_type();
+    },
+
+  });
+</script>

@@ -42,7 +42,7 @@
   }, 
   "Lecture": {
     "dataSource": "mongo"
-  },  
+  },
   "Member":{
     "dataSource": "mongo"
   },
@@ -52,6 +52,9 @@
   "Payment": {
     "dataSource": "mongo"
   },
+  "RealtimeLecture": {
+    "dataSource": "mongo"
+  },  
   "Task": {
     "dataSource": "mongo"
   },

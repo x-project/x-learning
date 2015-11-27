@@ -9,9 +9,16 @@
     </style>
   
     <h2>Realtime</h2>  
-   
-        <a is="app-link" href="/realtime">Create realtime </a>
-
+   <api-model-find id="find" collection="realtime_lectures" response="{{lectures}}"></api-model-find>
+    <a is="app-link" href="/realtime">Create realtime </a>
+    <ul class="nav">
+     
+    <template id="lecture" is="dom-repeat" items="{{lectures}}" as="lecture">
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/profile">{{lecture.title}}</a>
+      </li>
+    </template>
+    </ul>
 
   </template>
 </dom-module>
@@ -20,7 +27,14 @@
 
     is: 'part-home-realtime',
 
+    properties:{
+      lectures:{
+        type: Object
+      }
+    },
+
     attached: function(){
+      this.$.find.send();
     }
 
   });
