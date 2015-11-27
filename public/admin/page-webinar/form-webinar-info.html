@@ -1,0 +1,58 @@
+<link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="/components/iron-input/iron-input.html">
+<link rel="import" href="../style-form/style-form.html">
+
+<dom-module id="form-webinar-info">
+  <template>
+    <style include="style-form"></style>
+
+    <form id="form" class="form" on-submit="on_submit">
+      <div class="field">
+        <label class="label">Title</label>
+        <input class="input" id="title" type="text" is="iron-input" bind-value="{{webinar.title}}">
+        <input-errors property="title" error="{{error.details}}"></input-errors>
+      </div>
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="detail">
+          <iron-autogrow-textarea is="iron-input" bind-value="{{webinar.description}}" rows="4">
+          </iron-autogrow-textarea>
+        </div>
+        <input-errors property="description" error="{{error.details}}"></input-errors>
+      </div>
+      <div class="field">
+        <label class="label">Duration(mn)</label>
+        <input class="input" id="duration" type="text" is="iron-input" bind-value="{{webinar.duration}}">
+        <input-errors property="duration" error="{{error.details}}"></input-errors>
+      </div>
+    </form>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'form-webinar-info',
+
+    properties: {
+      webinar: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached:function(){
+      console.log(this.webinar)
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+
+  });
+</script>

@@ -1,6 +1,6 @@
 <link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../../components/app-link/app-link.html">
-<dom-module id="part-home-realtime">
+<dom-module id="part-home-webinar">
   <template>
     <style>
       :host {
@@ -9,13 +9,14 @@
     </style>
   
     <h2>Realtime</h2>  
-   <api-model-find id="find" collection="realtime_lectures" response="{{lectures}}"></api-model-find>
+    <api-model-find id="find" collection="courses" where='{"publish": true}'response="{{courses}}"></api-model-find>
+
     <a is="app-link" href="/realtime">Create realtime </a>
     <ul class="nav">
      
-    <template id="lecture" is="dom-repeat" items="{{lectures}}" as="lecture">
+    <template id="lecture" is="dom-repeat" items="{{courses}}" as="course">
       <li class="nav-item">
-        <a class="nav-link" href="/admin/profile">{{lecture.title}}</a>
+        <a class="nav-link" href="/webinar/{{course.id}}">{{course.title}}</a>
       </li>
     </template>
     </ul>
@@ -25,10 +26,10 @@
 <script>
   Polymer({
 
-    is: 'part-home-realtime',
+    is: 'part-home-webinar',
 
     properties:{
-      lectures:{
+      course:{
         type: Object
       }
     },

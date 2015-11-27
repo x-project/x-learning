@@ -8,8 +8,8 @@
 <link rel="import" href="../page-lectures/page-lectures.html">
 <link rel="import" href="../page-settings/page-settings.html">
 <link rel="import" href="../page-home/page-home.html">
-<link rel="import" href="../page-realtime/page-realtime.html">
-<link rel="import" href="../page-realtime/part-realtime-video.html">
+<link rel="import" href="../page-webinar/page-webinar.html">
+<link rel="import" href="../page-webinar/part-webinar-video.html">
 
 <dom-module id="app-boot">
   <template>
@@ -57,7 +57,7 @@
         this.get_model({
           collection: 'courses',
           modelId: context.params.course_id,
-          include: ['lectures']
+          include: ['lectures','webinars']
         })
         .then(function (model) {
           context.page = 'page-course';
@@ -110,6 +110,56 @@
         }.bind(this));
     },
 
+    '/admin/courses/:course_id/webinar/new': function (context) {
+        this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id
+        })
+        .then(function (model) {
+          context.page = 'page-webinar';
+          context.data = { webinar: {} };
+          context.data.course = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
+    '/admin/courses/:course_id/webinar/:webinar_id': function (context) {
+        this.get_model({
+          collection: 'webinars',
+          modelId: context.params.webinar_id,
+          include:['course']
+          })
+        .then(function (model) {
+          context.page = 'page-webinar';
+          context.data = { webinar: model};
+          context.data.course = model.course;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
+    '/admin/courses/:course_id/webinar/:webinar_id/start': function (context) {
+        this.get_model({
+          collection: 'webinars',
+          modelId: context.params.webinar_id,
+          include:['course']
+          })
+        .then(function (model) {
+          context.page = 'part-webinar-video';
+          context.data = { webinar: model};
+          context.data.course = model.course;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
     '/admin/profile': function (context) {
       this.get_model({
           collection: 'members',
@@ -126,25 +176,6 @@
         }.bind(this));
     },
 
-    '/admin/realtime': function (context) {
-      context.page = 'page-realtime';
-      this.open(context);
-    },
-
-    '/admin/realtime/:lecture_id/publish': function (context) {
-        this.get_model({
-          collection: 'realtime_lectures',
-          modelId: context.params.lecture_id
-          })
-        .then(function (model) {
-          context.page = 'part-realtime-video';
-          context.data = model
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
-    },
 
     '/admin/404': function (context) {
       context.page = 'page-404';

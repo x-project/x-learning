@@ -1,0 +1,35 @@
+<link rel="import" href="../style-form/style-form.html">
+<dom-module id="form-webinar-actions">
+  <template>
+    <style include="style-form"></style>
+      <button class="btn" on-click="on_click">Save</button>
+
+      <button class="btn" on-click="on_click_delete">Delete webinar</button>
+      <button class="btn" on-click="on_click_start">Start</button>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'form-webinar-actions',
+
+    properties: {},
+
+    on_click: function (event){
+      event.stopPropagation();
+      this.fire('try-save');
+    },
+
+    on_click_delete:function(event){
+      event.stopPropagation();
+      this.fire('try-delete');
+    },
+
+    on_click_start: function (event){
+      event.stopPropagation();
+      this.fire('try-start');
+    }
+
+  });
+</script>

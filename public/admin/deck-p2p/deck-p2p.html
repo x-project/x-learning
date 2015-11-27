@@ -2,7 +2,7 @@
 <link rel="import" href="../../components/iron-input/iron-input.html">
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <script src="../../components/peerjs/peer.js"></script>
-<dom-module id="part-realtime-video">
+<dom-module id="deck-p2p">
   <template>
     <style>
       :host {
@@ -61,7 +61,7 @@
 <script>
   Polymer({
 
-    is: 'part-realtime-video',
+    is: 'deck-p2p',
 
     properties: {
       others: {
@@ -138,7 +138,7 @@
       });
     },
 
-    stream: function(call){
+    stream: function (call) {
       var self =this;
       call.on('stream', function (stream) {
         self.my_stream = URL.createObjectURL(stream);

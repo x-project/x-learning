@@ -1,8 +1,8 @@
 {
-  "name": "RealtimeLecture",
-  "plural": "realtime_lectures",
+  "name": "Webinar",
+  "plural": "webinars",
   "mongodb": {
-    "collection": "realtime_lectures"
+    "collection": "webinars"
   },
   "base": "PersistedModel",
   "properties": {
@@ -14,6 +14,11 @@
     }
   },
   "relations": {
+    "course": {
+      "type": "belongsTo",
+      "model": "Course",
+      "foreignKey": "webinar_id"
+    }
   },
   "acls": [],
   "methods": [],

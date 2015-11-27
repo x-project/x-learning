@@ -52,9 +52,6 @@
   "Payment": {
     "dataSource": "mongo"
   },
-  "RealtimeLecture": {
-    "dataSource": "mongo"
-  },  
   "Task": {
     "dataSource": "mongo"
   },
@@ -66,5 +63,8 @@
   },
   "Video": {
     "dataSource": "mongo"
-  }
+  },
+  "Webinar": {
+    "dataSource": "mongo"
+  } 
 }

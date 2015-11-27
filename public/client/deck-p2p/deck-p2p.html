@@ -2,7 +2,7 @@
 <link rel="import" href="../../components/iron-input/iron-input.html">
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <script src="../../components/peerjs/peer.js"></script>
-<dom-module id="page-realtime">
+<dom-module id="deck-p2p">
   <template>
     <style>
       :host {
@@ -10,7 +10,7 @@
       }
 
       video {
-        width: 300px;
+        width: 500px;
         height: auto;
       }
 
@@ -27,8 +27,7 @@
       }
     </style>
   
-    <h2>Realtime</h2>   
-
+    <h2>Realtime {{data.title}}</h2>
     <div id="container">
       <div id="videos">
         <video src="{{my_stream}}" muted="true" autoplay></video>
@@ -62,13 +61,17 @@
 <script>
   Polymer({
 
-    is: 'page-realtime',
+    is: 'deck-p2p',
 
     properties: {
       others: {
         type: Array,
         value: function () { return []; }
       }
+    },
+
+    attached:function(){
+      console.log(this.data)
     },
 
     on_click_begin: function (event) {
@@ -135,7 +138,7 @@
       });
     },
 
-    stream: function(call){
+    stream: function (call) {
       var self =this;
       call.on('stream', function (stream) {
         self.my_stream = URL.createObjectURL(stream);
