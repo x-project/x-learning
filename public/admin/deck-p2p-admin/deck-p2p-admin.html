@@ -2,15 +2,20 @@
 <link rel="import" href="../../components/iron-input/iron-input.html">
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <script src="../../components/peerjs/peer.js"></script>
-<dom-module id="deck-p2p">
+<dom-module id="deck-p2p-admin">
   <template>
     <style>
       :host {
         display: block;
       }
 
-      video {
-        width: 300px;
+      #teacher {
+        width: 500px;
+        height: auto;
+      }
+
+      #students{
+        width: 100px;
         height: auto;
       }
 
@@ -30,28 +35,19 @@
     <h2>Realtime {{data.title}}</h2>
     <div id="container">
       <div id="videos">
-        <video src="{{my_stream}}" muted="true" autoplay></video>
+        <video id="teacher" src="{{my_stream}}" muted="true" autoplay></video>
       </div>
 
       <div id="actions">
-        <!-- <template is="dom-if" if="{{error}}"> -->
+        <template is="dom-if" if="{{error}}">
           <p>Failed to access the webcam and microphone.</p>
           <button class="btn btn-warning" on-click="on_click_retry">retry call</button>
-        <!-- </template> -->
-
-        <!-- <template is="dom-if" if="{{step_2}}"> -->
-          <p>Your id {{peer_id}}</p>
-          <div class="pure-form">
-            <input type="text" is="iron-input" bind-value="{{callto_id}}" placeholder="Call id">
-            <button class="btn btn-success" on-click="on_click_begin">begin call</button>
-          </div>
-        <!-- </template> -->
+        </template>
 
         <div>
           <template id="others" is="dom-repeat" items="{{others}}" as="other">
             <p>Other id {{other.peer}}</p>
-            <video src="{{other.stream}}" autoplay></video>
-            <button class="btn btn-danger" on-click="on_click_end">end call</button>
+            <video id="students" src="{{other.stream}}" autoplay></video>
           </template>
         </div>
     </div>
@@ -61,27 +57,13 @@
 <script>
   Polymer({
 
-    is: 'deck-p2p',
+    is: 'deck-p2p-admin',
 
     properties: {
       others: {
         type: Array,
         value: function () { return []; }
       }
-    },
-
-    attached:function(){
-      console.log(this.data)
-    },
-
-    on_click_begin: function (event) {
-      var call = this.peer.call(this.callto_id, this.local_stream);
-      this.stream(call);
-    },
-
-    on_click_end: function (event) {
-      var other = this.$.others.itemForElement(event.target);
-      other.close();
     },
 
     on_click_retry: function (event) {
@@ -136,13 +118,6 @@
       call.on('close', function () {
         var index = self.others.indexOf(call);
         self.splice('others', index, 1);
-      });
-    },
-
-    stream: function (call) {
-      var self =this;
-      call.on('stream', function (stream) {
-        self.my_stream = URL.createObjectURL(stream);
       });
     },
 
