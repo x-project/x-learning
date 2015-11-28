@@ -150,12 +150,18 @@
     },
 
     '/courses/:course_id/webinars/:webinar_id': function (context) {
-      this.find_model({
-        collection: 'webinars',
-        where: { and: [{category_id: context.params.webinar_id},{ publish: true }]},
-      })
-      context.page = 'page-webinar';
-      this.open(context);
+      this.get_model({
+          collection: 'webinars',
+          modelId: context.params.webinar_id,
+          })
+      .then(function (model) {
+          context.data = model;
+          context.page = 'page-webinar';          
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this)); 
     },
 
     '/profile': function (context) {
