@@ -6,7 +6,7 @@
   <div>
     $: {{data.course.cost}}
     Language: {{data.course.language}}
-    Followers: {{follow}}
+    Followers: {{students}}
     Lectures: {{lectures}}
     Teacher: {{teacher.name}}
   </div>
@@ -19,7 +19,7 @@
     is: 'part-course-info',
 
     properties: {
-      follow:{
+      students:{
         type:Number
       },
       lectures:{
@@ -32,15 +32,15 @@
 
     attached:function (event) {
       this.$.find.where={"id" : this.data.course.id};
-      this.$.find.include.push("follow");
+      this.$.find.include.push("students");
       this.$.find.include.push("teacher");
       this.$.find.send();
     },
 
     on_response:function(event){
       this.teacher = this.courses[0].teacher
-      this.follow=this.courses[0].follow.length;
-      this.lectures=this.data.lectures.length
+      this.students=this.courses[0].students.length;
+      this.lectures=this.data.lectures.length;
     }
 
   });

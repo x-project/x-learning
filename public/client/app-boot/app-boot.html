@@ -74,15 +74,6 @@
       this.open(context);
     },
 
-    '/webinar/:webinar_id': function (context) {
-      this.find_model({
-        collection: 'webinars',
-        where: { and: [{category_id: context.params.webinar_id},{ publish: true }]},
-      })
-      context.page = 'page-webinar';
-      this.open(context);
-    },
-
     '/categories/:category_id': function (context) {
       this.find_model({
         collection: 'courses',
@@ -117,19 +108,25 @@
     },
 
     '/courses/:course_id': function (context) {
-      this.find_model({
-         collection: 'lectures',
-          where: { course_id: context.params.course_id },
-          include:['course','video']
-          })
+        this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id,
+          include: [{'lectures': ['video']}, 'webinars']
+        })
         .then(function (model) {
           context.page = 'page-course';
-          context.data= { course: model[0].course};
-          context.data.video = model[0].video;
-          context.data.lectures = model;
+          context.data = {};
+          context.data.course = model;
+          context.data.lectures = model.lectures;
+          if( model.lectures.length !=0 ){
+            context.data.video = model.lectures[0].video;
+          }         
+          context.data.webinars = model.webinars;
+         
           this.open(context);
         }.bind(this))
         .catch(function (error) {
+
           this.redirect('/404');
         }.bind(this));
     },
@@ -150,6 +147,15 @@
         .catch(function (error) {
           this.redirect('/404');
         }.bind(this));
+    },
+
+    '/courses/:course_id/webinars/:webinar_id': function (context) {
+      this.find_model({
+        collection: 'webinars',
+        where: { and: [{category_id: context.params.webinar_id},{ publish: true }]},
+      })
+      context.page = 'page-webinar';
+      this.open(context);
     },
 
     '/profile': function (context) {
