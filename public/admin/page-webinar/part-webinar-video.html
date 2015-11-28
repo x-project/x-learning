@@ -1,10 +1,14 @@
 <link rel="import" href="../deck-p2p/deck-p2p.html">
+<link rel="import" href="../../components/api-user/api-user.html">
 
 
 <dom-module id="part-webinar-video">
   <template>
+    <api-model-update id="update" collection="webinars" model-id="{{data.webinar.id}}"
+      data="{{data.webinar}}" response="{{response}}" error="{{error}}">
+    </api-model-update>
 
-  <deck-p2p data="{{data.webinar}}"></deck-p2p>
+  <deck-p2p data="{{data.webinar}}" on-peer="on_peer"></deck-p2p>
   
   </template>
 </dom-module>
@@ -12,6 +16,12 @@
   Polymer({
 
     is: 'part-webinar-video',
+
+    on_peer: function(event){
+      this.data.webinar.peer_id=event.detail;
+      console.log(this.data.webinar)
+      this.$.update.send();
+    }
 
 
   });

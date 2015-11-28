@@ -18,7 +18,7 @@
 
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{webinar}}" on-response="on_response_create"> </iron-ajax>
 
-    <api-model-update id="update" collection="webinar" model-id="{{webinar.id}}"
+    <api-model-update id="update" collection="webinars" model-id="{{webinar.id}}"
       data="{{webinar}}" response="{{response}}" error="{{error}}">
     </api-model-update>
 
@@ -53,7 +53,6 @@
 
     attached:function(){
       this.webinar=this.data.webinar;
-      console.log(this.data)
     },
 
     on_try_save:function(event){

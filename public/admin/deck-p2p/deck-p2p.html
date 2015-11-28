@@ -115,7 +115,8 @@
     },
 
     on_open: function (id) {
-      this.set('peer_id', this.peer.id); 
+      this.set('peer_id', this.peer.id);
+      this.fire('peer', this.peer.id);
     },
 
     on_call: function (call) {
@@ -147,7 +148,7 @@
 
     on_error: function (error) {
       alert(error.message);
-    }
+    },
 
   });
 </script>
