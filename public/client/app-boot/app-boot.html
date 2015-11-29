@@ -13,7 +13,7 @@
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-upload/page-upload.html">
 <link rel="import" href="../page-payment/page-payment.html">
-<link rel="import" href="../page-realtime/page-realtime.html">
+<link rel="import" href="../page-webinar/page-webinar.html">
 
 
 <dom-module id="app-boot">
@@ -53,8 +53,6 @@
     },
 
     '/': function (context) {
-      if(context.state[0])
-        context.data= { courses: context.state};
       context.page = 'page-home';
       this.open(context);
     },
@@ -66,16 +64,6 @@
 
     '/contact': function (context) {
       context.page = 'page-contact';
-      this.open(context);
-    },
-
-    '/home': function (context) {
-      context.page = 'page-home';
-      this.open(context);
-    },
-
-    '/realtime': function (context) {
-      context.page = 'page-realtime';
       this.open(context);
     },
 
@@ -113,24 +101,31 @@
     },
 
     '/courses/:course_id': function (context) {
-      this.find_model({
-         collection: 'lectures',
-          where: { course_id: context.params.course_id },
-          include:['course','video']
-          })
+        this.get_model({
+          collection: 'courses',
+          modelId: context.params.course_id,
+          include: [{'lectures': ['video']}, 'webinars']
+        })
         .then(function (model) {
           context.page = 'page-course';
-          context.data= { course: model[0].course};
-          context.data.video = model[0].video;
-          context.data.lectures = model;
+          context.data = {};
+          context.data.course = model;
+          context.data.lectures = model.lectures;
+          if( model.lectures.length !=0 ){
+            context.data.video = model.lectures[0].video;
+          }         
+          context.data.webinars = model.webinars;
+         
           this.open(context);
         }.bind(this))
         .catch(function (error) {
+
           this.redirect('/404');
         }.bind(this));
     },
 
     '/courses/:course_id/lectures/:lecture_id': function (context) {
+      this.is_authenticated()
       this.get_model({
           collection: 'lectures',
           modelId: context.params.lecture_id,
@@ -148,12 +143,26 @@
         }.bind(this));
     },
 
+    '/courses/:course_id/webinars/:webinar_id': function (context) {
+      this.get_model({
+          collection: 'webinars',
+          modelId: context.params.webinar_id,
+          })
+      .then(function (model) {
+          context.data = model;
+          context.page = 'page-webinar';          
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this)); 
+    },
+
     '/profile': function (context) {
-      this.init(context);
-      if (!context.session.token) {
-        page('/');
-        return;
-      }
+      // if (!context.session.token) {
+      //   page('/');
+      //   return;
+      // }
       this.get_model({
           collection: 'members',
           modelId: this.session.get('user').id,
@@ -183,6 +192,14 @@
     '/404': function (context) {
       context.page = 'page-404';
       this.open(context);
+    },
+
+    is_authenticated: function(){
+      console.log(this.session.get('token'))
+      if ( this.session.get('token') ==="null") {
+        page('/');
+        return;
+      }
     }
 
   });

@@ -1,0 +1,87 @@
+<link rel="import" href="../../components/api-user/api-user.html">
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../style-panel/style-panel.html">
+<link rel="import" href="form-webinar-actions.html">
+<link rel="import" href="form-webinar-info.html">
+
+<dom-module id="page-webinar">
+  <template>
+
+    <style include="style-page"></style>
+    <style include="style-panel"></style>
+    
+    <app-session id="session"></app-session>
+
+
+    <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{webinar}}" on-response="on_response_create"> </iron-ajax>
+
+    <api-model-update id="update" collection="webinars" model-id="{{webinar.id}}"
+      data="{{webinar}}" response="{{response}}" error="{{error}}">
+    </api-model-update>
+
+     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
+
+    <layout-admin>
+      <div class="container">
+        <h1>Create webinar: {{webinar.title}}</h1>
+        <div>
+          <form-webinar-actions on-try-save="on_try_save" on-try-delete="on_try_delete" on-try-start="on_try_start"></form-webinar-actions>
+        </div>
+        <div class="panel">
+          <h3>Info</h3>
+          <form-webinar-info webinar="{{webinar}}" error="{{error}}"></form-webinar-info>
+        </div>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-webinar',
+
+    properties: {
+      webinar:{
+        type:Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached:function(){
+      this.webinar=this.data.webinar;
+    },
+
+    on_try_save:function(event){
+      event.stopPropagation();
+      if(this.webinar.id){
+        this.$.update.send();
+      }
+      else{
+        this.$.ajax_put.body=JSON.stringify(this.webinar);
+        this.$.ajax_put.url='/api/courses/'+ this.data.course.id + '/webinars';
+        this.$.ajax_put.generateRequest();
+      }
+    },
+
+    on_try_delete:function(event){
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/webinars/'+ this.webinar.id;
+      this.$.ajax_delete.generateRequest();
+      page('/admin/courses/' + this.data.course.id);
+    },
+
+    on_try_start:function(event){
+      page('/admin/courses/'+ this.data.course.id + '/webinar/' +this.webinar.id + '/start');
+    },
+    
+    on_response_create:function(){
+      page('/admin/courses/'+ this.data.course.id + '/webinar/' +this.webinar.id);
+    }
+   
+
+  });
+</script>

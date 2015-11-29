@@ -9,6 +9,7 @@
 <link rel="import" href="form-course-info.html">
 <link rel="import" href="form-course-image.html">
 <link rel="import" href="list-course-lectures.html">
+<link rel="import" href="list-course-webinars.html">
 
 <dom-module id="page-course">
   <template>
@@ -57,6 +58,11 @@
           <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
           <h3>Lectures</h3>
           <list-course-lectures course="{{course}}" on-try-delete-lecture="on_try_delete_lecture"></list-course-lectures>
+        </div>
+        <div class="panel">
+          <a is="app-link" href="/admin/courses/{{course.id}}/webinar/new">ADD WEBINAR</a>
+          <h3>Webinars</h3>
+          <list-course-webinars course="{{course}}" on-try-delete-webinar="on_try_delete_webinar"></list-course-webinars>
         </div>
       </div>
     </layout-admin>
@@ -123,6 +129,13 @@
       this.$.ajax_delete.url='/api/lectures/'+ event.detail.id + '/video';
       this.$.ajax_delete.generateRequest();
       this.$.ajax_delete.url='/api/lectures/'+ event.detail.id;
+      this.$.ajax_delete.generateRequest();
+      page('/admin/courses/' + this.course.id);
+    },
+
+    on_try_delete_webinar: function (event) {
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/webinars/'+ event.detail.id;
       this.$.ajax_delete.generateRequest();
       page('/admin/courses/' + this.course.id);
     },

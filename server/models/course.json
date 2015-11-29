@@ -35,7 +35,12 @@
       "model": "Lecture",
       "foreignKey": "course_id"
     },
-    "follow": {
+    "webinars": {
+      "type": "hasMany",
+      "model": "Webinar",
+      "foreignKey": "webinar_id"
+    },
+    "students": {
       "type": "hasAndBelongsToMany",
       "model": "Member",
       "through": "MemberCourse"

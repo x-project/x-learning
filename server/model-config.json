@@ -42,7 +42,7 @@
   }, 
   "Lecture": {
     "dataSource": "mongo"
-  },  
+  },
   "Member":{
     "dataSource": "mongo"
   },
@@ -63,5 +63,8 @@
   },
   "Video": {
     "dataSource": "mongo"
-  }
+  },
+  "Webinar": {
+    "dataSource": "mongo"
+  } 
 }

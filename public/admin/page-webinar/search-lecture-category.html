@@ -1,0 +1,122 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<dom-module id="search-course-category">
+  <template>
+    <style>
+      :host {
+        display: block;
+       }
+       .pill {
+        padding: 4px 8px;
+        border-radius: 2px;
+        display: inline-block;
+        background-color: #eee;
+       }
+       .pill .delete {
+        padding-left: 8px;
+        opacity: .4;
+       }
+       .pill .delete:hover {
+        opacity: 1;
+        cursor: pointer;
+       }
+    </style>
+        <style include="style-form"></style>
+
+
+    <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>
+
+    <div class="field ">
+      <label class="label">Category</label>
+      <input class="input" type="text" on-keypress="on_edit_category"
+        on-focus="on_edit_category" is="iron-input" bind-value="{{title}}">
+    </div>
+
+    <div class="selected items">
+      <template id="selected" is="dom-repeat" items="{{selected}}">
+        <div class="pill">
+          <span>{{item.title}}</span>
+          <span on-click="on_click_selected" class="delete">x</span>
+        <div>
+      </template>
+    </div>
+
+    <div class="items">
+      <template id="categories" is="dom-repeat" items="{{categories}}" filter="filter_category">
+          <div class="item" on-click="on_click_select">
+            <span>{{item.title}}</span>
+          </div>
+        <div>
+      </template>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'search-course-category',
+
+    properties: {
+      categories: {
+        type: Array,
+        value: function () { return []; }
+      },
+      selected: {
+        type: Array,
+        value: function () { return []; }
+      },
+      product: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      title: {
+        type: String,
+        value: function () { return ''; }
+      }
+    },
+
+    attached: function () {
+      this.selected = this.product.categories || [];
+    },
+
+    on_edit_category: function (event) {
+      event.stopPropagation();
+      this.$.find.send();
+    },
+
+    on_click_select: function (event) {
+      event.stopPropagation();
+      var category = this.$.categories.itemForElement(event.target);
+      if (!this.is_contain(category)) {
+        this.push('selected', category);
+        this.set('categories', []);
+        this.fire('try-save-categories', category.id);
+      }
+    },
+
+    on_click_selected: function (event) {
+      event.stopPropagation();
+      var category = this.$.selected.itemForElement(event.target);
+      var index = this.selected.indexOf(category);
+      this.splice('selected', index, 1);
+      this.fire('try-delete-categories', {categories: categories});
+    },
+
+
+    on_error: function (event) {
+      event.stopPropagation();
+      console.log(event);
+    },
+
+    is_contain: function (category) {
+      return this.selected.some(function (element) {
+        return element.id === category.id;
+      });
+    },
+
+    filter_category: function (item) {
+      return item.title.search(this.title) >= 0;
+    }
+
+  });
+</script>

@@ -1,0 +1,137 @@
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../../components/iron-input/iron-input.html">
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
+<script src="../../components/peerjs/peer.js"></script>
+<dom-module id="deck-p2p-admin">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      #teacher {
+        width: 500px;
+        height: auto;
+      }
+
+      #students{
+        width: 100px;
+        height: auto;
+      }
+
+      #container {
+        @apply(--layout-horizontal);
+      }
+
+      #videos {
+        @apply(--layout-flex);
+      }
+      
+      #actions {
+        @apply(--layout-flex);
+      }
+    </style>
+  
+    <h2>Realtime {{data.title}}</h2>
+    <div id="container">
+      <div id="videos">
+        <video id="teacher" src="{{my_stream}}" muted="true" autoplay></video>
+      </div>
+
+      <div id="actions">
+        <template is="dom-if" if="{{error}}">
+          <p>Failed to access the webcam and microphone.</p>
+          <button class="btn btn-warning" on-click="on_click_retry">retry call</button>
+        </template>
+
+        <div>
+          <template id="others" is="dom-repeat" items="{{others}}" as="other">
+            <p>Other id {{other.peer}}</p>
+            <video id="students" src="{{other.stream}}" autoplay></video>
+          </template>
+        </div>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'deck-p2p-admin',
+
+    properties: {
+      others: {
+        type: Array,
+        value: function () { return []; }
+      }
+    },
+
+    detached:function(event){
+      this.peer.destroy();
+    },
+
+    on_click_retry: function (event) {
+      this.start();
+    },
+
+    attached: function () {
+      navigator.getUserMedia = navigator.getUserMedia 
+        || navigator.webkitGetUserMedia 
+        || navigator.mozGetUserMedia;
+   
+      var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
+
+      peer.on('open', this.on_open.bind(this));
+      peer.on('call', this.on_call.bind(this));
+      peer.on('error', this.on_error.bind(this));
+      peer.on('close', this.on_close.bind(this));
+      this.start();
+    },
+
+    start: function () {
+      var self = this;
+
+      navigator.getUserMedia({audio: true, video: true}, function (stream) {
+        // Set your video displays
+        self.my_stream = URL.createObjectURL(stream);
+        self.local_stream = stream;
+      }, function (error) { 
+        console.error(error);
+      });
+    },
+
+    on_open: function (id) {
+      this.set('peer_id', this.peer.id);
+      this.fire('peer', this.peer.id);
+    },
+
+    on_close: function(event){
+      console.log(event)
+    },
+
+    on_call: function (call) {
+
+      var self = this;
+
+      call.answer(self.local_stream);
+
+      call.on('stream', function (stream) {
+        call.stream = URL.createObjectURL(stream);
+        self.push('others', call);
+
+        window.streams = {};
+        window.streams[call.peer] = call.stream;
+      });
+
+      call.on('close', function () {
+        var index = self.others.indexOf(call);
+        self.splice('others', index, 1);
+      });
+    },
+
+    on_error: function (error) {
+      alert(error.message);
+    },
+
+  });
+</script>

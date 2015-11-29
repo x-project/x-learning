@@ -10,15 +10,17 @@
     <iron-ajax id="ajax_find" handle-as="json" last-response="{{courses}}"> </iron-ajax>
     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
     
-    <api-model-find id="find" collection="members" where="{teacher_id:}"
+    <api-model-find id="find" collection="members"
       response="{{courses}}">
     </api-model-find>
 
     <layout-admin>
       <div class="container">
-        <h1>Courses</h1>
-        <a is="app-link" class="link" href="/admin/courses/new">Create new course</a>
+        <div>
+        <h1>My Courses</h1>
+        </div>
         <h3>COURSES LIST</h3>
+        <a is="app-link" class="link" href="/admin/courses/new">Create new course</a>
         <list-courses courses="{{courses}}" on-try-delete="on_try_delete"></list-courses>
       </div>
     </layout-admin>

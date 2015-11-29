@@ -1,13 +1,17 @@
 <link rel="import" href="part-course-lectures.html">
+<link rel="import" href="part-course-webinars.html">
 <link rel="import" href="part-course-buy.html">
 <link rel="import" href="part-course-info.html">
 <link rel="import" href="../deck-video/deck-video.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../style-panel/style-panel.html">
 
 <dom-module id="page-course">
   <template>
     <style include="style-page"></style>
+    <style include="style-panel"></style>
+
 
     <layout-client>
       <part-jumbotron class="jumbotron">
@@ -17,9 +21,17 @@
         <p class="description">Description: {{data.course.description}}</p>
         <deck-video src="{{data.video.url}}"></deck-video>
         <part-course-buy on-try-buy="on_try_buy"></part-course-buy>
-        <part-course-info data="{{data}}"></part-course-info>
-        <h3>Lectures</h3>
-        <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
+        <div class="panel">
+          <part-course-info data="{{data}}"></part-course-info>
+        </div>
+        <div class="panel">
+          <h3>Webinars</h3>
+          <part-course-webinars course="{{data.course}}" webinars="{{data.webinars}}"></part-course-webinars>
+        </div>
+        <div class="panel">
+          <h3>Lectures</h3>
+          <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
+        </div>
       </div>
     </layout-client>
 
@@ -39,10 +51,6 @@
 
     on_try_buy:function(event){
       page(this.data.course.id + '/payment');
-      // console.log(this.$.session.get('user'))
-      // this.$.ajax_purchased_post.body={};
-      // this.$.ajax_purchased_post.url='/api/courses/' + this.data.course.id + '/follow/rel/' +this.$.session.get('user').id;
-      // this.$.ajax_purchased_post.generateRequest();
     }
 
   });

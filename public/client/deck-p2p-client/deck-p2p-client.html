@@ -2,7 +2,7 @@
 <link rel="import" href="../../components/iron-input/iron-input.html">
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <script src="../../components/peerjs/peer.js"></script>
-<dom-module id="page-realtime">
+<dom-module id="deck-p2p-client">
   <template>
     <style>
       :host {
@@ -10,7 +10,7 @@
       }
 
       video {
-        width: 300px;
+        width: 500px;
         height: auto;
       }
 
@@ -27,34 +27,18 @@
       }
     </style>
   
-    <h2>Realtime</h2>   
-
+    <h2>Realtime {{data.title}}</h2>
     <div id="container">
       <div id="videos">
         <video src="{{my_stream}}" muted="true" autoplay></video>
       </div>
 
       <div id="actions">
-        <!-- <template is="dom-if" if="{{error}}"> -->
+        <template is="dom-if" if="{{error}}">
           <p>Failed to access the webcam and microphone.</p>
           <button class="btn btn-warning" on-click="on_click_retry">retry call</button>
-        <!-- </template> -->
-
-        <!-- <template is="dom-if" if="{{step_2}}"> -->
-          <p>Your id {{peer_id}}</p>
-          <div class="pure-form">
-            <input type="text" is="iron-input" bind-value="{{callto_id}}" placeholder="Call id">
-            <button class="btn btn-success" on-click="on_click_begin">begin call</button>
-          </div>
-        <!-- </template> -->
-
-        <div>
-          <template id="others" is="dom-repeat" items="{{others}}" as="other">
-            <p>Other id {{other.peer}}</p>
-            <video src="{{other.stream}}" autoplay></video>
-            <button class="btn btn-danger" on-click="on_click_end">end call</button>
-          </template>
-        </div>
+        </template>
+      </div>
     </div>
 
   </template>
@@ -62,7 +46,7 @@
 <script>
   Polymer({
 
-    is: 'page-realtime',
+    is: 'deck-p2p-client',
 
     properties: {
       others: {
@@ -71,9 +55,8 @@
       }
     },
 
-    on_click_begin: function (event) {
-      var call = this.peer.call(this.callto_id, this.local_stream);
-      this.stream(call);
+    detached:function(event){
+      this.peer.destroy();
     },
 
     on_click_end: function (event) {
@@ -92,10 +75,6 @@
    
       var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
 
-      peer.on('open', this.on_open.bind(this));
-      peer.on('call', this.on_call.bind(this));
-      peer.on('error', this.on_error.bind(this));
-
       this.start();
     },
 
@@ -106,36 +85,20 @@
         // Set your video displays
         self.my_stream = URL.createObjectURL(stream);
         self.local_stream = stream;
+
+        self.begin();
+
       }, function (error) { 
         console.error(error);
       });
     },
 
-    on_open: function (id) {
-      this.set('peer_id', this.peer.id); 
+    begin:function(){
+      var call = this.peer.call(this.data.peer_id, this.local_stream);
+      this.stream(call);
     },
 
-    on_call: function (call) {
-
-      var self = this;
-
-      call.answer(self.local_stream);
-
-      call.on('stream', function (stream) {
-        call.stream = URL.createObjectURL(stream);
-        self.push('others', call);
-
-        window.streams = {};
-        window.streams[call.peer] = call.stream;
-      });
-
-      call.on('close', function () {
-        var index = self.others.indexOf(call);
-        self.splice('others', index, 1);
-      });
-    },
-
-    stream: function(call){
+    stream: function (call) {
       var self =this;
       call.on('stream', function (stream) {
         self.my_stream = URL.createObjectURL(stream);
