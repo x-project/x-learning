@@ -7,6 +7,9 @@
     <iron-ajax id="createMultiPart" method="GET" url="{{url}}" params="{{params}}"
       last-response="{{response_get}}" on-response="on_response_get">
     </iron-ajax>
+    <template is="dom-if" if="{{response_get}}">
+        <progress value="{{chunk_progress}}" max="{{file_size}}"></progress>
+    </template>
 
   </template>
 </dom-module>
@@ -21,8 +24,12 @@
       file: {
         type: Object
       },
-      fileSize:{
+      file_size:{
         type : Number
+      },
+      chunk_progress:{
+        type : Number,
+        value :0
       },
       collection: {
         type: String
@@ -208,7 +215,8 @@
               ETag: res.etag,
               PartNumber: options.PartNumber
             });
-            console.log(options.PartNumber);
+            //progress bar update
+            self.chunk_progress = options.PartNumber * partSize;
           })
           .catch(function (err) {
             console.log(err);

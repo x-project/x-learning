@@ -56,10 +56,12 @@
         value: function () { return {}; }
       }
     },
+
     on_try_save: function(event){
       event.stopPropagation();
       if(this.data.lecture.id){
         this.$.update.send();
+        console.log(this.data)
       }
       else{
         this.$.ajax_put.body=JSON.stringify(this.data.lecture);
@@ -67,7 +69,7 @@
         this.$.ajax_put.generateRequest();
       }
       //test
-      this.on_upload_video(event);
+      // this.on_upload_video(event);
     },
 
     on_try_delete_lecture: function (event) {
