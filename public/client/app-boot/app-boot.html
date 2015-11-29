@@ -53,8 +53,6 @@
     },
 
     '/': function (context) {
-      if(context.state[0])
-        context.data= { courses: context.state};
       context.page = 'page-home';
       this.open(context);
     },
@@ -66,11 +64,6 @@
 
     '/contact': function (context) {
       context.page = 'page-contact';
-      this.open(context);
-    },
-
-    '/home': function (context) {
-      context.page = 'page-home';
       this.open(context);
     },
 
@@ -132,6 +125,7 @@
     },
 
     '/courses/:course_id/lectures/:lecture_id': function (context) {
+      this.is_authenticated()
       this.get_model({
           collection: 'lectures',
           modelId: context.params.lecture_id,
@@ -165,11 +159,10 @@
     },
 
     '/profile': function (context) {
-      this.init(context);
-      if (!context.session.token) {
-        page('/');
-        return;
-      }
+      // if (!context.session.token) {
+      //   page('/');
+      //   return;
+      // }
       this.get_model({
           collection: 'members',
           modelId: this.session.get('user').id,
@@ -199,6 +192,14 @@
     '/404': function (context) {
       context.page = 'page-404';
       this.open(context);
+    },
+
+    is_authenticated: function(){
+      console.log(this.session.get('token'))
+      if ( this.session.get('token') ==="null") {
+        page('/');
+        return;
+      }
     }
 
   });

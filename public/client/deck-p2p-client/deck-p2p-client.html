@@ -55,6 +55,10 @@
       }
     },
 
+    detached:function(event){
+      this.peer.destroy();
+    },
+
     on_click_end: function (event) {
       var other = this.$.others.itemForElement(event.target);
       other.close();
@@ -93,7 +97,6 @@
       var call = this.peer.call(this.data.peer_id, this.local_stream);
       this.stream(call);
     },
-
 
     stream: function (call) {
       var self =this;

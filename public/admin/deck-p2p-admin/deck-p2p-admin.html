@@ -66,6 +66,10 @@
       }
     },
 
+    detached:function(event){
+      this.peer.destroy();
+    },
+
     on_click_retry: function (event) {
       this.start();
     },
@@ -80,7 +84,7 @@
       peer.on('open', this.on_open.bind(this));
       peer.on('call', this.on_call.bind(this));
       peer.on('error', this.on_error.bind(this));
-
+      peer.on('close', this.on_close.bind(this));
       this.start();
     },
 
@@ -99,6 +103,10 @@
     on_open: function (id) {
       this.set('peer_id', this.peer.id);
       this.fire('peer', this.peer.id);
+    },
+
+    on_close: function(event){
+      console.log(event)
     },
 
     on_call: function (call) {
