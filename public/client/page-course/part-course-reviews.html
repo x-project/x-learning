@@ -9,7 +9,7 @@
     </style>
 
     <api-model-find id="find_reviews" collection="reviews"
-      response="{{reviews}}" on-response="on_response">
+      response="{{reviews}}">
     </api-model-find>
 
     <div>
@@ -31,11 +31,6 @@
         type: Object,
         value: function () { return {}; }
       }
-    },
-
-    on_response:function(event){
-      // console.log(event)
-      console.log(this.reviews)
     },
 
     attached: function () {
