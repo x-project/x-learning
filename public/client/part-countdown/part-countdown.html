@@ -1,0 +1,50 @@
+<dom-module id="part-countdown">
+  <template>
+    <div>Registration closes in <span>{{count}}</span> minutes!</div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-countdown',
+
+    properties: {
+      timer: {
+        type: Object,
+        value: function () { return {}; }
+        },
+      time:{
+        type: Number,
+        value: 30
+      },
+      count:{
+        type: Number,
+        value: 0
+      },
+    },
+     
+      
+    ready: function() {
+      this.count = this.time;
+      // TODO: Allow noauto to be a value free attribute
+      if (this.auto !== "no") {
+          this.start();
+      }
+    },
+    start: function() {
+      var self = this;
+      function countDown() {
+          self.count -= 1;
+          self.fire('core-countdown-count', self.count);
+          if (self.count > 0) {
+              setTimeout(countDown, 1000);
+          } else {
+              self.fire('core-countdown-ended');
+          }
+      }
+      countDown();
+    },
+
+  });
+</script>
