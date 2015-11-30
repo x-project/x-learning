@@ -1,8 +1,11 @@
 <link rel="import" href="../input-s3/input-s3.html">
 <dom-module id="form-settings-image">
   <template>
+    <api-model-update id="update" collection="members" model-id="{{member.id}}"
+      data="{{member}}" response="{{response}}" error="{{error}}">
+    </api-model-update>
 
-    <input-s3 collection="images" folder="image"></input-s3>
+    <input-s3 collection="images" folder="image" on-response="on_response"></input-s3>
 
   </template>
 </dom-module>
@@ -12,14 +15,16 @@
     is: 'form-settings-image',
 
     properties: {
-      course: {
-        type: Object,
-        value: function () { return {}; }
-      },
-      error: {
+      member: {
         type: Object,
         value: function () { return {}; }
       }
+    },
+
+    on_response:function(event){
+      var url = event.detail.split("?")[0];
+      this.member.photo = url;
+      this.$.update.send();
     }
 
   });

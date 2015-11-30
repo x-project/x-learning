@@ -12,7 +12,7 @@
     <layout-admin>
       <div class="container">
         <h1>Profile settings</h1>
-        <panel-settings-image></panel-settings-image>
+        <panel-settings-image user="{{data.user}}"></panel-settings-image>
         <panel-settings-profile user="{{data.user}}" ></panel-settings-profile>
         <panel-settings-email user="{{data.user}}"></panel-settings-email>
         <panel-settings-password user="{{data.user}}"></panel-settings-password>
@@ -31,10 +31,7 @@
         type: Object,
         value: function () { return {}; }
       }
-    },
-    attached:function(){
-      console.log(this.data.user)
     }
-
+    
   });
 </script>

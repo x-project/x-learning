@@ -1,12 +1,26 @@
 <link rel="import" href="../style-panel/style-panel.html">
 <link rel="import" href="form-settings-image.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
+
 <dom-module id="panel-settings-image">
   <template>
     <style include="style-panel"></style>
+    <style>
+      :host {
+        display: inline-block;
+        padding: 5px;
+      }
 
+      .image {
+        background-color: #eee;
+        height: 100px;
+        width: 50%;
+      }
+    </style>
     <div class="panel">
-      <h3 class="title">Update profile</h3>
-      <form-settings-image></form-settings-image>
+      <h3 class="title">Update image profile</h3>
+       <iron-image class="image" preload src="{{user.photo}}" sizing="contain"></iron-image>
+      <form-settings-image member="{{user}}"></form-settings-image>
     </div>
 
   </template>
