@@ -186,6 +186,7 @@ module.exports = function (Member) {
       get_member(data),
       get_course(data),
       braintree_checkout(data),
+      Member.prepare_order_review_braintree(data),
       Member.save_payment_braintree(data),
       Member.allow_member_course(data),
       create_fail_task_braintree(data)
@@ -244,13 +245,47 @@ module.exports = function (Member) {
         var member_course = {
           memberId: data.member.id
          };
-        var part = data.course.follow.build(member_course);
-        data.course.follow.add(part.memberId, function (err, model) {
+        var part = data.course.students.build(member_course);
+        data.course.students.add(part.memberId, function (err, model) {
           setImmediate(next, err);
           return;
         });
       }
     }
+  };
+
+  Member.prepare_order_review_braintree = function (data) {
+    return function (next) {
+      if (!data.payment_status) {
+        next();
+        return;
+      }
+      if (data.payment_status.transaction.status !== 'submitted_for_settlement') {
+        next();
+        return;
+      }
+      if(data.payment_status.transaction.status === 'submitted_for_settlement') {
+        var reviews = get_reviews(data);
+        Member.app.models.Review.create(reviews, function (err, model) {
+          setImmediate(next, err);
+          return;
+        });
+      }
+    };
+  };
+
+  var get_reviews = function (data) {
+    var review;
+    console.log(data)
+    review = {};
+    review.member_id = data.member.id;
+    review.course_id = data.course.id;
+    review.closed = false;
+    review.title = '';
+    review.text = '';
+    review.rating = 0;
+
+    return review;
   };
 
 var get_task_braintree = function (data) {

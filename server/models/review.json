@@ -1,0 +1,43 @@
+{
+  "name": "Review",
+  "plural": "reviews",
+  "mongodb": {
+    "collection": "reviews"
+  },
+  "base": "PersistedModel",
+  "properties": {
+   "title": {
+      "type": "String"
+    },
+    "text": {
+      "type": "String"
+    },
+    "rating": {
+      "type": "Number"
+    },
+    "closed": {
+      "type": "Boolean",
+      "default": false
+    }
+  },
+  "relations": {
+    "course": {
+      "type": "belongsTo",
+      "model": "Course",
+      "foreignKey": "course_id"
+    },
+    "member": {
+      "type": "belongsTo",
+      "model": "Member",
+      "foreignKey": "member_id"
+    },
+    "replies": {
+      "type": "hasMany",
+      "model": "ReviewReply",
+      "foreignKey": "review_id"
+    }
+  },
+  "acls": [],
+  "methods": [],
+  "validations": []
+}

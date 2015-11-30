@@ -1,0 +1,37 @@
+<link rel="import" href="part-reviews-items.html">
+<dom-module id="page-reviews">
+  <template>
+    <style include="style-page"></style>
+
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+        <h1>Reviews</h1>
+      </part-jumbotron>
+        <div class="container">
+          <part-reviews-items member="{{member}}"></part-reviews-items>
+        </div>
+    </layout-client>
+
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-reviews',
+
+    properties: {
+      member: {
+        type: Object,
+        value: function  () { return {}; }
+      }
+    },
+
+    attached: function () {
+      if(this.session.user != null) {
+        this.member = this.session.user;
+      }
+    }
+
+  });
+</script>
