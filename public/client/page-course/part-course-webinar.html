@@ -1,5 +1,6 @@
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="../part-countdown/part-countdown.html">
 
 <dom-module id="part-course-webinar">
   <template>
@@ -13,6 +14,8 @@
       <div>
         <span>webinar {{index}}: </span>
         <span>{{webinar.title}}</span>
+        <part-countdown webinar="{{webinar}}"></part-countdown>
+
       </div>
     </a>
 
