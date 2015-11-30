@@ -1,0 +1,26 @@
+<link rel="import" href="../style-panel/style-panel.html">
+<link rel="import" href="form-settings-image.html">
+<dom-module id="panel-settings-image">
+  <template>
+    <style include="style-panel"></style>
+
+    <div class="panel">
+      <h3 class="title">Update profile</h3>
+      <form-settings-image></form-settings-image>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'panel-settings-image',
+
+    properties: {
+      user: {
+        type: Object
+      }
+    }
+
+  });
+</script>
