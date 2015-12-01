@@ -1,10 +1,26 @@
 <link rel="import" href="../deck-p2p-client/deck-p2p-client.html">
-
+<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../style-page/style-page.html">
 
 <dom-module id="page-webinar">
   <template>
+  <style include="style-page">
+    </style>
 
-  <deck-p2p-client data="{{data}}"></deck-p2p-client>
+    <layout-client>
+      <part-jumbotron class="jumbotron">
+      <h2>{{data.title}}</h2>
+      </part-jumbotron>
+      <div class="container">
+        <template is="dom-if" if="{{!start}}">
+          <button on-click="on_click">Start webinar</button>  
+        </template>
+        <template is="dom-if" if="{{start}}">
+          <deck-p2p-client data="{{data}}"></deck-p2p-client>
+        </template>
+      </div>
+    </layout-client>
+
   
   </template>
 </dom-module>
@@ -12,6 +28,17 @@
   Polymer({
 
     is: 'page-webinar',
+
+    properties:{
+      start: {
+        type: Boolean,
+        value: false
+      }
+    },
+
+    on_click:function(){
+      this.start = true;
+    }
 
 
   });
