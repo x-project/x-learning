@@ -21,6 +21,7 @@
     "loopback-datasource-juggler": "^2.41.1",
     "mongojs": "^1.4.1",
     "node-env-file": "^0.1.7",
+    "peer": "^0.2.8",
     "request": "2.65.0",
     "serve-favicon": "^2.0.1",
     "superagent": "1.4.0",

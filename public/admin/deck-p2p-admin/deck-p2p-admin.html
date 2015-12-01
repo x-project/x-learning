@@ -79,8 +79,8 @@
         || navigator.webkitGetUserMedia 
         || navigator.mozGetUserMedia;
    
-      var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
-
+      // var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
+      var peer = this.peer = new Peer( { host: 'localhost', port: 9000, path: '/peerjs'});
       peer.on('open', this.on_open.bind(this));
       peer.on('call', this.on_call.bind(this));
       peer.on('error', this.on_error.bind(this));
@@ -101,6 +101,7 @@
     },
 
     on_open: function (id) {
+      console.log(this.peer.id)
       this.set('peer_id', this.peer.id);
       this.fire('peer', this.peer.id);
     },

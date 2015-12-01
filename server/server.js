@@ -4,7 +4,10 @@ var path = require('path');
 var env = require('node-env-file');
 var auth = require('./auth/auth');
 
+var ExpressPeerServer = require('peer').ExpressPeerServer;
+
 var app = module.exports = loopback();
+var server = require('http').createServer(app);
 
 env(__dirname + '/.env');
 
@@ -30,6 +33,14 @@ boot(app, __dirname, function(err) {
 
 
   app.use(loopback.static(path.resolve(__dirname, '../public')));
+
+  // peerjs server
+  var options = {
+      debug: true
+  }
+  app.use('/peerjs', ExpressPeerServer(server, options));
+
+  server.listen(9000);
 
   // start the server if `$ node server.js`
   if (require.main === module)
