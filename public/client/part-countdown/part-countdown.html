@@ -47,9 +47,9 @@
               setTimeout(countDown, 1000);
               date_expired = new Date(self.count - 60*60*1000);
               self.dateString = date_expired.toLocaleTimeString();
-          } else {
-              self.fire('core-countdown-ended');
+              return;
           }
+          self.fire('core-countdown-ended');
       };
       countDown();
     },
