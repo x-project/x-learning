@@ -1,6 +1,6 @@
 var aws = require('aws-sdk');
 
-module.exports = function (app) {
+module.exports = function (sns) {
   
   var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
   var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
