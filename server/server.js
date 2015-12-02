@@ -24,6 +24,8 @@ app.start = function() {
   });
 };
 
+
+
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
 boot(app, __dirname, function(err) {
@@ -33,6 +35,10 @@ boot(app, __dirname, function(err) {
 
 
   app.use(loopback.static(path.resolve(__dirname, '../public')));
+
+  //sns
+  require('./sns/listener')(app);
+
 
   // peerjs server
   var options = {
