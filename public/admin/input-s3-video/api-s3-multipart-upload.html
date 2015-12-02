@@ -99,8 +99,15 @@
       });
     },
 
-    upload_part: function (url, options) {
+    upload_part: function (url, options, retry) {
+      var self = this;
       return new Promise(function(resolve,reject){
+
+        if (retry == 0){
+          reject({ message: "error"});
+          return;
+        }
+
         var ajax = document.createElement('iron-ajax');
         ajax.url = url;
         ajax.method = 'PUT';
@@ -115,7 +122,14 @@
         });
 
         ajax.addEventListener('error', function (event) {
-          rejcet(ajax.lastError);
+          if (retry){
+            retry--;
+          }else{
+            retry = 3;
+            console.log("error" + retry);
+          }
+          self.upload_part(url,options,retry);
+          // reject(ajax.lastError);
         });
 
         ajax.generateRequest();
@@ -222,7 +236,7 @@
             console.log(err);
           })
 
-        })
+      })
         .then(function(res){
           var options_part = {
             Key: fileName,
