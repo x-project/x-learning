@@ -9,9 +9,7 @@
     </style>
 
     <api-s3-multipart-upload id="upload" collection="{{collection}}"
-      folder="{{folder}}" file-name="{{fileName}}" data="{{data}}"
-      response="{{response}}" error="{{error}}"
-      on-complete="on_response">
+      folder="{{folder}}" response="{{response}}" error="{{error}}">
     </api-s3-multipart-upload>
 
     <input type="file" on-change="on_change">
@@ -31,9 +29,6 @@
       folder: {
         type: String
       },
-      fileName: {
-        type: String
-      },
       response: {
         type: Object,
         notify: true
@@ -46,14 +41,7 @@
 
     on_change: function (event) {
       var file = event.target.files[0];
-      this.fileName=file.name;
       this.$.upload.send(file);
-    },
-
-    on_response: function (event) {
-      event.stopPropagation();
-      // this.fire('upload-video', event.detail.signed_url.Location);
-      this.fire('upload-video', {"title" : this.fileName, "url" :'http://d265dc9zzasikr.cloudfront.net/courses/'+ this.data.course.id +'/'+ this.fileName + '.m3u8'});
     }
 
   });

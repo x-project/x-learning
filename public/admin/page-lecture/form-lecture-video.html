@@ -5,8 +5,8 @@
     <style include="style-form"></style>
 
     <form class="form">
-      <input-s3-video collection="videos" folder="videos" data="{{data}}"
-        response="{{video}}" error="{{error}}">
+      <input-s3-video collection="videos" folder="{{folder}}"
+        response="{{video}}" error="{{error}}" on-complete="on_response">
       </input-s3-video>
     </form>
 
@@ -17,6 +17,26 @@
   Polymer({
 
     is: 'form-lecture-video',
+    
+    properties:{
+      folder: {
+        type: Object
+      },
+      title: {
+        type: String
+      }
+    },
+
+    attached:function(){
+      this.folder = 'courses/' + this.data.course.id + '/' + this.data.lecture.id + '/'
+    },
+
+    on_response: function (event) {
+      event.stopPropagation();
+      this.title = event.detail.dataId.Job.Input.Key;
+      // this.fire('upload-video', event.detail.signed_url.Location);
+      this.fire('upload-video', {"title" : this.title, "url" :'http://d265dc9zzasikr.cloudfront.net/'+ this.folder + this.title + '.m3u8'});
+    }
 
   });
 </script>

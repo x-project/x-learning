@@ -7,6 +7,7 @@
     <iron-ajax id="createMultiPart" method="GET" url="{{url}}" params="{{params}}"
       last-response="{{response_get}}" on-response="on_response_get">
     </iron-ajax>
+    
     <template is="dom-if" if="{{response_get}}">
         <progress value="{{chunk_progress}}" max="{{file_size}}"></progress>
     </template>
@@ -244,7 +245,7 @@
             .then(function (res) {
               var options = {
                 file_name: fileName,
-                courses_id: self.data.course.id
+                path: self.folder
               };
               return self.start_trascoder(options);
             });
