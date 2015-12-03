@@ -13,9 +13,8 @@
     <style include="style-panel"></style>
      
     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
-
+    <iron-ajax id="ajax_s3_delete" method="DELETE"></iron-ajax>
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
-
     <iron-ajax id="ajax_video_post" method="POST" handle-as="json" content-type="application/json" last-response="{{data.video}}" on-response="on_response_create"> </iron-ajax>
 
     <api-model-update id="update" collection="lectures" model-id="{{data.lecture.id}}"
@@ -73,10 +72,20 @@
     },
 
     on_try_delete_lecture: function (event) {
-      console.log(event)
       event.stopPropagation();
-      this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id + '/video';
-      this.$.ajax_delete.generateRequest();
+      console.log(this.data)
+      if(this.data.video.id){
+        //server
+        this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id + '/video';
+        this.$.ajax_delete.generateRequest();
+
+        //s3
+        var options = {};
+        options.path = 'courses/' + this.data.course.id + '/' + this.data.lecture.id + '/';
+        this.$.ajax_s3_delete.url = '/api/videos/delete_video';
+        this.$.ajax_s3_delete.params = options;
+        this.$.ajax_s3_delete.generateRequest()
+      }
       this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id;
       this.$.ajax_delete.generateRequest();
       page('/admin/courses/'+ this.data.course.id);

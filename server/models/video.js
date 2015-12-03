@@ -98,4 +98,48 @@ module.exports = function (Video) {
     returns: {arg: 'signed_url', type: 'string'}
   });
 
+
+  Video.delete_video = function(path,callback) {
+    var self = this;
+    var params = {
+      Bucket: S3_BUCKET,
+      Prefix: path
+    };
+
+    s3.listObjects(params, function(err, data) {
+      if (err){
+        console.log(err);
+        callback(err);
+        return;
+      } 
+
+      params = {Bucket: S3_BUCKET};
+      params.Delete = {};
+      params.Delete.Objects = [];
+
+      data.Contents.forEach(function(content) {
+        params.Delete.Objects.push({Key: content.Key});
+      });
+
+      s3.deleteObjects(params, function (err, delete_response) {
+        if (err){
+          console.log(err);
+          callback(err);
+          return;
+        }
+
+        console.log(delete_response.Deleted.length);
+        callback(null, delete_response);
+      });
+    });
+  };
+
+  Video.remoteMethod('delete_video', {
+    http: { verb: 'delete' },
+    accepts: [
+      {arg: 'path', type: 'string'}
+    ],
+    returns: {arg: 'delete_response', type: 'string'}
+  });
+
 };
