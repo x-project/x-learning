@@ -53,6 +53,11 @@
       }
     },
 
+    attached: function(){
+      if(!this.selected)
+        this.selected = [];
+    },
+
     on_click_add: function(event){ 
       this.push('selected', { item: this.item });
       this.fire('change', this.selected);    
