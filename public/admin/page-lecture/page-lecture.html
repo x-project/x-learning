@@ -110,14 +110,14 @@
       this.$.ajax_delete.addEventListener('response', function (event) {
           this.upload_complete();
         }.bind(this));
+      this.$.ajax_delete.generateRequest();
+
       //s3
       var options = {};
       options.path = 'courses/' + this.data.course.id + '/' + this.data.lecture.id + '/';
       this.$.ajax_s3_delete.url = '/api/videos/delete_video';
       this.$.ajax_s3_delete.params = options;
-
       this.$.ajax_s3_delete.generateRequest()
-      this.$.ajax_delete.generateRequest();
     },
 
     on_response_create: function(event){

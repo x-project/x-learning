@@ -1,0 +1,69 @@
+<link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="/components/iron-input/iron-input.html">
+<link rel="import" href="../style-form/style-form.html">
+
+<dom-module id="form-course-aims-deck">
+  <template>
+    <style>
+    :host {
+      display: block;
+     }
+     .pill {
+      padding: 4px 8px;
+      border-radius: 2px;
+      display: inline-block;
+      background-color: #eee;
+     }
+     .pill .delete {
+      padding-left: 8px;
+      opacity: .4;
+     }
+     .pill .delete:hover {
+      opacity: 1;
+      cursor: pointer;
+     }
+  </style>
+  <style include="style-form"></style>
+
+    <div class="field">
+      <input class="input" type="text" is="iron-input" bind-value="{{item}}">
+      <button on-click="on_click_add">add</button>
+        <template is="dom-repeat" id='selected' items="{{selected}}" as="select">
+          <div class="pill">
+            <span>{{select.item}}</span>
+            <span on-click="on_click_delete" class="delete">x</span>
+          <div>
+        </template>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'form-course-aims-deck',
+
+    properties: {
+      selected: {
+        type: Array,
+        value: function () { return []; }
+      },
+      item: {
+        type: String
+      }
+    },
+
+    on_click_add: function(event){ 
+      this.push('selected', { item: this.item });
+      this.fire('change', this.selected);    
+    },
+
+    on_click_delete:function(event){
+      var item = this.$.selected.itemForElement(event.target);
+      var index = this.selected.indexOf(item);
+      this.splice('selected', index, 1);
+      this.fire('change', this.selected);
+    },
+
+  });
+</script>

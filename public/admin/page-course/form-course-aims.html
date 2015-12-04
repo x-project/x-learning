@@ -1,0 +1,71 @@
+<link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="/components/iron-input/iron-input.html">
+<link rel="import" href="../style-form/style-form.html">
+<link rel="import" href="form-course-aims-deck.html">
+
+<dom-module id="form-course-aims">
+  <template>
+    <style include="style-form"></style>
+
+    <form id="form" class="form" on-submit="on_submit">
+      <div class="field">
+        <label class="label"> At the end of my course, students will be able to..</label>
+        <form-course-aims-deck on-change="on_change_end"></form-course-aims-deck>
+      </div>
+      <div class="field">
+        <label class="label">Who is advised to follow this course, and who is not ?</label>
+        <form-course-aims-deck on-change="on_change_follow"></form-course-aims-deck>
+      </div>
+      <div class="field">
+        <label class="label">What students need to know or do before you start your course ?</label>
+        <form-course-aims-deck on-change="on_change_need"></form-course-aims-deck>
+      </div>
+    </form>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'form-course-aims',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached: function(){
+      this.course.end = [];
+      this.course.follow = [];
+      this.course.need = [];
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    },
+
+    on_change_end: function(event){
+      this.course.end = event.detail;
+    },
+
+    on_change_follow: function(event){
+      this.course.follow = event.detail;
+    },
+
+    on_change_need: function(event){
+      this.course.need = event.detail;
+    }
+
+  });
+</script>
