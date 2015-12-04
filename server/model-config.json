@@ -52,6 +52,12 @@
   "Payment": {
     "dataSource": "mongo"
   },
+  "Review": {
+    "dataSource": "mongo"
+  },
+  "ReviewReply": {
+    "dataSource": "mongo"
+  },
   "Task": {
     "dataSource": "mongo"
   },

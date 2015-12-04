@@ -1,11 +1,11 @@
 <link rel="import" href="../input-s3/input-s3.html">
+
 <dom-module id="form-course-image">
   <template>
-
-    <input-s3 collection="images" folder="image"></input-s3>
-
+    <input-s3 collection="images" folder="{{folder}}"></input-s3>
   </template>
 </dom-module>
+
 <script>
   Polymer({
 
@@ -19,7 +19,14 @@
       error: {
         type: Object,
         value: function () { return {}; }
+      },
+      folder: {
+        type: String
       }
+    },
+
+    attached: function(event){
+      this.folder = 'courses/' + this.course.id + '/';
     }
 
   });

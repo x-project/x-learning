@@ -1,0 +1,81 @@
+<script src="/components/moment/moment.js"></script>
+<dom-module id="part-countdown">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+
+      .counters {
+        display: inline-block;
+        @apply(--countdown-counters);
+      }
+
+      .counter {
+        display: inline-block;
+        @apply(--countdown-counter);
+      }
+    </style>
+
+    <template is="dom-if" if="{{!ended}}">
+      <div class="counters">
+        <span class="counter" id="days">{{days}}:</span>        
+        <span class="counter" id="hours">{{hours}}:</span>
+        <span class="counter" id="minutes">{{minutes}}:</span>
+        <span class="counter" id="seconds">{{seconds}}</span>
+      </div>
+    </template>  
+
+    <template is="dom-if" if="{{ended}}">
+      <span>0</span>
+    </template>
+
+  </template>
+</dom-module>
+<script>
+
+  Polymer({
+
+    is: 'part-countdown',
+
+    properties: {
+      difference: {
+        type: Number,
+        value: 0
+      },
+      ended: {
+        type: Boolean,
+        value: false
+      },
+      date: {
+        type: String
+      }
+    },
+      
+    attached: function() {
+      this.tick = this.tick.bind(this);
+      this.tick();
+    },
+
+    tick: function () {
+      var date = moment(this.date);
+      var now = moment().format();
+      var time_exipired = moment( date.diff(now) );
+      time_exipired.utcOffset(0)
+
+      if (date.isBefore(now, 'second')) {
+        this.set('ended', true);
+        this.fire('countdown-ended');
+        return;
+      }
+      
+      this.days = date.diff( now, 'days');
+      this.hours = time_exipired.hours();
+      this.minutes = time_exipired.minutes();
+      this.seconds = time_exipired.seconds();
+    
+      setTimeout(this.tick, 1000);
+    }
+
+  });
+</script>

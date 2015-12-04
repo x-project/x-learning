@@ -1,5 +1,6 @@
 <link rel="import" href="../../components/api-user-login/api-user-login.html">
 <link rel="import" href="../../components/button-connect-google/button-connect-google.html">
+<link rel="import" href="../../components/button-connect-facebook/button-connect-facebook.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../style-page/style-page.html">
 <link rel="import" href="form-login.html">
@@ -18,9 +19,12 @@
       <div class="container">
         <a is="app-link" href="/">&larr;</a>
 
-        <button-connect-google client_id="{{clientId}}"
+        <button-connect-google client_id="{{client_google}}"
           on-response="on_connect" on-error="on_error">
         </button-connect-google>
+
+        <button-connect-facebook client_id="{{client_facebook}}"
+         on-response="on_connect" on-error="on_error"></button-connect-facebook>
         
         <h3>Login</h3>
         <form-login id="form" on-submit="on_submit"></form-login>
@@ -36,9 +40,13 @@
     is: 'page-login',
 
     properties: {
-      clientId: {
+      client_google: {
         type: String,
         value: '766830066511-sh61ne68dpnoc1q1n896br3qkp6nnfu2.apps.googleusercontent.com'
+      },
+      client_facebook: {
+        type: String,
+        value: '434734366718822'
       }
     },
 

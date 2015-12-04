@@ -1,0 +1,30 @@
+<link rel="import" href="part-review.html">
+<dom-module id="part-reviews">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    </style>
+
+    <template is="dom-repeat" items="{{reviews}}" as="review">
+      <part-review review="{{review}}"></part-review>
+    </template>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-reviews',
+
+    properties: {
+      reviews: {
+        type: Array,
+        value: function () { return []; }
+      }
+    }
+
+  });
+</script>

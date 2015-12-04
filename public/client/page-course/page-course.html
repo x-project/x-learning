@@ -2,6 +2,7 @@
 <link rel="import" href="part-course-webinars.html">
 <link rel="import" href="part-course-buy.html">
 <link rel="import" href="part-course-info.html">
+<link rel="import" href="part-course-reviews.html">
 <link rel="import" href="../deck-video/deck-video.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../style-page/style-page.html">
@@ -11,7 +12,6 @@
   <template>
     <style include="style-page"></style>
     <style include="style-panel"></style>
-
 
     <layout-client>
       <part-jumbotron class="jumbotron">
@@ -31,6 +31,9 @@
         <div class="panel">
           <h3>Lectures</h3>
           <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
+        </div>
+        <div class="panel">
+          <part-course-reviews></part-course-reviews>
         </div>
       </div>
     </layout-client>

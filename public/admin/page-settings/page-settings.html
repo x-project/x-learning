@@ -3,6 +3,8 @@
 <link rel="import" href="panel-settings-email.html">
 <link rel="import" href="panel-settings-profile.html">
 <link rel="import" href="panel-settings-password.html">
+<link rel="import" href="panel-settings-image.html">
+
 <dom-module id="page-settings">
   <template>
     <style include="style-page"></style>
@@ -10,6 +12,7 @@
     <layout-admin>
       <div class="container">
         <h1>Profile settings</h1>
+        <panel-settings-image user="{{data.user}}"></panel-settings-image>
         <panel-settings-profile user="{{data.user}}" ></panel-settings-profile>
         <panel-settings-email user="{{data.user}}"></panel-settings-email>
         <panel-settings-password user="{{data.user}}"></panel-settings-password>
@@ -28,10 +31,7 @@
         type: Object,
         value: function () { return {}; }
       }
-    },
-    attached:function(){
-      console.log(this.data.user)
     }
-
+    
   });
 </script>

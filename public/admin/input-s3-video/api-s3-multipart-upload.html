@@ -7,6 +7,7 @@
     <iron-ajax id="createMultiPart" method="GET" url="{{url}}" params="{{params}}"
       last-response="{{response_get}}" on-response="on_response_get">
     </iron-ajax>
+    
     <template is="dom-if" if="{{response_get}}">
         <progress value="{{chunk_progress}}" max="{{file_size}}"></progress>
     </template>
@@ -48,9 +49,6 @@
         type: Object,
         notify: true
       }
-    },
-    attached:function(){
-      console.log(this.data)
     },
 
     send: function (file) {
@@ -99,8 +97,15 @@
       });
     },
 
-    upload_part: function (url, options) {
+    upload_part: function (url, options, retry) {
+      var self = this;
       return new Promise(function(resolve,reject){
+
+        if (retry == 0){
+          reject({ message: "error"});
+          return;
+        }
+
         var ajax = document.createElement('iron-ajax');
         ajax.url = url;
         ajax.method = 'PUT';
@@ -115,7 +120,13 @@
         });
 
         ajax.addEventListener('error', function (event) {
-          rejcet(ajax.lastError);
+          if (retry){
+            retry--;
+          }else{
+            retry = 3;
+            console.log("error" + retry);
+          }
+          self.upload_part(url,options,retry);
         });
 
         ajax.generateRequest();
@@ -222,7 +233,7 @@
             console.log(err);
           })
 
-        })
+      })
         .then(function(res){
           var options_part = {
             Key: fileName,
@@ -234,7 +245,7 @@
             .then(function (res) {
               var options = {
                 file_name: fileName,
-                courses_id: self.data.course.id
+                path: self.folder
               };
               return self.start_trascoder(options);
             });

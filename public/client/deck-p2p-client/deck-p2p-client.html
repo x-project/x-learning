@@ -27,7 +27,6 @@
       }
     </style>
   
-    <h2>Realtime {{data.title}}</h2>
     <div id="container">
       <div id="videos">
         <video src="{{my_stream}}" muted="true" autoplay></video>
@@ -73,7 +72,8 @@
         || navigator.webkitGetUserMedia 
         || navigator.mozGetUserMedia;
    
-      var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
+      // var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
+      var peer = this.peer = new Peer({host: 'localhost', port: 9000, path: '/peerjs'});
 
       this.start();
     },

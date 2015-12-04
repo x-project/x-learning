@@ -13,7 +13,7 @@ module.exports = function (Transcoder) {
   
   var elastictranscoder = new aws.ElasticTranscoder();
 
-  Transcoder.createJob = function (file_name,courses_id,callback){
+  Transcoder.createJob = function (file_name,path,callback){
     
     var input_params = {
       Input: { 
@@ -25,7 +25,7 @@ module.exports = function (Transcoder) {
         Container: 'auto' 
       }, 
       PipelineId: PIPELINE_ID, // specifies output/input buckets in S3 
-      OutputKeyPrefix: 'courses/' + courses_id + '/',
+      OutputKeyPrefix: path,
       Output: { 
         Key: file_name, 
         PresetId: PRESET_ID, // specifies the output video format
@@ -50,7 +50,7 @@ module.exports = function (Transcoder) {
     http: { verb: 'put' },
     accepts: [
       {arg: 'file_name', type: 'string'},
-      {arg: 'courses_id', type: 'string'}
+      {arg: 'path', type: 'string'}
     ],
     returns: {arg: 'dataId', type: 'string'}
   });

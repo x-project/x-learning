@@ -7,15 +7,16 @@
 <link rel="import" href="form-lecture-actions.html">
 <link rel="import" href="form-lecture-info.html">
 <link rel="import" href="form-lecture-video.html">
+<link rel="import" href="../deck-video/deck-video.html">
+
 <dom-module id="page-lecture">
   <template>
     <style include="style-page"></style>
     <style include="style-panel"></style>
      
     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
-
+    <iron-ajax id="ajax_s3_delete" method="DELETE"></iron-ajax>
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
-
     <iron-ajax id="ajax_video_post" method="POST" handle-as="json" content-type="application/json" last-response="{{data.video}}" on-response="on_response_create"> </iron-ajax>
 
     <api-model-update id="update" collection="lectures" model-id="{{data.lecture.id}}"
@@ -32,12 +33,15 @@
           <form-lecture-info lecture="{{data.lecture}}"></form-lecture-info>
         </div>
         <div class="panel">
+          <template is="dom-if" if="{{data.video.id}}">
+            <h3>Video lecture already exist</h3>
+            <deck-video src="{{data.video.url}}"></deck-video>
+            <h3>Change video lecture</h3>
+            <form-lecture-video data="{{data}}" on-upload-video="on_upload_video"></form-lecture-video>
+          </template>
           <template is="dom-if" if="{{!data.video.id}}">
             <form-lecture-video data="{{data}}" on-upload-video="on_upload_video"></form-lecture-video>
           </template>
-           <template is="dom-if" if="{{data.video.id}}">
-           <h3>Video lecture already exist with id: {{data.video.id}}</h3>
-           </template>
         </div>
       </div>
     </layout-admin>
@@ -73,22 +77,47 @@
     },
 
     on_try_delete_lecture: function (event) {
-      console.log(event)
       event.stopPropagation();
-      this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id + '/video';
-      this.$.ajax_delete.generateRequest();
+      console.log(this.data)
+      if(this.data.video.id){
+        this.remove_video();
+      }
       this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id;
       this.$.ajax_delete.generateRequest();
       page('/admin/courses/'+ this.data.course.id);
     },
 
     on_upload_video: function(event){
-      //test
-      // this.video.url = event.detail;
-      this.data.video.url='http://d1s3yn3kxq96sy.cloudfront.net/bigbuckbunny/index.m3u8';
+      // 'http://d1s3yn3kxq96sy.cloudfront.net/bigbuckbunny/index.m3u8'
+      this.data.video.title = event.detail.title;
+      this.data.video.url = event.detail.url;
       this.$.ajax_video_post.body = this.data.video;
       this.$.ajax_video_post.url='/api/lectures/'+ this.data.lecture.id +'/video';
+      
+      if(this.data.video.id){
+        this.remove_video();
+      }else{
+        this.upload_complete();
+      } 
+    },
+
+    upload_complete: function(){
       this.$.ajax_video_post.generateRequest();
+    },
+
+    remove_video: function(){
+      this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id + '/video';
+      this.$.ajax_delete.addEventListener('response', function (event) {
+          this.upload_complete();
+        }.bind(this));
+      this.$.ajax_delete.generateRequest();
+
+      //s3
+      var options = {};
+      options.path = 'courses/' + this.data.course.id + '/' + this.data.lecture.id + '/';
+      this.$.ajax_s3_delete.url = '/api/videos/delete_video';
+      this.$.ajax_s3_delete.params = options;
+      this.$.ajax_s3_delete.generateRequest()
     },
 
     on_response_create: function(event){

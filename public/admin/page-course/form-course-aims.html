@@ -1,0 +1,67 @@
+<link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="/components/iron-input/iron-input.html">
+<link rel="import" href="../style-form/style-form.html">
+<link rel="import" href="form-course-aims-deck.html">
+
+<dom-module id="form-course-aims">
+  <template>
+    <style include="style-form"></style>
+
+    <form id="form" class="form" on-submit="on_submit">
+      <div class="field">
+        <label class="label"> At the end of my course, students will be able to..</label>
+        <form-course-aims-deck on-change="on_change_skill" selected="{{course.skill}}"></form-course-aims-deck>
+      </div>
+      <div class="field">
+        <label class="label">Who is advised to follow this course, and who is not ?</label>
+        <form-course-aims-deck on-change="on_change_audience" selected="{{course.audience}}"></form-course-aims-deck>
+      </div>
+      <div class="field">
+        <label class="label">What students need to know or do before you start your course ?</label>
+        <form-course-aims-deck on-change="on_change_need_skill" selected="{{course.need_skill}}"></form-course-aims-deck>
+      </div>
+    </form>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'form-course-aims',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    ready: function(){
+      this.course.skill = [];
+      this.course.audience = [];
+      this.course.need_skill = [];
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    },
+
+    on_change_skill: function(event){
+      this.course.skill = event.detail;
+    },
+
+    on_change_audience: function(event){
+      this.course.audience = event.detail;
+    },
+
+    on_change_need_skill: function(event){
+      this.course.need_skill = event.detail;
+    }
+
+  });
+</script>

@@ -14,6 +14,8 @@
 <link rel="import" href="../page-upload/page-upload.html">
 <link rel="import" href="../page-payment/page-payment.html">
 <link rel="import" href="../page-webinar/page-webinar.html">
+<link rel="import" href="../page-reviews/page-reviews.html">
+<link rel="import" href="../page-review/page-review.html">
 
 
 <dom-module id="app-boot">
@@ -159,10 +161,6 @@
     },
 
     '/profile': function (context) {
-      // if (!context.session.token) {
-      //   page('/');
-      //   return;
-      // }
       this.get_model({
           collection: 'members',
           modelId: this.session.get('user').id,
@@ -182,6 +180,30 @@
     '/login': function (context) {
       context.page = 'page-login';
       this.open(context);
+    },
+
+    '/reviews': function (context) {
+      this.init(context);
+      context.page = 'page-reviews';
+      this.open(context);
+    },
+
+    '/reviews/:review_id': function (context) {
+      this.init(context);
+      this.get_model({
+          collection: 'reviews',
+          modelId: context.params.review_id,
+          include: ['member', 'course']
+        })
+        .then(function (model) {
+          context.page = 'page-review';
+          context.data = {};
+          context.data.review = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (err) {
+          this.redirect('/404');
+        });
     },
 
     '/signup': function (context) {

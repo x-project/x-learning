@@ -4,7 +4,10 @@ var path = require('path');
 var env = require('node-env-file');
 var auth = require('./auth/auth');
 
+var ExpressPeerServer = require('peer').ExpressPeerServer;
+
 var app = module.exports = loopback();
+var server = require('http').createServer(app);
 
 env(__dirname + '/.env');
 
@@ -21,6 +24,8 @@ app.start = function() {
   });
 };
 
+
+
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
 boot(app, __dirname, function(err) {
@@ -30,6 +35,18 @@ boot(app, __dirname, function(err) {
 
 
   app.use(loopback.static(path.resolve(__dirname, '../public')));
+
+  //sns
+  // require('./sns/listener')(app);
+
+
+  // peerjs server
+  var options = {
+      debug: true
+  }
+  app.use('/peerjs', ExpressPeerServer(server, options));
+
+  server.listen(9000);
 
   // start the server if `$ node server.js`
   if (require.main === module)

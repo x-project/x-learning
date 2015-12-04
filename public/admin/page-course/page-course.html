@@ -8,6 +8,7 @@
 <link rel="import" href="form-course-actions.html">
 <link rel="import" href="form-course-info.html">
 <link rel="import" href="form-course-image.html">
+<link rel="import" href="form-course-aims.html">
 <link rel="import" href="list-course-lectures.html">
 <link rel="import" href="list-course-webinars.html">
 
@@ -54,6 +55,10 @@
             Change course image<form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
           </template>
         </div>
+         <div class="panel">
+          <h3>Aims</h3>
+          <form-course-aims course="{{course}}"></form-course-aims>
+        </div>
         <div class="panel">
           <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
           <h3>Lectures</h3>
@@ -76,6 +81,10 @@
 
     properties: {
       data: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      aims: {
         type: Object,
         value: function () { return {}; }
       },
