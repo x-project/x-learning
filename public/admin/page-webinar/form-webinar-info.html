@@ -5,29 +5,40 @@
 <dom-module id="form-webinar-info">
   <template>
     <style include="style-form"></style>
+    <style>
+      input, iron-autogrow-textarea {
+        box-sizing: border-box;
+      }
+      search-course-category {
+        --input-search: {
+          @apply(--form-control);
+          box-sizing: border-box;
+        };
+      }
+    </style>
 
-    <form id="form" class="form" on-submit="on_submit">
+    <form on-submit="on_submit">
       <div class="field">
         <label class="label">Title</label>
-        <input class="input" id="title" type="text" is="iron-input" bind-value="{{webinar.title}}">
+        <input class="form-control" id="title" type="text" is="iron-input" bind-value="{{webinar.title}}">
         <input-errors property="title" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
         <label class="label">Description</label>
         <div class="detail">
-          <iron-autogrow-textarea is="iron-input" bind-value="{{webinar.description}}" rows="4">
+          <iron-autogrow-textarea class="form-control" is="iron-input" bind-value="{{webinar.description}}" rows="4">
           </iron-autogrow-textarea>
         </div>
         <input-errors property="description" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
         <label class="label">Duration(mn)</label>
-        <input class="input" id="duration" type="text" is="iron-input" bind-value="{{webinar.duration}}">
+        <input class="form-control" id="duration" type="text" is="iron-input" bind-value="{{webinar.duration}}">
         <input-errors property="duration" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
         <label class="label">Start in:</label>
-        <input class="input" type="datetime-local" is="iron-input" bind-value="{{webinar.data}}">
+        <input class="form-control" type="datetime-local" is="iron-input" bind-value="{{webinar.data}}">
         <input-errors property="duration" error="{{error.details}}"></input-errors>
       </div>
     </form>
