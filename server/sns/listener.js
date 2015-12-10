@@ -43,7 +43,8 @@ module.exports = function (sns) {
       s3.deleteObjects(s3_params,deleteObjCallback)
       sqs.deleteMessage(deleteMessageParams, deleteMessageCallback);
     }
-    run_handler();
+
+    setTimeout(run_handler, 1000 * 60 * 5);
   }
 
   function deleteMessageCallback(err, data) {

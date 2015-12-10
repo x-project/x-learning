@@ -37,7 +37,7 @@ boot(app, __dirname, function(err) {
   app.use(loopback.static(path.resolve(__dirname, '../public')));
 
   //sns
-  // require('./sns/listener')(app);
+  require('./sns/listener')(app);
 
 
   // peerjs server
