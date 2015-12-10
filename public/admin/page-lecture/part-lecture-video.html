@@ -1,0 +1,38 @@
+<link rel="import" href="form-lecture-video.html">
+<link rel="import" href="../deck-video/deck-video.html">
+
+<dom-module id="part-lecture-video">
+  <template>
+    <style include="style-panel"></style>
+    <div class="panel">
+      <template is="dom-if" if="{{data.video.id}}">
+        <h3>Video lecture already exist</h3>
+        <deck-video src="{{data.video.url}}"></deck-video>
+        <h3>Change video lecture</h3>
+        <form-lecture-video data="{{data}}" on-upload-video="on_upload_video"></form-lecture-video>
+      </template>
+      <template is="dom-if" if="{{!data.video.id}}">
+        <form-lecture-video data="{{data}}" on-upload-video="on_upload_video"></form-lecture-video>
+      </template>
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-lecture-video',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_submit: function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+  });
+</script>

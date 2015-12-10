@@ -1,0 +1,33 @@
+<dom-module id="part-lecture-actions">
+  <template>
+  <style include="style-button"></style>
+
+    <button class="btn btn-secondary" on-click="on_click">save</button>
+    <button class="btn btn-secondary" on-click="on_click_delete">Delete course</button>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-lecture-actions',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function (){ return {}; }
+      }
+    },
+
+    on_click: function (event){
+      event.stopPropagation();
+      this.fire('try-save');
+    },
+
+    on_click_delete:function(event){
+      event.stopPropagation();
+      this.fire('try-delete-lecture');
+    }
+
+  });
+</script>

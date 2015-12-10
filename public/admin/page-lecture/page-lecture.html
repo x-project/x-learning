@@ -4,10 +4,10 @@
 <link rel="import" href="../input-s3-video/input-s3-video.html">
 <link rel="import" href="../style-page/style-page.html">
 <link rel="import" href="../style-panel/style-panel.html">
-<link rel="import" href="form-lecture-actions.html">
-<link rel="import" href="form-lecture-info.html">
-<link rel="import" href="form-lecture-video.html">
-<link rel="import" href="../deck-video/deck-video.html">
+
+<link rel="import" href="part-lecture-actions.html">
+<link rel="import" href="part-lecture-info.html">
+<link rel="import" href="part-lecture-video.html">
 
 <dom-module id="page-lecture">
   <template>
@@ -23,27 +23,12 @@
       data="{{data.lecture}}" response="{{response}}" error="{{error}}">
     </api-model-update>
 
-    <layout-admin>
-      <div class="container">
+    <layout-admin on-try-save="on_try_save" on-try-delete-lecture='on_try_delete_lecture'>
         <h1>Edit course: {{data.course.title}} lecture: {{data.lecture.title}}</h1>
-        <div>
-          <form-lecture-actions on-try-save="on_try_save" on-try-delete-lecture='on_try_delete_lecture'></form-lecture-actions>
-        </div>
-        <div class="panel">
-          <form-lecture-info lecture="{{data.lecture}}"></form-lecture-info>
-        </div>
-        <div class="panel">
-          <template is="dom-if" if="{{data.video.id}}">
-            <h3>Video lecture already exist</h3>
-            <deck-video src="{{data.video.url}}"></deck-video>
-            <h3>Change video lecture</h3>
-            <form-lecture-video data="{{data}}" on-upload-video="on_upload_video"></form-lecture-video>
-          </template>
-          <template is="dom-if" if="{{!data.video.id}}">
-            <form-lecture-video data="{{data}}" on-upload-video="on_upload_video"></form-lecture-video>
-          </template>
-        </div>
-      </div>
+        <part-lecture-actions></part-lecture-actions>
+        <part-lecture-info lecture="{{data.lecture}}"></part-lecture-info>
+        <part-lecture-video data="{{data}}"></part-lecture-video>
+       
     </layout-admin>
 
   </template>
@@ -72,6 +57,7 @@
         this.$.ajax_put.url='/api/courses/'+ this.data.course.id +'/lectures';
         this.$.ajax_put.generateRequest();
       }
+      page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
       //test
       // this.on_upload_video(event);
     },
