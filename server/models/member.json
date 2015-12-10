@@ -29,6 +29,9 @@
     },
     "location": {
       "type": "String"
+    },
+    "phone": {
+      "type": "Number"
     }
   },
   "relations": {
@@ -115,8 +118,19 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "get_token_email"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "get_token_sms"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "try_enter_sms"
     }
-
   ],
   "methods": [],
   "validations": []

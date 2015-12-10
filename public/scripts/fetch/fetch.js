@@ -23,8 +23,7 @@ Model.create = function (url, data, token) {
   .then(status);
 }
 
-Model.update = function (url, model_id, data) {
-  url = url + '/' + model_id;
+Model.update = function (url, data) {
   return fetch(url, {
     method: 'put',
     headers: {
@@ -35,9 +34,42 @@ Model.update = function (url, model_id, data) {
   .then(status);
 }
 
-Model.delete = function (url, model_id) {
-  url = url + '/' + model_id;
+Model.delete = function (url) {
   return fetch(url, {
     method: 'delete'
   })
+}
+
+Model.find = function (url, filter, token) {
+  var _get_filter = function () {
+    return {
+      where: filter.where,
+      order: filter.order,
+      skip: filter.page ? filter.page * filter.perpage : 0,
+      limit: filter.perpage,
+      include: filter.include
+    };
+  };
+  url = url + '?' + 'filter=' + JSON.stringify(_get_filter());
+  return fetch(url, {
+    method: 'get',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token
+    },
+  })
+  .then(status);
+}
+
+Model.count = function (url, filter, token) {
+  return fetch(url, {
+    method: 'get',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token
+    },
+  })
+  .then(status);
 }
