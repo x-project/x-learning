@@ -6,12 +6,15 @@
 <link rel="import" href="../page-category/page-category.html">
 <link rel="import" href="../page-contact/page-contact.html">
 <link rel="import" href="../page-course/page-course.html">
+<link rel="import" href="../page-forgot/page-forgot.html">
 <link rel="import" href="../page-home/page-home.html">
 <link rel="import" href="../page-lecture/page-lecture.html">
 <link rel="import" href="../page-login/page-login.html">
 <link rel="import" href="../page-profile/page-profile.html">
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-upload/page-upload.html">
+<link rel="import" href="../page-passwordless-phone/page-passwordless-phone.html">
+<link rel="import" href="../page-passwordless-email/page-passwordless-email.html">
 <link rel="import" href="../page-payment/page-payment.html">
 <link rel="import" href="../page-webinar/page-webinar.html">
 <link rel="import" href="../page-reviews/page-reviews.html">
@@ -52,6 +55,12 @@
       this.session.unset('user');
       this.session.unset('token');
       page('/');
+    },
+
+    '/forgot': function (context) {
+      this.init(context);
+      context.page = 'page-forgot';
+      this.open(context);
     },
 
     '/': function (context) {
@@ -158,6 +167,18 @@
         .catch(function (error) {
           this.redirect('/404');
         }.bind(this)); 
+    },
+
+    '/passwordless_phone': function (context) {
+      this.init(context);
+      context.page = 'page-passwordless-phone';
+      this.open(context);
+    },
+
+    '/passwordless_email': function (context) {
+      this.init(context);
+      context.page = 'page-passwordless-email';
+      this.open(context);
     },
 
     '/profile': function (context) {

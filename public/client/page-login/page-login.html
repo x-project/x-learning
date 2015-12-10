@@ -19,15 +19,35 @@
       <div class="container">
         <a is="app-link" href="/">&larr;</a>
 
-        <button-connect-google client_id="{{client_google}}"
-          on-response="on_connect" on-error="on_error">
-        </button-connect-google>
-
-        <button-connect-facebook client_id="{{client_facebook}}"
-         on-response="on_connect" on-error="on_error"></button-connect-facebook>
         
-        <h3>Login</h3>
-        <form-login id="form" on-submit="on_submit"></form-login>
+          <div>
+            <a is="app-link" href="/passwordless_email">passwordless emal</a>
+          </div>
+          <div>
+            <a is="app-link" href="/passwordless_phone">passwordless phone</a>
+          </div>
+
+          <div>
+            or
+          </div>
+          <div>
+            <form-login id="form" on-submit="on_submit"></form-login>
+            <button-connect-google client_id="{{client_google}}"
+              on-response="on_connect" on-error="on_error">
+            </button-connect-google>
+
+            <button-connect-facebook client_id="{{client_facebook}}"
+             on-response="on_connect" on-error="on_error">
+             </button-connect-facebook>
+          </div>
+          <div>
+            <a is="app-link" href="/signup">not registered?</a>
+          </div>
+          <div>
+            <a is="app-link" href="/forgot">forgot password?</a>
+          </div>
+
+
       </div>
     </layout-client>
 
