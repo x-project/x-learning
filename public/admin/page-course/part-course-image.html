@@ -1,0 +1,40 @@
+<link rel="import" href="form-course-image.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
+
+<dom-module id="part-course-image">
+  <template>
+    <style include="style-panel"></style>
+    <style>
+        .image {
+        background-color: #eee;
+        height: 100px;
+        width: 20%;
+      }
+    </style>
+    <div class="panel">
+      <h3>Image</h3>
+      <template is="dom-if" if="{{!course.cover}}">
+        <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
+      </template>
+      <template is="dom-if" if="{{course.cover}}">
+        <iron-image class="image" preload src="{{course.cover}}" sizing="contain"></iron-image>
+        Change course image<form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
+      </template>
+  </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-course-image',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>

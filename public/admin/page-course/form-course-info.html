@@ -1,34 +1,44 @@
 <link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="/components/iron-input/iron-input.html">
-<link rel="import" href="../style-form/style-form.html">
 <link rel="import" href="search-course-category.html">
 
 <dom-module id="form-course-info">
   <template>
     <style include="style-form"></style>
+    <style>
+      input, iron-autogrow-textarea {
+        box-sizing: border-box;
+      }
+      search-course-category {
+        --input-search: {
+          @apply(--form-control);
+          box-sizing: border-box;
+        };
+      }
+    </style>
 
-    <form id="form" class="form" on-submit="on_submit">
+    <form on-submit="on_submit">
       <div class="field">
         <label class="label">Title</label>
-        <input class="input" id="title" type="text" is="iron-input" bind-value="{{course.title}}">
+        <input class="form-control" id="title" type="text" is="iron-input" bind-value="{{course.title}}">
         <input-errors property="title" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
         <label class="label">Description</label>
         <div class="detail">
-          <iron-autogrow-textarea is="iron-input" bind-value="{{course.description}}" rows="4">
+          <iron-autogrow-textarea class="form-control" is="iron-input" bind-value="{{course.description}}" rows="4">
           </iron-autogrow-textarea>
         </div>
         <input-errors property="description" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
         <label class="label">Language</label>
-        <input class="input" id="language" type="text" is="iron-input" bind-value="{{course.language}}">
+        <input class="form-control" id="language" type="text" is="iron-input" bind-value="{{course.language}}">
         <input-errors property="title" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
         <label class="label">Cost</label>
-        <input class="input" id="cost" type="text" is="iron-input" bind-value="{{course.cost}}">
+        <input class="form-control" id="cost" type="text" is="iron-input" bind-value="{{course.cost}}">
         <input-errors property="cost" error="{{error.details}}"></input-errors>
       </div>
        <div class="field">

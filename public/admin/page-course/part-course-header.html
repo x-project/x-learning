@@ -1,0 +1,23 @@
+<dom-module id="part-course-header">
+  <template>
+
+  <div>
+    <h2>Course / {{course.title}}</h2>
+  </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-course-header',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>

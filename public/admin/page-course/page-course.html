@@ -1,27 +1,22 @@
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/app-session/app-session.html">
-<link rel="import" href="../../components/iron-image/iron-image.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
-<link rel="import" href="../style-page/style-page.html">
-<link rel="import" href="../style-panel/style-panel.html">
-<link rel="import" href="form-course-actions.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-form/style-form.html">
+
 <link rel="import" href="form-course-info.html">
-<link rel="import" href="form-course-image.html">
-<link rel="import" href="form-course-aims.html">
 <link rel="import" href="list-course-lectures.html">
 <link rel="import" href="list-course-webinars.html">
+<link rel="import" href="part-course-actions.html">
+<link rel="import" href="part-course-header.html">
+<link rel="import" href="part-course-info.html">
+<link rel="import" href="part-course-image.html">
+<link rel="import" href="part-course-aims.html">
 
 <dom-module id="page-course">
   <template>
-    <style>
-        .image {
-        background-color: #eee;
-        height: 100px;
-        width: 20%;
-      }
-    </style>
-    <style include="style-page"></style>
     <style include="style-panel"></style>
     
     <app-session id="session"></app-session>
@@ -30,35 +25,20 @@
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{course}}" on-response="on_response_create"> </iron-ajax>
 
     <api-model-update id="update" collection="courses" model-id="{{course.id}}"
-      data="{{course}}" response="{{response}}" error="{{error}}">
+      data="{{course}}" response="{{course}}" error="{{error}}" on-response="on_response_update">
     </api-model-update>
 
      <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
 
-    <layout-admin>
-      <div class="container">
-        <h1>Edit course {{course.title}}</h1>
-        <div>
-          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" on-try-preview="on_try_preview" on-try-delete="on_try_delete" published="{{data.course.publish}}"></form-course-actions>
-        </div>
-        <div class="panel">
-          <h3>Info</h3>
-          <form-course-info course="{{course}}" error="{{error}}"></form-course-info>
-        </div>
-        <div class="panel">
-          <h3>Image</h3>
-          <template is="dom-if" if="{{!course.cover}}">
-            <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
-          </template>
-          <template is="dom-if" if="{{course.cover}}">
-            <iron-image class="image" preload src="{{course.cover}}" sizing="contain"></iron-image>
-            Change course image<form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
-          </template>
-        </div>
-         <div class="panel">
-          <h3>Aims</h3>
-          <form-course-aims course="{{course}}"></form-course-aims>
-        </div>
+    <layout-admin on-try-save="on_try_save" on-try-publish="on_try_publish"
+      on-try-preview="on_try_preview" on-try-delete="on_try_delete">
+        <h1>Course</h1>
+        <part-course-header course="{{course}}"></part-course-header>
+        <part-course-actions course="{{course}}"></part-course-actions>
+        <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
+        <part-course-image course="{{course}}"></part-course-image>
+        <part-course-aims course="{{course}}"></part-course-aims>
+
         <div class="panel">
           <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
           <h3>Lectures</h3>
@@ -68,7 +48,6 @@
           <a is="app-link" href="/admin/courses/{{course.id}}/webinar/new">ADD WEBINAR</a>
           <h3>Webinars</h3>
           <list-course-webinars course="{{course}}" on-try-delete-webinar="on_try_delete_webinar"></list-course-webinars>
-        </div>
       </div>
     </layout-admin>
 
@@ -115,6 +94,11 @@
         console.log(this.course)
         this.$.update.send();
       }
+    },
+
+    on_response_update: function (event) {
+      event.stopPropagation();
+      page('/admin/courses/' + this.course.id);
     },
 
     on_try_preview: function (event) {

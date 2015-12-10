@@ -6,8 +6,6 @@
 <dom-module id="form-course-aims">
   <template>
     <style include="style-form"></style>
-
-    <form id="form" class="form" on-submit="on_submit">
       <div class="field">
         <label class="label"> At the end of my course, students will be able to..</label>
         <form-course-aims-deck on-change="on_change_skill" selected="{{course.skill}}"></form-course-aims-deck>
@@ -20,7 +18,6 @@
         <label class="label">What students need to know or do before you start your course ?</label>
         <form-course-aims-deck on-change="on_change_need_skill" selected="{{course.need_skill}}"></form-course-aims-deck>
       </div>
-    </form>
 
   </template>
 </dom-module>
