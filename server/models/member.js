@@ -289,7 +289,6 @@ module.exports = function (Member) {
 
   var get_reviews = function (data) {
     var review;
-    console.log(data)
     review = {};
     review.member_id = data.member.id;
     review.course_id = data.course.id;
@@ -491,7 +490,6 @@ var get_task_braintree = function (data) {
       var token = jwt.encode(payload, process.env.TOKEN_SECRET_ENTER_SMS);
       data.token =  token;
       data.customer.last_sms_token = token;
-      console.log(data.customer);
       Member.upsert(data.customer, function (err, model) {
         data.customer = model;
         setImmediate(next, err);
@@ -517,7 +515,6 @@ var get_task_braintree = function (data) {
 
   Member.try_enter_sms = function (phone, code, callback) {
     var query = { where: {phone: phone} };
-    console.log(phone,code)
     Member.findOne(query, function(err, customer) {
       if (!customer) {
         callback(null, {invalid_input: 'customer not found', success: false});
