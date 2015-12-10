@@ -109,6 +109,12 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "checkout_braintree"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "get_token_email"
     }
 
   ],

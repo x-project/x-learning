@@ -1,6 +1,10 @@
 var loopback = require('loopback');
 var braintree = require('braintree');
 var async = require('async');
+var mandrill = require('mandrill-api/mandrill');
+var mandrill_client = new mandrill.Mandrill(process.env.MANDRILL_KEY);
+var moment = require('moment');
+var jwt = require('jwt-simple');
 
 var gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
@@ -326,6 +330,112 @@ var get_task_braintree = function (data) {
     };
   };
 
+  // passwordless for email
+  Member.get_token_email = function (email, first_name, last_name, callback) {
+    var data = {};
+    data.email = email;
+    data.first_name = first_name;
+    data.last_name = last_name;
+    data.new_customer = {
+      first_name: 'unknown',
+      last_name: 'unknown',
+      email: data.email,
+      password: '3208932443232987832932'
+    };
+
+    async.waterfall([
+      get_customer_by_email(data),
+      create_new_customer(data),
+      create_token(data),
+      send_signed_url_by_email(data)
+    ],
+    function (err) {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      callback(null, data.email_result);
+    });
+  };
+
+  var create_new_customer = function (data) {
+    return function (next) {
+      if (data.customer != null) {
+        next();
+        return;
+      }
+      Member.create(data.new_customer, function (err, model) {
+        data.customer = model;
+        setImmediate(next, err);
+      });
+    };
+  };
+
+  var get_customer_by_email = function (data) {
+    return function (next) {
+      var query = { where: {email: data.email} };
+      Member.findOne(query, function (err, model) {
+        data.customer = model;
+        setImmediate(next, err);
+      });
+    };
+  };
+
+  var create_token = function (data) {
+    return function (next) {
+      var payload = {
+        sub: data.customer.id,
+        iat: moment().unix(),
+        exp: moment().add(1, 'days').unix()
+      };
+      var token = jwt.encode(payload, process.env.TOKEN_SECRET_ENTER_EMAIL);
+      data.token =  token;
+      data.customer.last_enter_token = token;
+      Member.upsert(data.customer, function (err, model) {
+        data.customer = model;
+        setImmediate(next, err);
+      });
+    };
+  };
+
+  var send_signed_url_by_email = function (data) {
+    return function (next) {
+      var message = prepare_mail(data.email, data.token);
+      mandrill_client.messages.send({"message": message},
+        function (res) {
+          data.email_result = res;
+          setImmediate(next, null);
+        },
+        function (err) {
+          setImmediate(next, err);
+        }
+      );
+    };
+  };
+
+  var prepare_mail = function (destination_email, enter_token) {
+    var host = 'http://localhost:3000/';
+    var link = host + 'enter?token=' + enter_token;
+    var signed_url = '<a href="' + link + '">' + link + '</a>';
+    var message = {
+      "html": signed_url,
+      "text": "click from url for sign in",
+      "subject": "signed url",
+      "from_email": process.env.MY_EMAIL,
+      "from_name": "x-learning",
+      "to": [{
+              "email": destination_email,
+              "name": "x-learning",
+              "type": "to"
+          }],
+      "headers": {
+          "Reply-To": process.env.MY_EMAIL
+      },
+      "subaccount": "12345",
+    };
+    return message;
+  };
+
 
   Member.remoteMethod('change_password', {
     http: { path: '/change_password', verb: 'post' },
@@ -346,7 +456,15 @@ var get_task_braintree = function (data) {
     // TODO: send email to user
   });
 
-
+  Member.remoteMethod('get_token_email', {
+    accepts: [
+      { arg: 'email', type: 'string', required: true },
+      { arg: 'first_name', type: 'string', required: true },
+      { arg: 'last_name', type: 'string', required: true }
+    ],
+    returns: { arg: 'result', type: 'object' },
+    http: { path: '/enter_token', verb: 'post' }
+  });
 
   Member.remoteMethod('get_client_token', {
     accepts: { arg: 'customer_id', type: 'string', required: true },
