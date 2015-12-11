@@ -8,6 +8,7 @@
 <link rel="import" href="part-home-webinar.html">
 <link rel="import" href="../part-jumbotron/part-jumbotron.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
 
 <dom-module id="page-home">
   <template>
@@ -40,20 +41,23 @@
 
     properties: {
       courses:{
-        type:Object
+        type: Object,
+        value: function() { return {}; }
       }
     },
 
-    attached: function () {},
+    attached: function () {
+      console.log(this.courses)
+    },
 
     on_try_find:function(event){
-      this.$.ajax_find.where={"title" : {"like": event.detail ,"options":"i"} };
+      this.$.ajax_find.where = { and: [{"title" : {"like": event.detail ,"options":"i"}},{"publish": true}] };
       this.$.ajax_find.send();
     },
 
     on_response:function(event){
       this.courses=event.detail;
-      page('/',event.detail);
+      page('/', event.detail);
     }
 
   });

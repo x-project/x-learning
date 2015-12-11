@@ -1,11 +1,20 @@
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-form/style-form.html">
+
 <dom-module id="part-home-find">
   <template>
     <style include="style-panel"></style>
-
+    <style include="style-button"></style>
+    <style include="style-form"></style>
+    <style>
+    input {
+        box-sizing: border-box;
+      }
+    </style>
     <div class="panel">
       <label class="label">Find course</label>
-      <input class="input" is="iron-input" type="text" bind-value="{{course}}">
-      <button class="btn" on-click="on_click">Find</button>
+      <input class="form-control" is="iron-input" type="text" bind-value="{{course}}">
+      <button class="btn btn-secondary" on-click="on_click">Find</button>
     </div>
   </template>
 </dom-module>

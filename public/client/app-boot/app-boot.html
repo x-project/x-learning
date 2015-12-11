@@ -65,6 +65,9 @@
 
     '/': function (context) {
       context.page = 'page-home';
+      context.data = {};
+      if(context.state.length)
+        context.data.courses = context.state;
       this.open(context);
     },
 
