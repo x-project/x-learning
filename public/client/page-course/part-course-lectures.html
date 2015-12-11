@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <template id="course" is="dom-repeat" items="{{lectures}}" as="lecture">
+            <template id="lecture" is="dom-repeat" items="{{lectures}}" as="lecture">
               <tr class="text-left" on-click="on_click">
                 <th scope="row">Lecture {{index}}</th>
                 <td>{{lecture.title}}</td>
@@ -49,8 +49,8 @@
       }
     },
 
-    attached:function(){
-      console.log(this.lectures)
+    on_click: function(event){
+      page('/courses/'+ this.course.id + '/lectures/' + this.$.lecture.itemForElement(event.target).id);
     }
 
   });
