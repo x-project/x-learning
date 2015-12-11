@@ -4,22 +4,25 @@
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
 <link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-basic/style-basic.html">
+<link rel="import" href="../../styles/style-table/style-table.html">
 <link rel="import" href="../../styles/style-form/style-form.html">
 
-<link rel="import" href="list-course-lectures.html">
 <link rel="import" href="list-course-webinars.html">
 <link rel="import" href="part-course-actions.html">
 <link rel="import" href="part-course-header.html">
 <link rel="import" href="part-course-info.html">
 <link rel="import" href="part-course-image.html">
 <link rel="import" href="part-course-aims.html">
+<link rel="import" href="part-course-lectures.html">
+<link rel="import" href="part-course-webinars.html">
+<link rel="import" href="../x-tabs/x-tabs.html">
 
 <dom-module id="page-course">
   <template>
     <style include="style-panel"></style>
     
     <app-session id="session"></app-session>
-
 
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{course}}" on-response="on_response_create"> </iron-ajax>
 
@@ -29,26 +32,44 @@
 
      <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
 
-    <layout-admin on-try-save="on_try_save" on-try-publish="on_try_publish"
-      on-try-preview="on_try_preview" on-try-delete="on_try_delete">
-        <h1>Course</h1>
-        <part-course-header course="{{course}}"></part-course-header>
-        <part-course-actions course="{{course}}"></part-course-actions>
-        <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
-        <part-course-image course="{{course}}"></part-course-image>
-        <part-course-aims course="{{course}}"></part-course-aims>
+    <div id="layout">
+      <div id="sidebar">
+        <nav on-click="on_click_nav">
+          <ul>
+            <li data-tab="info">info</li>
+            <li data-tab="image">image</li>
+            <li data-tab="aims">aims</li>
+            <li data-tab="lectures">lectures</li>
+            <li data-tab="webinars">webinars</li>
+          </ul>
+        </nav>
+      </div>     
+      <div id="main" on-try-save="on_try_save" on-try-publish="on_try_publish"
+        on-try-preview="on_try_preview" on-try-delete="on_try_delete" on-try-delete-lecture="on_try_delete_lecture" on-try-delete-webinar="on_try_delete_webinar">
+          <h1>Course</h1>
+          <part-course-header course="{{course}}"></part-course-header>
+          <part-course-actions course="{{course}}"></part-course-actions>
 
-        <div class="panel">
-          <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
-          <h3>Lectures</h3>
-          <list-course-lectures course="{{course}}" on-try-delete-lecture="on_try_delete_lecture"></list-course-lectures>
-        </div>
-        <div class="panel">
-          <a is="app-link" href="/admin/courses/{{course.id}}/webinar/new">ADD WEBINAR</a>
-          <h3>Webinars</h3>
-          <list-course-webinars course="{{course}}" on-try-delete-webinar="on_try_delete_webinar"></list-course-webinars>
+          <x-tabs id="tabs" current="{{current}}">
+            <x-tab name="info">
+              <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
+            </x-tab>
+            <x-tab name="image">
+              <part-course-image course="{{course}}"></part-course-image>
+            </x-tab>
+            <x-tab name="aims">
+              <part-course-aims course="{{course}}"></part-course-aims>
+            </x-tab>
+            <x-tab name="lectures">
+              <part-course-lectures course="{{course}}"></part-course-lectures>
+            </x-tab>
+            <x-tab name="webinars">
+              <part-course-webinars course="{{course}}"></part-course-webinars>
+            </x-tab>
+          </x-tabs>
+          
       </div>
-    </layout-admin>
+    </div>
 
   </template>
 </dom-module>
@@ -62,6 +83,10 @@
         type: Object,
         value: function () { return {}; }
       },
+      current: {
+        type: String,
+        value: 'info'
+      },
       aims: {
         type: Object,
         value: function () { return {}; }
@@ -72,6 +97,12 @@
       this.course = this.data.course;
       if(!this.course.publish)
         this.course.publish=false;
+    },
+
+    on_click_nav: function (event) {
+      var name = event.target.dataset.tab;
+      this.set('current', name);
+      // this.$.tabs.current = name
     },
 
     on_try_save: function (event) {

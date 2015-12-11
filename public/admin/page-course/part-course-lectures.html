@@ -1,0 +1,59 @@
+<dom-module id="part-course-lectures">
+  <template>
+    <style include="style-panel"></style>
+    <style include="style-table"></style>
+    <style include="style-basic"></style>
+
+    <div class="panel">
+      <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+            </tr>
+          </thead>
+          <tbody>
+            <template is="dom-repeat" id='lecture' items="{{course.lectures}}" as="lecture">
+              <tr class="text-left" on-click="on_click">
+                <th scope="row">Lecture {{index}}</th>
+                <td>{{lecture.title}}</td>
+                <td>
+                  <button class="btn" on-click="on_click_delete">Delete lecture</button>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-course-lectures',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_click_delete:function(event){
+      this.fire('try-delete-lecture',this.$.lecture.itemForElement(event.target))
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    },
+
+    on_click: function (event) {
+      page('/admin/courses/'+ this.course.id + '/lectures/' + this.$.lecture.itemForElement(event.target).id);
+    }
+
+  });
+</script>
