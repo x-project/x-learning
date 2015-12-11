@@ -2,8 +2,10 @@
 
 <dom-module id="part-course-info">
   <template>
+    <style include="style-panel"></style>
+
     <api-model-find id="find" collection="courses" on-response="on_response"response="{{courses}}"></api-model-find>
-  <div>
+  <div class="panel">
     $: {{data.course.cost}}
     Language: {{data.course.language}}
     Followers: {{students}}

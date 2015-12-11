@@ -2,11 +2,15 @@
 <link rel="import" href="part-course-webinars.html">
 <link rel="import" href="part-course-buy.html">
 <link rel="import" href="part-course-info.html">
+<link rel="import" href="part-course-header.html">
 <link rel="import" href="part-course-reviews.html">
 <link rel="import" href="../deck-video/deck-video.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../../styles/style-page/style-page.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-table/style-table.html">
+<link rel="import" href="../../styles/style-basic/style-basic.html">
 
 <dom-module id="page-course">
   <template>
@@ -15,26 +19,15 @@
 
     <layout-client>
       <part-jumbotron class="jumbotron">
-        <h1>Course {{data.course.title}}</h1>
       </part-jumbotron>
       <div class="container">
-        <p class="description">Description: {{data.course.description}}</p>
+        <part-course-header course="{{data.course}}"></part-course-header>
         <deck-video src="{{data.video.url}}"></deck-video>
         <part-course-buy on-try-buy="on_try_buy"></part-course-buy>
-        <div class="panel">
-          <part-course-info data="{{data}}"></part-course-info>
-        </div>
-        <div class="panel">
-          <h3>Webinars</h3>
-          <part-course-webinars course="{{data.course}}" webinars="{{data.webinars}}"></part-course-webinars>
-        </div>
-        <div class="panel">
-          <h3>Lectures</h3>
-          <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
-        </div>
-        <div class="panel">
-          <part-course-reviews></part-course-reviews>
-        </div>
+        <part-course-info data="{{data}}"></part-course-info>
+        <part-course-webinars course="{{data.course}}" webinars="{{data.webinars}}"></part-course-webinars>        
+        <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
+        <part-course-reviews></part-course-reviews>
       </div>
     </layout-client>
 

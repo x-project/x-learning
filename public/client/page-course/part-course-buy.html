@@ -1,15 +1,15 @@
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../components/layout-grid/layout-grid.html">
-<link rel="import" href="../style-form/style-form.html">
-
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
 
 <dom-module id="part-course-buy">
   <template>
-    <style include="style-form" ></style>
-    <div>
-      <form class="form" on-submit="on_submit">
-        <button class="btn" on-click="on_click_buy">BUY</button>
-      </form>
+    <style include="style-button"></style>
+    <style include="style-panel"></style>
+
+    <div class="panel">
+        <button class="btn btn-secondary" on-click="on_click_buy">BUY</button>
     </div>
 
   </template>
@@ -24,11 +24,6 @@
 
     on_click_buy:function(event){
       this.fire('try-buy')
-    },
-
-    on_submit: function (event) {
-      event.preventDefault();
-      event.stopPropagation();
     }
 
   });

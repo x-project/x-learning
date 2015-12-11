@@ -2,17 +2,13 @@
 <link rel="import" href="../part-reviews/part-reviews.html">
 <dom-module id="part-course-reviews">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+    <style include="style-panel"></style>
 
     <api-model-find id="find_reviews" collection="reviews"
       response="{{reviews}}">
     </api-model-find>
 
-    <div>
+    <div class="panel">
       <h3>Reviews</h3>
         <part-reviews reviews="{{reviews}}" product="{{course}}"
           on-change-discussion="on_change_discussion">

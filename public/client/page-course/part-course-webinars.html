@@ -4,16 +4,30 @@
 
 <dom-module id="part-course-webinars">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+    <style include="style-panel"></style>
+    <style include="style-table"></style>
+    <style include="style-basic"></style>
 
-    <div class="strips">
-      <template id="course" is="dom-repeat" items="{{webinars}}" as="webinar">
-        <part-course-webinar class="strip" course="{{course}}" webinar="{{webinar}}" index="{{index}}"></part-course-webinar>
-      </template>
+    <div class="panel">
+     <h3>Webinars</h3>
+       <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+              </tr>
+            </thead>
+            <tbody>
+              <template id="webinar" is="dom-repeat" items="{{webinars}}" as="webinar">
+                <tr class="text-left" on-click="on_click">
+                  <th scope="row">Webinar {{index}}</th>
+                  <td>{{webinar.title}}</td>
+                  <td>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
     </div>
 
   </template>

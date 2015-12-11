@@ -25,15 +25,13 @@
 
 <dom-module id="deck-video">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-      
-    <video id="video" class="video-js vjs-default-skin" height="300" width="600" controls>
-      <source type="application/x-mpegURL" src="{{src}}">
-    </video>
+    <style include="style-panel"></style>
+
+    <div class="panel">  
+      <video id="video" class="video-js vjs-default-skin" height="300" width="600" controls>
+        <source type="application/x-mpegURL" src="{{src}}">
+      </video>
+    </div>
         
   </template>
 </dom-module>
