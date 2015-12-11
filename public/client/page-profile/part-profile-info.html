@@ -2,6 +2,8 @@
 
 <dom-module id="part-profile-info">
   <template>
+    <style include="style-panel"></style>
+
     <style>
       :host {
         display: block;
@@ -13,9 +15,11 @@
       }
     </style>
 
-    <h3>Info</h3>
-    <h2>{{member.name}}</h2> 
-    <iron-image class="image" preload src="{{member.photo}}" sizing="contain"></iron-image> 
+    <div class="panel">
+      <h3 class="title">Info</h3>
+      <h2>{{member.name}}</h2> 
+      <iron-image class="image" preload src="{{member.photo}}" sizing="contain"></iron-image> 
+    </div>
 
   </template>
 </dom-module>

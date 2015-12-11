@@ -3,14 +3,16 @@
 
 <dom-module id="part-profile-learning">
   <template>
+    <style include="style-panel"></style>
     <style>
       :host {
         display: block;
       }
     </style>
-
-    <h3>Learning</h3>
-    <deck-courses courses="{{courses}}"></deck-courses>
+    <div class="panel">
+      <h3 class="title">Learning</h3>
+      <deck-courses courses="{{courses}}"></deck-courses>
+    </div>
   </template>
 </dom-module>
 
