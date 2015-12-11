@@ -1,21 +1,21 @@
 <link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+
 <dom-module id="part-home-categories">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+    <style include="style-panel"></style>
     
     <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>
     
-    <h2>Categories</h2>  
-    <template id="category" is="dom-repeat" items="{{categories}}" as="category">
-      <div>
-        <a is="app-link" href="/categories/{{category.id}}">{{category.title}}</a>
-      </div>
-    </template>
+    <div class="panel">
+      <h2 class="title">Categories</h2> 
+      <template id="category" is="dom-repeat" items="{{categories}}" as="category">
+        <div>
+          <a is="app-link" href="/categories/{{category.id}}">{{category.title}}</a>
+        </div>
+      </template>
+    </div>
 
   </template>
 </dom-module>

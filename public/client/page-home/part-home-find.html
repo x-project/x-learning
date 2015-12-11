@@ -1,6 +1,8 @@
 <dom-module id="part-home-find">
   <template>
-    <div>
+    <style include="style-panel"></style>
+
+    <div class="panel">
       <label class="label">Find course</label>
       <input class="input" is="iron-input" type="text" bind-value="{{course}}">
       <button class="btn" on-click="on_click">Find</button>
