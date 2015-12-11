@@ -1,6 +1,7 @@
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../components/layout-grid/layout-grid.html">
 <link rel="import" href="part-course-webinar.html">
+<link rel="import" href="../part-countdown/part-countdown.html">
 
 <dom-module id="part-course-webinars">
   <template>
@@ -21,8 +22,7 @@
                 <tr class="text-left" on-click="on_click">
                   <th scope="row">Webinar {{index}}</th>
                   <td>{{webinar.title}}</td>
-                  <td>
-                  </td>
+                  <td><part-countdown date="{{webinar.data}}"></part-countdown></td>
                 </tr>
               </template>
             </tbody>
@@ -47,6 +47,10 @@
         type: Array,
         value: function () { return []; }
       }
+    },
+
+    on_click: function(event){
+      page('/courses/'+ this.course.id + '/webinars/' + this.$.webinar.itemForElement(event.target).id);
     }
 
   });
