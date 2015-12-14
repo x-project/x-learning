@@ -16,6 +16,7 @@
 <link rel="import" href="part-course-aims.html">
 <link rel="import" href="part-course-lectures.html">
 <link rel="import" href="part-course-webinars.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
 
 <dom-module id="page-course">
@@ -31,8 +32,7 @@
     </api-model-update>
 
      <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
-
-    <div id="layout">
+<layout-admin>
       <div id="sidebar">
         <nav on-click="on_click_nav">
           <ul>
@@ -69,7 +69,7 @@
           </x-tabs>
           
       </div>
-    </div>
+    </layout-admin>
 
   </template>
 </dom-module>
