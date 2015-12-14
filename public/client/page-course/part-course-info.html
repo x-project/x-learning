@@ -6,11 +6,21 @@
 
     <api-model-find id="find" collection="courses" on-response="on_response"response="{{courses}}"></api-model-find>
   <div class="panel">
-    $: {{data.course.cost}}
-    Language: {{data.course.language}}
-    Followers: {{students}}
-    Lectures: {{lectures}}
-    Teacher: {{teacher.name}}
+    <div>
+      $: {{data.course.cost}}
+    </div>
+    <div>
+      Language: {{data.course.language}}
+    </div>
+    <div>
+      Followers: {{students}}
+    </div>
+    <div>
+      Lectures: {{lectures}}
+    </div>
+    <div>
+      Teacher: {{teacher.name}}
+    </div>
   </div>
   </template>
 </dom-module>
