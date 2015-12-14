@@ -1,0 +1,49 @@
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../deck-video/deck-video.html">
+<link rel="import" href="part-lecture-other.html">
+<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../layout-client/layout-client.html">
+
+<dom-module id="part-lecture-other">
+  <template>
+      <api-model-find id="find" collection="courses" on-response="on_response" response="{{course}}"></api-model-find>
+
+      <template is="dom-repeat" items="{{lectures}}" as="lecture">
+        <li>
+          <h4>
+            {{lecture.title}}
+          </h4>
+        </li>
+      </template>    
+ 
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-lecture-other',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      lectures: {
+        type: Array,
+        value: function () { return []; }
+      }
+    },
+
+    attached:function(){
+        this.$.find.include = ['lectures'];
+        this.$.find.where = {id: this.course.id}
+        this.$.find.send();
+
+    },
+
+    on_response:function(){
+      this.lectures = this.course[0].lectures;
+    }
+
+  });
+</script>
