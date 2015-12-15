@@ -1,7 +1,6 @@
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/app-session/app-session.html">
-<link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
 <link rel="import" href="../../styles/style-button/style-button.html">
 <link rel="import" href="../../styles/style-basic/style-basic.html">
@@ -17,7 +16,6 @@
 <link rel="import" href="part-course-aims.html">
 <link rel="import" href="part-course-lectures.html">
 <link rel="import" href="part-course-webinars.html">
-<link rel="import" href="../layout-admin-complete/layout-admin-complete.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
 
 <dom-module id="page-course">
@@ -35,7 +33,7 @@
 
     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
       
-    <layout-admin-complete class="row">
+    <layout-admin class="row">
       <div class="col-sm-3 col-sm-push-1">
         <nav on-click="on_click_nav">
           <ul>
@@ -72,7 +70,7 @@
           </x-tabs>
           
       </div>
-    </layout-admin-complete>
+    </layout-admin>
     </div>
 
   </template>
