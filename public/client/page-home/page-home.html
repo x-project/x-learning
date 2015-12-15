@@ -1,33 +1,28 @@
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../../components/iron-input/iron-input.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="part-home-categories.html">
 <link rel="import" href="part-home-courses.html">
 <link rel="import" href="part-home-find.html">
 <link rel="import" href="part-home-webinar.html">
-<link rel="import" href="../part-jumbotron/part-jumbotron.html">
-<link rel="import" href="../../styles/style-panel/style-panel.html">
-<link rel="import" href="../../styles/style-button/style-button.html">
 
 <dom-module id="page-home">
   <template>
-    <style include="layout-admin"></style>
-    
+    <style include="style-grid"></style>
+
     <api-model-find id="ajax_find" collection="courses"
       on-response="on_response" on-error="on_error">
     </api-model-find>
-    <layout-client>
-      <part-jumbotron class="jumbotron">
-      </part-jumbotron>
-      <div class="container">
-        <div class="sidebar">
-          <part-home-categories></part-home-categories>
-        </div>
-        <div class="main">
-          <part-home-find on-try-find="on_try_find"></part-home-find>
-          <part-home-courses courses="{{data.courses}}"></part-home-courses>
-        </div>
+    <layout-client class="row">
+      <div class="col-sm-3 col-sm-push-1">
+        <part-home-categories></part-home-categories>
+      </div>
+      <div class="col-sm-8">
+        <part-home-find on-try-find="on_try_find"></part-home-find>
+        <part-home-courses courses="{{data.courses}}"></part-home-courses>
       </div>
     </layout-client>
 
@@ -45,11 +40,7 @@
         value: function() { return {}; }
       }
     },
-
-    attached: function () {
-      console.log(this.courses)
-    },
-
+    
     on_try_find:function(event){
       this.$.ajax_find.where = { and: [{"title" : {"like": event.detail ,"options":"i"}},{"publish": true}] };
       this.$.ajax_find.send();
