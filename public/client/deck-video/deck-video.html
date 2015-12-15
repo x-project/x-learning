@@ -28,21 +28,12 @@
   <template>
   <style include="style-video"></style>
   <style>
-    @media(min-width: 2048px) {
-      .a {
-        width: 800px !important;
-      }
+    .video {
+        @apply(--video-style);
     }
-
-    @media(min-width: 1024px) {
-      .b {
-        width: 500px !important;
-      }
-    }
-
   </style>
 
-      <video id="video" class="a b video-js vjs-default-skin vjs-fw" controls>
+      <video id="video" class="video video-js vjs-default-skin vjs-fw" controls>
         <source type="application/x-mpegURL" src="{{src}}">
       </video>
 

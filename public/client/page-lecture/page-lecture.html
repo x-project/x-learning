@@ -1,11 +1,11 @@
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../deck-video/deck-video.html">
-<link rel="import" href="part-lecture-other.html">
-<link rel="import" href="../part-jumbotron/part-jumbotron.html">
-<link rel="import" href="../layout-client/layout-client.html">
+<link rel="import" href="part-lecture-others.html">
 
 <dom-module id="page-lecture">
   <template>
+  <style include="style-grid"></style>
+
   <style>
     .title{
         display: block;
@@ -13,31 +13,23 @@
         height: 50%;
         margin: auto; 
       }
-    .main {
-      @apply(--layout-horizontal);
-      margin-top: 20px;       
-      }
-    .video{
-      @apply(--layout-col-8);
-
-    }
-    .other_lecture{
-      @apply(--layout-col-2);
+    .video {
+      --video-style : {
+        width: 100% !important;
+        height: 600px !important;
+      };
     }
   </style>
 
     <layout-client>
-      <part-jumbotron class="jumbotron">
-      </part-jumbotron>
       <div class="container">
         <div class="title">
-          <h3>Course {{data.course.title}}</h3>
-          <h4>Lecture {{data.lecture.title}}</h4>
+          <h3>Course {{data.course.title}}: {{data.lecture.title}} </h3>
           <a is="app-link" class="btn btn-link" href="/courses/{{data.course.id}}">back to course</a>
         </div>
-        <div class="main">
-          <deck-video class="video" src="{{data.lecture.video.url}}"></deck-video>
-          <part-lecture-other class="other_lecture" course="{{data.course}}"></part-lecture-other>
+        <div class="row">
+          <deck-video class="video col-sm-7" src="{{data.lecture.video.url}}"></deck-video>
+          <part-lecture-others class="other_lecture col-sm-4" course="{{data.course}}"></part-lecture-others>
         </div>
       </div>
     </layout-client>
