@@ -1,4 +1,5 @@
-<link href="../../my_scripts/videojs/dist/video-js/video-js.css" rel="stylesheet">
+<link  href="../../my_scripts/videojs/dist/video-js/video-js.css" rel="stylesheet">
+<!-- <link rel="import" href="../../styles/style-video/style-video.html"> -->
 
 <!-- video.js -->
 <script src="../../my_scripts/videojs/dist/video-js/video.js"></script>
@@ -25,20 +26,30 @@
 
 <dom-module id="deck-video">
   <template>
+  <style include="style-video"></style>
   <style>
-    :host {
-      display: block;
+    @media(min-width: 2048px) {
+      .a {
+        width: 800px !important;
+      }
     }
+
+    @media(min-width: 1024px) {
+      .b {
+        width: 500px !important;
+      }
+    }
+
   </style>
 
-      <video id="video" class="video-js vjs-default-skin" height="300" width="600" controls>
+      <video id="video" class="a b video-js vjs-default-skin vjs-fw" controls>
         <source type="application/x-mpegURL" src="{{src}}">
       </video>
 
   </template>
 </dom-module>
 
-<script>
+<script> 
   Polymer({
 
     is: 'deck-video',
