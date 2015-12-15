@@ -7,6 +7,7 @@
 <link rel="import" href="../../styles/style-basic/style-basic.html">
 <link rel="import" href="../../styles/style-table/style-table.html">
 <link rel="import" href="../../styles/style-form/style-form.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
 
 <link rel="import" href="list-course-webinars.html">
 <link rel="import" href="part-course-actions.html">
@@ -16,13 +17,14 @@
 <link rel="import" href="part-course-aims.html">
 <link rel="import" href="part-course-lectures.html">
 <link rel="import" href="part-course-webinars.html">
-<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="../layout-admin-complete/layout-admin-complete.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
 
 <dom-module id="page-course">
   <template>
     <style include="style-panel"></style>
-    
+    <style include="style-grid"></style>
+
     <app-session id="session"></app-session>
 
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{course}}" on-response="on_response_create"> </iron-ajax>
@@ -31,9 +33,10 @@
       data="{{course}}" response="{{course}}" error="{{error}}" on-response="on_response_update">
     </api-model-update>
 
-     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
-<layout-admin>
-      <div id="sidebar">
+    <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
+      
+    <layout-admin-complete class="row">
+      <div class="col-sm-3 col-sm-push-1">
         <nav on-click="on_click_nav">
           <ul>
             <li data-tab="info">info</li>
@@ -44,7 +47,7 @@
           </ul>
         </nav>
       </div>     
-      <div id="main" on-try-save="on_try_save" on-try-publish="on_try_publish"
+      <div class="col-sm-8" on-try-save="on_try_save" on-try-publish="on_try_publish"
         on-try-preview="on_try_preview" on-try-delete="on_try_delete" on-try-delete-lecture="on_try_delete_lecture" on-try-delete-webinar="on_try_delete_webinar">
           <h1>Course</h1>
           <part-course-header course="{{course}}"></part-course-header>
@@ -69,7 +72,8 @@
           </x-tabs>
           
       </div>
-    </layout-admin>
+    </layout-admin-complete>
+    </div>
 
   </template>
 </dom-module>
