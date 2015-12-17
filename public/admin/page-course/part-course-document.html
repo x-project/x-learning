@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="../../fonts/icons/css/font-awesome.min.css">
 <link rel="import" href="form-course-document.html">
 <link rel="import" href="../../components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../input-s3/api-s3-delete.html">
 
 <dom-module id="part-course-document">
   <template>
@@ -14,17 +15,8 @@
         margin-left: 20px
       }
     </style>
-    <api-model-update id="update" collection="courses" model-id="{{course.id}}"
-      data="{{course}}" response="{{course}}" error="{{error}}" on-response="on_response_update">
-    </api-model-update>
-    
-    <iron-ajax id="signed_delete" method="GET" url="{{url}}" params="{{params}}"
-      last-response="{{response_get}}" on-response="on_response_get">
-    </iron-ajax>
+    <api-s3-delete id="delete_document" on-delete-completed="on_delete_completed"></api-s3-delete>
 
-     <iron-ajax id="delete_file" method="DELETE" url="{{url}}"
-      on-response="on_delete_complete"></iron-ajax>
-    
     <div class="panel">
       <template id="documents" is="dom-repeat" items="{{documents}}" as="document">
         <div>
@@ -74,20 +66,11 @@
       var index = this.documents.indexOf(item);
       this.splice('documents', index, 1);
 
-      //get singned_url
-      this.url = '/api/images/signed_delete';
-      var params = {};
-      params.file_name = 'courses/' + this.course.id + '/documents/' + item.title;
-      this.params = params;
-      this.$.signed_delete.generateRequest();
+      file_name = 'courses/' + this.course.id + '/documents/' + item.title;
+      this.$.delete_document.delete_file(file_name);
     },
 
-    on_response_get: function(event){
-      this.url = this.response_get.signed_url;
-      this.$.delete_file.generateRequest();
-    },
-
-    on_delete_complete : function(event){
+    on_delete_completed : function(event){
       this.fire ('try-save');
     }
 
