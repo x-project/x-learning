@@ -22,7 +22,14 @@
   <template>
     <style include="style-panel"></style>
     <style include="style-grid"></style>
-
+    <style>
+      .nav-link{
+        display: block;
+        font-weight: normal;
+        color: #0275d8;
+        border-radius: 0;
+      }
+    </style>
     <app-session id="session"></app-session>
 
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{course}}" on-response="on_response_create"> </iron-ajax>
@@ -37,11 +44,11 @@
       <div class="col-sm-3 col-sm-push-1">
         <nav on-click="on_click_nav">
           <ul>
-            <li data-tab="info">info</li>
-            <li data-tab="image">image</li>
-            <li data-tab="aims">aims</li>
-            <li data-tab="lectures">lectures</li>
-            <li data-tab="webinars">webinars</li>
+            <li class="nav-link" data-tab="info">info</li>
+            <li class="nav-link" data-tab="image">image</li>
+            <li class="nav-link" data-tab="aims">aims</li>
+            <li class="nav-link" data-tab="lectures">lectures</li>
+            <li class="nav-link" data-tab="webinars">webinars</li>
           </ul>
         </nav>
       </div>     
@@ -104,7 +111,6 @@
     on_click_nav: function (event) {
       var name = event.target.dataset.tab;
       this.set('current', name);
-      // this.$.tabs.current = name
     },
 
     on_try_save: function (event) {
