@@ -1,20 +1,37 @@
 <link rel="import" href="../layout-admin/layout-admin.html">
-<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../../styles/style-image/style-image.html">
+<link rel="import" href="../deck-courses/card-course.html">
 
 <dom-module id="page-home">
   <template>
     <style include="style-page"></style>
-
+    <style include="style-grid"></style>
+    <style include="style-image"></style>
+    <style>
+      .image {
+        background-color: #eee;
+        width: 80%;
+        height: 400px;
+      }
+      .title{
+        margin-left: 30%;
+      }
+    </style>
     <layout-admin>
-      <h1>admin</h1>
-      <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/courses/new">Create new course</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/realtime">Create new realtime lecture</a>
-      </li>
-    </ul>
+      <div class="row">
+        <div class="col-sm-5 col-sm-push-1">
+          <a class="nav-link title" href="/admin/courses/new">Create new course
+            <image class="image img-responsive" src="http://moneyandtravels.com/wp-content/uploads/2015/09/presentation-training-course-02.jpg">
+            </image>
+          </a>
+        </div>  
+        <div class="col-sm-5">
+          <a class="nav-link title" href="/admin/realtime">Create new realtime lecture
+            <image class="image img-responsive" src="http://exchanges.wiley.com/blog/wp-content/uploads/2014/06/Webinar.jpg">
+            </image>
+          </a>
+        </div>
+      </div>
     </layout-admin>
 
   </template>
