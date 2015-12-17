@@ -6,19 +6,20 @@
 <link rel="import" href="../page-category/page-category.html">
 <link rel="import" href="../page-contact/page-contact.html">
 <link rel="import" href="../page-course/page-course.html">
+<link rel="import" href="../page-courses/page-courses.html">
 <link rel="import" href="../page-forgot/page-forgot.html">
 <link rel="import" href="../page-home/page-home.html">
 <link rel="import" href="../page-lecture/page-lecture.html">
 <link rel="import" href="../page-login/page-login.html">
-<link rel="import" href="../page-profile/page-profile.html">
-<link rel="import" href="../page-signup/page-signup.html">
-<link rel="import" href="../page-upload/page-upload.html">
+<link rel="import" href="../page-payment/page-payment.html">
 <link rel="import" href="../page-passwordless-phone/page-passwordless-phone.html">
 <link rel="import" href="../page-passwordless-email/page-passwordless-email.html">
-<link rel="import" href="../page-payment/page-payment.html">
-<link rel="import" href="../page-webinar/page-webinar.html">
+<link rel="import" href="../page-profile/page-profile.html">
 <link rel="import" href="../page-reviews/page-reviews.html">
 <link rel="import" href="../page-review/page-review.html">
+<link rel="import" href="../page-signup/page-signup.html">
+<link rel="import" href="../page-webinar/page-webinar.html">
+<link rel="import" href="../page-upload/page-upload.html">
 
 
 <dom-module id="app-boot">
@@ -188,10 +189,26 @@
       this.get_model({
           collection: 'members',
           modelId: this.session.get('user').id,
-          include: ['teaching', 'learning']
         })
         .then(function (model) {
           context.page = 'page-profile';
+          context.data = {};
+          context.data.member = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
+
+    '/courses': function (context) {
+      this.get_model({
+          collection: 'members',
+          modelId: this.session.get('user').id,
+          include: ['teaching', 'learning']
+        })
+        .then(function (model) {
+          context.page = 'page-courses';
           context.data = {};
           context.data.member = model;
           this.open(context);

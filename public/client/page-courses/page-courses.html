@@ -1,0 +1,64 @@
+<link rel="import" href="part-courses-learning.html">
+<link rel="import" href="part-courses-teaching.html">
+<link rel="import" href="../x-tabs/x-tabs.html">
+<link rel="import" href="../../styles/style-page/style-page.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+
+<dom-module id="page-courses">
+  <template>
+    <style include="style-page"></style>
+    <style include="style-panel"></style>
+    <style include="style-grid"></style>
+    <style include="style-button"></style>
+
+    <layout-client>
+      <div class="container row">
+        <div class="panel">
+          <div on-click="on_click_nav">
+            <button class="btn btn-secondary" data-tab="learning">Learning</button>
+            <button class="btn btn-secondary" data-tab="teaching">Teaching</button>
+            <button class="btn btn-secondary" data-tab="create">Create new course</button>
+          </div>
+        </div>
+        <div>
+          <x-tabs id="tabs" current="{{current}}">
+            <x-tab name="learning">
+              <part-courses-learning courses="{{data.member.learning}}"></part-courses-learning>
+            </x-tab>
+            <x-tab name="teaching">
+              <part-courses-teaching courses="{{data.member.teaching}}"></part-courses-teaching>
+            </x-tab>
+          </x-tabs>
+        </div>
+      </div>
+    </layout-client>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-courses',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      current: {
+        type: String,
+        value: 'learning'
+      }
+    },
+
+    on_click_nav: function (event) {
+      var name = event.target.dataset.tab;
+      this.set('current', name);
+      if(name=='create')
+        page('/admin/courses/new')
+      // this.$.tabs.current = name
+    },
+
+  });
+</script>
