@@ -1,8 +1,11 @@
 <link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="part-profile-photo.html">
+<link rel="stylesheet" type="text/css" href="../../fonts/icons/css/font-awesome.min.css">
 
 <dom-module id="part-profile-info">
   <template>
     <style include="style-panel"></style>
+    <style include="style-grid"></style>
 
     <style>
       :host {
@@ -10,15 +13,58 @@
       }
       .image {
         background-color: #eee;
-        height: 100px;
-        width: 100px;
+        height: 250px;
+        width: 250px;
+      }
+      .text {
+        display: flex;
+        margin: 0px;
+        margin-left: 30px;
+        margin-top: -20px;
+      }
+      .item {
+        padding-top: 11px;
+      }
+      .edit{
+        padding-top: 30px;
+        padding-bottom: 20px;
+      }
+      .edit-icon{
+        margin-left: 60%;
+        margin-top: 7px;
       }
     </style>
 
-    <div class="panel">
-      <h3 class="title">Info</h3>
-      <h2>{{member.name}}</h2> 
-      <iron-image class="image" preload src="{{member.photo}}" sizing="contain"></iron-image> 
+    <div class="row">
+      <div class="col-sm-4 col-sm-push-1">    
+        <iron-image class="image" preload src="{{member.photo}}" sizing="contain"></iron-image> 
+      </div>
+      <div class="col-sm-7 col-sm-push-1">
+        <div class="edit">
+          <i class="fa fa-edit edit-icon" on-click="on_click_edit"></i>
+          <h2 class="text">{{member.name}} {{member.last_name}}</h2>
+        </div>
+        <div class="item">
+          <i class="fa fa-envelope-o"></i>
+          <h4 class="text">{{member.email}}</h4>
+        </div>
+        <div class="item">
+          <i class="fa fa-phoneop"></i>
+          <h4 class="text">{{member.gender}}</h4>
+        </div>
+        <div class="item">
+          <i class="fa fa-phone"></i>
+          <h4 class="text">{{member.phone}}</h4>
+        </div>
+        <div class="item">
+          <i class="fa fa-map-o"></i>
+          <h4 class="text">{{member.location}}</h4>
+        </div>
+        <div class="item">
+          <i class="fa fa-calendar"></i>
+          <h4 class="text">{{member.birthday}}</h4>
+        </div>
+      </div>
     </div>
 
   </template>
@@ -34,6 +80,10 @@
         type: Object,
         value: function () { return {}; }
       }
+    },
+
+    on_click_edit: function(){
+      page('/admin/profile')
     }
 
   });
