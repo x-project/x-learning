@@ -1,0 +1,95 @@
+<link rel="stylesheet" type="text/css" href="../../fonts/icons/css/font-awesome.min.css">
+<link rel="import" href="form-course-document.html">
+<link rel="import" href="../../components/iron-ajax/iron-ajax.html">
+
+<dom-module id="part-course-document">
+  <template>
+    <style include="style-panel"></style>
+    <style>
+      .title{
+        display: inline;
+      }
+      .fa{
+        display: inline;
+        margin-left: 20px
+      }
+    </style>
+    <api-model-update id="update" collection="courses" model-id="{{course.id}}"
+      data="{{course}}" response="{{course}}" error="{{error}}" on-response="on_response_update">
+    </api-model-update>
+    
+    <iron-ajax id="signed_delete" method="GET" url="{{url}}" params="{{params}}"
+      last-response="{{response_get}}" on-response="on_response_get">
+    </iron-ajax>
+
+     <iron-ajax id="delete_file" method="DELETE" url="{{url}}"
+      on-response="on_delete_complete"></iron-ajax>
+    
+    <div class="panel">
+      <template id="documents" is="dom-repeat" items="{{documents}}" as="document">
+        <div>
+          <h4 class="title">Title: {{document.title}}</h4>
+          <i class="fa fa-trash-o" on-click="on_click_delete"></i>
+        </div>
+      </template>
+    </div>
+      
+    <form-course-document course="{{course}}" on-response="on_response" error="{{error}}"></form-course-document>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-course-document',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      documents: {
+        type: Array,
+        value: function () { return []; }
+      }
+    },
+
+    attached: function(){
+      if(!this.course.documents){
+        this.documents = [];
+      }else{
+        this.documents = this.course.documents;
+      }
+    },
+
+    on_response: function(event){
+      this.course.documents.push(event.detail)
+      console.log(this.course.documents)
+      this.fire('try-save')
+      page('/admin/courses/' + this.course.id)
+    },
+
+    on_click_delete: function(event){
+      var item = this.$.documents.itemForElement(event.target);
+      var index = this.documents.indexOf(item);
+      this.splice('documents', index, 1);
+
+      //get singned_url
+      this.url = '/api/images/signed_delete';
+      var params = {};
+      params.file_name = 'courses/' + this.course.id + '/documents/' + item.title;
+      this.params = params;
+      this.$.signed_delete.generateRequest();
+    },
+
+    on_response_get: function(event){
+      this.url = this.response_get.signed_url;
+      this.$.delete_file.generateRequest();
+    },
+
+    on_delete_complete : function(event){
+      this.fire ('try-save');
+    }
+
+  });
+</script>

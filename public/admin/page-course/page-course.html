@@ -16,6 +16,7 @@
 <link rel="import" href="part-course-aims.html">
 <link rel="import" href="part-course-lectures.html">
 <link rel="import" href="part-course-webinars.html">
+<link rel="import" href="part-course-document.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
 
 <dom-module id="page-course">
@@ -44,11 +45,12 @@
       <div class="col-sm-3 col-sm-push-1">
         <nav on-click="on_click_nav">
           <ul>
-            <li class="nav-link" data-tab="info">info</li>
-            <li class="nav-link" data-tab="image">image</li>
-            <li class="nav-link" data-tab="aims">aims</li>
-            <li class="nav-link" data-tab="lectures">lectures</li>
-            <li class="nav-link" data-tab="webinars">webinars</li>
+            <li class="nav-link" data-tab="info">Info</li>
+            <li class="nav-link" data-tab="image">Image</li>
+            <li class="nav-link" data-tab="aims">Aims</li>
+            <li class="nav-link" data-tab="lectures">Lectures</li>
+            <li class="nav-link" data-tab="webinars">Webinars</li>
+            <li class="nav-link" data-tab="document">Document</li>
           </ul>
         </nav>
       </div>     
@@ -73,6 +75,9 @@
             </x-tab>
             <x-tab name="webinars">
               <part-course-webinars course="{{course}}"></part-course-webinars>
+            </x-tab>
+            <x-tab name="document">
+              <part-course-document course="{{course}}"></part-course-document>
             </x-tab>
           </x-tabs>
           
