@@ -178,15 +178,6 @@
 
     on_response_create: function (event) {
       page('/admin/courses/'+ this.course.id)
-    },
-
-    on_response: function(event){
-      var url = event.detail.split("?")[0];
-      this.course.cover = url;
-      console.log(this.course);
-
-      if(this.course.id)
-        this.on_try_save(event);
     }
 
   });
