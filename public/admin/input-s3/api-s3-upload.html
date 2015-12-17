@@ -73,7 +73,7 @@
     },
 
     on_response_put: function (event) {
-      this.fire('response', event.detail.url);
+      this.fire('response', {"title" : this.file.name, "url" :'http://d265dc9zzasikr.cloudfront.net/'+ this.folder + this.file.name });
       event.stopPropagation();
     }
 

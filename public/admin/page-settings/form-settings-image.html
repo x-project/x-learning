@@ -29,8 +29,7 @@
     },
 
     on_response:function(event){
-      var url = event.detail.split("?")[0];
-      this.member.photo = url;
+      this.member.photo = event.detail.url;
       this.$.update.send();
     }
 
