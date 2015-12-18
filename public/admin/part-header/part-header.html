@@ -1,6 +1,9 @@
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../components/layout-grid/layout-grid.html">
+<link rel="import" href="../../styles/style-image/style-image.html">
+<link rel="import" href="part-header-photo.html">
+
 <dom-module id="part-header">
   <style>
     :host {
@@ -39,6 +42,7 @@
       padding: 2;
     }
   </style>
+
   <template>
 
     <app-session id="session"></app-session>
@@ -62,6 +66,7 @@
           <ul class="links">
             <li><a is="app-link" class="link" href="/admin/profile">profile</a></li>
             <li><a is="app-link" class="link" href="/admin/courses">courses</a></li>
+            <part-header-photo user="{{user}}"></part-header-photo>
             <li><a class="link" on-click="on_click_logout">logout</a></li>
           </ul>
         </template>
@@ -73,6 +78,13 @@
 <script>
   Polymer({
     is: 'part-header',
+
+    properties: {
+      user: {
+        type: Object
+      }
+    },
+
     attached: function () {
       this.token = this.$.session.get('token');
       this.user = this.$.session.get('user');
