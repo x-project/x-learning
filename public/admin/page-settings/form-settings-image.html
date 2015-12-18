@@ -1,11 +1,8 @@
 <link rel="import" href="../input-s3/input-s3.html">
 <dom-module id="form-settings-image">
   <template>
-    <api-model-update id="update" collection="members" model-id="{{member.id}}"
-      data="{{member}}" response="{{response}}" error="{{error}}">
-    </api-model-update>
 
-    <input-s3 collection="images" folder="{{folder}}" on-response="on_response"></input-s3>
+    <input-s3 collection="images" folder="{{folder}}"></input-s3>
 
   </template>
 </dom-module>
@@ -26,11 +23,6 @@
 
     attached: function(event){
       this.folder = 'profile_image/';
-    },
-
-    on_response:function(event){
-      this.member.photo = event.detail.url;
-      this.$.update.send();
     }
 
   });
