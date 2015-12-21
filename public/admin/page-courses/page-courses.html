@@ -5,13 +5,7 @@
   <template>
     <style include="style-button"></style>
 
-    <app-session id="session"></app-session>
-
-    <iron-ajax id="ajax_find" handle-as="json" last-response="{{courses}}"> </iron-ajax>
     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
-    
-    <api-model-find id="find" collection="members" response="{{courses}}">
-    </api-model-find>
 
     <layout-admin>
       <div>
@@ -20,7 +14,7 @@
       <div class="panel">      
         <h2 class="title">Courses</h2>  
         <a is="app-link" class="btn btn-link" href="/admin/courses/new">Create new course</a>
-        <deck-courses courses="{{courses}}" on-try-delete="on_try_delete"></deck-courses>
+        <deck-courses courses="{{course.teaching}}" on-try-delete="on_try_delete"></deck-courses>
       </div>
     </layout-admin>
 
@@ -35,12 +29,15 @@
       data: {
         type: Object,
         value: function () { return {}; }
+      },
+      course: {
+        type: Object,
+        value: function () { return {}; }
       }
     },
 
     attached: function () {
-      this.$.ajax_find.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
-      this.$.ajax_find.generateRequest();
+      this.course = this.data.course
     },
 
     on_try_delete:function(event){

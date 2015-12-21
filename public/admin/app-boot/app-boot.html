@@ -33,19 +33,22 @@
     ],
 
     '/admin': function (context) {
-      context.page = 'page-home';
-      this.open(context);
+      this.get_model({
+          collection: 'members',
+          modelId: this.session.get('user').id,
+          include: ['teaching']
+        })
+        .then(function (model) {
+          context.page = 'page-courses';
+          context.data = {};
+          context.data.course = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
     },
 
-    '/admin/home': function (context) {
-      context.page = 'page-home';
-      this.open(context);
-    },
-
-    '/admin/courses': function (context) {
-        context.page = 'page-courses';
-        this.open(context);
-    },
 
     '/admin/courses/new': function (context) {
         context.page = 'page-course';
