@@ -59,7 +59,8 @@
     },
 
     on_click: function(event){
-      this.fire('try-delete',this.course.id);
+      if(confirm("DO YOU WANT DELETE COURSE"))
+        this.fire('try-delete',this.course.id);
     }
 
   });
