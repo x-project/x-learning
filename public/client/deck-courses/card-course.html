@@ -1,5 +1,6 @@
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="../input-rating/input-rating-4.html">
 
 <dom-module id="card-course">
   <template>
@@ -29,6 +30,12 @@
       .link {
         display: block;
       }
+      .star {
+        --rating-star : {
+          width: 30px;
+        };
+      }
+    
     </style>
 
     <a class="card" is="app-link" href="/courses/{{course.id}}">
@@ -38,6 +45,7 @@
       <div>
         <h4 class="title">{{course.title}}</h4>
         <p class="description">{{course.description}}</p>
+        <input-rating-4 class="star" value="{{rating}}"></input-rating-4>
         <h4>$ {{course.cost}}</h2>
       </div>
     </a>
@@ -53,7 +61,17 @@
       course: {
         type: Object,
         value: function () { return {}; }
+      },
+      rating: {
+        type:Number,
+        value:0
       }
+    },
+
+    attached:function(){
+      this.rating = this.course.score_review/this.course.total_review;
+
+      console.log(this.rating)
     }
 
   });
