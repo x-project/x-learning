@@ -7,6 +7,10 @@
       model-id="{{review.id}}" on-response="on_response">
     </api-model-update>
 
+    <api-model-update id="course_update" collection="courses" data="{{course}}"
+      model-id="{{course.id}}">
+    </api-model-update>
+
     <form-feedback id="form_feedback" review="{{review}}" on-try-save="on_try_save"></form-feedback>
 
   </template>
@@ -21,13 +25,30 @@
         type: Object,
         notify: true,
         value: function () { return {}; }
+      },
+      course: {
+        type: Object,
+        notify: true,
+        value: function () { return {}; }
       }
     },
 
     on_try_save: function  (event) {
       event.stopPropagation();
       this.review.closed = true;
+      
+      if(!this.course.total_review)
+        this.course.total_review=0;
+
+      if(!this.course.score_review)
+        this.course.score_review=0;
+
+      this.course.total_review = this.course.total_review +1;
+      this.course.score_review = this.course.score_review + this.review.rating;  
+ 
+      this.$.course_update.send();
       this.$.update.send();
+
     },
 
     on_response: function (event) {
