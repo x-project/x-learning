@@ -4,21 +4,41 @@
 
 <dom-module id="page-webinar">
   <template>
-  <style include="style-page">
-    </style>
+  <style>
+  .information{
+    padding-left:30%;
+  }
+  .countdown{
+    display:flex;
+  }
+  .countdown .count {
+    padding-left:20px;
+    padding-top: 20px;
+  }
+  .start {
+    padding-left:50%;
+  }
+  .video{
+    padding-left: 30%;
+  }
+  </style>
+      <style include="style-button"></style>
 
     <layout-client>
-      <part-jumbotron class="jumbotron">
-      <h2>{{data.title}}</h2>
-      </part-jumbotron>
-      <div class="container">
+      <div class="information">
+        <h3 class="title">Title: {{data.title}}</h3>
+        <div class="countdown">
+          <h3>Start in :</h3>
+          <part-countdown class="count" date="{{webinar.data}}"></part-countdown>  
+        </div>
         <template is="dom-if" if="{{!start}}">
-          <button on-click="on_click">Start webinar</button>  
+          <button class="start btn btn-secondary" on-click="on_click">Start webinar</button>  
         </template>
-        <template is="dom-if" if="{{start}}">
-          <deck-p2p-client data="{{data}}"></deck-p2p-client>
-        </template>
+        
       </div>
+      <template is="dom-if" if="{{start}}">
+        <deck-p2p-client class="video" data="{{data}}"></deck-p2p-client>
+      </template>
     </layout-client>
 
   
