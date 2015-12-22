@@ -89,10 +89,14 @@
         include: ['lectures', 'category']
       })
       .then(function (models) {
-        context.page = 'page-category';
-        context.data = {};
-        context.data.courses = models;
-        context.data.category = models[0].category;
+        if(models.length>0){
+          context.page = 'page-category';
+          context.data = {};
+          context.data.courses = models;
+          context.data.category = models[0].category;
+        }else{
+          context.page = 'page-home';
+        }
         this.open(context);
       }.bind(this))
       .catch(function (error) {
