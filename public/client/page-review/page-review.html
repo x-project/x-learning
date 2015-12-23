@@ -3,14 +3,20 @@
 <dom-module id="page-review">
   <template>
     <style include="style-page"></style>
-
-    <layout-client>
-      <part-jumbotron class="jumbotron">
-        <h1>Review <span>{{data.review.course.title}}</span></h1>
-      </part-jumbotron>
-        <div class="container">
-          <part-feedback review="{{data.review}}" course="{{data.review.course}}"></part-feedback>
-        </div>
+    <style>
+      :host {
+        display: block;
+      }
+    .container:{
+      position: relative;
+      margin-left:30%;
+    }
+    </style>
+    <layout-client>      
+      <div class="container">
+      <h1 class="title">Review <span>{{data.review.course.title}}</span></h1>
+        <part-feedback review="{{data.review}}" course="{{data.review.course}}"></part-feedback>
+      </div>
     </layout-client>
 
   </template>
