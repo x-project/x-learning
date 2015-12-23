@@ -33,6 +33,7 @@
 
     on_response: function (event) {
       event.stopPropagation();
+      console.log(event)
       this.title = event.detail.dataId.Job.Input.Key;
       // this.fire('upload-video', event.detail.signed_url.Location);
       this.fire('upload-video', {"title" : this.title, "url" :'http://d265dc9zzasikr.cloudfront.net/'+ this.folder + this.title + '.m3u8'});
