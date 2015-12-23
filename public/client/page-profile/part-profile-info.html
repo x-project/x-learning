@@ -62,7 +62,7 @@
         </div>
         <div class="item">
           <i class="fa fa-calendar"></i>
-          <h4 class="text">{{member.birthday}}</h4>
+          <h4 class="text">{{member_data}}</h4>
         </div>
       </div>
     </div>
@@ -79,7 +79,14 @@
       member: {
         type: Object,
         value: function () { return {}; }
+      },
+      member_data: {
+        type: String
       }
+    },
+
+    attached:function(){
+      this.member_data = this.member.birthday.split('T')[0];
     },
 
     on_click_edit: function(){
