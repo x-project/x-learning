@@ -21,9 +21,9 @@
           <tbody>
             <template id="lecture" is="dom-repeat" items="{{lectures}}" as="lecture">
               <tr class="text-left" on-click="on_click">
-                <th scope="row">Lecture {{index}}</th>
+                <th scope="row"><i class="fa fa-play-circle"></i> Lecture {{index}}</th>
                 <td>{{lecture.title}}</td>
-                <td>{{lecture.video.id}}</td>
+                <td>{{lecture.video.time}}</td>
               </tr>
             </template>
           </tbody>
