@@ -13,7 +13,7 @@
     </api-s3-multipart-upload>
 
     <input type="file" on-change="on_change">
-
+    <video controls width="500px" id="vid" src="{{src}}" style="display:none"></video>
   </template>
 </dom-module>
 
@@ -36,11 +36,25 @@
       error: {
         type: Object,
         notify: true
+      },
+      src :{
+        type:String
+      },
+      duration: {
+        type:Number
       }
     },
 
     on_change: function (event) {
-      var file = event.target.files[0];
+      var file = event.currentTarget.files[0];
+
+      var objectUrl = URL.createObjectURL(file);
+      this.src = objectUrl;
+      var myVideoPlayer = this.$.vid;
+      myVideoPlayer.addEventListener('loadedmetadata', function() {
+        this.fire('duration',myVideoPlayer.duration)
+      }.bind(this));
+
       this.$.upload.send(file);
     }
 

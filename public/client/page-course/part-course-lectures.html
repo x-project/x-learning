@@ -3,6 +3,7 @@
 <link rel="import" href="part-course-lecture.html">
 <link rel="import" href="../../styles/style-table/style-table.html">
 <link rel="import" href="../../styles/style-basic/style-basic.html">
+<script src="/components/moment/moment.js"></script>
 
 <dom-module id="part-course-lectures">
   <template>
@@ -23,7 +24,7 @@
               <tr class="text-left" on-click="on_click">
                 <th scope="row"><i class="fa fa-play-circle"></i> Lecture {{index}}</th>
                 <td>{{lecture.title}}</td>
-                <td>{{lecture.video.time}}</td>
+                <td>{{lecture.video.duration}}</td>
               </tr>
             </template>
           </tbody>
@@ -49,6 +50,16 @@
         value: function () { return []; }
       }
     },
+
+    attached:function(){
+      this.lectures.forEach(function(lecture){
+        if(lecture.video.duration){
+          var time = moment(lecture.video.duration*1000)
+          lecture.video.duration = time.minutes() + ':' + time.seconds();
+        }
+      });
+    },
+
 
     on_click: function(event){
       page('/courses/'+ this.course.id + '/lectures/' + this.$.lecture.itemForElement(event.target).id);

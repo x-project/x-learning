@@ -76,7 +76,9 @@
     on_upload_video: function(event){
       // 'http://d1s3yn3kxq96sy.cloudfront.net/bigbuckbunny/index.m3u8'
       this.data.video.title = event.detail.title;
+      this.data.video.duration = event.detail.duration;
       this.data.video.url = event.detail.url;
+      
       this.$.ajax_video_post.body = this.data.video;
       this.$.ajax_video_post.url='/api/lectures/'+ this.data.lecture.id +'/video';
       
