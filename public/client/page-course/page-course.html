@@ -5,6 +5,7 @@
 <link rel="import" href="part-course-lectures.html">
 <link rel="import" href="part-course-reviews.html">
 <link rel="import" href="part-course-webinars.html">
+<link rel="import" href="part-course-other-course.html">
 <link rel="import" href="../deck-video/deck-video.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../../styles/style-page/style-page.html">
@@ -47,14 +48,14 @@
 
     <layout-client>
         <div class="title"> 
-          <h1>Course {{data.course.title}}</h1>
-          <p class="description">Description: {{data.course.description}}</p>      
+          <h1>{{data.course.title}}</h1>
+          <p class="description">{{data.course.description}}</p>      
         </div>
         <div class="row">
           <div class="col-sm-8 col-sm-push-1">
             <deck-video class="video" src="{{data.video.url}}"></deck-video>          
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2 col-xs-pull-0">
             <button class="buy btn btn-secondary" on-click="on_try_buy">BUY</button>
             <part-course-info data="{{data}}"></part-course-info>            
           </div>
@@ -69,7 +70,9 @@
           <part-course-webinars course="{{data.course}}" webinars="{{data.webinars}}"></part-course-webinars>        
           <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
           <part-course-reviews course="{{data.course}}"></part-course-reviews>
+          <part-course-other-course teacher="{{data.course.teacher_id}}"></part-course-other-course>
         </div>
+        
 
       </div>
     </layout-client>

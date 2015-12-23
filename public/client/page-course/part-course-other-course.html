@@ -1,0 +1,42 @@
+<link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../deck-courses/deck-courses.html">
+
+<dom-module id="part-course-other-course">
+  <template>
+    <style include="style-panel"></style>
+ 
+    <api-model-find id="find" collection="courses" response="{{courses}}" on-response="on_response"></api-model-find>
+
+    <div class="panel">      
+      <h2 class="title">other course of {{teacher.name}} {{teacher.last_name}}</h2>  
+      <deck-courses courses="{{courses}}"></deck-courses>
+    </div>
+    
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-course-other-course',
+
+    properties:{
+      teacher:{
+        type: Object,
+        value: function() { return {}; }
+      }
+    },
+
+    attached: function(){
+      console.log(this.teacher)
+      this.$.find.include = ['teacher'];
+      this.$.find.where = { and: [{"teacher_id" : this.teacher},{"publish": true}] };
+      this.$.find.send();
+    },
+
+    on_response: function(event){
+      this.teacher = this.courses[0].teacher;
+    }
+
+  });
+</script>
