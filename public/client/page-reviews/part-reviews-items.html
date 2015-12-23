@@ -7,17 +7,51 @@
       .review {
         margin-top: 20px;
       }
+      .panel.part-reviews-items {
+        padding: 20px;
+        border: 2px solid #eee;
+        border-radius: 4px;
+        margin-top: 20px;
+        margin-left: 25%;
+        width: 50%;
+        box-sizing: border-box;
+      }
     </style>
-
+    <style include="style-panel"></style>
+    <style include="style-table"></style>
+    <style include="style-basic"></style>
+    <style include="style-button"></style>
+    
     <api-model-find id="find" collection="reviews" response="{{reviews}}"
       include=["member","course"] on-response="on_response" on-error="on_error">
     </api-model-find>
-
-    <div class="list">
-      <template is="dom-repeat" items="{{reviews}}" as="review">
-        <part-reviews-item class="review" review="{{review}}"></part-reviews-item>
-      </template>
+    
+    <div class="panel">
+      <h3>Reviews</h3>
+       <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+            </tr>
+          </thead>
+          <tbody>
+            <template id="review" is="dom-repeat" items="{{reviews}}" as="review">
+              <tr class="text-left" on-click="on_click">
+                <th scope="row">Review {{index}}</th>
+                <td>{{review.course.title}}</td>
+                <template is="dom-if" if="{{!review.closed}}">
+                  <td><button class="btn btn secondary" on-click="on_click_leave">leave feedback</button></td>
+                </template>
+                <template is="dom-if" if="{{review.closed}}">
+                  <td><button class="btn btn secondary" on-click="on_click_view">view feedback</button></td>
+                </template>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
     </div>
+
 
   </template>
 </dom-module>
@@ -37,7 +71,7 @@
       }
     },
 
-    attached: function  () {
+    attached: function  (event) {
       if(Object.keys(this.member).length > 0){
         this.$.find.where = { member_id: this.member.id };
         this.$.find.send();
@@ -46,12 +80,19 @@
 
     on_response: function  (event) {
       event.stopPropagation();
-      console.log(this.reviews);
     },
 
     on_error: function (event) {
       event.stopPropagation();
       console.log(event);
+    },
+
+    on_click_view: function(){
+      page('/reviews/' + this.$.review.itemForElement(event.target).id);
+    },
+
+    on_click_leave: function(event){
+      page('/reviews/' + this.$.review.itemForElement(event.target).id);
     }
 
   });

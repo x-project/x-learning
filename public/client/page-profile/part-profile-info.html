@@ -17,9 +17,9 @@
         width: 250px;
       }
       .text {
-        display: flex;
+        display: inline;
         margin: 0px;
-        margin-left: 30px;
+        margin-left: 20px;
         margin-top: -20px;
       }
       .item {
@@ -29,10 +29,7 @@
         padding-top: 30px;
         padding-bottom: 20px;
       }
-      .edit-icon{
-        margin-left: 60%;
-        margin-top: 7px;
-      }
+
     </style>
 
     <div class="row">
@@ -41,8 +38,12 @@
       </div>
       <div class="col-sm-7 col-sm-push-1">
         <div class="edit">
-          <i class="fa fa-pencil edit-icon" on-click="on_click_edit"></i>
-          <h2 class="text">{{member.name}} {{member.last_name}}</h2>
+          <span>
+            <h2 class="text">{{member.name}} {{member.last_name}}</h2>
+          </span>
+          <span class="edit-icon">
+            <i class="fa fa-pencil" on-click="on_click_edit"></i>
+          </span>
         </div>
         <div class="item">
           <i class="fa fa-envelope-o"></i>
