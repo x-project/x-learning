@@ -48,7 +48,7 @@
 
     attached: function(){
       if(!this.course.documents){
-        this.documents = [];
+        this.course.documents = [];
       }else{
         this.documents = this.course.documents;
       }
@@ -56,7 +56,6 @@
 
     on_response: function(event){
       this.course.documents.push(event.detail)
-      console.log(this.course.documents)
       this.fire('try-save')
       page('/admin/courses/' + this.course.id)
     },
