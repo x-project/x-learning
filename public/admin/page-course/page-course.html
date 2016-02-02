@@ -151,10 +151,10 @@
 
     on_try_delete: function (event) {
       event.stopPropagation();
-      this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/follow';
-      this.$.ajax_delete.generateRequest();
-      this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/lectures';
-      this.$.ajax_delete.generateRequest();
+      // this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/follow';
+      // this.$.ajax_delete.generateRequest();
+      // this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/lectures';
+      // this.$.ajax_delete.generateRequest();
       this.$.ajax_delete.url='/api/courses/'+ this.course.id ;
       this.$.ajax_delete.generateRequest();
       page('/admin/')

@@ -12,7 +12,7 @@
     </api-model-update>
     
     <layout-admin>
-      <deck-p2p-admin data="{{data.webinar}}" on-peer="on_peer"></deck-p2p-admin>
+      <deck-p2p-admin data="{{data.webinar}}" on-peer="on_peer" on-webinar-closed="webinar_closed"></deck-p2p-admin>
     </layout-admin>
   </template>
 </dom-module>
@@ -24,7 +24,14 @@
     on_peer: function(event){
       this.data.webinar.peer_id=event.detail;
       this.$.update.send();
+    },
+
+    webinar_closed: function(){
+      this.data.webinar.started=false;
+      this.$.update.send();
     }
+
+
 
 
   });
