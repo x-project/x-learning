@@ -70,7 +70,6 @@
     attached: function () {
       this.title = this.course.category.title || '';
       this.selected = this.course.category;
-      // this.push('selected',this.course.category)
     },
 
     on_edit_category: function (event) {
@@ -85,7 +84,6 @@
       if(this.selected.id!= category.id){
         this.title=category.title;
         this.selected = category;
-        // this.push('selected', category);
         this.set('categories', []);
         this.fire('try-save-categories', category.id);
       }
