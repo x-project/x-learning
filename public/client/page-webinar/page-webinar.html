@@ -29,7 +29,7 @@
         <h3 class="title">Title: {{data.title}}</h3>
         <div class="countdown">
           <h3>Start in :</h3>
-          <part-countdown class="count" date="{{webinar.data}}"></part-countdown>  
+          <part-countdown class="count" date="{{data.data}}"></part-countdown>  
         </div>
         <template is="dom-if" if="{{!start}}">
           <button class="start btn btn-secondary" on-click="on_click">Start webinar</button>  
@@ -53,7 +53,15 @@
       start: {
         type: Boolean,
         value: false
+      },
+      webinar: {
+        type: Object,
+        value: function () { return {}; }
       }
+    },
+
+    attached:function(){
+      console.log(this.data.data)
     },
 
     on_click:function(){
