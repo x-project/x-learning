@@ -1,0 +1,35 @@
+<link rel="import" href="../../components/app-session/app-session.html">
+
+<dom-module id="page-test">
+  <template>
+      <app-session id="session"></app-session>
+
+      <iron-ajax id="ajax" method="GET" url="/api/members_courses/authorizated"
+      content-type="application/json" handle-as="json"
+      last-response="{{response}}" on-response="on_response"
+      last-error="{{error}}" on-error="on_error">
+    </iron-ajax>
+  ok
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-test',
+
+    attached:function(){
+      var ajax = this.$.ajax;
+      // ajax.params.data = "5649b02de567d38f03376459";
+      ajax.params.data = this.$.session.get('token');
+
+      ajax.headers = { Authorization: this.$.session.get('token') };
+      ajax.generateRequest()
+    },
+
+    on_response:function(event){
+      console.log(event)
+    }
+
+  });
+</script>

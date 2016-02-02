@@ -17,6 +17,15 @@
     },
     "cover": {
       "type": "String"
+    },
+    "language": {
+      "type": "String"
+    },
+    "cost": {
+      "type": "Number"
+    },
+    "publish": {
+      "type": "Boolean"
     }
   },
   "relations": {
@@ -44,6 +53,11 @@
       "type": "hasAndBelongsToMany",
       "model": "Member",
       "through": "MemberCourse"
+    },
+    "review": {
+      "type": "hasMany",
+      "model": "Review",
+      "foreignKey": "review_id"
     }
   },
   "acls": [],

@@ -11,8 +11,14 @@
     "collection": "videos"
   },
   "properties": {
+    "title": {
+      "type": "String"
+    },
     "url": {
       "type": "String"
+    },
+    "duration": {
+      "type": "Number"
     }
   },
   "validations": [],

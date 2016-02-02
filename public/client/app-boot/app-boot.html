@@ -19,7 +19,7 @@
 <link rel="import" href="../page-review/page-review.html">
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-webinar/page-webinar.html">
-<link rel="import" href="../page-upload/page-upload.html">
+<link rel="import" href="../page-test/page-test.html">
 
 
 <dom-module id="app-boot">
@@ -61,6 +61,13 @@
     '/forgot': function (context) {
       this.init(context);
       context.page = 'page-forgot';
+      this.open(context);
+    },
+
+    '/test': function (context) {
+            this.init(context);
+
+      context.page = 'page-test';
       this.open(context);
     },
 
