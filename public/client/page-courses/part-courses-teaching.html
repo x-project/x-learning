@@ -8,9 +8,14 @@
         display: block;
       }
     </style>
+    <h3 class="title">Teaching</h3>
     <div class="panel">
-      <h3 class="title">Teaching</h3>
-      <deck-courses courses="{{courses}}"></deck-courses>
+      <h3>Publish</h3>
+      <deck-courses courses="{{courses_published}}"></deck-courses>
+    </div>
+    <div class="panel">
+      <h3>NotPublish</h3>
+      <deck-courses courses="{{courses_not_published}}"></deck-courses>
     </div>
 
   </template>
@@ -25,7 +30,25 @@
       courses: {
         type: Array,
         value: function () { return []; }
+      },
+      courses_published: {
+        type: Array,
+        value: function () { return []; }
+      },
+      courses_not_published: {
+        type: Array,
+        value: function () { return []; }
       }
+    },
+
+    attached: function(){
+      this.courses.forEach(function(course){
+        if(course.publish==true)
+          this.push('courses_published', course);
+        else
+          this.push('courses_not_published', course);
+        
+      }.bind(this))
     }
 
   });
