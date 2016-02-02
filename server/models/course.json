@@ -47,7 +47,7 @@
     "webinars": {
       "type": "hasMany",
       "model": "Webinar",
-      "foreignKey": "webinar_id"
+      "foreignKey": "course_id"
     },
     "students": {
       "type": "hasAndBelongsToMany",
