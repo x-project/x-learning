@@ -40,11 +40,13 @@
         value: function () { return {}; }
       },
       image_name:{
-        type: String
+        type: String,
+        value: ''
       }
     },
 
     attached:function(){
+      if(this.course.cover)
       this.image_name = this.course.cover.split('/').pop();
     },
 
