@@ -142,4 +142,19 @@ module.exports = function (Video) {
     returns: {arg: 'delete_response', type: 'string'}
   });
 
+
+  Video.observe('before delete', function(ctx, callback) {
+    var data = {};
+    var url = ctx.instance.url;
+    var path_url = url.split(".net/")[1];
+    var path_id = path_url.split("/");
+    var path = path_id[0] + "/" + path_id[1] + "/" + path_id[2] + "/";
+
+    Video.delete_video(path,function(err,result){
+      console.log("result : " + result);
+      callback(null,result);
+    });
+
+  });
+
 };

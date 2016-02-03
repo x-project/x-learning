@@ -14,9 +14,10 @@
     <style include="style-page"></style>
     <style include="style-panel"></style>
      
-    <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
-    <iron-ajax id="ajax_s3_delete" method="DELETE"></iron-ajax>
+    <iron-ajax id="ajax_delete_lecture" method="DELETE" on-response="on_response_delete"></iron-ajax>
+        
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{data.lecture}}" on-response="on_response_create"> </iron-ajax>
+    
     <iron-ajax id="ajax_video_post" method="POST" handle-as="json" content-type="application/json" last-response="{{data.video}}" on-response="on_response_create"> </iron-ajax>
 
     <api-model-update id="update" collection="lectures" model-id="{{data.lecture.id}}"
@@ -50,7 +51,6 @@
       event.stopPropagation();
       if(this.data.lecture.id){
         this.$.update.send();
-        console.log(this.data)
       }
       else{
         this.$.ajax_put.body=JSON.stringify(this.data.lecture);
@@ -58,19 +58,12 @@
         this.$.ajax_put.generateRequest();
       }
       page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
-      //test
-      // this.on_upload_video(event);
     },
 
     on_try_delete_lecture: function (event) {
       event.stopPropagation();
-      console.log(this.data)
-      if(this.data.video.id){
-        this.remove_video();
-      }
-      this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id;
-      this.$.ajax_delete.generateRequest();
-      page('/admin/courses/'+ this.data.course.id);
+      this.$.ajax_delete_lecture.url='/api/lectures/'+ this.data.lecture.id;
+      this.$.ajax_delete_lecture.generateRequest();
     },
 
     on_upload_video: function(event){
@@ -78,39 +71,20 @@
       this.data.video.title = event.detail.title;
       this.data.video.duration = event.detail.duration;
       this.data.video.url = event.detail.url;
-      
+
       this.$.ajax_video_post.body = this.data.video;
       this.$.ajax_video_post.url='/api/lectures/'+ this.data.lecture.id +'/video';
-      
-      if(this.data.video.id){
-        this.remove_video();
-      }else{
-        this.upload_complete();
-      } 
-    },
-
-    upload_complete: function(){
       this.$.ajax_video_post.generateRequest();
-    },
 
-    remove_video: function(){
-      this.$.ajax_delete.url='/api/lectures/'+ this.data.lecture.id + '/video';
-      this.$.ajax_delete.addEventListener('response', function (event) {
-          this.upload_complete();
-        }.bind(this));
-      this.$.ajax_delete.generateRequest();
-
-      //s3
-      var options = {};
-      options.path = 'courses/' + this.data.course.id + '/' + this.data.lecture.id + '/';
-      this.$.ajax_s3_delete.url = '/api/videos/delete_video';
-      this.$.ajax_s3_delete.params = options;
-      this.$.ajax_s3_delete.generateRequest()
     },
 
     on_response_create: function(event){
       page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
-    }
+    },
+
+    on_response_delete: function(event){
+      page('/admin/courses/'+ this.data.course.id);
+    },
 
   });
 </script>
