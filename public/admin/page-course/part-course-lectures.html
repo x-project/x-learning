@@ -52,6 +52,8 @@
     },
 
     on_click: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
       page('/admin/courses/'+ this.course.id + '/lectures/' + this.$.lecture.itemForElement(event.target).id);
     }
 
