@@ -30,8 +30,6 @@ module.exports = function (Course) {
   };
 
   var get_students = function (data) {
-        console.log("getstudent")
-
     return function (next) {
       data.course.students(function (err, students) {
         data.students = students;
@@ -43,12 +41,21 @@ module.exports = function (Course) {
 
 
   var remove_students = function (data) {
-    console.log("removestudent")
     return function (next) {
       async.each(data.students,
         function(student, done) {
           data.course.students.remove(student, done);
         }, next);
+    };
+  };
+
+  var destroy_review = function (data) {
+    return function (next) {
+      data.course.review.destroyAll(function (err, info, num) {
+        console.log(data.course.review);
+        console.log(err,info,num)
+        setImmediate(next, err);
+      });
     };
   };
 
@@ -61,8 +68,8 @@ module.exports = function (Course) {
       destroy_lecture(data),
       destroy_webinars(data),
       destroy_review(data),
-      // get_students(data),
-      // remove_students(data)
+      get_students(data),
+      remove_students(data)
     ],
     function (err) {
       if (err) {
