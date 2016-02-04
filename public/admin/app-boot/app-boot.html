@@ -8,6 +8,7 @@
 <link rel="import" href="../page-lectures/page-lectures.html">
 <link rel="import" href="../page-settings/page-settings.html">
 <link rel="import" href="../page-home/page-home.html">
+<link rel="import" href="../page-services/page-services.html">
 <link rel="import" href="../page-webinar/page-webinar.html">
 <link rel="import" href="../page-webinar/part-webinar-video.html">
 
@@ -177,6 +178,11 @@
         .catch(function (error) {
           this.redirect('/404');
         }.bind(this));
+    },
+
+    '/admin/services': function (context) {
+          context.page = 'page-services';
+          this.open(context);
     },
 
 
