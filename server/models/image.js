@@ -1,30 +1,38 @@
 var aws = require('aws-sdk');
 
 module.exports = function (Image) {
+  var s3;
+ 
+  function getCredentials(){
+    return new Promise(function (resolve,reject){
 
-  var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-  var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-  var S3_BUCKET = process.env.S3_BUCKET;
-  var S3_REGION = process.env.S3_REGION;
-
-  aws.config.update({accessKeyId: AWS_ACCESS_KEY , secretAccessKey: AWS_SECRET_KEY });
-  aws.config.update({region: S3_REGION , signatureVersion: 'v4' });
+      Image.app.models.Service.get_service('aws').then(function (service) {  
+      aws.config.update({accessKeyId: service.public_key , secretAccessKey: service.secret_key });
+      aws.config.update({region: service.params.region , signatureVersion: 'v4' });
+      
+      s3 = new aws.S3();
+      
+      resolve(service)
+      });
+    })
+  }
 
   Image.signed_put = function(file_name, file_type, callback) {
-    var s3 = new aws.S3();
-    var s3_params = {
-      Bucket: S3_BUCKET,
-      Key: file_name,
-      Expires: 60,
-      ContentType: file_type,
-      ACL: 'public-read'
-    };
-    s3.getSignedUrl('putObject', s3_params, function (err, signed_url) {
-      if (err) {
-        callback(err);
-        return;
-      }
-      callback(null, signed_url);
+    getCredentials().then(function (service){
+      var s3_params = {
+        Bucket: service.params.bucket,
+        Key: file_name,
+        Expires: 60,
+        ContentType: file_type,
+        ACL: 'public-read'
+      };
+      s3.getSignedUrl('putObject', s3_params, function (err, signed_url) {
+        if (err) {
+          callback(err);
+          return;
+        }
+        callback(null, signed_url);
+      });
     });
   };
 
@@ -39,21 +47,23 @@ module.exports = function (Image) {
 
 
   Image.signed_list = function (folder, callback) {
-    var s3 = new aws.S3();
-    var s3_params = {
-      Bucket: S3_BUCKET,
-      EncodingType: 'url',
-      // Delimiter: 'STRING_VALUE',
-      // Marker: 'STRING_VALUE',
-      Prefix: folder,
-      MaxKeys: 1000
-    };
-    s3.getSignedUrl('listObjects', s3_params, function (err, signed_url) {
-      if (err) {
-        callback(err);
-        return;
-      }
-      callback(null, signed_url);
+    getCredentials().then(function (service){
+      var s3_params = {
+        Bucket: service.params.bucket,
+        Key: file_name,
+        EncodingType: 'url',
+        // Delimiter: 'STRING_VALUE',
+        // Marker: 'STRING_VALUE',
+        Prefix: folder,
+        MaxKeys: 1000
+      };
+      s3.getSignedUrl('listObjects', s3_params, function (err, signed_url) {
+        if (err) {
+          callback(err);
+          return;
+        }
+        callback(null, signed_url);
+      });
     });
   };
 
@@ -64,17 +74,19 @@ module.exports = function (Image) {
   });
 
   Image.signed_delete = function(file_name, callback) {
-    var s3 = new aws.S3();
-    var s3_params = {
-      Bucket: S3_BUCKET,
-      Key: file_name
-    };
-    s3.getSignedUrl('deleteObject', s3_params, function (err, signed_url) {
-      if (err) {
-        callback(err);
-        return;
-      }
-      callback(null, signed_url);
+   getCredentials().then(function (service){
+      var s3_params = {
+        Bucket: service.params.bucket,
+        Key: file_name,
+        Key: file_name
+      };
+      s3.getSignedUrl('deleteObject', s3_params, function (err, signed_url) {
+        if (err) {
+          callback(err);
+          return;
+        }
+        callback(null, signed_url);
+      });
     });
   };
 
