@@ -1,13 +1,17 @@
+<link rel="import" href="../table-view/table-view.html">
+
 <dom-module id="part-course-lectures">
   <template>
     <style include="style-panel"></style>
-    <style include="style-table"></style>
-    <style include="style-basic"></style>
 
     <div class="panel">
       <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
+      <table-view items="{{course.lectures}}" fields=["title"] list=Lecture on-click="on_click"
+        on-delete="on_click_delete">
+      </table-view>
 
-      <div class="table-responsive">
+
+      <!-- <div class="table-responsive">
         <table class="table table-striped table-hover">
           <thead>
             <tr>
@@ -25,7 +29,7 @@
             </template>
           </tbody>
         </table>
-      </div>
+      </div> -->
     </div>
 
   </template>
@@ -42,8 +46,12 @@
       }
     },
 
+    attached:function(){
+      console.log(this.course.lectures)
+    },
+
     on_click_delete:function(event){
-      this.fire('try-delete-lecture',this.$.lecture.itemForElement(event.target))
+      this.fire('try-delete-lecture',event.detail)
     },
 
     on_submit: function (event) {
@@ -54,7 +62,7 @@
     on_click: function (event) {
       event.stopPropagation();
       event.preventDefault();
-      page('/admin/courses/'+ this.course.id + '/lectures/' + this.$.lecture.itemForElement(event.target).id);
+      page('/admin/courses/'+ this.course.id + '/lectures/' + event.detail.id);
     }
 
   });
