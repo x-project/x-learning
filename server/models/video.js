@@ -125,7 +125,7 @@ module.exports = function (Video) {
           return;
         } 
 
-        params = {Bucket: S3_BUCKET};
+        params = {Bucket: service.params.bucket};
         params.Delete = {};
         params.Delete.Objects = [];
 
