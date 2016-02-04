@@ -17,7 +17,6 @@ module.exports = function (Service) {
           return;
         }
         services[name] = service;
-        console.log(service[name])
         resolve(service);
       });
     });
