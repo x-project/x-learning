@@ -2,23 +2,79 @@ var loopback = require('loopback');
 var braintree = require('braintree');
 var async = require('async');
 var mandrill = require('mandrill-api/mandrill');
-var mandrill_client = new mandrill.Mandrill(process.env.MANDRILL_KEY);
+// var mandrill_client = new mandrill.Mandrill(process.env.MANDRILL_KEY);
 var moment = require('moment');
 var jwt = require('jwt-simple');
 var plivo = require('plivo')
-var plivo_client = plivo.RestAPI({
-  authId: process.env.PLIVIO_AUTH_ID_KEY,
-  authToken: process.env.PLIVIO_AUTH_TOKEN
-});
+// var plivo_client = plivo.RestAPI({
+//   authId: process.env.PLIVIO_AUTH_ID_KEY,
+//   authToken: process.env.PLIVIO_AUTH_TOKEN
+// });
 
-var gateway = braintree.connect({
-  environment: braintree.Environment.Sandbox,
-  merchantId: process.env.BRAINTREE_MERCHANT_ID,
-  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
-  privateKey: process.env.TOKEN_SECRET_BRAINTREE
-});
+// var gateway = braintree.connect({
+//   environment: braintree.Environment.Sandbox,
+//   merchantId: process.env.BRAINTREE_MERCHANT_ID,
+//   publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+//   privateKey: process.env.TOKEN_SECRET_BRAINTREE
+// });
 
 module.exports = function (Member) {
+
+  var gateway;
+  function connect_braintree () {
+    return new Promise(function (resolve, reject) {
+      if (gateway) {
+        resolve(gateway);
+        return;
+      }
+      Member.app.models.Service.get_service('braintree').then(function (service) {
+        gateway = braintree.connect({
+          environment: braintree.Environment.Sandbox,
+          merchantId: service.params.merchant_id,
+          publicKey: service.public_key,
+          privateKey: service.private_key
+        });
+        resolve(gateway);
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+  }
+
+  var mandrill_client;
+  function connect_mandrill_client () {
+    return new Promise(function (resolve, reject) {
+      if (mandrill_client) {
+        resolve(mandrill_client);
+        return;
+      }
+      Member.app.models.Service.get_service('mandrill').then(function (service) {
+        resolve(new mandrill.Mandrill(service.private_key));
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+  }
+
+  var plivo_client;
+  function connect_plivo_client () {
+    return new Promise(function (resolve, reject) {
+      if (plivo_client) {
+        resolve(plivo_client);
+        return;
+      }
+      Member.app.models.Service.get_service('plivo').then(function (service) {
+        var plivo_client = plivo.RestAPI({
+          authId: service.public_key,
+          authToken: service.private_key
+        });
+        resolve(plivo_client);
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+  }
+
 
   function getCurrentUserId() {
     var ctx = loopback.getCurrentContext();
@@ -110,17 +166,19 @@ module.exports = function (Member) {
 
   //payment
   Member.get_client_token = function (customer_id, callback) {
-    gateway.customer.find(customer_id, function (err, customer) {
-      if (err) {
-        callback(err, null);
-        return;
-      }
-      gateway.clientToken.generate({ customerId: customer_id }, function (err, response) {
+    connect_braintree().then(function (gateway) {
+      gateway.customer.find(customer_id, function (err, customer) {
         if (err) {
           callback(err, null);
           return;
         }
-        callback(null, response);
+        gateway.clientToken.generate({ customerId: customer_id }, function (err, response) {
+          if (err) {
+            callback(err, null);
+            return;
+          }
+          callback(null, response);
+        });
       });
     });
   };
@@ -408,16 +466,26 @@ var get_task_braintree = function (data) {
 
   var send_signed_url_by_email = function (data) {
     return function (next) {
-      var message = prepare_mail(data.email, data.token);
-      mandrill_client.messages.send({"message": message},
-        function (res) {
-          data.email_result = res;
-          setImmediate(next, null);
-        },
-        function (err) {
+      prepare_mail(data.email, data.token, function (err, message) {
+        if (err) {
           setImmediate(next, err);
+          return;
         }
-      );
+        connect_mandrill_client()
+          .then(function (mandrill_client) {
+            mandrill_client.messages.send({"message": message},
+              function (res) {
+                data.email_result = res;
+                setImmediate(next, null);
+              },
+              function (err) {
+                setImmediate(next, err);
+              }
+            );
+          }).catch(function (err) {
+            setImmediate(next, err);
+          });
+      });
     };
   };
 
@@ -499,17 +567,29 @@ var get_task_braintree = function (data) {
 
   var send_sms = function (data) {
     return function (next) {
-      var params = {
-        'src': process.env.PHONE_SRC,
-        'dst' : data.phone,
-        'text' : "Your code for login is: " + data.code,
-        'url' : "http://example.com/report/",
-        'method' : "GET"
-      };
-      plivo_client.send_message(params, function (status, response) {
-        data.response = { status: status, response: response };
-        setImmediate(next, null);
-      });
+      Member.app.models.Service.get_service('phone')
+        .then(function (serivce) {
+          var params = {
+            'src': serivce.params.phone,
+            'dst' : data.phone,
+            'text' : "Your code for login is: " + data.code,
+            'url' : "http://example.com/report/",
+            'method' : "GET"
+          };
+          connect_plivo_client()
+            .then(function (plivo_client) {
+              plivo_client.send_message(params, function (status, response) {
+              data.response = { status: status, response: response };
+              setImmediate(next, null);
+            });
+          })
+          .catch(function (err) {
+            setImmediate(next, err);
+          });
+        })
+        .catch(function (err) {
+          setImmediate(next, err);
+        });
     };
   };
 
