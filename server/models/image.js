@@ -5,9 +5,9 @@ module.exports = function (Image) {
  
   function getCredentials(){
     return new Promise(function (resolve,reject){
-
+      
       Image.app.models.Service.get_service('aws').then(function (service) {  
-      aws.config.update({accessKeyId: service.public_key , secretAccessKey: service.secret_key });
+      aws.config.update({accessKeyId: service.public_key , secretAccessKey: service.private_key });
       aws.config.update({region: service.params.region , signatureVersion: 'v4' });
       
       s3 = new aws.S3();
@@ -19,6 +19,7 @@ module.exports = function (Image) {
 
   Image.signed_put = function(file_name, file_type, callback) {
     getCredentials().then(function (service){
+      console.log(service)
       var s3_params = {
         Bucket: service.params.bucket,
         Key: file_name,

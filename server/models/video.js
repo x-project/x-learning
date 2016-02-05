@@ -7,7 +7,7 @@ module.exports = function (Video) {
   function getCredentials(){
     return new Promise(function (resolve,reject){
       Video.app.models.Service.get_service('aws').then(function (service) {  
-      aws.config.update({accessKeyId: service.public_key , secretAccessKey: service.secret_key });
+      aws.config.update({accessKeyId: service.public_key , secretAccessKey: service.private_key });
       aws.config.update({region: service.params.region , signatureVersion: 'v4' });
       
       s3 = new aws.S3();
