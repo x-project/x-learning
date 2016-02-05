@@ -93,7 +93,7 @@
       this.find_model({
         collection: 'courses',
         where: { and: [{category_id: context.params.category_id},{ publish: true }]},
-        include: ['lectures', 'category']
+        include: ['lectures', 'category','cover']
       })
       .then(function (models) {
         if(models.length>0){
@@ -130,7 +130,7 @@
         this.get_model({
           collection: 'courses',
           modelId: context.params.course_id,
-          include: [{'lectures': ['video']}, 'webinars']
+          include: [{'lectures': ['video']}, 'webinars','cover']
         })
         .then(function (model) {
           context.page = 'page-course';
@@ -200,26 +200,10 @@
       this.get_model({
           collection: 'members',
           modelId: this.session.get('user').id,
+          include: [{'teaching': ['cover']},{'learning': ['cover']}]
         })
         .then(function (model) {
           context.page = 'page-profile';
-          context.data = {};
-          context.data.member = model;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
-    },
-
-    '/courses': function (context) {
-      this.get_model({
-          collection: 'members',
-          modelId: this.session.get('user').id,
-          include: ['teaching', 'learning']
-        })
-        .then(function (model) {
-          context.page = 'page-courses';
           context.data = {};
           context.data.member = model;
           this.open(context);
