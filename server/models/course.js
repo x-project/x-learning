@@ -29,6 +29,16 @@ module.exports = function (Course) {
     };
   };
 
+  var destroy_documents = function (data) {
+    return function (next) {
+      data.course.documents.destroyAll(function (err, info, num) {
+        console.log(data.course.documents);
+        console.log(err,info,num)
+        setImmediate(next, err);
+      });
+    };
+  };
+
   var get_students = function (data) {
     return function (next) {
       data.course.students(function (err, students) {
@@ -67,6 +77,7 @@ module.exports = function (Course) {
       get_course(data),
       destroy_lecture(data),
       destroy_webinars(data),
+      destroy_documents(data),
       destroy_review(data),
       get_students(data),
       remove_students(data)
