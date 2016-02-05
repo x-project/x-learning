@@ -3,7 +3,7 @@
 <dom-module id="form-course-document">
   <template>
 
-   <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{webinar}}" on-response="on_response_create"> </iron-ajax>
+   <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" on-response="on_response_create"> </iron-ajax>
 
     <input-s3 collection="images" folder="{{folder}}" on-response="on_response"></input-s3>
   </template>

@@ -1,4 +1,5 @@
 var aws = require('aws-sdk');
+var async = require('async');
 
 module.exports = function (Image) {
   var s3;
@@ -95,6 +96,53 @@ module.exports = function (Image) {
     http: { verb: 'get' },
     accepts: {arg: 'file_name', type: 'string'},
     returns: {arg: 'signed_url', type: 'string'}
+  });
+
+
+var get_image = function (data) {
+    return function (next) {
+      Image.findById(data.image_id, function (err, model) {
+        data.image = model;
+        data.path = "courses/" + data.image.course_id + "/" +data.image.title;
+        console.log(data.path);
+        setImmediate(next, err);
+      });
+    };
+  }
+
+  var delete_image = function(data) {
+    return function (next) {
+      getCredentials().then(function (service){
+        var params = {
+          Bucket: service.params.bucket, /* required */
+          Key: data.path
+        };
+        console.log(params)
+        s3.deleteObject(params, function(err, data) {
+          setImmediate(next,err)
+        });
+      });
+    };
+
+  }
+
+
+
+  Image.observe('before delete', function(ctx, callback) {
+    data = {};
+    console.log(ctx)
+    data.image_id = ctx.where.id;
+    async.waterfall([
+        get_image(data),
+        delete_image(data)
+      ],
+      function (err) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      callback(null);
+    });
   });
 
 };

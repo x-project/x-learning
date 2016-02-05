@@ -15,9 +15,6 @@
     "date": {
       "type": "Date"
     },
-    "cover": {
-      "type": "String"
-    },
     "language": {
       "type": "String"
     },
@@ -62,6 +59,11 @@
     "documents": {
       "type": "hasMany",
       "model": "Document",
+      "foreignKey": "course_id"
+    },
+    "cover": {
+      "type": "hasOne",
+      "model": "Image",
       "foreignKey": "course_id"
     }
   },
