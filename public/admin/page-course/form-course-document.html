@@ -2,7 +2,10 @@
 
 <dom-module id="form-course-document">
   <template>
-    <input-s3 collection="images" folder="{{folder}}"></input-s3>
+
+   <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{webinar}}" on-response="on_response_create"> </iron-ajax>
+
+    <input-s3 collection="images" folder="{{folder}}" on-response="on_response"></input-s3>
   </template>
 </dom-module>
 
@@ -22,11 +25,29 @@
       },
       folder: {
         type: String
+      },
+      document: {
+        type: Object,
+        value: function () { return {}; }
       }
     },
 
     attached: function(event){
       this.folder = 'courses/' + this.course.id + '/documents/';
+    },
+
+    on_response: function(event){
+      event.stopPropagation();
+      console.log(event.detail);
+      this.document = event.detail;
+      
+      this.$.ajax_put.body=JSON.stringify(this.document);
+      this.$.ajax_put.url='/api/courses/'+ this.course.id + '/documents';
+      this.$.ajax_put.generateRequest();
+    },
+
+    on_response_create: function(){
+      this.fire('try-save')
     }
 
   });

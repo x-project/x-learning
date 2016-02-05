@@ -15,17 +15,12 @@
         margin-left: 20px
       }
     </style>
-    <api-s3-delete id="delete_document" on-delete-completed="on_delete_completed"></api-s3-delete>
+
+    <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response_delete"></iron-ajax>
 
     <div class="panel">
-      <table-view items="{{lectures}}" fields='["index", "title"]' on-click="on_click" on-delete="on_click_delete">
+      <table-view items="{{documents}}" fields='["index", "title"]' on-click="on_click" on-delete="on_click_delete">
       </table-view>
-<!--       <template id="documents" is="dom-repeat" items="{{documents}}" as="document">
-        <div>
-          <h4 class="title">Title: {{document.title}}</h4>
-          <i class="fa fa-trash-o" on-click="on_click_delete"></i>
-        </div>
-      </template> -->
     </div>
       
     <form-course-document course="{{course}}" on-response="on_response" error="{{error}}"></form-course-document>
@@ -41,38 +36,30 @@
       course: {
         type: Object,
         value: function () { return {}; }
-      },
-      documents: {
-        type: Array,
-        value: function () { return []; }
       }
     },
 
-    attached: function(){
-      if(!this.course.documents){
-        this.course.documents = [];
-      }else{
-        this.documents = this.course.documents;
-      }
-    },
-
-    on_response: function(event){
-      this.course.documents.push(event.detail)
-      this.fire('try-save')
-      page('/admin/courses/' + this.course.id)
+    attached:function(){
+      this.documents = this.course.documents.map(function (document, index) {
+        return {
+          id: document.id,
+          title: document.title,
+          description: document.description,
+        index: '#' + index
+        };
+      })
     },
 
     on_click_delete: function(event){
-      var item = this.$.documents.itemForElement(event.target);
-      var index = this.documents.indexOf(item);
-      this.splice('documents', index, 1);
-
-      file_name = 'courses/' + this.course.id + '/documents/' + item.title;
-      this.$.delete_document.delete_file(file_name);
+      event.stopPropagation();
+      console.log(event.detail)
+      this.$.ajax_delete.url='/api/documents/'+ event.detail.id;
+      this.$.ajax_delete.generateRequest();
     },
 
-    on_delete_completed : function(event){
+    on_response_delete : function(event){
       this.fire ('try-save');
+
     }
 
   });
