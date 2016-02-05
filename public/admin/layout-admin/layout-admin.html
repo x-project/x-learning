@@ -1,22 +1,24 @@
-<link rel="import" href="../part-header/part-header.html">
-<link rel="import" href="../part-jumbotron/part-jumbotron.html">
+<link rel="import" href="../../components/layout-grid/layout-grid.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
-
+<link rel="import" href="../part-sidebar/part-sidebar.html">
 <dom-module id="layout-admin">
   <template>
+  <style include="style-grid"></style>
     <style>
-      .header {
-        position: absolute;
-        width: 100%;
+      .page {
+        min-height: 100vh;
       }
     </style>
-    <style include="style-grid"></style>
 
-    <div class="container-fluid">
-      <part-jumbotron>
-        <part-header class="content"></part-header>
-      </part-jumbotron>
-      <content></content>
+    <div class="page">
+      <div class="container">
+        <div class="row">
+          <part-sidebar class="sidebar col col-sm-3"></part-sidebar>
+          <div class="main col col-sm-8">
+            <content></content>
+          </div>
+        </div>
+      </div>
     </div>
 
   </template>

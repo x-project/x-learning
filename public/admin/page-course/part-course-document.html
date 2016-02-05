@@ -18,12 +18,14 @@
     <api-s3-delete id="delete_document" on-delete-completed="on_delete_completed"></api-s3-delete>
 
     <div class="panel">
-      <template id="documents" is="dom-repeat" items="{{documents}}" as="document">
+      <table-view items="{{lectures}}" fields='["index", "title"]' on-click="on_click" on-delete="on_click_delete">
+      </table-view>
+<!--       <template id="documents" is="dom-repeat" items="{{documents}}" as="document">
         <div>
           <h4 class="title">Title: {{document.title}}</h4>
           <i class="fa fa-trash-o" on-click="on_click_delete"></i>
         </div>
-      </template>
+      </template> -->
     </div>
       
     <form-course-document course="{{course}}" on-response="on_response" error="{{error}}"></form-course-document>

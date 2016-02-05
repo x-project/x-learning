@@ -6,30 +6,9 @@
 
     <div class="panel">
       <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
-      <table-view items="{{course.lectures}}" fields=["title"] list=Lecture on-click="on_click"
-        on-delete="on_click_delete">
+      
+      <table-view items="{{lectures}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
       </table-view>
-
-
-      <!-- <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-            </tr>
-          </thead>
-          <tbody>
-            <template is="dom-repeat" id='lecture' items="{{course.lectures}}" as="lecture">
-              <tr class="text-left" on-click="on_click">
-                <th scope="row">Lecture {{index}}</th>
-                <td>{{lecture.title}}</td>
-                <td>
-                  <button class="btn" on-click="on_click_delete">Delete lecture</button>
-                </td>
-              </tr>
-            </template>
-          </tbody>
-        </table>
-      </div> -->
     </div>
 
   </template>
@@ -47,7 +26,14 @@
     },
 
     attached:function(){
-      console.log(this.course.lectures)
+      this.lectures = this.course.lectures.map(function (lecture, index) {
+        return {
+          id: lecture.id,
+          title: lecture.title,
+          description: lecture.description,
+        index: '#' + index
+        };
+      })
     },
 
     on_click_delete:function(event){
