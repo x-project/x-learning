@@ -1,17 +1,16 @@
-<link rel="import" href="part-courses-learning.html">
-<link rel="import" href="part-courses-teaching.html">
+<link rel="import" href="part-profile-learning.html">
+<link rel="import" href="part-profile-teaching.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
 <link rel="import" href="../../styles/style-page/style-page.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
 
-<dom-module id="page-courses">
+<dom-module id="part-profile-courses">
   <template>
     <style include="style-page"></style>
     <style include="style-panel"></style>
     <style include="style-grid"></style>
     <style include="style-button"></style>
-    <layout-client>
-      <div class="container">
+
         <div class="panel">
           <div on-click="on_click_nav">
             <button class="btn btn-secondary" data-tab="learning">Learning</button>
@@ -22,15 +21,14 @@
         <div>
           <x-tabs id="tabs" current="{{current}}">
             <x-tab name="learning">
-              <part-courses-learning courses="{{data.member.learning}}"></part-courses-learning>
+              <part-profile-learning courses="{{member.learning}}"></part-profile-learning>
             </x-tab>
             <x-tab name="teaching">
-              <part-courses-teaching courses="{{data.member.teaching}}"></part-courses-teaching>
+              <part-profile-teaching courses="{{member.teaching}}"></part-profile-teaching>
             </x-tab>
           </x-tabs>
         </div>
-      </div>
-    </layout-client>
+
 
   </template>
 </dom-module>
@@ -38,10 +36,10 @@
 <script>
   Polymer({
 
-    is: 'page-courses',
+    is: 'part-profile-courses',
 
     properties: {
-      data: {
+      member: {
         type: Object,
         value: function () { return {}; }
       },
@@ -49,6 +47,10 @@
         type: String,
         value: 'learning'
       }
+    },
+
+    attached:function(){
+      console.log(this.member)
     },
 
     on_click_nav: function (event) {
