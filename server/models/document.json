@@ -1,0 +1,26 @@
+{
+  "name": "Document",
+  "plural": "documents",
+  "mongodb": {
+    "collection": "documents"
+  },
+  "base": "PersistedModel",
+  "properties": {
+    "title": {
+      "type": "String"
+    },
+    "url": {
+      "type": "String"
+    }
+  },
+  "relations": {
+    "course": {
+      "type": "belongsTo",
+      "model": "Course",
+      "foreignKey": "course_id"
+    }
+  },
+  "acls": [],
+  "methods": [],
+  "validations": []
+}

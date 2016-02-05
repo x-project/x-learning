@@ -58,6 +58,11 @@
       "type": "hasMany",
       "model": "Review",
       "foreignKey": "review_id"
+    },
+    "documents": {
+      "type": "hasMany",
+      "model": "Document",
+      "foreignKey": "course_id"
     }
   },
   "acls": [],
