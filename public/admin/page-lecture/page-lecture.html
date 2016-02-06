@@ -26,6 +26,7 @@
 
     <layout-admin on-try-save="on_try_save" on-try-delete-lecture='on_try_delete_lecture'>
         <h1>Edit course: {{data.course.title}} lecture: {{data.lecture.title}}</h1>
+        <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/">back</a>
         <part-lecture-actions></part-lecture-actions>
         <part-lecture-info lecture="{{data.lecture}}"></part-lecture-info>
         <part-lecture-video data="{{data}}" on-upload-video="on_upload_video"></part-lecture-video>

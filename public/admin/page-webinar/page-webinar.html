@@ -10,6 +10,7 @@
 <dom-module id="page-webinar">
   <template>
     <app-session id="session"></app-session>
+    
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{webinar}}" on-response="on_response_create"> </iron-ajax>
 
     <api-model-update id="update" collection="webinars" model-id="{{webinar.id}}"
@@ -21,6 +22,7 @@
     <layout-admin on-try-save="on_try_save" on-try-delete="on_try_delete" on-try-start="on_try_start">
         <h1>Create webinar: {{webinar.title}}</h1>
         <part-webinar-actions></part-webinar-actions>
+        <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/">back</a>
         <part-webinar-info webinar="{{webinar}}"></part-webinar-info>
 
     </layout-admin>
@@ -65,8 +67,9 @@
     },
 
     on_try_start:function(event){
-      this.webinar.started=true;
-      this.$.update.send();
+      // this.webinar.started=true;
+      // this.$.update.send();
+      // console.log(this.data)
       page('/admin/courses/'+ this.data.course.id + '/webinar/' +this.webinar.id + '/start');
     },
     
