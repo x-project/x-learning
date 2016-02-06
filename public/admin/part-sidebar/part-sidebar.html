@@ -40,6 +40,9 @@
         width: 26px;
       }
     </style>
+    <api-user-logout id="logout" collection="managers" access-token="{{admin_token}}"
+      on-response="on_logout" on-error="on_error">
+    </api-user-logout>
 
     <nav role="navigation">
       <h3 class="title"><a class="link" href="/admin">X-Learning</a></h3>
@@ -79,9 +82,17 @@
       </ul>
       <ul class="links">
         <li>
-          <a is="app-link" class="link" href="/admin/customers">
+          <a is="app-link" class="link" href="/admin/students">
             <i class="fa fa-users"></i>
             <span>Student</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="links">
+        <li>
+          <a is="app-link" class="link" href="/admin/reviews">
+            <i class="fa fa-home fa-lg" ></i>
+            <span>Reviews</span>
           </a>
         </li>
       </ul>
@@ -101,6 +112,14 @@
           </a>
         </li>
       </ul>
+      <ul class="links">
+        <li>
+          <a is="app-link" class="link" on-click="on_click_logout">
+            <i class="fa fa-home fa-lg" ></i>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
     </nav>
 
   </template>
@@ -108,7 +127,18 @@
 <script>
   Polymer({
 
-    is: 'part-sidebar'
+    is: 'part-sidebar',
+
+    on_click_logout: function (event) {
+      console.log(logout)
+      event.stopPropagation();
+      event.preventDefault();
+      this.$.logout.send();
+    },
+
+    on_logout: function(){
+      this.fire('logout');
+    }
 
   });
 </script>
