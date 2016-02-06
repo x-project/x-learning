@@ -33,7 +33,7 @@
     },
     "teacher": {
       "type": "belongsTo",
-      "model": "Member",
+      "model": "Manager",
       "foreignKey": "teacher_id"
     },
     "lectures": {
