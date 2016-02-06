@@ -314,8 +314,23 @@
         page('/admin/login');
         return;
       }
-      context.page = 'page-students';
-      this.open(context);
+      this.get_model({
+        collection: 'managers',
+        modelId: this.session.get('admin_user').id,
+        include:[{'teaching': ['students']}]
+      })
+      .then(function (model) {
+        context.page = 'page-students';
+        context.data ={};
+        context.data.manager = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        console.log(error);
+        context.page = 'page-404';
+        context.data.error = error;
+        this.open(context);
+      }.bind(this));
     },
 
     '/admin/services': function (context) {
