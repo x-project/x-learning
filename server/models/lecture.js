@@ -20,6 +20,8 @@ module.exports = function (Lecture) {
           setImmediate(next, null);
         });
       };
+
+      setImmediate(next, null);
     };
   };
 

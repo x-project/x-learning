@@ -20,10 +20,21 @@ module.exports = function (Document) {
 
   var get_document = function (data) {
     return function (next) {
+      var filter = {where: { course_id: data.course_id }};
+
+      Document.find( filter, function (err, model) {
+        data.document = model;
+        data.path = "courses/" + data.document.course_id + "/documents/" + data.document.title;
+        setImmediate(next, err);
+      });
+    };
+  };
+
+  var get_document_id = function (data) {
+    return function (next) {
       Document.findById(data.document_id, function (err, model) {
         data.document = model;
         data.path = "courses/" + data.document.course_id + "/documents/" + data.document.title;
-        console.log(data.path);
         setImmediate(next, err);
       });
     };
@@ -36,7 +47,6 @@ module.exports = function (Document) {
           Bucket: service.params.bucket, /* required */
           Key: data.path
         };
-        console.log(params)
         s3.deleteObject(params, function(err, data) {
           setImmediate(next,err)
         });
@@ -47,8 +57,12 @@ module.exports = function (Document) {
 
   Document.observe('before delete', function(ctx, callback) {
     data = {};
-    data.document_id = ctx.where.id;
-    async.waterfall([
+
+    if(ctx.where.course_id){
+      console.log("course: "+ctx.where.course_id)
+      data.course_id = ctx.where.course_id;
+     
+      async.waterfall([
         get_document(data),
         delete_document(data)
       ],
@@ -59,5 +73,21 @@ module.exports = function (Document) {
       }
       callback(null);
     });
+    }else{
+      console.log("document: " + ctx.where.id)
+      data.document_id = ctx.where.id
+
+      async.waterfall([
+        get_document_id(data),
+        delete_document(data)
+      ],
+      function (err) {
+        if (err) {
+          callback(err);
+          return;
+        }
+      callback(null);
+      });
+    }
   });
 };

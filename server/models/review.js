@@ -11,15 +11,19 @@ module.exports = function (Review) {
         data.review = model;
         setImmediate(next, err);
       });
+      setImmediate(next, null);
     };
   };
 
   var destroy_replies = function (data) {
     return function (next) {
-      for (var i = 0; i < data.review.length; i++) {
-        data.review[i].replies.destroyAll(function (err, info, num) {
-        setImmediate(next, null);
-      });
+      if(data.review){
+        for (var i = 0; i < data.review.length; i++) {
+          data.review[i].replies.destroyAll(function (err, info, num) {
+          setImmediate(next, null);
+        });
+      }
+      setImmediate(next, null);
     };
 
     };
