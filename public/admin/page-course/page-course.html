@@ -125,7 +125,7 @@
       }
       else{
         this.$.ajax_put.body=JSON.stringify(this.course);
-        this.$.ajax_put.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
+        this.$.ajax_put.url='/api/managers/'+ this.$.session.get('admin_user').id +'/teaching';
         this.$.ajax_put.generateRequest();
       }
     },

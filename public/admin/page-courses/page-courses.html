@@ -1,5 +1,4 @@
 <link rel="import" href="components/app-session/app-session.html">
-<!-- <link rel="import" href="../deck-courses/deck-courses.html"> -->
 <link rel="import" href="../table-view/table-view.html">
 
 <dom-module id="page-courses">
@@ -13,12 +12,12 @@
         <h1>My Courses</h1>
       </div>
       <div class="panel">      
-        <h2 class="title">Courses</h2> 
-        <table-view items="{{lectures}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
-      </table-view>
-       
         <a is="app-link" class="btn btn-link" href="/admin/courses/new">Create new course</a>
-       <!--  <deck-courses courses="{{course.teaching}}" on-try-delete="on_try_delete"></deck-courses> -->
+
+        <table-view items="{{teaching}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
+          <h2 class="title">Courses</h2> 
+        </table-view>
+       
       </div>
     </layout-admin>
 
@@ -34,14 +33,21 @@
         type: Object,
         value: function () { return {}; }
       },
-      course: {
+      manager: {
         type: Object,
         value: function () { return {}; }
       }
     },
 
     attached: function () {
-      this.course = this.data.course
+      this.teaching = this.data.manager.teaching.map(function (course, index) {
+        return {
+          id: course.id,
+          title: course.title,
+          description: course.description,
+        index: '#' + index
+        };
+      })
     },
 
     on_try_delete:function(event){
@@ -53,6 +59,13 @@
       this.$.ajax_delete.url='/api/courses/'+ event.detail ;
       this.$.ajax_delete.generateRequest();
       page('/admin/')
+    },
+
+    on_click: function (event) {
+      console.log(event)
+      event.stopPropagation();
+      event.preventDefault();
+      page('/admin/courses/'+ event.detail.id);
     }
 
 
