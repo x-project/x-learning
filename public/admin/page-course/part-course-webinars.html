@@ -36,7 +36,7 @@
     },
 
     on_click_delete:function(event){
-      this.fire('try-delete-webinar',this.$.webinar.itemForElement(event.target))
+      this.fire('try-delete-webinar',event.detail)
     },
 
     on_submit: function (event) {
@@ -45,7 +45,7 @@
     },
 
     on_click: function (event) {
-      page('/admin/courses/'+ this.course.id + '/webinar/' + this.$.webinar.itemForElement(event.target).id);
+      page('/admin/courses/'+ this.course.id + '/webinar/' + event.detail.id);
     }
 
   });
