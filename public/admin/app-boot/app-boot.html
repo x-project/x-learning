@@ -15,6 +15,7 @@
 <link rel="import" href="../page-login/page-login.html">
 <link rel="import" href="../page-member/page-member.html">
 <link rel="import" href="../page-invite/page-invite.html">
+<link rel="import" href="../page-students/page-students.html">
 
 <dom-module id="app-boot">
   <template>
@@ -276,7 +277,9 @@
         })
       .then(function (model) {
         context.page = 'part-webinar-video';
-        context.data = { webinar: model};
+        console.log(model)
+        context.data = {};
+        context.data.webinar = model;
         context.data.course = model.course;
         this.open(context);
       }.bind(this))
@@ -305,6 +308,15 @@
     //     this.redirect('/404');
     //   }.bind(this));
     // },
+    '/admin/students': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      context.page = 'page-students';
+      this.open(context);
+    },
 
     '/admin/services': function (context) {
       this.init(context);

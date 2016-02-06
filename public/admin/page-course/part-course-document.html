@@ -44,10 +44,14 @@
         return {
           id: document.id,
           title: document.title,
-          description: document.description,
+          url: document.url,
         index: '#' + index
         };
       })
+    },
+
+    on_click: function(event){
+      console.log(event.detail)
     },
 
     on_click_delete: function(event){

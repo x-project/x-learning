@@ -71,11 +71,8 @@
 
     on_try_save_categories: function (event) {
       event.stopPropagation();
-      console.log(event);
       this.course.category_id=event.detail;
       this.fire('try-save');
-      // this.collection = event.detail.collection;
-      // this.save_prod_type();
     },
 
   });
