@@ -24,7 +24,7 @@
       }
     </style>
 
-    <app-container id="app" on-login="on_login"></app-container>
+    <app-container id="app" on-login="on_login" on-logout="on_logout"></app-container>
 
   </template>
 </dom-module>
@@ -41,6 +41,12 @@
       this.session.set('admin_user', event.detail.user);
       this.session.set('admin_token', event.detail.id);
       page('/admin/team');
+    },
+
+    on_logout: function () {
+      this.session.unset('admin_user');
+      this.session.unset('admin_token');
+      page('/admin/login');
     },
 
     auth: function (context) {
@@ -100,14 +106,14 @@
         return;
       }
       this.get_model({
-          collection: 'members',
+          collection: 'managers',
           modelId: this.session.get('admin_user').id,
           include: ['teaching']
         })
         .then(function (model) {
           context.page = 'page-courses';
           context.data = {};
-          context.data.course = model;
+          context.data.manager = model;
           this.open(context);
         }.bind(this))
         .catch(function (error) {
@@ -116,10 +122,10 @@
     },
     '/admin/team': function (context) {
       this.init(context);
-      // if (!this.auth(context)) {
-      //   page('/admin/login');
-      //   return;
-      // }
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
       context.page = 'page-team';
       context.data.manager = this.session.get('admin_user');
       this.open(context);
@@ -127,137 +133,187 @@
 
 
     '/admin/courses/new': function (context) {
-        context.page = 'page-course';
-        context.data = { course:{} };
-        this.open(context);
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      context.page = 'page-course';
+      context.data = { course:{} };
+      this.open(context);
     },
 
     '/admin/courses/:course_id': function (context) {
-        this.get_model({
-          collection: 'courses',
-          modelId: context.params.course_id,
-          include: ['lectures','webinars','category','documents','cover']
-        })
-        .then(function (model) {
-          context.page = 'page-course';
-          context.data = {};
-          context.data.course = model;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'courses',
+        modelId: context.params.course_id,
+        include: ['lectures','webinars','category','documents','cover']
+      })
+      .then(function (model) {
+        context.page = 'page-course';
+        context.data = {};
+        context.data.course = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
     },
 
     '/admin/courses/:course_id/lectures': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
       context.page = 'page-lectures';
       this.open(context);
     },
 
     '/admin/courses/:course_id/lectures/new': function (context) {
-        this.get_model({
-          collection: 'courses',
-          modelId: context.params.course_id
-        })
-        .then(function (model) {
-          context.page = 'page-lecture';
-          context.data = { lecture: {},
-          video:{} };
-          context.data.course = model;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'courses',
+        modelId: context.params.course_id
+      })
+      .then(function (model) {
+        context.page = 'page-lecture';
+        context.data = { lecture: {},
+        video:{} };
+        context.data.course = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
     },
 
     '/admin/courses/:course_id/lectures/:lecture_id': function (context) {
-        this.get_model({
-          collection: 'lectures',
-          modelId: context.params.lecture_id,
-          include:['course','video']
-          })
-        .then(function (model) {
-          context.page = 'page-lecture';
-          context.data = { lecture: model};
-          context.data.course = model.course;
-          context.data.video = model.video || {} ;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'lectures',
+        modelId: context.params.lecture_id,
+        include:['course','video']
+        })
+      .then(function (model) {
+        context.page = 'page-lecture';
+        context.data = { lecture: model};
+        context.data.course = model.course;
+        context.data.video = model.video || {} ;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
     },
 
     '/admin/courses/:course_id/webinar/new': function (context) {
-        this.get_model({
-          collection: 'courses',
-          modelId: context.params.course_id
-        })
-        .then(function (model) {
-          context.page = 'page-webinar';
-          context.data = { webinar: {} };
-          context.data.course = model;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'courses',
+        modelId: context.params.course_id
+      })
+      .then(function (model) {
+        context.page = 'page-webinar';
+        context.data = { webinar: {} };
+        context.data.course = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
     },
 
     '/admin/courses/:course_id/webinar/:webinar_id': function (context) {
-        this.get_model({
-          collection: 'webinars',
-          modelId: context.params.webinar_id,
-          include:['course']
-          })
-        .then(function (model) {
-          context.page = 'page-webinar';
-          context.data = { webinar: model};
-          context.data.course = model.course;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'webinars',
+        modelId: context.params.webinar_id,
+        include:['course']
+        })
+      .then(function (model) {
+        context.page = 'page-webinar';
+        context.data = { webinar: model};
+        context.data.course = model.course;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
     },
 
     '/admin/courses/:course_id/webinar/:webinar_id/start': function (context) {
-        this.get_model({
-          collection: 'webinars',
-          modelId: context.params.webinar_id,
-          include:['course']
-          })
-        .then(function (model) {
-          context.page = 'part-webinar-video';
-          context.data = { webinar: model};
-          context.data.course = model.course;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'webinars',
+        modelId: context.params.webinar_id,
+        include:['course']
+        })
+      .then(function (model) {
+        context.page = 'part-webinar-video';
+        context.data = { webinar: model};
+        context.data.course = model.course;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
     },
 
-    '/admin/profile': function (context) {
-      this.get_model({
-          collection: 'members',
-          modelId: this.session.get('user').id
-        })
-        .then(function (model) {
-          context.page = 'page-settings';
-          context.data = {};
-          context.data.user = model;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
-    },
+    // '/admin/profile': function (context) {
+    //   this.init(context);
+    //   if (!this.auth(context)) {
+    //     page('/admin/login');
+    //     return;
+    //   }
+    //   this.get_model({
+    //     collection: 'members',
+    //     modelId: this.session.get('admin_user').id
+    //   })
+    //   .then(function (model) {
+    //     context.page = 'page-settings';
+    //     context.data = {};
+    //     context.data.user = model;
+    //     this.open(context);
+    //   }.bind(this))
+    //   .catch(function (error) {
+    //     this.redirect('/404');
+    //   }.bind(this));
+    // },
 
     '/admin/services': function (context) {
-          context.page = 'page-services';
-          this.open(context);
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      context.page = 'page-services';
+      this.open(context);
     },
 
 
