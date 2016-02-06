@@ -50,19 +50,14 @@
       })
     },
 
-    on_try_delete:function(event){
+    on_click_delete:function(event){
       event.stopPropagation();
-      this.$.ajax_delete.url='/api/courses/'+ event.detail +'/follow';
-      this.$.ajax_delete.generateRequest();
-      this.$.ajax_delete.url='/api/courses/'+ event.detail +'/lectures';
-      this.$.ajax_delete.generateRequest();
-      this.$.ajax_delete.url='/api/courses/'+ event.detail ;
+      this.$.ajax_delete.url='/api/courses/'+ event.detail.id ;
       this.$.ajax_delete.generateRequest();
       page('/admin/')
     },
 
     on_click: function (event) {
-      console.log(event)
       event.stopPropagation();
       event.preventDefault();
       page('/admin/courses/'+ event.detail.id);
