@@ -1,0 +1,68 @@
+<link rel="import" href="../../components/api-model-create/api-model-create.html">
+<link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../styles/style-form/style-form.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="part-invite-actions.html">
+<link rel="import" href="part-invite-header.html">
+<link rel="import" href="part-invite-member.html">
+
+<dom-module id="page-invite">
+  <template>
+    <app-session id="session"></app-session>
+
+    <api-model-create id="create" collection="invites" response="{{response}}"
+      error="{{error}}" on-response="on_response" on-error="on_error">
+    </api-model-create>
+
+    <layout-admin on-try-invite="on_try_invite">
+      <part-invite-header></part-invite-header>
+      <part-invite-member member="{{member}}" error="{{error}}"></part-invite-member>
+      <part-invite-actions></part-invite-actions>
+
+      <!--
+      <template is="dom-if" if="{{error_occurs}}">
+        <div class="error-box">Error! <span>{{response.message}}</span></div>
+      </template>
+      -->
+    </layout-admin>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-invite',
+
+    properties: {
+      member: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_try_invite: function (event) {
+      event.stopPropagation();
+      console.log(this.member);
+      this.$.create.accessToken = this.$.session.get('admin_token');
+      this.$.create.data = this.member;
+      console.log(this.member);
+      this.$.create.send();
+    },
+
+    on_response: function (event) {
+      page('/admin/team');
+    },
+
+    on_error: function (event) {
+      event.stopPropagation();
+      console.log(event);
+    }
+
+  });
+</script>

@@ -7,10 +7,14 @@
 <link rel="import" href="../page-lecture/page-lecture.html">
 <link rel="import" href="../page-lectures/page-lectures.html">
 <link rel="import" href="../page-settings/page-settings.html">
+<link rel="import" href="../page-team/page-team.html">
 <link rel="import" href="../page-home/page-home.html">
 <link rel="import" href="../page-services/page-services.html">
 <link rel="import" href="../page-webinar/page-webinar.html">
 <link rel="import" href="../page-webinar/part-webinar-video.html">
+<link rel="import" href="../page-login/page-login.html">
+<link rel="import" href="../page-member/page-member.html">
+<link rel="import" href="../page-invite/page-invite.html">
 
 <dom-module id="app-boot">
   <template>
@@ -20,7 +24,7 @@
       }
     </style>
 
-    <app-container id="app"></app-container>
+    <app-container id="app" on-login="on_login"></app-container>
 
   </template>
 </dom-module>
@@ -33,10 +37,71 @@
       Polymer.BehaviorRouter
     ],
 
+    on_login: function (event) {
+      this.session.set('admin_user', event.detail.user);
+      this.session.set('admin_token', event.detail.id);
+      page('/admin/team');
+    },
+
+    auth: function (context) {
+      if (this.session.get('admin_token')) {
+        return true;
+      }
+      return false;
+    },
+    '/admin/invites/new': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      context.page = 'page-invite';
+      this.open(context);
+    },
+
+     '/admin/members/:member_id': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'managers',
+        modelId: context.params.member_id,
+        token: this.session.get('admin_token')
+      })
+      .then(function (model) {
+        context.page = 'page-member';
+        context.data.member = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        console.log(error);
+        context.page = 'page-404';
+        context.data.error = error;
+        this.open(context);
+      }.bind(this));
+    },
+
+    '/admin/login': function (context) {
+      this.init(context);
+      if (this.auth(context)) {
+        page('/admin');
+        return;
+      }
+      context.page = 'page-login';
+      this.open(context);
+    },
+
     '/admin': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
       this.get_model({
           collection: 'members',
-          modelId: this.session.get('user').id,
+          modelId: this.session.get('admin_user').id,
           include: ['teaching']
         })
         .then(function (model) {
@@ -48,6 +113,16 @@
         .catch(function (error) {
           this.redirect('/404');
         }.bind(this));
+    },
+    '/admin/team': function (context) {
+      this.init(context);
+      // if (!this.auth(context)) {
+      //   page('/admin/login');
+      //   return;
+      // }
+      context.page = 'page-team';
+      context.data.manager = this.session.get('admin_user');
+      this.open(context);
     },
 
 

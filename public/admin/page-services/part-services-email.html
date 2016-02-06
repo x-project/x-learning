@@ -1,0 +1,68 @@
+<link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="form-services-email.html">
+<dom-module id="part-services-email">
+  <template>
+    <style include="style-panel"></style>
+
+    <app-session id="session"></app-session>
+
+    <div class="panel">
+      <h2 class="title">Email</h2>
+      <form-services-email service="{{service}}" error="{{error}}" on-submit="on_submit">
+      </form-services-email>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-services-email',
+
+    properties: {
+      services: {
+        type: Array,
+        value: function () { return []; },
+        observer: '_on_change_services'
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    _on_change_services: function () {
+      if (!this.services) {
+        return;
+      }
+      this.services.find(function (item) {
+        if (item.name == "email") {
+          this.service = item.params;
+        }
+      }, this);
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      var email_data = event.detail;
+      var data = {};
+      data.name = 'email';
+      data.admin_email = email_data.admin_email;
+      data.admin_password = email_data.admin_password;
+      data.params = {};
+      data.params.email = email_data.email;
+      data.params.email_password = email_data.email_password;
+      data.params.email_service = email_data.email_service;
+
+      Model.create('/api/services/update_service', {data: data}, this.$.session.get('admin_token'))
+      .then(function (data) {
+        this.service = data.result.params;
+      }.bind(this))
+      .catch(function (error) {
+        this.error = error;
+        alert(this.error.message);
+      }.bind(this));
+    }
+
+  });
+</script>

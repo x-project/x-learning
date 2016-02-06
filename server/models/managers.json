@@ -1,0 +1,38 @@
+{
+  "name": "Manager",
+  "plural": "managers",
+  "mongodb": {
+    "collection": "managers"
+  },
+  "base": "InvitableUser",
+  "properties": {},
+  "relations": {},
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "owner",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "count"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "confirm_invite"
+    }
+  ],
+  "validations": [],
+  "methods": []
+}

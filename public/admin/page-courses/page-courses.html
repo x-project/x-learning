@@ -1,5 +1,6 @@
 <link rel="import" href="components/app-session/app-session.html">
-<link rel="import" href="../deck-courses/deck-courses.html">
+<!-- <link rel="import" href="../deck-courses/deck-courses.html"> -->
+<link rel="import" href="../table-view/table-view.html">
 
 <dom-module id="page-courses">
   <template>
@@ -12,9 +13,12 @@
         <h1>My Courses</h1>
       </div>
       <div class="panel">      
-        <h2 class="title">Courses</h2>  
+        <h2 class="title">Courses</h2> 
+        <table-view items="{{lectures}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
+      </table-view>
+       
         <a is="app-link" class="btn btn-link" href="/admin/courses/new">Create new course</a>
-        <deck-courses courses="{{course.teaching}}" on-try-delete="on_try_delete"></deck-courses>
+       <!--  <deck-courses courses="{{course.teaching}}" on-try-delete="on_try_delete"></deck-courses> -->
       </div>
     </layout-admin>
 

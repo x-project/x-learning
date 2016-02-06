@@ -42,7 +42,7 @@ module.exports = function (Member) {
   }
 
   var mandrill_client;
-  function connect_mandrill_client () {
+  Member.connect_mandrill_client = function () {
     return new Promise(function (resolve, reject) {
       if (mandrill_client) {
         resolve(mandrill_client);
@@ -471,7 +471,7 @@ var get_task_braintree = function (data) {
           setImmediate(next, err);
           return;
         }
-        connect_mandrill_client()
+        Member.connect_mandrill_client()
           .then(function (mandrill_client) {
             mandrill_client.messages.send({"message": message},
               function (res) {
