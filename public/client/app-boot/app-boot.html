@@ -43,6 +43,13 @@
       Polymer.BehaviorRouter
     ],
 
+    auth: function (context) {
+      if (this.session.get('token')) {
+        return true;
+      }
+      return false;
+    },
+
     on_login: function (event) {
       var response = event.detail;
       if (response.id != null) {
@@ -72,6 +79,11 @@
     },
 
     '/': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       context.page = 'page-home';
       context.data = {};
       if(context.state.length)
@@ -90,6 +102,11 @@
     },
 
     '/categories/:category_id': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.find_model({
         collection: 'courses',
         where: { and: [{category_id: context.params.category_id},{ publish: true }]},
@@ -112,6 +129,11 @@
     },
 
     '/courses/:course_id/payment': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.get_model({
         collection: 'courses',
         modelId: context.params.course_id
@@ -127,6 +149,11 @@
     },
 
     '/courses/:course_id': function (context) {
+        this.init(context);
+        if (!this.auth(context)) {
+          page('/login');
+          return;
+        }
         this.get_model({
           collection: 'courses',
           modelId: context.params.course_id,
@@ -151,7 +178,11 @@
     },
 
     '/courses/:course_id/lectures/:lecture_id': function (context) {
-      this.is_authenticated()
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.get_model({
           collection: 'lectures',
           modelId: context.params.lecture_id,
@@ -170,6 +201,11 @@
     },
 
     '/courses/:course_id/webinars/:webinar_id': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.get_model({
           collection: 'webinars',
           modelId: context.params.webinar_id,
@@ -191,12 +227,17 @@
     },
 
     '/passwordless_email': function (context) {
-      this.init(context);
+      this.init(context);    
       context.page = 'page-passwordless-email';
       this.open(context);
     },
 
     '/profile': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.get_model({
           collection: 'members',
           modelId: this.session.get('user').id,
@@ -220,13 +261,21 @@
 
     '/reviews': function (context) {
       this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       context.page = 'page-reviews';
       this.open(context);
     },
 
     '/reviews/:review_id': function (context) {
-      this.init(context);
-      this.get_model({
+        this.init(context);
+        if (!this.auth(context)) {
+          page('/login');
+          return;
+        }   
+        this.get_model({
           collection: 'reviews',
           modelId: context.params.review_id,
           include: ['member', 'course']
@@ -250,14 +299,6 @@
     '/404': function (context) {
       context.page = 'page-404';
       this.open(context);
-    },
-
-    is_authenticated: function(){
-      console.log(this.session.get('token'))
-      if ( this.session.get('token') ==="null") {
-        page('/');
-        return;
-      }
     }
 
   });
