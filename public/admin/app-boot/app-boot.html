@@ -17,6 +17,7 @@
 <link rel="import" href="../page-invite/page-invite.html">
 <link rel="import" href="../page-students/page-students.html">
 <link rel="import" href="../page-reviews/page-reviews.html">
+<link rel="import" href="../page-preview/page-preview.html">
 
 <dom-module id="app-boot">
   <template>
@@ -158,6 +159,28 @@
       })
       .then(function (model) {
         context.page = 'page-course';
+        context.data = {};
+        context.data.course = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
+    },
+
+    '/admin/courses/:course_id/preview': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'courses',
+        modelId: context.params.course_id,
+        include: [{'lectures': ['video']},'teacher','students','webinars','category','documents','cover']
+      })
+      .then(function (model) {
+        context.page = 'page-preview';
         context.data = {};
         context.data.course = model;
         this.open(context);
