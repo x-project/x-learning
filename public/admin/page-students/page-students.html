@@ -10,7 +10,7 @@
       <div>
           <h1>Students</h1>
       </div>
-      <table-view items="{{students}}" fields='["index", "Name","Lastname"]' on-click="on_click" on-delete="on_click_delete">
+      <table-view items="{{students}}" fields='["index", "Name","Lastname","Course"]' on-click="on_click" on-delete="on_click_delete">
         <h2 class="title">Courses</h2> 
       </table-view>
     </layout-admin>
@@ -45,7 +45,7 @@
       this.teaching.forEach(function (course){
         if(course.students){
           course.students.forEach(function (member) {
-            // console.log(member)
+            member.course = course.title;
             this.all_students.push(member); 
           }.bind(this))
         }
@@ -56,6 +56,7 @@
           id: student.id,
           Name: student.name,
           Lastname: student.last_name,
+          Course: student.course,
         index: '#' + index
         };
       });
