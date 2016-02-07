@@ -4,7 +4,6 @@
   <template>
     <style include="style-panel"></style>
 
-    <api-model-find id="find" collection="courses" on-response="on_response"response="{{courses}}"></api-model-find>
     <div class="panel">
       <div>
         <h4>$: {{data.course.cost}}</h4> 
@@ -15,7 +14,7 @@
     
         <h4>Lectures: {{lectures}}</h4>
      
-        <h4>Teacher: {{teacher.name}}</h4>
+        <h4>Teacher: {{teacher.fullname}}</h4>
       </div>
     </div>
   </template>
@@ -39,16 +38,9 @@
     },
 
     attached:function (event) {
-      this.$.find.where={"id" : this.data.course.id};
-      this.$.find.include.push("students");
-      this.$.find.include.push("teacher");
-      this.$.find.send();
-    },
-
-    on_response:function(event){
-      this.teacher = this.courses[0].teacher
-      this.students=this.courses[0].students.length;
-      this.lectures=this.data.lectures.length;
+      this.teacher = this.data.course.teacher
+      this.students=this.data.course.students.length;
+      this.lectures=this.data.course.lectures.length;
     }
 
   });
