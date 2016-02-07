@@ -14,7 +14,7 @@
       <div class="panel">      
         <a is="app-link" class="btn btn-link" href="/admin/courses/new">Create new course</a>
 
-        <table-view items="{{teaching}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
+        <table-view items="{{teaching}}" fields='["index", "title","description","publish"]' on-click="on_click" on-delete="on_click_delete">
           <h2 class="title">Courses</h2> 
         </table-view>
       </div>
@@ -44,6 +44,7 @@
           id: course.id,
           title: course.title,
           description: course.description,
+          publish: course.publish.toString(),
         index: '#' + index
         };
       })
