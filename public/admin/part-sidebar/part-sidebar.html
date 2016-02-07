@@ -1,27 +1,138 @@
-<link rel="import" href="../style-nav/style-nav.html">
+<link rel="stylesheet" type="text/css" href="../../fonts/icons/css/font-awesome.min.css">
 <dom-module id="part-sidebar">
   <template>
-    <style include="style-nav"></style>
+    <style>
+      :host {
+        display: block;
+      }
 
-    <h1>x-learning</h1>
-    <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/profile">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/courses">Courses</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/">&larr; home</a>
-      </li>
-    </ul>
+      nav {
+        padding: 20px;
+        position: fixed;
+      }
+
+      .title .link {
+        text-decoration: none;
+        color: #777;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-family: font-bold;
+      }
+
+      .links {
+        list-style: none;
+        padding: 0;
+      }
+
+      .links .link {
+        display: inline-block;
+        text-decoration: none;
+        color: #7f8c8d;
+        margin-bottom: 12px;
+        font-size: 14px;
+      }
+      .links .link:hover {
+        color: #333;
+        font-family: font-bold;
+      }
+
+      .links .link .fa {
+        width: 26px;
+      }
+    </style>
+    <api-user-logout id="logout" collection="managers" access-token="{{admin_token}}"
+      on-response="on_logout" on-error="on_error">
+    </api-user-logout>
+
+    <nav role="navigation">
+      <h3 class="title"><a class="link" href="/admin">X-Learning</a></h3>
+      <ul class="links">
+        <li>
+          <a is="app-link" class="link" href="/admin/team">
+            <i class="fa fa-users"></i>
+            <span>Team</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="links">
+        <li>
+          <a is="app-link" class="link" href="/admin/">
+            <i class="fa fa-cube fa-lg"></i>
+            <span>Course</span>
+          </a>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/webinar">
+            <i class="fa fa-sitemap"></i>
+            <span>Webinar</span>
+          </a>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/students">
+            <i class="fa fa-users"></i>
+            <span>Student</span>
+          </a>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/reviews">
+            <i class="fa fa-home fa-lg" ></i>
+            <span>Reviews</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="links">
+      </ul>
+      <ul class="links">
+        <li>
+          <a is="app-link" class="link" href="/admin/coupons">
+            <i class="fa fa-percent"></i>
+            <span>Coupons</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="links">
+        <li>
+          <a is="app-link" class="link" href="/admin/services">
+            <i class="fa fa-key"></i>
+            <span>Services</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="links">
+        <li>
+          <a is="app-link" class="link" href="/">
+            <i class="fa fa-home fa-lg"></i>
+            <span>Home</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="links">
+        <li>
+          <a is="app-link" class="link" on-click="on_click_logout">
+            <i class="fa fa-home fa-lg" ></i>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
   </template>
 </dom-module>
 <script>
   Polymer({
 
-    is: 'part-sidebar'
+    is: 'part-sidebar',
+
+    on_click_logout: function (event) {
+      console.log(logout)
+      event.stopPropagation();
+      event.preventDefault();
+      this.$.logout.send();
+    },
+
+    on_logout: function(){
+      this.fire('logout');
+    }
 
   });
 </script>

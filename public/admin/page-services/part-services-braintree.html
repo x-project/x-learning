@@ -1,0 +1,73 @@
+<link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="form-services-braintree.html">
+<dom-module id="part-services-braintree">
+  <template>
+    <style include="style-panel"></style>
+
+    <app-session id="session"></app-session>
+
+    <div class="panel">
+      <h2 class="title">Braintree</h2>
+      <form-services-braintree service="{{service}}" on-submit="on_submit">
+      </form-services-braintree>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-services-braintree',
+
+    properties: {
+      services: {
+        type: Array,
+        value: function () { return []; },
+        observer: '_on_change_services'
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    _on_change_services: function () {
+      if (!this.services) {
+        return;
+      }
+      var service = {};
+      this.services.find(function (item) {
+        if (item.name == "braintree") {
+          service.public_key = item.public_key;
+          service.private_key = item.private_key;
+          service.merchant_id = item.params.merchant_id;
+          return true;
+        }
+      }, this);
+      this.service = service;
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      var braintree_data = event.detail;
+      var data = {};
+      data.name = 'braintree';
+      data.admin_email = braintree_data.admin_email;
+      data.admin_password = braintree_data.admin_password;
+      data.public_key = braintree_data.public_key;
+      data.private_key = braintree_data.private_key;
+      data.params = {};
+      data.params.merchant_id = braintree_data.merchant_id;
+
+      Model.create('/api/services/update_service', {data: data}, this.$.session.get('admin_token'))
+      .then(function (data) {
+        this.service = data.result;
+      }.bind(this))
+      .catch(function (error) {
+        this.error = error;
+        alert(this.error.message);
+      }.bind(this));
+    }
+
+  });
+</script>

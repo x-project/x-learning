@@ -1,0 +1,74 @@
+{
+  "name": "Manager",
+  "plural": "managers",
+  "mongodb": {
+    "collection": "managers"
+  },
+  "base": "InvitableUser",
+  "properties": {},
+  "relations": {
+    "teaching": {
+      "type": "hasMany",
+      "model": "Course",
+      "foreignKey": "teacher_id"
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "owner",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "count"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "confirm_invite"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "updateAttributes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__get__teaching"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__create__teaching"
+    }
+  ],
+  "validations": [],
+  "methods": []
+}

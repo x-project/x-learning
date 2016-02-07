@@ -15,7 +15,19 @@
     "date": {
       "type": "Date"
     },
-    "cover": {
+    "language": {
+      "type": "String"
+    },
+    "cost": {
+      "type": "Number"
+    },
+    "publish": {
+      "type": "Boolean"
+    },
+    "total_review": {
+      "type": "String"
+    },
+    "score_review": {
       "type": "String"
     }
   },
@@ -27,7 +39,7 @@
     },
     "teacher": {
       "type": "belongsTo",
-      "model": "Member",
+      "model": "Manager",
       "foreignKey": "teacher_id"
     },
     "lectures": {
@@ -38,12 +50,27 @@
     "webinars": {
       "type": "hasMany",
       "model": "Webinar",
-      "foreignKey": "webinar_id"
+      "foreignKey": "course_id"
     },
     "students": {
       "type": "hasAndBelongsToMany",
       "model": "Member",
       "through": "MemberCourse"
+    },
+    "review": {
+      "type": "hasMany",
+      "model": "Review",
+      "foreignKey": "review_id"
+    },
+    "documents": {
+      "type": "hasMany",
+      "model": "Document",
+      "foreignKey": "course_id"
+    },
+    "cover": {
+      "type": "hasOne",
+      "model": "Image",
+      "foreignKey": "course_id"
     }
   },
   "acls": [],

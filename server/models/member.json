@@ -29,6 +29,9 @@
     },
     "location": {
       "type": "String"
+    },
+    "phone": {
+      "type": "Number"
     }
   },
   "relations": {
@@ -36,11 +39,6 @@
       "type": "hasAndBelongsToMany",
       "model": "Course",
       "through": "MemberCourse"
-    },
-    "teaching": {
-      "type": "hasMany",
-      "model": "Course",
-      "foreignKey": "teacher_id"
     }
   },
   "acls": [
@@ -109,8 +107,25 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "checkout_braintree"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "get_token_email"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "get_token_sms"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "try_enter_sms"
     }
-
   ],
   "methods": [],
   "validations": []

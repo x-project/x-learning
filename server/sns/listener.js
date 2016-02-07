@@ -21,6 +21,7 @@ module.exports = function (sns) {
 
   function receiveMessageCallback(err, data) {
     if (data.Messages && data.Messages.length > 0) {
+      console.log(data.Messages[0])
       var message = JSON.parse(data.Messages[0].Body);
       var key = JSON.parse(message.Message).input.key;
       
@@ -43,7 +44,8 @@ module.exports = function (sns) {
       s3.deleteObjects(s3_params,deleteObjCallback)
       sqs.deleteMessage(deleteMessageParams, deleteMessageCallback);
     }
-    run_handler();
+
+    setTimeout(run_handler, 1000 * 60 * 5);
   }
 
   function deleteMessageCallback(err, data) {

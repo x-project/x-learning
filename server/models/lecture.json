@@ -22,7 +22,7 @@
     "video": {
       "type": "hasOne",
       "model": "Video",
-      "foreignKey": "lecture_video_id"
+      "foreignKey": "lecture_id"
     }
   },
   "acls": [],

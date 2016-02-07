@@ -1,15 +1,19 @@
 <link rel="import" href="../deck-p2p-admin/deck-p2p-admin.html">
 <link rel="import" href="../../components/api-user/api-user.html">
-
+<link rel="import" href="../layout-admin/layout-admin.html">
 
 <dom-module id="part-webinar-video">
   <template>
+  <style>
+    
+  </style>
     <api-model-update id="update" collection="webinars" model-id="{{data.webinar.id}}"
       data="{{data.webinar}}" response="{{response}}" error="{{error}}">
     </api-model-update>
-
-  <deck-p2p-admin data="{{data.webinar}}" on-peer="on_peer"></deck-p2p-admin>
-  
+    
+    <layout-admin>
+      <deck-p2p-admin data="{{data.webinar}}" on-peer="on_peer" on-webinar-closed="webinar_closed"></deck-p2p-admin>
+    </layout-admin>
   </template>
 </dom-module>
 <script>
@@ -20,7 +24,14 @@
     on_peer: function(event){
       this.data.webinar.peer_id=event.detail;
       this.$.update.send();
+    },
+
+    webinar_closed: function(){
+      this.data.webinar.started=false;
+      this.$.update.send();
     }
+
+
 
 
   });

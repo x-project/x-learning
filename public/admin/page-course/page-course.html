@@ -1,76 +1,89 @@
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/app-session/app-session.html">
-<link rel="import" href="../../components/iron-image/iron-image.html">
-<link rel="import" href="../layout-admin/layout-admin.html">
-<link rel="import" href="../style-page/style-page.html">
-<link rel="import" href="../style-panel/style-panel.html">
-<link rel="import" href="form-course-actions.html">
-<link rel="import" href="form-course-info.html">
-<link rel="import" href="form-course-image.html">
-<link rel="import" href="form-course-aims.html">
-<link rel="import" href="list-course-lectures.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-basic/style-basic.html">
+<link rel="import" href="../../styles/style-table/style-table.html">
+<link rel="import" href="../../styles/style-form/style-form.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+
 <link rel="import" href="list-course-webinars.html">
+<link rel="import" href="part-course-actions.html">
+<link rel="import" href="part-course-header.html">
+<link rel="import" href="part-course-info.html">
+<link rel="import" href="part-course-image.html">
+<link rel="import" href="part-course-aims.html">
+<link rel="import" href="part-course-lectures.html">
+<link rel="import" href="part-course-webinars.html">
+<link rel="import" href="part-course-document.html">
+<link rel="import" href="../x-tabs/x-tabs.html">
 
 <dom-module id="page-course">
   <template>
+    <style include="style-panel"></style>
+    <style include="style-grid"></style>
     <style>
-        .image {
-        background-color: #eee;
-        height: 100px;
-        width: 20%;
+      .nav-link{
+        display: block;
+        font-weight: normal;
+        color: #0275d8;
+        border-radius: 0;
       }
     </style>
-    <style include="style-page"></style>
-    <style include="style-panel"></style>
-    
     <app-session id="session"></app-session>
-
 
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{course}}" on-response="on_response_create"> </iron-ajax>
 
     <api-model-update id="update" collection="courses" model-id="{{course.id}}"
-      data="{{course}}" response="{{response}}" error="{{error}}">
+      data="{{course}}" response="{{course}}" error="{{error}}" on-response="on_response_update">
     </api-model-update>
 
-     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
+    <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response_delete"></iron-ajax>
+      
+    <layout-admin class="row">
+      <div class="col-sm-3 ">
+        <nav on-click="on_click_nav">
+          <ul>
+            <li class="nav-link" data-tab="info">Info</li>
+            <li class="nav-link" data-tab="image">Image</li>
+            <li class="nav-link" data-tab="aims">Aims</li>
+            <li class="nav-link" data-tab="lectures">Lectures</li>
+            <li class="nav-link" data-tab="webinars">Webinars</li>
+            <li class="nav-link" data-tab="document">Document</li>
+          </ul>
+        </nav>
+      </div>     
+      <div class="col-sm-8" on-try-save="on_try_save" on-try-publish="on_try_publish"
+        on-try-preview="on_try_preview" on-try-delete="on_try_delete" on-try-delete-lecture="on_try_delete_lecture" on-try-delete-webinar="on_try_delete_webinar">
+          <h1>Course</h1>
+          <part-course-header course="{{course}}"></part-course-header>
+          <part-course-actions course="{{course}}"></part-course-actions>
 
-    <layout-admin>
-      <div class="container">
-        <h1>Edit course {{course.title}}</h1>
-        <div>
-          <form-course-actions on-try-save="on_try_save" on-try-publish="on_try_publish" on-try-preview="on_try_preview" on-try-delete="on_try_delete" published="{{data.course.publish}}"></form-course-actions>
-        </div>
-        <div class="panel">
-          <h3>Info</h3>
-          <form-course-info course="{{course}}" error="{{error}}"></form-course-info>
-        </div>
-        <div class="panel">
-          <h3>Image</h3>
-          <template is="dom-if" if="{{!course.cover}}">
-            <form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
-          </template>
-          <template is="dom-if" if="{{course.cover}}">
-            <iron-image class="image" preload src="{{course.cover}}" sizing="contain"></iron-image>
-            Change course image<form-course-image course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>
-          </template>
-        </div>
-         <div class="panel">
-          <h3>Aims</h3>
-          <form-course-aims course="{{course}}"></form-course-aims>
-        </div>
-        <div class="panel">
-          <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
-          <h3>Lectures</h3>
-          <list-course-lectures course="{{course}}" on-try-delete-lecture="on_try_delete_lecture"></list-course-lectures>
-        </div>
-        <div class="panel">
-          <a is="app-link" href="/admin/courses/{{course.id}}/webinar/new">ADD WEBINAR</a>
-          <h3>Webinars</h3>
-          <list-course-webinars course="{{course}}" on-try-delete-webinar="on_try_delete_webinar"></list-course-webinars>
-        </div>
+          <x-tabs id="tabs" current="{{current}}">
+            <x-tab name="info">
+              <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
+            </x-tab>
+            <x-tab name="image">
+              <part-course-image course="{{course}}"></part-course-image>
+            </x-tab>
+            <x-tab name="aims">
+              <part-course-aims course="{{course}}"></part-course-aims>
+            </x-tab>
+            <x-tab name="lectures">
+              <part-course-lectures course="{{course}}"></part-course-lectures>
+            </x-tab>
+            <x-tab name="webinars">
+              <part-course-webinars course="{{course}}"></part-course-webinars>
+            </x-tab>
+            <x-tab name="document">
+              <part-course-document course="{{course}}"></part-course-document>
+            </x-tab>
+          </x-tabs>
+          
       </div>
     </layout-admin>
+    </div>
 
   </template>
 </dom-module>
@@ -84,6 +97,10 @@
         type: Object,
         value: function () { return {}; }
       },
+      current: {
+        type: String,
+        value: 'info'
+      },
       aims: {
         type: Object,
         value: function () { return {}; }
@@ -96,6 +113,11 @@
         this.course.publish=false;
     },
 
+    on_click_nav: function (event) {
+      var name = event.target.dataset.tab;
+      this.set('current', name);
+    },
+
     on_try_save: function (event) {
       event.stopPropagation();
       if(this.course.id){
@@ -103,7 +125,7 @@
       }
       else{
         this.$.ajax_put.body=JSON.stringify(this.course);
-        this.$.ajax_put.url='/api/members/'+ this.$.session.get('user').id +'/teaching';
+        this.$.ajax_put.url='/api/managers/'+ this.$.session.get('admin_user').id +'/teaching';
         this.$.ajax_put.generateRequest();
       }
     },
@@ -112,54 +134,45 @@
       event.stopPropagation();
       if(this.course.id){
         this.course.publish = !this.course.publish;
-        console.log(this.course)
         this.$.update.send();
       }
     },
 
+    on_response_update: function (event) {
+      event.stopPropagation();
+      page('/admin/courses/' + this.course.id);
+    },
+
     on_try_preview: function (event) {
       event.stopPropagation();
-      page('/courses/' + this.course.id)
+      page('/admin/courses/' + this.course.id + "/preview")
     },
 
     on_try_delete: function (event) {
       event.stopPropagation();
-      this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/follow';
-      this.$.ajax_delete.generateRequest();
-      this.$.ajax_delete.url='/api/courses/'+ this.course.id +'/lectures';
-      this.$.ajax_delete.generateRequest();
       this.$.ajax_delete.url='/api/courses/'+ this.course.id ;
       this.$.ajax_delete.generateRequest();
-      page('/admin/courses')
+      page('/admin/')
     },
 
     on_try_delete_lecture: function (event) {
       event.stopPropagation();
-      this.$.ajax_delete.url='/api/lectures/'+ event.detail.id + '/video';
-      this.$.ajax_delete.generateRequest();
       this.$.ajax_delete.url='/api/lectures/'+ event.detail.id;
       this.$.ajax_delete.generateRequest();
-      page('/admin/courses/' + this.course.id);
     },
 
     on_try_delete_webinar: function (event) {
       event.stopPropagation();
       this.$.ajax_delete.url='/api/webinars/'+ event.detail.id;
       this.$.ajax_delete.generateRequest();
+    },
+
+    on_response_delete: function(event){
       page('/admin/courses/' + this.course.id);
     },
 
     on_response_create: function (event) {
       page('/admin/courses/'+ this.course.id)
-    },
-
-    on_response: function(event){
-      var url = event.detail.split("?")[0];
-      this.course.cover = url;
-      console.log(this.course);
-
-      if(this.course.id)
-        this.on_try_save(event);
     }
 
   });

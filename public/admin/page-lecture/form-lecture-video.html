@@ -3,10 +3,12 @@
 <dom-module id="form-lecture-video">
   <template>
     <style include="style-form"></style>
+    
+    <iron-ajax id="ajax_delete_video" method="DELETE"></iron-ajax>
 
-    <form class="form">
+    <form class="form" on-change="on_change">
       <input-s3-video collection="videos" folder="{{folder}}"
-        response="{{video}}" error="{{error}}" on-complete="on_response">
+        response="{{video}}" error="{{error}}" on-complete="on_response" on-duration="on_duration">
       </input-s3-video>
     </form>
 
@@ -24,6 +26,9 @@
       },
       title: {
         type: String
+      },
+      duration: {
+        type: Number
       }
     },
 
@@ -31,11 +36,22 @@
       this.folder = 'courses/' + this.data.course.id + '/' + this.data.lecture.id + '/'
     },
 
+    on_change:function(){
+      console.log(this.data.video.id)
+      if(this.data.video.id){
+        this.$.ajax_delete_video.url='/api/lectures/'+ this.data.lecture.id + '/video';
+        this.$.ajax_delete_video.generateRequest();
+      }
+    },
+    on_duration:function(event){
+      this.duration = event.detail;
+    },
+
     on_response: function (event) {
       event.stopPropagation();
+      console.log(event)
       this.title = event.detail.dataId.Job.Input.Key;
-      // this.fire('upload-video', event.detail.signed_url.Location);
-      this.fire('upload-video', {"title" : this.title, "url" :'http://d265dc9zzasikr.cloudfront.net/'+ this.folder + this.title + '.m3u8'});
+      this.fire('upload-video', {"title" : this.title, "duration": this.duration, "url" :'http://d265dc9zzasikr.cloudfront.net/'+ this.folder + this.title + '.m3u8'});
     }
 
   });

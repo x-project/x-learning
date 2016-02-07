@@ -1,0 +1,52 @@
+<dom-module id="part-course-webinars">
+  <template>
+    <style include="style-panel"></style>
+    <style include="style-table"></style>
+    <style include="style-basic"></style>
+
+    <div class="panel">
+      <a is="app-link" href="/admin/courses/{{course.id}}/webinar/new">ADD WEBINAR</a>
+
+      <table-view items="{{webinars}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
+      </table-view>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-course-webinars',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached:function(){
+      this.webinars = this.course.webinars.map(function (webinar, index) {
+        return {
+          id: webinar.id,
+          title: webinar.title,
+          description: webinar.description,
+        index: '#' + index
+        };
+      })
+    },
+
+    on_click_delete:function(event){
+      this.fire('try-delete-webinar',event.detail)
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    },
+
+    on_click: function (event) {
+      page('/admin/courses/'+ this.course.id + '/webinar/' + event.detail.id);
+    }
+
+  });
+</script>

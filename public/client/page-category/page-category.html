@@ -1,24 +1,21 @@
-<link rel="import" href="part-category-course.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="../page-home/part-home-categories.html">
 <link rel="import" href="../deck-courses/deck-courses.html">
 <link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../layout-client/layout-client.html">
 
 <dom-module id="page-category">
   <template>
-    <style include="style-page"></style>
-    <style include="layout-admin"></style>
+    <style include="style-grid"></style>
 
-    <layout-client>
-      <part-jumbotron class="jumbotron"></part-jumbotron>
-      <div class="container">
-        <div class="sidebar">
-          <part-home-categories></part-home-categories>
-        </div>
-        <div class="main">
+    <layout-client class="row">
+      <div class="col-sm-3 col-sm-push-1">
+        <part-home-categories></part-home-categories>
+      </div>
+      <div class="col-sm-8">
           <h2>Courses in {{data.category.title}}</h2>
           <deck-courses courses="{{data.courses}}"></deck-courses>
-        </div>
       </div>
     </layout-client>
 

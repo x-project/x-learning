@@ -6,16 +6,20 @@
 <link rel="import" href="../page-category/page-category.html">
 <link rel="import" href="../page-contact/page-contact.html">
 <link rel="import" href="../page-course/page-course.html">
+<link rel="import" href="../page-courses/page-courses.html">
+<link rel="import" href="../page-forgot/page-forgot.html">
 <link rel="import" href="../page-home/page-home.html">
 <link rel="import" href="../page-lecture/page-lecture.html">
 <link rel="import" href="../page-login/page-login.html">
-<link rel="import" href="../page-profile/page-profile.html">
-<link rel="import" href="../page-signup/page-signup.html">
-<link rel="import" href="../page-upload/page-upload.html">
 <link rel="import" href="../page-payment/page-payment.html">
-<link rel="import" href="../page-webinar/page-webinar.html">
+<link rel="import" href="../page-passwordless-phone/page-passwordless-phone.html">
+<link rel="import" href="../page-passwordless-email/page-passwordless-email.html">
+<link rel="import" href="../page-profile/page-profile.html">
 <link rel="import" href="../page-reviews/page-reviews.html">
 <link rel="import" href="../page-review/page-review.html">
+<link rel="import" href="../page-signup/page-signup.html">
+<link rel="import" href="../page-webinar/page-webinar.html">
+<link rel="import" href="../page-test/page-test.html">
 
 
 <dom-module id="app-boot">
@@ -39,6 +43,13 @@
       Polymer.BehaviorRouter
     ],
 
+    auth: function (context) {
+      if (this.session.get('token')) {
+        return true;
+      }
+      return false;
+    },
+
     on_login: function (event) {
       var response = event.detail;
       if (response.id != null) {
@@ -54,8 +65,29 @@
       page('/');
     },
 
+    '/forgot': function (context) {
+      this.init(context);
+      context.page = 'page-forgot';
+      this.open(context);
+    },
+
+    '/test': function (context) {
+            this.init(context);
+
+      context.page = 'page-test';
+      this.open(context);
+    },
+
     '/': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       context.page = 'page-home';
+      context.data = {};
+      if(context.state.length)
+        context.data.courses = context.state;
       this.open(context);
     },
 
@@ -70,16 +102,25 @@
     },
 
     '/categories/:category_id': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.find_model({
         collection: 'courses',
         where: { and: [{category_id: context.params.category_id},{ publish: true }]},
-        include: ['lectures', 'category']
+        include: ['lectures', 'category','cover']
       })
       .then(function (models) {
-        context.page = 'page-category';
-        context.data = {};
-        context.data.courses = models;
-        context.data.category = models[0].category;
+        if(models.length>0){
+          context.page = 'page-category';
+          context.data = {};
+          context.data.courses = models;
+          context.data.category = models[0].category;
+        }else{
+          context.page = 'page-home';
+        }
         this.open(context);
       }.bind(this))
       .catch(function (error) {
@@ -88,6 +129,11 @@
     },
 
     '/courses/:course_id/payment': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.get_model({
         collection: 'courses',
         modelId: context.params.course_id
@@ -103,10 +149,15 @@
     },
 
     '/courses/:course_id': function (context) {
+        this.init(context);
+        if (!this.auth(context)) {
+          page('/login');
+          return;
+        }
         this.get_model({
           collection: 'courses',
           modelId: context.params.course_id,
-          include: [{'lectures': ['video']}, 'webinars']
+          include: [{'lectures': ['video']},'students','teacher', 'webinars','cover']
         })
         .then(function (model) {
           context.page = 'page-course';
@@ -127,7 +178,11 @@
     },
 
     '/courses/:course_id/lectures/:lecture_id': function (context) {
-      this.is_authenticated()
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.get_model({
           collection: 'lectures',
           modelId: context.params.lecture_id,
@@ -146,6 +201,11 @@
     },
 
     '/courses/:course_id/webinars/:webinar_id': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.get_model({
           collection: 'webinars',
           modelId: context.params.webinar_id,
@@ -160,11 +220,28 @@
         }.bind(this)); 
     },
 
+    '/passwordless_phone': function (context) {
+      this.init(context);
+      context.page = 'page-passwordless-phone';
+      this.open(context);
+    },
+
+    '/passwordless_email': function (context) {
+      this.init(context);    
+      context.page = 'page-passwordless-email';
+      this.open(context);
+    },
+
     '/profile': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       this.get_model({
           collection: 'members',
           modelId: this.session.get('user').id,
-          include: ['teaching', 'learning']
+          include: [{'teaching': ['cover']},{'learning': ['cover']}]
         })
         .then(function (model) {
           context.page = 'page-profile';
@@ -184,13 +261,21 @@
 
     '/reviews': function (context) {
       this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
       context.page = 'page-reviews';
       this.open(context);
     },
 
     '/reviews/:review_id': function (context) {
-      this.init(context);
-      this.get_model({
+        this.init(context);
+        if (!this.auth(context)) {
+          page('/login');
+          return;
+        }   
+        this.get_model({
           collection: 'reviews',
           modelId: context.params.review_id,
           include: ['member', 'course']
@@ -214,14 +299,6 @@
     '/404': function (context) {
       context.page = 'page-404';
       this.open(context);
-    },
-
-    is_authenticated: function(){
-      console.log(this.session.get('token'))
-      if ( this.session.get('token') ==="null") {
-        page('/');
-        return;
-      }
     }
 
   });

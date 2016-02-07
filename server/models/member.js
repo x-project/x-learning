@@ -1,21 +1,90 @@
 var loopback = require('loopback');
 var braintree = require('braintree');
 var async = require('async');
+var mandrill = require('mandrill-api/mandrill');
+// var mandrill_client = new mandrill.Mandrill(process.env.MANDRILL_KEY);
+var moment = require('moment');
+var jwt = require('jwt-simple');
+var plivo = require('plivo')
+// var plivo_client = plivo.RestAPI({
+//   authId: process.env.PLIVIO_AUTH_ID_KEY,
+//   authToken: process.env.PLIVIO_AUTH_TOKEN
+// });
 
-var gateway = braintree.connect({
-  environment: braintree.Environment.Sandbox,
-  merchantId: process.env.BRAINTREE_MERCHANT_ID,
-  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
-  privateKey: process.env.TOKEN_SECRET_BRAINTREE
-});
+// var gateway = braintree.connect({
+//   environment: braintree.Environment.Sandbox,
+//   merchantId: process.env.BRAINTREE_MERCHANT_ID,
+//   publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+//   privateKey: process.env.TOKEN_SECRET_BRAINTREE
+// });
 
 module.exports = function (Member) {
+
+  var gateway;
+  function connect_braintree () {
+    return new Promise(function (resolve, reject) {
+      if (gateway) {
+        resolve(gateway);
+        return;
+      }
+      Member.app.models.Service.get_service('braintree').then(function (service) {
+        gateway = braintree.connect({
+          environment: braintree.Environment.Sandbox,
+          merchantId: service.params.merchant_id,
+          publicKey: service.public_key,
+          privateKey: service.private_key
+        });
+        resolve(gateway);
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+  }
+
+  var mandrill_client;
+  Member.connect_mandrill_client = function () {
+    return new Promise(function (resolve, reject) {
+      if (mandrill_client) {
+        resolve(mandrill_client);
+        return;
+      }
+      Member.app.models.Service.get_service('mandrill').then(function (service) {
+        resolve(new mandrill.Mandrill(service.private_key));
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+  }
+
+  var plivo_client;
+  function connect_plivo_client () {
+    return new Promise(function (resolve, reject) {
+      if (plivo_client) {
+        resolve(plivo_client);
+        return;
+      }
+      Member.app.models.Service.get_service('plivo').then(function (service) {
+        var plivo_client = plivo.RestAPI({
+          authId: service.public_key,
+          authToken: service.private_key
+        });
+        resolve(plivo_client);
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+  }
+
 
   function getCurrentUserId() {
     var ctx = loopback.getCurrentContext();
     var accessToken = ctx && ctx.get('accessToken');
     var userId = accessToken && accessToken.userId;
     return userId;
+  }
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
   }
 
   Member.change_email = function (confirm, email, password, callback) {
@@ -97,17 +166,19 @@ module.exports = function (Member) {
 
   //payment
   Member.get_client_token = function (customer_id, callback) {
-    gateway.customer.find(customer_id, function (err, customer) {
-      if (err) {
-        callback(err, null);
-        return;
-      }
-      gateway.clientToken.generate({ customerId: customer_id }, function (err, response) {
+    connect_braintree().then(function (gateway) {
+      gateway.customer.find(customer_id, function (err, customer) {
         if (err) {
           callback(err, null);
           return;
         }
-        callback(null, response);
+        gateway.clientToken.generate({ customerId: customer_id }, function (err, response) {
+          if (err) {
+            callback(err, null);
+            return;
+          }
+          callback(null, response);
+        });
       });
     });
   };
@@ -276,7 +347,6 @@ module.exports = function (Member) {
 
   var get_reviews = function (data) {
     var review;
-    console.log(data)
     review = {};
     review.member_id = data.member.id;
     review.course_id = data.course.id;
@@ -326,6 +396,242 @@ var get_task_braintree = function (data) {
     };
   };
 
+  // passwordless for email
+  Member.get_token_email = function (email, first_name, last_name, callback) {
+    var data = {};
+    data.email = email;
+    data.first_name = first_name;
+    data.last_name = last_name;
+    data.new_customer = {
+      first_name: 'unknown',
+      last_name: 'unknown',
+      email: data.email,
+      password: '3208932443232987832932'
+    };
+
+    async.waterfall([
+      get_customer_by_email(data),
+      create_new_customer(data),
+      create_token(data),
+      send_signed_url_by_email(data)
+    ],
+    function (err) {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      callback(null, data.email_result);
+    });
+  };
+
+  var create_new_customer = function (data) {
+    return function (next) {
+      if (data.customer != null) {
+        next();
+        return;
+      }
+      Member.create(data.new_customer, function (err, model) {
+        data.customer = model;
+        setImmediate(next, err);
+      });
+    };
+  };
+
+  var get_customer_by_email = function (data) {
+    return function (next) {
+      var query = { where: {email: data.email} };
+      Member.findOne(query, function (err, model) {
+        data.customer = model;
+        setImmediate(next, err);
+      });
+    };
+  };
+
+  var create_token = function (data) {
+    return function (next) {
+      var payload = {
+        sub: data.customer.id,
+        iat: moment().unix(),
+        exp: moment().add(1, 'days').unix()
+      };
+      var token = jwt.encode(payload, process.env.TOKEN_SECRET_ENTER_EMAIL);
+      data.token =  token;
+      data.customer.last_enter_token = token;
+      Member.upsert(data.customer, function (err, model) {
+        data.customer = model;
+        setImmediate(next, err);
+      });
+    };
+  };
+
+  var send_signed_url_by_email = function (data) {
+    return function (next) {
+      prepare_mail(data.email, data.token, function (err, message) {
+        if (err) {
+          setImmediate(next, err);
+          return;
+        }
+        Member.connect_mandrill_client()
+          .then(function (mandrill_client) {
+            mandrill_client.messages.send({"message": message},
+              function (res) {
+                data.email_result = res;
+                setImmediate(next, null);
+              },
+              function (err) {
+                setImmediate(next, err);
+              }
+            );
+          }).catch(function (err) {
+            setImmediate(next, err);
+          });
+      });
+    };
+  };
+
+  var prepare_mail = function (destination_email, enter_token) {
+    var host = 'http://localhost:3000/';
+    var link = host + 'enter?token=' + enter_token;
+    var signed_url = '<a href="' + link + '">' + link + '</a>';
+    var message = {
+      "html": signed_url,
+      "text": "click from url for sign in",
+      "subject": "signed url",
+      "from_email": process.env.MY_EMAIL,
+      "from_name": "x-learning",
+      "to": [{
+              "email": destination_email,
+              "name": "x-learning",
+              "type": "to"
+          }],
+      "headers": {
+          "Reply-To": process.env.MY_EMAIL
+      },
+      "subaccount": "12345",
+    };
+    return message;
+  };
+
+  Member.get_token_sms = function (phone, callback) {
+    var data = {};
+    data.phone = phone;
+    data.new_customer = {
+      first_name: 'unknown',
+      last_name: 'unknown',
+      email: 'unknown32089' + getRandomInt(1, 10000000000000)+ '@email.com',
+      password: '3208932443232987832932',
+      phone: data.phone
+    };
+    async.waterfall([
+      get_customer_by_phone(data),
+      create_new_customer(data),
+      create_sms_code(data),
+      send_sms(data)
+    ],
+    function (err) {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      callback(null, data.response);
+    });
+  };
+  var get_customer_by_phone = function (data) {
+    return function (next) {
+      var query = { where: {phone: data.phone} };
+      Member.findOne(query, function (err, model) {
+        data.customer = model;
+        setImmediate(next, err);
+      });
+    };
+  };
+
+  var create_sms_code = function (data) {
+    return function (next) {
+      var code = getRandomInt(10000, 1000000);
+      data.code = code;
+      var payload = {
+        sub: data.customer.id + '' + data.code,
+        iat: moment().unix(),
+        exp: moment().add(1, 'days').unix()
+      };
+      var token = jwt.encode(payload, process.env.TOKEN_SECRET_ENTER_SMS);
+      data.token =  token;
+      data.customer.last_sms_token = token;
+      Member.upsert(data.customer, function (err, model) {
+        data.customer = model;
+        setImmediate(next, err);
+      });
+    };
+  };
+
+  var send_sms = function (data) {
+    return function (next) {
+      Member.app.models.Service.get_service('phone')
+        .then(function (serivce) {
+          var params = {
+            'src': serivce.params.phone,
+            'dst' : data.phone,
+            'text' : "Your code for login is: " + data.code,
+            'url' : "http://example.com/report/",
+            'method' : "GET"
+          };
+          connect_plivo_client()
+            .then(function (plivo_client) {
+              plivo_client.send_message(params, function (status, response) {
+              data.response = { status: status, response: response };
+              setImmediate(next, null);
+            });
+          })
+          .catch(function (err) {
+            setImmediate(next, err);
+          });
+        })
+        .catch(function (err) {
+          setImmediate(next, err);
+        });
+    };
+  };
+
+  Member.try_enter_sms = function (phone, code, callback) {
+    var query = { where: {phone: phone} };
+    Member.findOne(query, function(err, customer) {
+      if (!customer) {
+        callback(null, {invalid_input: 'customer not found', success: false});
+        return;
+      }
+      var payload = jwt.decode(customer.last_sms_token, process.env.TOKEN_SECRET_ENTER_SMS);
+      if (payload.sub !== customer.id + '' + code) {
+        callback(null, {invalid_input: 'invalid code',  success: false });
+        return;
+      }
+      create_access_token(customer, function (err, user_profile) {
+        if (err) {
+          callback(err, null);
+          return;
+        }
+        user_profile.success = true;
+        callback(null, user_profile);
+      });
+    });
+  };
+  
+  var create_access_token = function (user, callback) {
+    user.createAccessToken(Member.settings.ttl, function (err, token) {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      var _token = JSON.parse(JSON.stringify(token));
+      var _user = JSON.parse(JSON.stringify(user));
+      delete _user.password;
+      delete _user.last_enter_token;
+      _user.id = _token.userId;
+      _token.user = _user;
+      callback(null, _token);
+    });
+  };
+
 
   Member.remoteMethod('change_password', {
     http: { path: '/change_password', verb: 'post' },
@@ -346,7 +652,32 @@ var get_task_braintree = function (data) {
     // TODO: send email to user
   });
 
+  Member.remoteMethod('get_token_email', {
+    accepts: [
+      { arg: 'email', type: 'string', required: true },
+      { arg: 'first_name', type: 'string', required: true },
+      { arg: 'last_name', type: 'string', required: true }
+    ],
+    returns: { arg: 'result', type: 'object' },
+    http: { path: '/enter_token', verb: 'post' }
+  });
+  /*
+    * passwordless by sms
+  */
+  Member.remoteMethod('get_token_sms', {
+    accepts: { arg: 'phone', type: 'number', required: true },
+    returns: { arg: 'result', type: 'object' },
+    http: { path: '/get_token_sms', verb: 'post' }
+  });
 
+  Member.remoteMethod('try_enter_sms', {
+    accepts: [
+      { arg: 'phone', type: 'number', required: true },
+      { arg: 'code', type: 'string', required: true }
+    ],
+    returns: { arg: 'result', type: 'object' },
+    http: { path: '/enter_sms', verb: 'post' }
+  });
 
   Member.remoteMethod('get_client_token', {
     accepts: { arg: 'customer_id', type: 'string', required: true },

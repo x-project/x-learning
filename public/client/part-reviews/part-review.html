@@ -1,6 +1,8 @@
 <link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../input-rating/input-rating-4.html">
 <link rel="import" href="part-review-reply.html">
 <link rel="import" href="form-review-reply.html">
+
 <dom-module id="part-review">
   <template>
     <style>
@@ -29,8 +31,7 @@
 
     <div class="comment">
       <div class="rating">
-        <label class="label">rating</label>
-        <span class="title">{{review.rating}}</span>
+        <input-rating-4 value="{{review.rating}}"></input-rating-4>
       </div>
       <div class="rating">
         <label class="label">title</label>

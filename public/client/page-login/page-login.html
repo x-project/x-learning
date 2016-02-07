@@ -2,13 +2,20 @@
 <link rel="import" href="../../components/button-connect-google/button-connect-google.html">
 <link rel="import" href="../../components/button-connect-facebook/button-connect-facebook.html">
 <link rel="import" href="../layout-client/layout-client.html">
-<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../../styles/style-page/style-page.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
+
 <link rel="import" href="form-login.html">
 
 <dom-module id="page-login">
   <template>
     <style include="style-page"></style>
-
+    <style include="style-panel"></style>
+    <style include="style-button"></style>
+    <style type="text/css">
+    
+    </style>
     <api-user-login id="login" credentials="{{credentials}}" collection="members"
       response="{{response}}" on-response="on_login" on-error="on_error">
     </api-user-login>
@@ -17,17 +24,27 @@
     <layout-client>
       <part-jumbotron class="jumbotron"></part-jumbotron>
       <div class="container">
+        <div class="panel">
         <a is="app-link" href="/">&larr;</a>
+          <div>
+            <a is="app-link"  class="btn btn-link" href="/passwordless_email">passwordless emal</a>
+            <a is="app-link"  class="btn btn-link" href="/passwordless_phone">passwordless phone</a>
+          </div>
+          <div>
+            <form-login id="form" on-submit="on_submit"></form-login>
+            <button-connect-google client_id="{{client_google}}"
+              on-response="on_connect" on-error="on_error">
+            </button-connect-google>
+            <button-connect-facebook client_id="{{client_facebook}}"
+             on-response="on_connect" on-error="on_error">
+             </button-connect-facebook>
+          </div>
+          <div>
+            <a is="app-link" class="btn btn-link" href="/signup">not registered?</a>
+            <a is="app-link" class="btn btn-link" href="/forgot">forgot password?</a>
+          </div>
+        </div>
 
-        <button-connect-google client_id="{{client_google}}"
-          on-response="on_connect" on-error="on_error">
-        </button-connect-google>
-
-        <button-connect-facebook client_id="{{client_facebook}}"
-         on-response="on_connect" on-error="on_error"></button-connect-facebook>
-        
-        <h3>Login</h3>
-        <form-login id="form" on-submit="on_submit"></form-login>
       </div>
     </layout-client>
 
@@ -57,6 +74,7 @@
 
     on_login: function (event) {
       event.stopPropagation();
+      console.log(this.response)
       this.fire('login', this.response);
     },
 

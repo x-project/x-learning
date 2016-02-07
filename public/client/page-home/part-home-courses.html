@@ -3,17 +3,14 @@
 
 <dom-module id="part-home-courses">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+    <style include="style-panel"></style>
+    <api-model-find id="find" collection="courses" where='{"publish": true}' include=["cover"] response="{{courses}}"></api-model-find>
+
+    <div class="panel">      
+      <h2 class="title">Courses</h2>  
+      <deck-courses courses="{{courses}}"></deck-courses>
+    </div>
     
-    <api-model-find id="find" collection="courses" where='{"publish": true}'response="{{courses}}"></api-model-find>
-
-    <h2>Courses</h2>  
-    <deck-courses courses="{{courses}}"></deck-courses>
-
   </template>
 </dom-module>
 

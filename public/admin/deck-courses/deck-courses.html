@@ -1,0 +1,33 @@
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../components/layout-grid/layout-grid.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="card-course.html">
+
+<dom-module id="deck-courses">
+  <template>
+    <style include="style-panel"></style>
+    <style include="style-grid"></style>
+
+    <div class="row">
+      <template id="course" is="dom-repeat" items="{{courses}}" as="course">
+        <card-course class="col-sm-3 panel" course="{{course}}"></card-course>
+      </template>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'deck-courses',
+
+    properties: {
+      courses: {
+        type: Array,
+        value: function () { return []; }
+      }
+    },
+
+
+  });
+</script>

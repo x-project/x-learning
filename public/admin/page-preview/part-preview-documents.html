@@ -1,0 +1,50 @@
+<link rel="import" href="../../components/layout-grid/layout-grid.html">
+<link rel="import" href="../../styles/style-table/style-table.html">
+<link rel="import" href="../../styles/style-basic/style-basic.html">
+
+<dom-module id="part-preview-documents">
+  <template>
+    <style include="style-panel"></style>
+    <style include="style-table"></style>
+    <style include="style-basic"></style>
+
+    <div class="panel">
+     <h3>Documents</h3>
+       <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+              </tr>
+            </thead>
+            <tbody>
+              <template id="document" is="dom-repeat" items="{{course.documents}}" as="document">
+                <tr class="text-left" on-click="on_click">
+                  <td><a is="app-link" class="link" href="{{document.url}}">{{document.title}}</a></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-preview-documents',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_click: function(event){
+      page('/courses/'+ this.course.id + '/webinars/' + this.$.webinar.itemForElement(event.target).id);
+    }
+
+  });
+</script>

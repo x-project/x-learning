@@ -17,7 +17,7 @@
     "course": {
       "type": "belongsTo",
       "model": "Course",
-      "foreignKey": "webinar_id"
+      "foreignKey": "course_id"
     }
   },
   "acls": [],

@@ -1,0 +1,26 @@
+{
+  "name": "Service",
+  "plural": "services",
+  "mongodb": {
+    "collection": "services"
+  },
+  "base": "PersistedModel",
+  "properties": {
+    "name": {
+      "type": "String"
+    },
+    "public_key": {
+      "type": "String"
+    },
+    "private_key": {
+      "type": "String"
+    },
+    "params": {
+      "type": "Object"
+    }
+  },
+  "relations": {},
+  "acls": [],
+  "methods": [],
+  "validations": []
+}

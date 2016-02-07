@@ -1,0 +1,67 @@
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="stylesheet" type="text/css" href="../../fonts/icons/css/font-awesome.min.css">
+<dom-module id="card-course">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        padding: 5px;
+      }
+      .card {
+        color: #333;
+        text-decoration: none;
+      }
+
+      .image {
+        background-color: #eee;
+        height: 200px;
+        width: 100%;
+      }
+
+      .title {
+        margin: 0;
+      }
+      .description {
+        margin: 6px 0px;
+      }
+      .link {
+        display: block;
+      }
+    </style>
+
+    <a class="card" is="app-link" href="/admin/courses/{{course.id}}">
+      <div>
+        <iron-image class="image" preload src="{{course.cover.url}}" sizing="contain"></iron-image>
+      </div>
+      <div>
+        <h4 class="title">{{course.title}}</h4>
+        <p class="description">{{course.description}}</p>
+        <h4>$ {{course.cost}}</h2>
+      </div>
+    </a>
+    <i class="fa fa-trash-o" on-click="on_click"></i>
+
+
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'card-course',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_click: function(event){
+      if(confirm("DO YOU WANT DELETE COURSE"))
+        this.fire('try-delete',this.course.id);
+    }
+
+  });
+</script>

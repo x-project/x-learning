@@ -1,0 +1,34 @@
+<dom-module id="part-webinar-actions">
+  <template>
+  <style include="style-button"></style>
+
+    <button class="btn btn-secondary" on-click="on_click">save</button>
+    <button class="btn btn-secondary" on-click="on_click_delete">Delete webinar</button>
+    <button class="btn btn-secondary" on-click="on_click_start">Start</button>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-webinar-actions',
+
+    properties: {},
+
+    on_click: function (event){
+      event.stopPropagation();
+      this.fire('try-save');
+    },
+
+    on_click_delete:function(event){
+      event.stopPropagation();
+      this.fire('try-delete');
+    },
+
+    on_click_start: function (event){
+      event.stopPropagation();
+      this.fire('try-start');
+    }
+
+  });
+</script>

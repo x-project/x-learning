@@ -1,0 +1,60 @@
+<link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="../form-service-keys/form-service-keys.html">
+<dom-module id="part-services-mandrill">
+  <template>
+    <style include="style-panel"></style>
+
+    <app-session id="session"></app-session>
+
+    <div class="panel">
+      <h2 class="title">Mandrill</h2>
+      <form-service-keys service="{{service}}" on-update="on_update">
+      </form-services-keys>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-services-mandrill',
+
+    properties: {
+      services: {
+        type: Array,
+        value: function () { return []; },
+        observer: '_on_change_services'
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    _on_change_services: function () {
+      if (!this.services) {
+        return;
+      }
+      this.services.find(function (item) {
+        if (item.name == "mandrill") {
+          this.service = item;
+        }
+      }, this);
+    },
+
+    on_update: function (event) {
+      event.stopPropagation();
+      var data = event.detail;
+      data.name = 'mandrill';
+      Model.create('/api/services/update_service', {data: data}, this.$.session.get('admin_token'))
+      .then(function (data) {
+        this.service = data.result;
+      }.bind(this))
+      .catch(function (error) {
+        this.error = error;
+        alert(this.error.message);
+      }.bind(this));
+    }
+
+  });
+</script>
