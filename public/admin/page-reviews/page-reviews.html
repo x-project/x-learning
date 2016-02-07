@@ -1,0 +1,58 @@
+<link rel="import" href="../table-view/table-view.html">
+
+<dom-module id="page-reviews">
+  <template>
+    <style include="style-page"></style>
+    <style include="style-panel"></style>
+     
+
+    <layout-admin >
+      <div>
+          <h1>Reviews</h1>
+      </div>
+      <table-view items="{{teaching}}" fields='["title","total_review","score_review"]' on-click="on_click" on-delete="on_click_delete">
+        <h2 class="title">Courses</h2> 
+      </table-view>
+    </layout-admin>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-reviews',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      review: {
+        type: Object,
+        value: function () { return []; }
+      }
+    },
+
+    attached:function(){
+      this.manager= this.data.manager;
+      this.teaching=this.manager.teaching;
+      // console.log(this.teaching)
+
+
+      // this.review = this.teaching.map(function (course, index) {
+      //   if(course.total_review){
+      //     return {
+      //       id: course.id,
+      //       Name: course.name,
+      //       NumberReview: course.total_review,
+      //       Review: course.score_review
+      //     };
+      //   }else{
+      //     return{};
+      //   }
+      // });
+    }
+
+  });
+</script>Reviews

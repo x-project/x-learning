@@ -16,6 +16,7 @@
 <link rel="import" href="../page-member/page-member.html">
 <link rel="import" href="../page-invite/page-invite.html">
 <link rel="import" href="../page-students/page-students.html">
+<link rel="import" href="../page-reviews/page-reviews.html">
 
 <dom-module id="app-boot">
   <template>
@@ -321,6 +322,31 @@
       })
       .then(function (model) {
         context.page = 'page-students';
+        context.data ={};
+        context.data.manager = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        console.log(error);
+        context.page = 'page-404';
+        context.data.error = error;
+        this.open(context);
+      }.bind(this));
+    },
+
+    '/admin/reviews': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'managers',
+        modelId: this.session.get('admin_user').id,
+        include:['teaching']
+      })
+      .then(function (model) {
+        context.page = 'page-reviews';
         context.data ={};
         context.data.manager = model;
         this.open(context);

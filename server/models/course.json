@@ -23,6 +23,12 @@
     },
     "publish": {
       "type": "Boolean"
+    },
+    "total_review": {
+      "type": "String"
+    },
+    "score_review": {
+      "type": "String"
     }
   },
   "relations": {
