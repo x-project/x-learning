@@ -157,7 +157,7 @@
         this.get_model({
           collection: 'courses',
           modelId: context.params.course_id,
-          include: [{'lectures': ['video']},'students','teacher', 'webinars','cover']
+          include: [{'lectures': ['video']},'students','teacher', 'webinars','cover','documents']
         })
         .then(function (model) {
           context.page = 'page-course';

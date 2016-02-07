@@ -70,18 +70,8 @@
     attached:function(){
       console.log(this.course)
       this.webinars = this.course.webinars;
-      // var now = moment().format();
-      // this.webinars.forEach(function(webinar){
-      //   var date = moment(webinar.data);
-      //   if (date.isBefore(now, 'second')) {
-      //    webinar.start = true; 
-      //   }
-      // });
     },
 
-    on_click: function(event){
-        page('/courses/'+ this.course.id + '/webinars/' + this.$.webinar.itemForElement(event.target).id);
-    },
 
     filter_state:function(webinar){
       console.log(webinar)

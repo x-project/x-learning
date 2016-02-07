@@ -18,9 +18,7 @@
             </thead>
             <tbody>
               <template id="document" is="dom-repeat" items="{{course.documents}}" as="document">
-                <tr class="text-left" on-click="on_click">
-                  <td><a is="app-link" class="link" href="{{document.url}}">{{document.title}}</a></td>
-                </tr>
+                <i class="fa fa-file-text" on-click="on_click" > {{document.title}}</i>
               </template>
             </tbody>
           </table>
@@ -43,7 +41,7 @@
     },
 
     on_click: function(event){
-      page('/courses/'+ this.course.id + '/webinars/' + this.$.webinar.itemForElement(event.target).id);
+      window.open(this.$.document.itemForElement(event.target).url,'_blank');
     }
 
   });

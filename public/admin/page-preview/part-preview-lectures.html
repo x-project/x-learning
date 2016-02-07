@@ -59,10 +59,6 @@
           lecture.video.duration = time.minutes() + ':' + time.seconds();
         }
       });
-    },
-
-    on_click: function(event){
-      page('/courses/'+ this.course.id + '/lectures/' + this.$.lecture.itemForElement(event.target).id);
     }
 
   });

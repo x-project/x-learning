@@ -28,7 +28,6 @@
     },
 
     attached: function(){
-      console.log(this.teacher)
       this.$.find.include = ['teacher'];
       this.$.find.where = { and: [{"teacher_id" : this.teacher},{"publish": true}] };
       this.$.find.send();

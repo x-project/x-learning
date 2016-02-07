@@ -1,0 +1,81 @@
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-form/style-form.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="part-coupons-actions.html">
+<link rel="import" href="part-coupons-items.html">
+<link rel="import" href="part-coupons-pages.html">
+<dom-module id="page-coupons">
+  <template>
+
+    <layout-admin>
+      <h1>Coupons</h1>
+      <part-coupons-actions></part-coupons-actions>
+      <part-coupons-items coupons="{{coupons}}"></part-coupons-items>
+      <part-coupons-pages on-change-page="on_change_page" perpage="{{perpage}}"
+        count="{{count}}">
+      </part-coupons-pages>
+    </layout-admin>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-coupons',
+
+    properties: {
+      coupons: {
+        type: Array,
+        value: function () { return []; }
+      },
+      page: {
+        type: Number,
+        value: 0
+      },
+      perpage: {
+        type: Number,
+        value: 30
+      }
+    },
+
+    attached: function () {
+      this.count_coupons();
+    },
+
+    count_coupons: function () {
+      Model.count('/api/coupons/count')
+        .then(function (data) {
+          this.count = data.count;
+        }.bind(this))
+        .catch(function (error) {
+          this.count = 0;
+          console.log(error);
+        }.bind(this));
+    },
+
+    get_coupons: function () {
+      Model.find('/api/coupons', this.get_filter_options())
+        .then(function (data) {
+          this.coupons = data;
+        }.bind(this))
+        .catch(function (error) {
+          console.log(error);
+        }.bind(this));
+    },
+
+    get_filter_options: function () {
+      return {
+        perpage: this.perpage,
+        order: 'name',
+        page: this.page
+      };
+    },
+
+    on_change_page: function (event) {
+      this.page = event.detail.current - 1;
+      this.get_coupons();
+    }
+
+  });
+</script>

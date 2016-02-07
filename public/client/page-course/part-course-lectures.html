@@ -55,7 +55,7 @@
       this.lectures.forEach(function(lecture){
         if(lecture.video.duration){
           var time = moment(lecture.video.duration*1000)
-          lecture.video.duration = time.minutes() + ':' + time.seconds();
+          lecture.video.duration = time.minutes() + 'mm:' + time.seconds() +"ss";
         }
       });
     },

@@ -71,6 +71,11 @@
       "type": "hasOne",
       "model": "Image",
       "foreignKey": "course_id"
+    },
+    "coupon": {
+      "type": "hasOne",
+      "model": "Counpon",
+      "foreignKey": "course_id"
     }
   },
   "acls": [],

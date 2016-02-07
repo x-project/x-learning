@@ -18,6 +18,8 @@
 <link rel="import" href="../page-students/page-students.html">
 <link rel="import" href="../page-reviews/page-reviews.html">
 <link rel="import" href="../page-preview/page-preview.html">
+<link rel="import" href="../page-coupons/page-coupons.html">
+<link rel="import" href="../page-coupon/page-coupon.html">
 
 <dom-module id="app-boot">
   <template>
@@ -132,6 +134,32 @@
       context.page = 'page-team';
       context.data.manager = this.session.get('admin_user');
       this.open(context);
+    },
+
+
+    '/admin/coupons': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      
+        context.page = 'page-coupons';
+       
+        this.open(context);
+     
+    },
+    '/admin/coupons/new': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      
+        context.page = 'page-coupon';
+       
+        this.open(context);
+     
     },
 
 
