@@ -22,25 +22,25 @@ module.exports = function (Service) {
     });
   }
 
-  // var verify_admin = function (data) {
-  //   return function (next) {
-  //     var admin_email = data.admin_email;
-  //     var admin_password = data.admin_password + '';
-  //     Service.app.models.Manager.findOne({where: {email: admin_email}}, function (err, manager) {
-  //        manager.hasPassword(admin_password, function (err, match) {
-  //         data.authenticate = match;
-  //         setImmediate(next, err);
-  //        });
-  //     });
-  //   }
-  // };
+  var verify_admin = function (data) {
+    return function (next) {
+      var admin_email = data.admin_email;
+      var admin_password = data.admin_password + '';
+      Service.app.models.Manager.findOne({where: {email: admin_email}}, function (err, manager) {
+         manager.hasPassword(admin_password, function (err, match) {
+          data.authenticate = match;
+          setImmediate(next, err);
+         });
+      });
+    }
+  };
 
   var find_or_create_service = function (data) {
     return function (next) {
-      // if (!data.authenticate) {
-      //   next(new Error('you don\'t have permission for request this actions'), null);
-      //   return;
-      // }
+      if (!data.authenticate) {
+        next(new Error('you don\'t have permission for request this actions'), null);
+        return;
+      }
       var service_data = {};
       service_data.name = data.name;
       service_data.public_key = data.public_key;
@@ -56,10 +56,10 @@ module.exports = function (Service) {
 
   var update_service_key = function (data) {
     return function (next) {
-      // if (!data.authenticate) {
-      //   next(new Error('you don\'t have permission for request this actions'), null);
-      //   return;
-      // }
+      if (!data.authenticate) {
+        next(new Error('you don\'t have permission for request this actions'), null);
+        return;
+      }
       var service_data = {};
       data.name = data.name;
       data.service_model.public_key = data.public_key;
@@ -74,7 +74,7 @@ module.exports = function (Service) {
 
   Service.update_service = function (data, callback) {
       async.waterfall([
-      // verify_admin(data),
+      verify_admin(data),
       find_or_create_service(data),
       update_service_key(data)
     ],

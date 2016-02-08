@@ -40,6 +40,11 @@
         <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
+        <label class="label">[[service_aws_cloudfront]]</label>
+        <input class="form-control" type="text" is="iron-input" bind-value="{{service.cloudfront}}">
+        <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
+      </div>
+      <div class="field">
         <label class="label">[[service_aws_pipeline_label]]</label>
         <input class="form-control" type="text" is="iron-input" bind-value="{{service.pipeline_id}}">
         <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
@@ -49,7 +54,7 @@
         <input class="form-control" type="text" is="iron-input" bind-value="{{service.preset_id}}">
         <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
       </div>
-      <button id="update" type="submit" class="btn btn-secondary">submit</button>
+      <button id="update" type="submit" class="btn btn-secondary">update</button>
     </form>
 
     <div class="password" show$="{{show}}">
@@ -84,6 +89,10 @@
         type: String,
         value: 'S3 Region'
       },
+      service_aws_cloudfront: {
+        type: String,
+        value: 'Cloudfront'
+      },
       service_aws_pipeline_label: {
         type: String,
         value: 'Pipeline ID'
@@ -106,6 +115,8 @@
       }
     },
 
+
+
     on_submit: function (event) {
       event.stopPropagation();
       event.preventDefault();
@@ -115,12 +126,13 @@
 
     on_click_submit: function (event) {
       event.stopPropagation();
-      var admin = this.$.session.get('user');
+      var admin = this.$.session.get('admin_user');
       var data = {
         public_key: this.service.public_key,
         private_key: this.service.private_key,
         bucket: this.service.bucket,
         region: this.service.region,
+        cloudfront: this.service.cloudfront,
         pipeline_id: this.service.pipeline_id,
         preset_id: this.service.preset_id,
         admin_email: admin.email,

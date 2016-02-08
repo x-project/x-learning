@@ -16,7 +16,7 @@
 <dom-module id="page-services">
 
   <template>
-      <layout-admin>
+      <layout-admin on-updated="on_updated">
 
     <part-services-aws services="{{services}}"></part-services-aws>
     <part-services-plivo services="{{services}}"></part-services-plivo>
@@ -26,7 +26,7 @@
     <part-services-mandrill services="{{services}}"></part-services-mandrill>
     <part-services-phone services="{{services}}"></part-services-phone>
     <part-services-secret-keys services="{{services}}"></part-services-secret-keys>
-          <part-services-email services="{{services}}"></part-services-email>
+    <part-services-email services="{{services}}"></part-services-email>
 
     </layout-admin>
   </template>
@@ -43,6 +43,10 @@
         type: Array,
         value: function () { return []; }
       }
+    },
+
+    on_updated: function(){
+      this.find_services();
     },
 
     attached: function () {

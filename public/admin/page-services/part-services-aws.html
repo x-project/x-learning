@@ -43,6 +43,7 @@
           service.merchant_id = item.params.merchant_id;
           service.bucket = item.params.bucket;
           service.region = item.params.region;
+          service.cloudfront = item.params.cloudfront;
           service.pipeline_id = item.params.pipeline_id;
           service.preset_id = item.params.preset_id;
           return true;
@@ -63,13 +64,15 @@
       data.params = {};
       data.params.bucket = aws_data.bucket;
       data.params.region = aws_data.region;
+      data.params.cloudfront = aws_data.cloudfront;
       data.params.pipeline_id = aws_data.pipeline_id;
       data.params.preset_id = aws_data.preset_id;
 
 
-      Model.create('/api/services/update_service', {data: data}, this.$.session.get('token'))
+      Model.create('/api/services/update_service', {data: data}, this.$.session.get('admin_token'))
       .then(function (data) {
         this.service = data.result;
+        this.fire('updated');
       }.bind(this))
       .catch(function (error) {
         this.error = error;

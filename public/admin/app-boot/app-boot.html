@@ -20,6 +20,7 @@
 <link rel="import" href="../page-preview/page-preview.html">
 <link rel="import" href="../page-coupons/page-coupons.html">
 <link rel="import" href="../page-coupon/page-coupon.html">
+<link rel="import" href="../page-webinars/page-webinars.html">
 
 <dom-module id="app-boot">
   <template>
@@ -418,6 +419,31 @@
       }
       context.page = 'page-services';
       this.open(context);
+    },
+
+    '/admin/webinars': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'managers',
+        modelId: this.session.get('admin_user').id,
+        include:[{'teaching': ['webinars']}]
+      })
+      .then(function (model) {
+        context.page = 'page-webinars';
+        context.data ={};
+        context.data.manager = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        console.log(error);
+        context.page = 'page-404';
+        context.data.error = error;
+        this.open(context);
+      }.bind(this));
     },
 
 
