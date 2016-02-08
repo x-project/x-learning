@@ -1,0 +1,51 @@
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<dom-module id="api-s3-delete">
+  <template>
+
+    <iron-ajax id="signed_delete" method="GET" url="{{url}}" params="{{params}}"
+      last-response="{{response_get}}" on-response="on_response_get">
+    </iron-ajax>
+
+    <iron-ajax id="delete_file" method="DELETE" url="{{url}}"
+      on-response="on_complete"></iron-ajax>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'api-s3-delete',
+
+    properties: {
+      file: {
+        type: String
+      }
+    },
+
+    delete_file: function (file) {
+      if (file) {
+        this.file = file;
+      }
+      if (!this.file) {
+        return;
+      }
+
+      //get singned_url
+      this.url = '/api/images/signed_delete';
+      var params = {};
+      params.file_name = file;
+      this.params = params;
+      this.$.signed_delete.generateRequest();
+    },
+
+    on_response_get: function(event){
+      this.url = this.response_get.signed_url;
+      this.$.delete_file.generateRequest();
+    },
+
+    on_complete: function(event){
+      this.fire('delete-completed')
+    }
+
+  });
+</script>
