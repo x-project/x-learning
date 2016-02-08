@@ -44,7 +44,6 @@
       this.teaching.forEach(function (course){
         if(course.webinars){
           course.webinars.forEach(function (webinar) {
-            console.log(webinar)
             this.webinars_list.push(webinar); 
           }.bind(this))
         }
