@@ -10,25 +10,10 @@
     <style include="style-panel"></style>
     <style include="style-grid"></style>
     <style include="style-button"></style>
-
-        <div class="panel">
-          <div on-click="on_click_nav">
-            <button class="btn btn-secondary" data-tab="learning">Learning</button>
-            <button class="btn btn-secondary" data-tab="teaching">Teaching</button>
-            <button class="btn btn-secondary" data-tab="create">Create new course</button>
-          </div>
-        </div>
-        <div>
-          <x-tabs id="tabs" current="{{current}}">
-            <x-tab name="learning">
-              <part-profile-learning courses="{{member.learning}}"></part-profile-learning>
-            </x-tab>
-            <x-tab name="teaching">
-              <part-profile-teaching courses="{{member.teaching}}"></part-profile-teaching>
-            </x-tab>
-          </x-tabs>
-        </div>
-
+    <div class="panel">
+      <button class="btn btn-secondary" on-click="on_click">Create new course</button>
+    </div>
+      <part-profile-learning courses="{{member.learning}}"></part-profile-learning>
 
   </template>
 </dom-module>
@@ -42,24 +27,13 @@
       member: {
         type: Object,
         value: function () { return {}; }
-      },
-      current: {
-        type: String,
-        value: 'learning'
       }
     },
 
-    attached:function(){
-      console.log(this.member)
-    },
+    on_click:function(){
+      page('/admin/login');
+    }
 
-    on_click_nav: function (event) {
-      var name = event.target.dataset.tab;
-      this.set('current', name);
-      if(name=='create')
-        page('/admin/courses/new')
-      // this.$.tabs.current = name
-    },
 
   });
 </script>
