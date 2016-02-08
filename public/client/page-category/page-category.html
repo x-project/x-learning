@@ -9,14 +9,18 @@
   <template>
     <style include="style-grid"></style>
 
-    <layout-client class="row">
-      <div class="col-sm-3 col-sm-push-1">
-        <part-home-categories></part-home-categories>
+    <layout-client>
+    <div class="container">
+      <div class="row">  
+        <div class="col-sm-2">
+          <part-home-categories></part-home-categories>
+        </div>
+        <div class="col-sm-9">
+            <h2>Courses in {{data.category.title}}</h2>
+            <deck-courses courses="{{data.courses}}"></deck-courses>
+        </div>
       </div>
-      <div class="col-sm-8">
-          <h2>Courses in {{data.category.title}}</h2>
-          <deck-courses courses="{{data.courses}}"></deck-courses>
-      </div>
+    </div>
     </layout-client>
 
   </template>

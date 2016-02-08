@@ -1,16 +1,10 @@
-<link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../deck-courses/deck-courses.html">
 
 <dom-module id="part-home-courses">
-  <template>
-    <style include="style-panel"></style>
+  <template>    
     <api-model-find id="find" collection="courses" where='{"publish": true}' include=["cover"] response="{{courses}}"></api-model-find>
 
-    <div class="panel">      
-      <h2 class="title">Courses</h2>  
-      <deck-courses courses="{{courses}}"></deck-courses>
-    </div>
-    
+    <deck-courses courses="{{courses}}"></deck-courses>
   </template>
 </dom-module>
 

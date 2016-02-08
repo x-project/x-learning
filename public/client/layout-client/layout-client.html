@@ -1,25 +1,45 @@
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../part-footer/part-footer.html">
 <link rel="import" href="../part-header/part-header.html">
-<link rel="import" href="../../styles/style-grid/style-grid.html">
-
 <dom-module id="layout-client">
   <template>
+    <style include="style-grid"></style>
     <style>
-      .header {
-        position: absolute;
+      :host {
+        display: block;
+      }
+
+      #page {
         width: 100%;
+        min-height: 100vh;
+        @apply(--layout-vertical);
+        overflow: hidden;
+      }
+
+      #header {
+        position: fixed;
+      }
+
+      #main {
+        padding-top: 50px;
+      }
+
+      #space {
+        @apply(--layout-flex);
+      }
+
+      #footer {
+
       }
     </style>
-    <style include="style-grid"></style>
 
-      <div class="container-fluid">
-        <part-jumbotron>
-            <part-header class="content"></part-header>     
-        </part-jumbotron>
-        <content></content>
-      </div>
-      <div class="space"></div>
-        <part-footer class="footer"></part-footer>
+      <div id="page">
+        <part-header id="header"></part-header>               
+        <div id="main">
+          <content></content>          
+        </div>
+        <div id="space"></div>
+        <part-footer id="footer"></part-footer>
       </div>
 
   </template>
