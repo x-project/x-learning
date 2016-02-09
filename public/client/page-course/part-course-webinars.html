@@ -19,27 +19,18 @@
             </thead>
             <tbody>
               <template id="webinar" is="dom-repeat" items="{{webinars}}" as="webinar" filter="filter_state">
-
-              <template is="dom-if" if="{{webinar.started}}">
                 <tr class="text-left" on-click="on_click">
                 <th scope="row"> <i class="fa fa-video-camera"></i> Webinar {{index}}</th>
                 <td>{{webinar.title}}</td>
-                <td>{{webinar.state}}</td>
-              </template>
-              
-              <template is="dom-if" if="{{!webinar.started}}">
-                <tr class="text-left">
-                <th scope="row"> <i class="fa fa-video-camera"></i> Webinar {{index}}</th>
-                <td>{{webinar.title}}</td>
-                <td>{{webinar.state}}
+                <td>{{webinar.message}}
                 <template is="dom-if" if="{{webinar.countdown}}">
                   <part-countdown date="{{webinar.data}}" on-countdown-ended="on_ended"></part-countdown></td>
                 </template>  
 
-              </template>               
-
                 </tr>
-              </template>
+              </template>               
+              </td>
+
             </tbody>
           </table>
         </div>
@@ -63,45 +54,33 @@
         value: function () { return []; }
       },
       state: {
-        type:String
+        type:Boolean,
+        value: false
       }
-    },
-
-    attached:function(){
-      // var now = moment().format();
-      // this.webinars.forEach(function(webinar){
-      //   var date = moment(webinar.data);
-      //   if (date.isBefore(now, 'second')) {
-      //    webinar.start = true; 
-      //   }
-      // });
     },
 
     on_click: function(event){
-        page('/courses/'+ this.course.id + '/webinars/' + this.$.webinar.itemForElement(event.target).id);
+      if(this.$.webinar.itemForElement(event.target).state=="online")
+        page('/courses/'+ this.course.id + '/webinar/' + this.$.webinar.itemForElement(event.target).id);
     },
 
     filter_state:function(webinar){
-      console.log(webinar)
       var now = moment().format();
       var date = moment(webinar.data);
 
-      if( webinar.started==true)
-        webinar.state="Started"
+      if( webinar.state=='online'){
+        console.log('1')
+        webinar.message="Started";
+      }
 
-      if( webinar.started==false ){
-        webinar.state="Expired"
+      if( webinar.state=='offline' ){
+        webinar.message="Expired"
         webinar.countdown = false;          
       }
 
-      if(typeof webinar.started == 'undefined'){
-        if (date.isAfter(now, 'second')){
-          webinar.state="Starting in ";
+      if(webinar.state == 'false'){
+          webinar.message="Starting in ";
           webinar.countdown = true;
-        }else{
-          webinar.state="Expired"
-          webinar.countdown = false;   
-        }
       }
 
       return webinar;

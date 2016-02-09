@@ -27,7 +27,7 @@
     },
 
     webinar_closed: function(){
-      this.data.webinar.started=false;
+      this.data.webinar.state="offline"
       this.$.update.send();
     }
 

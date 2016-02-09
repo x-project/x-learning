@@ -1,0 +1,29 @@
+<link rel="import" href="../../styles/style-deck/style-deck.html">
+<link rel="import" href="card-webinar.html">
+
+<dom-module id="deck-webinars">
+  <template>
+    <style include="style-deck"></style>
+
+    <div class="deck">
+      <template id="webinar" is="dom-repeat" items="{{webinars}}" as="webinar">
+        <card-webinar class="card" webinar="{{webinar}}"></card-webinar>
+      </template>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'deck-webinars',
+
+    properties: {
+      webinars: {
+        type: Array,
+        value: function () { return []; }
+      }
+    }
+
+  });
+</script>

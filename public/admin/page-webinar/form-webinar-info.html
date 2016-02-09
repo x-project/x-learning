@@ -26,11 +26,6 @@
         <input-errors property="description" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
-        <label class="label">Duration(mn)</label>
-        <input class="form-control" id="duration" type="text" is="iron-input" bind-value="{{webinar.duration}}">
-        <input-errors property="duration" error="{{error.details}}"></input-errors>
-      </div>
-      <div class="field">
         <label class="label">Start in:</label>
         <input class="form-control" type="datetime-local" is="iron-input" bind-value="{{webinar.data}}">
         <input-errors property="duration" error="{{error.details}}"></input-errors>
@@ -53,6 +48,11 @@
         type: Object,
         value: function () { return {}; }
       }
+    },
+
+    attached:function(){
+      if(!this.webinar.state)
+        this.webinar.state="false";
     },
 
     on_submit: function (event) {

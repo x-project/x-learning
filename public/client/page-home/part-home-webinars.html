@@ -1,0 +1,28 @@
+<link rel="import" href="../deck-courses/deck-courses.html">
+
+<dom-module id="part-home-webinars">
+  <template>    
+    <api-model-find id="find" collection="webinars" where='{"publish": true}' include=["cover"] response="{{courses}}"></api-model-find>
+
+    <deck-courses courses="{{courses}}"></deck-courses>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-home-webinars',
+
+    properties:{
+      courses:{
+        type: Object
+      }
+    },
+
+    attached: function(){
+      if(!this.courses)
+        this.$.find.send();
+    }
+
+  });
+</script>

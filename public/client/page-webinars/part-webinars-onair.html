@@ -1,0 +1,29 @@
+<link rel="import" href="../deck-webinars/deck-webinars.html">
+
+<dom-module id="part-webinars-onair">
+  <template>    
+    <deck-webinars webinars="{{webinars}}" on-select="on_select"></deck-webinars>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-webinars-onair',
+
+    properties:{
+      webinar:{
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_select:function(event){
+      console.log(event.detail)
+      this.webinar=event.detail;
+      if(this.webinar.state=="online")
+        page('/courses/'+ this.webinar.course_id + '/webinar/' +this.webinar.id )
+    }
+
+  });
+</script>

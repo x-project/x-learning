@@ -20,6 +20,7 @@
 <link rel="import" href="../page-review/page-review.html">
 <link rel="import" href="../page-signup/page-signup.html">
 <link rel="import" href="../page-webinar/page-webinar.html">
+<link rel="import" href="../page-webinars/page-webinars.html">
 <link rel="import" href="../page-test/page-test.html">
 
 
@@ -201,7 +202,7 @@
         }.bind(this));
     },
 
-    '/courses/:course_id/webinars/:webinar_id': function (context) {
+    '/courses/:course_id/webinar/:webinar_id': function (context) {
       this.init(context);
       if (!this.auth(context)) {
         page('/login');
@@ -308,6 +309,28 @@
           context.page = 'page-review';
           context.data = {};
           context.data.review = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (err) {
+          this.redirect('/404');
+        });
+    },
+
+    '/webinars/': function (context) {
+        this.init(context);
+        if (!this.auth(context)) {
+          page('/login');
+          return;
+        }   
+        this.find_model({
+          collection: 'webinars',
+          where: { state: {nlike: 'offline'} },
+          include: [{'course':'cover'}]
+        })
+        .then(function (model) {
+          context.page = 'page-webinars';
+          context.data = {};
+          context.data.webinars = model;
           this.open(context);
         }.bind(this))
         .catch(function (err) {

@@ -11,6 +11,15 @@
     },
     "description": {
       "type": "String"
+    },
+    "data": {
+      "type": "String"
+    },
+    "peer_id": {
+      "type": "String"
+    },
+    "state": {
+      "type": "String"
     }
   },
   "relations": {

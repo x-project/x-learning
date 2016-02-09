@@ -67,9 +67,8 @@
     },
 
     on_try_start:function(event){
-      // this.webinar.started=true;
-      // this.$.update.send();
-      // console.log(this.data)
+      this.webinar.state="online";
+      this.$.update.send();
       page('/admin/courses/'+ this.data.course.id + '/webinar/' +this.webinar.id + '/start');
     },
     

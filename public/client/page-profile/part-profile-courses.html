@@ -10,10 +10,8 @@
     <style include="style-panel"></style>
     <style include="style-grid"></style>
     <style include="style-button"></style>
-    <div class="panel">
-      <button class="btn btn-secondary" on-click="on_click">Create new course</button>
-    </div>
-      <part-profile-learning courses="{{member.learning}}"></part-profile-learning>
+
+    <part-profile-learning courses="{{member.learning}}"></part-profile-learning>
 
   </template>
 </dom-module>
@@ -29,11 +27,6 @@
         value: function () { return {}; }
       }
     },
-
-    on_click:function(){
-      page('/admin/login');
-    }
-
 
   });
 </script>

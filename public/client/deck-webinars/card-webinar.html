@@ -1,0 +1,60 @@
+<link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="../../styles/style-card/style-card.html">
+<link rel="import" href="../input-rating/input-rating-4.html">
+
+<dom-module id="card-webinar">
+  <template>
+    <style include="style-card"></style>
+    <style>
+      :host {
+        display: inline-block;
+        padding: 5px;
+        width: 200px;
+      }
+
+      .image {
+        background-color: #eee;
+        height: 200px;
+        width: 100%;
+      }
+      
+      .star {
+        --rating-star : {
+          /*width: 10px;*/
+          font-size: 14px;
+          padding: 2px;
+        };
+      }
+    
+    </style>
+
+    <div class="card" on-click="on_click">
+      <div class="card-header">
+        <iron-image class="image" preload src="{{webinar.cover.url}}" sizing="contain"></iron-image>
+      </div>
+      <div class="card-block" >
+        <h4 class="card-title"><a href="/webinar/{{webinar.id}}">{{webinar.title}}</a></h4>
+        <p class="card-text">{{webinar.description}}</p>
+      </div>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'card-webinar',
+
+    properties: {
+      webinar: {
+        type: Object,
+        value: function () { return {}; }
+      },
+    },
+
+    on_click:function(event){
+      this.fire('select',this.webinar)
+    }
+
+  });
+</script>
