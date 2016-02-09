@@ -65,6 +65,22 @@
       });
     },
 
+    find_model: function (params) {
+      var request = document.createElement('api-model-find');
+      request.collection = params.collection;
+      request.where = params.where || {};
+      request.include = params.include || [];
+      return new Promise(function (resolve, reject) {
+        request.addEventListener('response', function (event) {
+          resolve(request.response);
+        });
+        request.addEventListener('error', function (event) {
+          reject(request.error);
+        });
+        request.send();
+      });
+    },
+
     init: function (context) {
       context.session = {};
       context.session.user = this.session.get('user');
