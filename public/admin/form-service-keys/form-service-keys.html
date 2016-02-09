@@ -87,7 +87,7 @@
 
     on_click_submit: function (event) {
       event.stopPropagation();
-      var admin = this.$.session.get('user');
+      var admin = this.$.session.get('admin_user');
       var keys = {
         public_key: this.service.public_key,
         private_key: this.service.private_key,

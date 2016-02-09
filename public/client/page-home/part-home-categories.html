@@ -5,7 +5,6 @@
   <template>
     <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>
     
-    <h2 class="title">Categories</h2> 
     <template id="category" is="dom-repeat" items="{{categories}}" as="category">
       <div>
         <a is="app-link" href="/categories/{{category.id}}">{{category.title}}</a>

@@ -1,18 +1,15 @@
-<link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="../../styles/style-card/style-card.html">
 <link rel="import" href="../input-rating/input-rating-4.html">
 
 <dom-module id="card-course">
   <template>
+    <style include="style-card"></style>
     <style>
       :host {
         display: inline-block;
         padding: 5px;
-      }
-
-      .card {
-        color: #333;
-        text-decoration: none;
+        width: 200px;
       }
 
       .image {
@@ -20,35 +17,28 @@
         height: 200px;
         width: 100%;
       }
-
-      .title {
-        margin: 0;
-      }
-      .description {
-        margin: 6px 0px;
-      }
-      .link {
-        display: block;
-      }
+      
       .star {
         --rating-star : {
-          width: 30px;
+          /*width: 10px;*/
+          font-size: 14px;
+          padding: 2px;
         };
       }
     
     </style>
 
-    <a class="card" is="app-link" href="/courses/{{course.id}}">
-      <div>
+    <div class="card">
+      <div class="card-header">
         <iron-image class="image" preload src="{{course.cover.url}}" sizing="contain"></iron-image>
       </div>
-      <div>
-        <h4 class="title">{{course.title}}</h4>
-        <p class="description">{{course.description}}</p>
+      <div class="card-block">
+        <h4 class="card-title"><a href="/courses/{{course.id}}">{{course.title}}</a></h4>
+        <p class="card-text">{{course.description}}</p>
         <input-rating-4 class="star" value="{{rating}}"></input-rating-4>
         <h4>$ {{course.cost}}</h2>
       </div>
-    </a>
+    </div>
 
   </template>
 </dom-module>

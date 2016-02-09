@@ -1,0 +1,29 @@
+<link rel="import" href="../input-s3/input-s3.html">
+<dom-module id="form-settings-image">
+  <template>
+
+    <input-s3 collection="images" folder="{{folder}}"></input-s3>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'form-settings-image',
+
+    properties: {
+      member: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      folder: {
+        type: String
+      }
+    },
+
+    attached: function(event){
+      this.folder = 'profile_image/';
+    }
+
+  });
+</script>

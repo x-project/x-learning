@@ -1,21 +1,26 @@
-<link rel="import" href="../../styles/style-button/style-button.html">
-<link rel="import" href="../../styles/style-form/style-form.html">
+<link rel="import" href="../../components/iron-input/iron-input.html">
 
 <dom-module id="part-home-find">
   <template>
-    <style include="style-panel"></style>
-    <style include="style-button"></style>
-    <style include="style-form"></style>
     <style>
-    input {
-        box-sizing: border-box;
+      :host{ 
+        display: inline-block;
+      }
+
+      #input {
+        font-size: 12px;
+        border: 1px solid #efefef;
+        border-radius: 1px;
+        padding: 6px;
+      }
+      #input:focus {
+        border-color: gold;
+        outline: none;
       }
     </style>
-    <div class="panel">
-      <label class="label">Find course</label>
-      <input class="form-control" is="iron-input" type="text" bind-value="{{course}}">
-      <button class="btn btn-secondary" on-click="on_click">Find</button>
-    </div>
+
+    <input id="input" is="iron-input" type="text" bind-value="{{course}}" on-keydown="on_keydown">
+
   </template>
 </dom-module>
 
@@ -30,8 +35,10 @@
       }
     },
 
-    on_click:function(event){
-      this.fire("try-find", this.course)
+    on_keydown: function (event) {
+      if (event.keyCode == 13) {
+        this.fire("try-find", this.course);      
+      }
     }
 
   });

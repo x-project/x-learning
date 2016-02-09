@@ -1,0 +1,81 @@
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<dom-module id="api-s3-upload">
+  <template>
+
+    <iron-ajax id="get" method="GET" url="{{url}}" params="{{params}}"
+      last-response="{{response_get}}" on-response="on_response_get">
+    </iron-ajax>
+
+    <iron-ajax id="put" method="PUT" url="{{response_get.signed_url}}"
+      last-response="{{response_put}}" on-response="on_response_put">
+    </iron-ajax>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'api-s3-upload',
+
+    properties: {
+      file: {
+        type: Object
+      },
+      collection: {
+        type: String
+      },
+      folder: {
+        type: String,
+        value: ''
+      },
+      fileName: {
+        type: String
+      },
+      response: {
+        type: Object,
+        notify: true
+      },
+      error: {
+        type: Object,
+        notify: true
+      }
+    },
+
+    send: function (file) {
+      if (file) {
+        this.file = file;
+      }
+      if (!this.file) {
+        return;
+      }
+      this._compute_url();
+      this._compute_params();
+      this.$.get.generateRequest();
+    },
+    
+    _compute_url: function () {
+      var url = '/api/' + this.collection + '/signed_put';
+      url = url.replace(/\/\/+/, '/');
+      this.url = url;
+    },
+    
+    _compute_params: function () {
+      var params = {};
+      params.file_name = this.folder + this.file.name;
+      params.file_type = this.file.type;
+      this.params = params;
+    },
+
+    on_response_get: function (event) {
+      event.stopPropagation();
+      this.$.put.body = this.file;
+      this.$.put.generateRequest();
+    },
+
+    on_response_put: function (event) {
+      this.fire('response', {"title" : this.file.name, "url" :'http://d265dc9zzasikr.cloudfront.net/'+ this.folder + this.file.name });
+      event.stopPropagation();
+    }
+
+  });
+</script>

@@ -1,0 +1,50 @@
+<dom-module id="part-coupon-period">
+  <template>
+    <style include="style-panel"></style>
+    <style include="style-form"></style>
+    <style include="style-field"></style>
+    <style include="style-button"></style>
+    <style>
+      input-datetime {
+        --datetime-input: {
+          @apply(--form-control);
+        };
+        --datetime-button: {
+        };
+      }
+    </style>
+
+    <div class="panel" on-change-date="on_change_date">
+      <h2 class="title">[[coupon_period_title_label]]</h2>
+      <div class="field">
+        <label class="label">From</label>
+        <input-datetime value="{{coupon.date_from}}"></input-datetime>
+        <input-errors property="date_from" error="{{error.details}}"></input-errors>
+      </div>
+      <div class="filed">
+        <label class="label">To</label>
+        <input-datetime value="{{coupon.date_to}}"></input-datetime>
+        <input-errors property="date_to" error="{{error.details}}"></input-errors>
+      </div>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-coupon-period',
+
+    properties: {
+      coupon_period_title_label: {
+        type: String,
+        value: 'Period'
+      },
+      coupon: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>

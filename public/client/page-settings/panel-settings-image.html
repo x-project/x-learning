@@ -1,0 +1,70 @@
+<link rel="import" href="../style-panel/style-panel.html">
+<link rel="import" href="form-settings-image.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="../input-s3/api-s3-delete.html">
+
+<dom-module id="panel-settings-image">
+  <template>
+    <style include="style-panel"></style>
+    <style>
+      :host {
+        display: inline-block;
+        padding: 5px;
+      }
+
+      .image {
+        background-color: #eee;
+        height: 100px;
+        width: 50%;
+      }
+    </style>
+    
+    <api-s3-delete id="delete_photo" on-delete-completed="on_delete_completed"></api-s3-delete>
+
+    <api-model-update id="update" collection="members" model-id="{{user.id}}"
+      data="{{user}}" response="{{response}}" error="{{error}}">
+    </api-model-update>
+
+    <div class="panel">
+      <h3 class="title">Update image profile</h3>
+       <iron-image class="image" preload src="{{user.photo}}" sizing="contain"></iron-image>
+      <form-settings-image member="{{user}}" on-response="on_response"></form-settings-image>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'panel-settings-image',
+
+    properties: {
+      user: {
+        type: Object
+      },
+      photo_name:{
+        type: String
+      }
+    },
+
+    attached:function(){
+      this.photo_name = this.user.photo.split('/').pop();
+    },
+
+    on_response: function(event){
+      if( this.user.photo != event.detail.url){
+        this.user.photo = event.detail.url;
+        file_name = 'profile_image/' + this.photo_name;
+        this.$.delete_photo.delete_file(file_name);
+      }else{
+        page('/admin/profile');
+      }
+    },
+
+    on_delete_completed : function(event){
+      this.$.update.send();
+      page('/admin/profile')
+    }
+
+  });
+</script>
