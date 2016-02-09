@@ -3,12 +3,23 @@
 
 <dom-module id="part-home-categories">
   <template>
+    <style>
+      .link {
+        display:block;
+        font-size: 13px;
+        color: #333;
+        font-family: font-light;
+        font-style: normal;
+        font-weight: 300;
+        letter-spacing: 0.75px;
+        text-decoration: blink;
+      }
+    </style>
+    
     <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>
     
     <template id="category" is="dom-repeat" items="{{categories}}" as="category">
-      <div>
-        <a is="app-link" href="/categories/{{category.id}}">{{category.title}}</a>
-      </div>
+      <a class="link" href="/categories/{{category.id}}">{{category.title}}</a>
     </template>
 
   </template>

@@ -4,10 +4,15 @@
 <dom-module id="deck-courses">
   <template>
     <style include="style-deck"></style>
+    <style>
+      :host {
+        margin: 0 -5px;
+      }
+    </style>
 
-    <div class="deck">
+    <div class="deck row">
       <template id="course" is="dom-repeat" items="{{courses}}" as="course">
-        <card-course class="card" course="{{course}}"></card-course>
+        <card-course course="{{course}}"></card-course>
       </template>
     </div>
 

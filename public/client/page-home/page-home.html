@@ -11,6 +11,17 @@
 <dom-module id="page-home">
   <template>
     <style include="style-grid"></style>
+    <style>
+    .title {
+      font-size: 13px;
+      color: #a4a4a4;
+      font-family: font-light;
+      font-style: normal;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 0.75px;
+    }
+    </style>
 
     <api-model-find id="ajax_find" collection="courses"
       on-response="on_response" include=["cover"] on-error="on_error">
@@ -19,11 +30,11 @@
     <layout-client>
       <div class="container">
         <div class="row">
-          <div class="col-sm-2">
+          <div class="col col-sm-2">
             <h2 class="title">Categories</h2> 
             <part-home-categories></part-home-categories>
           </div>
-          <div class="col-sm-9">
+          <div class="col col-sm-10">
             <h2 class="title">Courses</h2>             
             <part-home-find on-try-find="on_try_find"></part-home-find>
             <part-home-courses courses="{{data.courses}}"></part-home-courses>

@@ -21,7 +21,7 @@
     on_select:function(event){
       console.log(event.detail)
       this.webinar=event.detail;
-      if(this.webinar.state=="online")
+      if(this.webinar.state!="offline")
         page('/courses/'+ this.webinar.course_id + '/webinar/' +this.webinar.id )
     }
 

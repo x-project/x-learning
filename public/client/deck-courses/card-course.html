@@ -4,39 +4,70 @@
 
 <dom-module id="card-course">
   <template>
-    <style include="style-card"></style>
+    <!-- /*<style include="style-card"></style>*/ -->
     <style>
       :host {
         display: inline-block;
-        padding: 5px;
-        width: 200px;
+        padding: 10px 5px;
+        width: 25%;
+        color: #333;
+        box-sizing: border-box;
       }
 
       .image {
         background-color: #eee;
-        height: 200px;
+        height: 120px;
         width: 100%;
       }
-      
-      .star {
+
+      .card-title {
+        margin: 6px 0px;
+        text-decoration: none;
+        font-size: 15px;
+        font-family: font-light;
+      }
+
+      .card-title .link {
+        color: #333;
+        text-decoration: none;
+      }
+
+      .card-text {
+        margin: 6px 0px;
+        font-size: 15px;
+        font-family: font-light;
+      }
+
+      .card-rating {
+        margin: 6px 0px;    
+
         --rating-star : {
-          /*width: 10px;*/
-          font-size: 14px;
+          font-size: 12px;
           padding: 2px;
         };
+      }
+
+      .card-detail {
+        margin: 6px 0;
+      }
+
+      .usd:before {
+        content: "$";
       }
     
     </style>
 
     <div class="card">
       <div class="card-header">
-        <iron-image class="image" preload src="{{course.cover.url}}" sizing="contain"></iron-image>
+        <iron-image class="image" preload src="{{course.cover.url}}" sizing="cover"></iron-image>
       </div>
       <div class="card-block">
-        <h4 class="card-title"><a href="/courses/{{course.id}}">{{course.title}}</a></h4>
+        <h4 class="card-title">
+          <a class="link" href="/courses/{{course.id}}">{{course.title}}</a>
+        </h4>
         <p class="card-text">{{course.description}}</p>
-        <input-rating-4 class="star" value="{{rating}}"></input-rating-4>
-        <h4>$ {{course.cost}}</h2>
+        <input-rating-4 class="card-rating" value="{{rating}}"></input-rating-4>
+        <h4 class="card-detail"><span class="usd">{{course.cost}}</span></h2>
       </div>
     </div>
 

@@ -5,7 +5,26 @@
     "collection": "managers"
   },
   "base": "InvitableUser",
-  "properties": {},
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "editor",
+        "author"
+      ]
+    },
+    "fullname": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "is_main_admin": {
+      "type": "Boolean",
+      "required": false
+    }
+  },
   "relations": {
     "teaching": {
       "type": "hasMany",
