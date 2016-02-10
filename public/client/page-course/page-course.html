@@ -1,80 +1,189 @@
 <link rel="import" href="part-course-aims.html">
 <link rel="import" href="part-course-documents.html">
 <link rel="import" href="part-course-header.html">
-<link rel="import" href="part-course-info.html">
 <link rel="import" href="part-course-lectures.html">
 <link rel="import" href="part-course-reviews.html">
 <link rel="import" href="part-course-webinars.html">
 <link rel="import" href="part-course-other-course.html">
 <link rel="import" href="../deck-video/deck-video.html">
 <link rel="import" href="../layout-client/layout-client.html">
-<link rel="import" href="../../styles/style-page/style-page.html">
-<link rel="import" href="../../styles/style-panel/style-panel.html">
-<link rel="import" href="../../styles/style-button/style-button.html">
-<link rel="import" href="../../styles/style-table/style-table.html">
-<link rel="import" href="../../styles/style-basic/style-basic.html">
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-navs/style-navs.html">
 
 <dom-module id="page-course">
   <template>
-    <style include="style-page"></style>
-    <style include="style-panel"></style>
-    <style include="style-button"></style>
     <style include="style-grid"></style>
+    <style include="style-button"></style>
+    <style include="style-navs"></style>
 
-    <style> 
-      .title {
-        display: block;
-        width: 50%;
-        height: 50%;
-        margin: auto; 
-      }
-      .buy {
-        margin-bottom: 20px;
-      }
-      .video {
+    <style>
+    .blockmain{
+      position: relative;
+      overflow: hidden;
+      padding: 30px 0;
+      background-color: #f1f1f1;
+    }
+
+    .row{
+      box-sizing: border-box;
+      margin: 0;
+      min-height: 400px;
+    }
+
+    .title{
+      margin:0;
+      font-size: 2.5vw;
+      font-style: normal;
+      color: #000;
+      font-family: font-light;
+      font-style: normal;
+      font-weight: 300;
+      letter-spacing: 0.75px;
+    }
+    .teacher{
+      margin-top: 3px;
+    }
+    .info {
+      @apply(--layout-vertical);
+      background-color: #fff;
+      margin: 0px 0px;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+    .media{
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .media .video{
+      background-color: black
+    }
+
+    .video {
         --video-style : {
-          width: 80% !important;
-          height: 500px !important;
+            width:100% !important;
+            height: 100% !important;
+            position:absolute;
         };
-      }
-      .lectures,.webinars, .aims, .documents {
-        @apply(--layout-col-10);
-        @apply(--layout-col-offset-1);
-        margin-top: 20px;
-      }
+    }
+
+    .price {
+      margin:0;
+      font-size: 39px;
+      font-weight: 600;
+    }
+    .btn{
+      width: 160px;
+      padding: 14px 0;
+      border-radius: 0;
+    }
+
+    .space{
+      @apply(--layout-flex)
+    }
+
+
+    .numbers {
+      display: flex;
+      margin-top: 15px;
+      font-size: 1.2vw;
+      line-height: 1.3;
+      font-weight: 400;
+      text-transform: none;
+      color: #000;
+      @apply(--layout-justified)
+    }
+
+    .number .label {
+      margin: 5px 0px;
+    }
+
+    .number .value{
+      margin: 0 17px;
+    }
+
+    .nav {
+      display: flex;
+      @apply(--layout-justified)
+    }
+
+    .nav-tabs .nav-item{
+      margin: 0 10px;
+    }
 
     </style>
 
     <layout-client>
-        <div class="title"> 
-          <h1>{{data.course.title}}</h1>
-          <p class="description">{{data.course.description}}</p>      
-        </div>
-        <div class="row">
-          <div class="col-sm-8 col-sm-push-1">
-            <deck-video class="video" src="{{data.video.url}}"></deck-video>          
-          </div>
-          <div class="col-sm-2 col-xs-pull-0">
-            <button class="buy btn btn-secondary" on-click="on_try_buy">BUY</button>
-            <part-course-info data="{{data}}"></part-course-info>            
-          </div>
-        </div>
-        <div class="aims"> 
-          <part-course-aims course="{{data.course}}"></part-course-aims>
-        </div>
-        <div class="documents">
-          <part-course-documents course="{{data.course}}"></part-course-documents>
-        </div>
-        <div class="lectures">
-          <part-course-webinars course="{{data.course}}" webinars="{{data.webinars}}"></part-course-webinars>        
-          <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
-          <part-course-reviews course="{{data.course}}"></part-course-reviews>
-          <part-course-other-course teacher="{{data.course.teacher_id}}"></part-course-other-course>
-        </div>
-        
+      <div class="blockmain">     
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 media">
+              <deck-video class="video" src="{{data.video.url}}"></deck-video>          
+            </div>
+            <div class="col-md-4 info">
+              <h2 class="title">{{data.course.title}}</h2>
+              <h4 class="teacher">Teacher {{data.course.teacher.fullname}}</h4>
+      
+              <div >
+                <h4 class="price">$ {{data.course.cost}}</h4> 
+                <button class="btn btn-primary" on-click="on_try_buy">BUY</button>
+              </div>
+              <div class="space">
+              </div>
 
+              <div class="numbers">
+                <div class="number">
+                  <div class="value">{{data.course.language}}</div>
+                  <h4 class="label">Language</h4>
+                </div>
+                <div class="number">
+                  <div class="value">{{data.course.students.length}}</div>
+                  <h4 class="label">Students</h4>
+                </div>
+                <div class="number">
+                  <div class="value">{{data.course.lectures.length}}</div>
+                  <h4 class="label">Lectures</h4>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <div class="container">
+        <nav class="nav nav-tabs" role="tablist" on-click="on_click_nav">
+          <ul>
+            <li class="nav-item nav-link active" data-tab="reviews">Reviews</li>
+            <li class="nav-item nav-link active" data-tab="others">Others</li>
+            <li class="nav-item nav-link active" data-tab="aims">Aims</li>
+            <li class="nav-item nav-link active" data-tab="lectures">Lectures</li>
+            <li class="nav-item nav-link active" data-tab="webinars">Webinars</li>
+            <li class="nav-item nav-link active" data-tab="document">Document</li>
+          </ul>
+        </nav>
+
+        <x-tabs id="tabs" current="{{current}}">
+          <x-tab name="aims">
+            <part-course-aims course="{{data.course}}"></part-course-aims>
+          </x-tab>
+          <x-tab name="lectures">
+            <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
+          </x-tab>
+          <x-tab name="webinars">
+            <part-course-webinars course="{{data.course}}" webinars="{{data.webinars}}"></part-course-webinars>        
+          </x-tab>
+          <x-tab name="document">
+            <part-course-documents course="{{data.course}}"></part-course-documents>
+          </x-tab>
+          <x-tab name="reviews">
+            <part-course-reviews course="{{data.course}}"></part-course-reviews>
+          </x-tab>
+          <x-tab name="others">
+            <part-course-other-course teacher="{{data.course.teacher_id}}"></part-course-other-course>
+          </x-tab>
+        </x-tabs>
+      </div>
+        
     </layout-client>
 
   </template>
@@ -88,7 +197,16 @@
       data: {
         type: Object,
         value: function () { return {}; }
-      }
+      },
+      current: {
+        type: String,
+        value: 'lectures'
+      },
+    },
+
+    on_click_nav: function (event) {
+      var name = event.target.dataset.tab;
+      this.set('current', name);
     },
 
     on_try_buy:function(event){

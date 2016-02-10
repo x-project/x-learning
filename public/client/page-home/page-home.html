@@ -21,6 +21,9 @@
       text-transform: uppercase;
       letter-spacing: 0.75px;
     }
+    .sidebar{
+      position: fixed;
+    }
     </style>
 
     <api-model-find id="ajax_find" collection="courses"
@@ -31,8 +34,10 @@
       <div class="container">
         <div class="row">
           <div class="col col-sm-2">
-            <h2 class="title">Categories</h2> 
-            <part-home-categories></part-home-categories>
+            <div class="sidebar">
+              <h2 class="title">Categories</h2> 
+              <part-home-categories></part-home-categories>
+            </div>
           </div>
           <div class="col col-sm-10">
             <h2 class="title">Courses</h2>             

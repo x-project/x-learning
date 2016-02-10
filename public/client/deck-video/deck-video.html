@@ -26,16 +26,16 @@
 
 <dom-module id="deck-video">
   <template>
-  <style include="style-video"></style>
-  <style>
-    .video {
+    <!-- <style include="style-video"></style> -->
+    <style>
+      .video {
         @apply(--video-style);
-    }
-  </style>
+      }
+    </style>
 
-      <video id="video" class="video video-js vjs-default-skin vjs-fw" controls>
-        <source type="application/x-mpegURL" src="{{src}}">
-      </video>
+    <video id="video" class="video video-js vjs-default-skin vjs-fw" controls>
+      <source type="application/x-mpegURL" src="{{src}}">
+    </video>
 
   </template>
 </dom-module>
@@ -46,7 +46,7 @@
     is: 'deck-video',
 
     attached: function(){
-      this.player = videojs('video');
+      this.player = videojs('video', {});
       //this.player.play();
     },
 
