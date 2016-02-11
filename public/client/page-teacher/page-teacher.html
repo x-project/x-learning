@@ -1,0 +1,74 @@
+<dom-module id="page-teacher">
+  <template>
+    <style include="style-grid"></style>
+    <style>
+      .row{
+            box-sizing: border-box;
+      }
+
+      .image {
+        display:flex;
+        height: 250px;
+      }
+
+      .info{
+        @apply(--layout-vertical);
+      }
+
+      .item {
+        display: flex;
+      }
+      .items .text{
+        margin: 0px 30px;
+      }
+      .fa{
+        width: 10px;
+      }
+
+      .title{
+        margin: 0;
+      }
+
+      .info .name{
+        margin: 20px 0px;
+      }
+
+    </style>
+    <layout-client>
+      <div class="container">
+        <div class="row">
+          <div class="col col-md-3 info">
+            <iron-image class="image" preload src="{{data.member.photo}}" sizing="cover"></iron-image> 
+            <h2 class="name">{{data.manager.fullname}}</h2>
+              <div class="items">
+                <div class="item">
+                  <i class="fa fa-envelope-o"></i>
+                  <h4 class="text">{{data.manager.email}}</h4>
+                </div>
+              </div>
+          </div>
+          <div class="col col-md-9 courses">
+            <h3 class="title">Teaching</h3>
+            <deck-courses courses="{{data.manager.teaching}}"></deck-courses>
+          </div>
+        </div>
+      </div>
+    </layout-client>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-teacher',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>
