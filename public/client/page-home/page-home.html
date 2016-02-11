@@ -24,13 +24,14 @@
     .sidebar{
       position: fixed;
     }
+
     </style>
 
     <api-model-find id="ajax_find" collection="courses"
       on-response="on_response" include=["cover"] on-error="on_error">
     </api-model-find>
 
-    <layout-client>
+    <layout-client mode="waterfall-tall">
       <div class="container">
         <div class="row">
           <div class="col col-sm-2">
@@ -63,8 +64,6 @@
       }
     },
 
-    
-    
     on_try_find:function(event){
       this.$.ajax_find.where = { and: [{"title" : {"like": event.detail ,"options":"i"}},{"publish": true}] };
       this.$.ajax_find.send();
