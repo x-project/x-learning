@@ -3,71 +3,57 @@
 <link rel="import" href="../../components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../part-footer/part-footer.html">
 <link rel="import" href="../part-header/part-header.html">
-<dom-module id="layout-client">
+<dom-module id="layout-jumbotron">
   <template>
     <style include="style-grid"></style>
     <style>
-      #page {
-        width: 100%;
+      :host {
+        display: block;
+      }
+      paper-header-panel {
         min-height: 100vh;
-        @apply(--layout-vertical);
-        overflow: hidden;
       }
       paper-toolbar {
-      }
-      paper-header-panel paper-toolbar {
         background-color: #fff;
-      }
-      paper-header-panel[mode="waterfall-tall"] paper-toolbar {
-        --paper-toolbar-background: transparent;
         background-attachment: initial;
+        /*background-image: url('https://ec.europa.eu/epale/sites/epale/files/learning_styles.jpg');*/
         background-image: url('https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg');
         background-position: center;
         background-size: 100%;
-        --paper-toolbar-transition: 0.50s;
       }
-      part-header {
-        background-color: transparent;
-      }
-
-      paper-header-panel[mode="waterfall-tall"] part-header {
+      part-header{
         background-color: transparent;
         --link-color:{color:#fff;};
       }
-
-      paper-header-panel {
-        height: 100vh;
-        --paper-header-panel-shadow: {
-            box-shadow: none;
-        }
-        --paper-header-panel-standard-container: {
-          @apply(--layout-vertical);
-        }
-         --paper-header-panel-waterfall-tall-container: {
-          @apply(--layout-vertical);
-        }
+      
+      .fit {
+        width: 100%;
+        min-height: 200vh;
+        @apply(--layout-vertical);
+        overflow: hidden;
       }
       #space {
         @apply(--layout-flex);
       }
     </style>
 
-    <paper-header-panel mode="{{mode}}">
+    <paper-header-panel mode="waterfall-tall">
       <paper-toolbar>
         <part-header></part-header>
       </paper-toolbar>
-      <div id="bottom-bar" class="bottom-bar">
-        <content select=".test"></content>
-      </div>
+      <div class="fit">
       <content></content>
       <div id="space"></div>
-      <part-footer id="footer"></part-footer>
+        <part-footer id="footer"></part-footer>
+      </div>
+      </div>
     </paper-header-panel>
+
 
   </template>
 </dom-module>
 <script>
   Polymer({
-    is: 'layout-client'
+    is: 'layout-jumbotron'
   });
 </script>
