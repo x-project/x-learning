@@ -15,6 +15,8 @@
     <layout-client>      
       <div class="container">
       <h1 class="title">Review <span>{{data.review.course.title}}</span></h1>
+      <a is="app-link" href="/dashboard">Back to reviews</a>
+
         <part-feedback review="{{data.review}}" course="{{data.review.course}}"></part-feedback>
       </div>
     </layout-client>

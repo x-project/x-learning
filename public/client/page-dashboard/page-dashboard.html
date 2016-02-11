@@ -1,8 +1,11 @@
 <link rel="import" href="../table-view/table-view.html">
+<link rel="import" href="../../styles/style-navs/style-navs.html">
+<link rel="import" href="../x-tabs/x-tabs.html">
 
 <dom-module id="page-dashboard">
   <template>
     <style include="style-grid"></style>
+    <style include="style-navs"></style>
     <style>
       .row{
             box-sizing: border-box;
@@ -42,6 +45,10 @@
         display: inline-flex;
         margin-top: 15px;
       }
+      .ul {
+      /*@apply(--layout-justified)*/
+      margin-top: 0;
+      }
     </style>
     <layout-client>
       <div class="container">
@@ -77,13 +84,27 @@
               </div>
           </div>
           <div class="col col-md-9 courses">
-            <h3 class="title">Learning</h3>
-            <deck-courses courses="{{data.member.learning}}"></deck-courses>
+
+          <nav class="nav nav-tabs" on-click="on_click_nav">
+            <ul class="ul">
+              <li class="nav-item nav-link active" data-tab="lectures">Learning</li>
+              <li class="nav-item nav-link active" data-tab="reviews">Reviews</li>
+            </ul>
+          </nav>
+
+          <x-tabs id="tabs" current="{{current}}">
+            <x-tab name="lectures">
+              <h3 class="title">Learning</h3>
+              <deck-courses courses="{{data.member.learning}}"></deck-courses>
+            </x-tab>
+            <x-tab name="reviews">
+              <h3>Reviews</h3>
+              <table-view items="{{reviews}}" fields='["course","title","text","rating"]' on-click="on_click">
+              </table-view>
+            </x-tab>
+          </x-tabs>
 
             <div class="panel">
-              <h3>Reviews</h3>
-              <table-view items="{{reviews}}" fields='["course","title","text","rating"]' on-click="on_click" on-delete="on_click_delete">
-              </table-view>
             </div>
           </div>
         </div>
@@ -109,29 +130,41 @@
       reviews:{
         type: Object,
         value: function () { return []; }
-      }
+      },
+      current: {
+        type: String,
+        value: 'lectures'
+      },
     },
 
     attached:function(){
-      // this.reviews=this.data.member.reviews;
       this.member_data = this.data.member.birthday.split('T')[0];
 
       this.reviews = this.data.member.reviews.map(function (review, index) {
-        console.log(review)
         return {
           id: review.id,
           course: review.course.title,
           title: review.title,
           text: review.text,
-          rating: String(review.rating),
+          rating: String(review.rating/2),
+          close: review.closed,
         index: '#' + index
         };
       })
-      // console.log(this.data.member.reviews)
     },
 
     on_click_edit: function(){
       page('/profile/setting')
+    },
+
+    on_click_nav: function (event) {
+      var name = event.target.dataset.tab;
+      this.set('current', name);
+    },
+
+    on_click:function(event){
+      if(!event.detail.close)
+        page('/review/' + event.detail.id);
     }
 
   });
