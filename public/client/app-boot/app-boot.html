@@ -15,7 +15,6 @@
 <link rel="import" href="../page-passwordless-phone/page-passwordless-phone.html">
 <link rel="import" href="../page-passwordless-email/page-passwordless-email.html">
 <link rel="import" href="../page-dashboard/page-dashboard.html">
-<link rel="import" href="../page-reviews/page-reviews.html">
 <link rel="import" href="../page-review/page-review.html">
 <link rel="import" href="../page-settings/page-settings.html">
 <link rel="import" href="../page-signup/page-signup.html">
@@ -307,17 +306,7 @@
       this.open(context);
     },
 
-    '/reviews': function (context) {
-      this.init(context);
-      if (!this.auth(context)) {
-        page('/login');
-        return;
-      }
-      context.page = 'page-reviews';
-      this.open(context);
-    },
-
-    '/reviews/:review_id': function (context) {
+    '/review/:review_id': function (context) {
         this.init(context);
         if (!this.auth(context)) {
           page('/login');
