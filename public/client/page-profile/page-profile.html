@@ -7,69 +7,77 @@
     <style>
       .row{
             box-sizing: border-box;
-            margin: 0;
       }
-      .edit{
-        margin: 0;
-      }
+
       .image {
         display:flex;
-        height: 70px;
-        width: 30%;
+        height: 250px;
       }
-      .inf{
+
+      .info{
         @apply(--layout-vertical);
       }
-      .info .item{
+
+      .item {
         display: flex;
       }
-
-      .info .fa{
-        padding: 3px 0px;
-        padding-right: 10px;
+      .items .text{
+        margin: 0px 30px;
       }
-      .info .text{
-        display: absolute;
-        margin: 0 8px;
+      .fa{
+        width: 10px;
       }
 
+      .title{
+        margin: 0;
+      }
+
+      .edit {
+        display: inline-flex;
+      }
       .info .name{
-        display: flex;
-        margin: 0 0px;
+        margin: 20px 0px;
+      }
+
+      .fa-pencil{
+        display: inline-flex;
+        margin-top: 15px;
       }
     </style>
     <layout-client>
       <div class="container">
         <div class="row">
-          <div class="col-md-3 info">
+          <div class="col col-md-3 info">
             <iron-image class="image" preload src="{{data.member.photo}}" sizing="cover"></iron-image> 
               <div class="edit">
                 <h2 class="name">{{data.member.name}} {{data.member.last_name}}</h2>
                   <i class="fa fa-pencil" on-click="on_click_edit"></i>
                 </span>
               </div>
-              <div class="item">
-                <i class="fa fa-envelope-o"></i>
-                <h4 class="text">{{data.member.email}}</h4>
-              </div>
-              <div class="item">
-                <i class="fa fa-male"></i>
-                <h4 class="text">{{data.member.gender}}</h4>
-              </div>
-              <div class="item">
-                <i class="fa fa-phone"></i>
-                <h4 class="text">{{data.member.phone}}</h4>
-              </div>
-              <div class="item">
-                <i class="fa fa-map-o"></i>
-                <h4 class="text">{{data.member.location}}</h4>
-              </div>
-              <div class="item">
-                <i class="fa fa-calendar"></i>
-                <h4 class="text">{{data.member_data}}</h4>
+              <div class="items">
+                <div class="item">
+                  <i class="fa fa-envelope-o"></i>
+                  <h4 class="text">{{data.member.email}}</h4>
+                </div>
+                <div class="item">
+                  <i class="fa fa-male"></i>
+                  <h4 class="text">{{data.member.gender}}</h4>
+                </div>
+                <div class="item">
+                  <i class="fa fa-phone"></i>
+                  <h4 class="text">{{data.member.phone}}</h4>
+                </div>
+                <div class="item">
+                  <i class="fa fa-map-o"></i>
+                  <h4 class="text">{{data.member.location}}</h4>
+                </div>
+                <div class="item">
+                  <i class="fa fa-calendar"></i>
+                  <h4 class="text">{{member_data}}</h4>
+                </div>
               </div>
           </div>
-          <div class="col-md-8 courses">
+          <div class="col col-md-9 courses">
             <h3 class="title">Learning</h3>
             <deck-courses courses="{{data.member.learning}}"></deck-courses>
           </div>
@@ -89,11 +97,15 @@
       data: {
         type: Object,
         value: function () { return {}; }
+      },
+      member_data:{
+        type:String
       }
     },
 
     attached:function(){
-      this.member_data = this.member.birthday.split('T')[0];
+      this.member_data = this.data.member.birthday.split('T')[0];
+      console.log(this.member_data)
     },
 
     on_click_edit: function(){
