@@ -24,6 +24,7 @@
       overflow: hidden;
       padding: 30px 0;
       background-color: #f1f1f1;
+      min-height: 400px;
     }
 
     .row{
@@ -107,11 +108,14 @@
     .nav {
       display: flex;
       @apply(--layout-justified)
+      margin-bottom: 0;
     }
-
+/*
     .nav-tabs .nav-item{
       margin: 0 10px;
-    }
+      margin-bottom: 0;
+
+    }*/
 
     </style>
 
@@ -124,8 +128,7 @@
             </div>
             <div class="col-md-4 info">
               <h2 class="title">{{data.course.title}}</h2>
-              <h4 class="teacher">Teacher {{data.course.teacher.fullname}}</h4>
-      
+              <h4 class="teacher">Teacher <a href="/profile/{{data.course.teacher.id}}">{{data.course.teacher.fullname}}</a> </h4>
               <div >
                 <h4 class="price">$ {{data.course.cost}}</h4> 
                 <button class="btn btn-primary" on-click="on_try_buy">BUY</button>
@@ -152,8 +155,8 @@
         </div>
       </div>
       <div class="container">
-        <nav class="nav nav-tabs" role="tablist" on-click="on_click_nav">
-          <ul>
+        <nav class="nav nav-tabs" on-click="on_click_nav">
+          <ul class="nav">
             <li class="nav-item nav-link active" data-tab="reviews">Reviews</li>
             <li class="nav-item nav-link active" data-tab="others">Others</li>
             <li class="nav-item nav-link active" data-tab="aims">Aims</li>
