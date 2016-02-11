@@ -1,4 +1,6 @@
-<dom-module id="page-profile">
+<link rel="import" href="../table-view/table-view.html">
+
+<dom-module id="page-dashboard">
   <template>
     <style include="style-grid"></style>
     <style>
@@ -77,6 +79,12 @@
           <div class="col col-md-9 courses">
             <h3 class="title">Learning</h3>
             <deck-courses courses="{{data.member.learning}}"></deck-courses>
+
+            <div class="panel">
+              <h3>Reviews</h3>
+              <table-view items="{{reviews}}" fields='["course","title","text","rating"]' on-click="on_click" on-delete="on_click_delete">
+              </table-view>
+            </div>
           </div>
         </div>
       </div>
@@ -88,7 +96,7 @@
 <script>
   Polymer({
 
-    is: 'page-profile',
+    is: 'page-dashboard',
 
     properties: {
       data: {
@@ -97,12 +105,29 @@
       },
       member_data:{
         type:String
+      },
+      reviews:{
+        type: Object,
+        value: function () { return []; }
       }
     },
 
     attached:function(){
+      // this.reviews=this.data.member.reviews;
       this.member_data = this.data.member.birthday.split('T')[0];
-      console.log(this.member_data)
+
+      this.reviews = this.data.member.reviews.map(function (review, index) {
+        console.log(review)
+        return {
+          id: review.id,
+          course: review.course.title,
+          title: review.title,
+          text: review.text,
+          rating: String(review.rating),
+        index: '#' + index
+        };
+      })
+      // console.log(this.data.member.reviews)
     },
 
     on_click_edit: function(){

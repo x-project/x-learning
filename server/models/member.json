@@ -39,6 +39,11 @@
       "type": "hasAndBelongsToMany",
       "model": "Course",
       "through": "MemberCourse"
+    },
+    "reviews": {
+      "type": "hasMany",
+      "model": "Review",
+      "foreignKey": "member_id"
     }
   },
   "acls": [

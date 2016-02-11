@@ -14,7 +14,7 @@
 <link rel="import" href="../page-payment/page-payment.html">
 <link rel="import" href="../page-passwordless-phone/page-passwordless-phone.html">
 <link rel="import" href="../page-passwordless-email/page-passwordless-email.html">
-<link rel="import" href="../page-profile/page-profile.html">
+<link rel="import" href="../page-dashboard/page-dashboard.html">
 <link rel="import" href="../page-reviews/page-reviews.html">
 <link rel="import" href="../page-review/page-review.html">
 <link rel="import" href="../page-settings/page-settings.html">
@@ -235,7 +235,7 @@
       this.open(context);
     },
 
-    '/profile': function (context) {
+    '/dashboard': function (context) {
       this.init(context);
       if (!this.auth(context)) {
         page('/login');
@@ -244,10 +244,10 @@
       this.get_model({
           collection: 'members',
           modelId: this.session.get('user').id,
-          include: [{'learning': ['cover']}]
+          include: [{'learning': ['cover']},{'reviews':['course']}]
         })
         .then(function (model) {
-          context.page = 'page-profile';
+          context.page = 'page-dashboard';
           context.data = {};
           context.data.member = model;
           this.open(context);
