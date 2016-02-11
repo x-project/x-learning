@@ -57,7 +57,7 @@
     
     </style>
 
-    <div class="card">
+    <div class="card" on-click="on_click">
       <div class="card-header">
         <iron-image class="image" preload src="{{course.cover.url}}" sizing="cover"></iron-image>
       </div>
@@ -91,6 +91,10 @@
 
     attached:function(){
       this.rating = this.course.score_review/this.course.total_review;
+    },
+
+    on_click:function(event){
+      this.fire('select',this.course)
     }
 
   });

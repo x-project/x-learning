@@ -1,8 +1,8 @@
-<link rel="import" href="../deck-webinars/deck-webinars.html">
+<link rel="import" href="../deck-courses/deck-courses.html">
 
 <dom-module id="part-webinars-onair">
   <template>    
-    <deck-webinars webinars="{{webinars}}" on-select="on_select"></deck-webinars>
+    <deck-courses courses="{{webinars}}" on-select="on_select"></deck-courses>
   </template>
 </dom-module>
 
@@ -19,7 +19,8 @@
     },
 
     on_select:function(event){
-      console.log(event.detail)
+      event.stopPropagation();
+      event.preventDefault();      
       this.webinar=event.detail;
       if(this.webinar.state!="offline")
         page('/courses/'+ this.webinar.course_id + '/webinar/' +this.webinar.id )
