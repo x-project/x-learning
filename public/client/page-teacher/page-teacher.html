@@ -1,56 +1,59 @@
+<link rel="import" href="../../styles/style-navs/style-navs.html">
+<link rel="import" href="../x-tabs/x-tabs.html">
+
 <dom-module id="page-teacher">
   <template>
     <style include="style-grid"></style>
+    <style include="style-navs"></style>
     <style>
       .row{
-            box-sizing: border-box;
+        box-sizing: border-box;
       }
 
       .image {
         display:flex;
-        height: 250px;
+        height: 150px;
+        width: auto;
       }
 
       .info{
         @apply(--layout-vertical);
       }
 
-      .item {
-        display: flex;
-      }
-      .items .text{
-        margin: 0px 30px;
-      }
-      .fa{
-        width: 10px;
-      }
-
-      .title{
-        margin: 0;
-      }
-
-      .info .name{
-        margin: 20px 0px;
+      .relations{
+        padding-top: 100px;
       }
 
     </style>
     <layout-client>
       <div class="container">
         <div class="row">
-          <div class="col col-md-3 info">
-            <iron-image class="image" preload src="{{data.member.photo}}" sizing="cover"></iron-image> 
-            <h2 class="name">{{data.manager.fullname}}</h2>
-              <div class="items">
-                <div class="item">
-                  <i class="fa fa-envelope-o"></i>
-                  <h4 class="text">{{data.manager.email}}</h4>
-                </div>
-              </div>
-          </div>
-          <div class="col col-md-9 courses">
-            <h3 class="title">Teaching</h3>
-            <deck-courses courses="{{data.manager.teaching}}"></deck-courses>
-          </div>
+            <div class="col col-md-3 info">
+              <iron-image class="image" preload src="{{data.manager.photo}}" sizing="contain"></iron-image> 
+            </div>
+            <div class="info">
+              <h2 class="name">{{data.manager.fullname}}</h2>
+              <h4 class="text">{{data.manager.email}}</h4>
+            </div>
+        </div>
+        <div class="relations">
+          <nav class="nav nav-tabs" on-click="on_click_nav">
+            <ul class="ul">
+              <li class="nav-item nav-link active" data-tab="teaching">Teaching</li>
+              <li class="nav-item nav-link active" data-tab="reviews">Reviews</li>
+            </ul>
+          </nav>
+          <x-tabs id="tabs" current="{{current}}">
+            <x-tab name="teaching">
+              <h3 class="title">Teaching</h3>
+              <deck-courses courses="{{courses}}"></deck-courses>
+            </x-tab>
+            <x-tab name="reviews">
+              <h3>Reviews</h3>
+              <table-view items="{{reviews}}" fields='["course","reviews","rating"]' on-click="on_click">
+              </table-view>
+            </x-tab>
+          </x-tabs>
         </div>
       </div>
     </layout-client>
@@ -67,8 +70,43 @@
       data: {
         type: Object,
         value: function () { return {}; }
-      }
-    }
+      },
+      current: {
+        type: String,
+        value: 'teaching'
+      },
+      courses:{
+        type: Array,
+        value: function () { return []; }
+      },
+      reviews:{
+        type: Array,
+        value: function () { return []; }
+      },
+    },
+
+    attached:function(){
+      console.log(this.data.manager)
+      this.data.manager.teaching.forEach(function(course){
+        if(course.publish){
+          this.push('courses',course)
+          if(course.total_review){
+            review = {
+              course: course.title,
+              reviews: String(course.total_review),
+              rating: String(course.score_review/course.total_review/2)
+            };
+            this.push('reviews',review)
+          }
+        }
+      }.bind(this))
+    },
+
+     on_click_nav: function (event) {
+      var name = event.target.dataset.tab;
+      this.set('current', name);
+    },
+
 
   });
 </script>

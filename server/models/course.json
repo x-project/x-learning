@@ -60,7 +60,7 @@
     "review": {
       "type": "hasMany",
       "model": "Review",
-      "foreignKey": "review_id"
+      "foreignKey": "course_id"
     },
     "documents": {
       "type": "hasMany",
