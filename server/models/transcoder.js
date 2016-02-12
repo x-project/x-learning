@@ -5,16 +5,16 @@ module.exports = function (Transcoder) {
   var elastictranscoder;
 
     function getCredentials(){
-    return new Promise(function (resolve,reject){
-      Transcoder.app.models.Service.get_service('aws').then(function (service) {  
-      aws.config.update({accessKeyId: service.public_key , secretAccessKey: service.secret_key });
-      aws.config.update({region: service.params.region , signatureVersion: 'v4' });
-      
-      elastictranscoder = new aws.ElasticTranscoder();
-      
-      resolve(service)
-      });
-    })
+      return new Promise(function (resolve,reject){
+        Transcoder.app.models.Service.get_service('aws').then(function (service) {  
+        aws.config.update({accessKeyId: service.public_key , secretAccessKey: service.secret_key });
+        aws.config.update({region: service.params.region , signatureVersion: 'v4' });
+        
+        elastictranscoder = new aws.ElasticTranscoder();
+        
+        resolve(service)
+        });
+      })
   }
 
   Transcoder.createJob = function (file_name,path,callback){
@@ -37,7 +37,6 @@ module.exports = function (Transcoder) {
           ThumbnailPattern:'image/' + file_name + '-{count}'//modifica preset per determinare il numero di immagini
         },
       };
-        console.log(input_params);
       
       elastictranscoder.createJob(input_params, function(err, data) {
         if (err) {
@@ -45,6 +44,7 @@ module.exports = function (Transcoder) {
           callback(err);
           return;
         }else{
+          data.mycloudfront = service.params.cloudfront;
           callback(null, data);
         }
       });

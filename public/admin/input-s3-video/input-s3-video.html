@@ -9,7 +9,7 @@
     </style>
 
     <api-s3-multipart-upload id="upload" collection="{{collection}}"
-      folder="{{folder}}" response="{{response}}" error="{{error}}">
+      folder="{{folder}}" response="{{response}}" error="{{error}}" on-complete="on_complete">
     </api-s3-multipart-upload>
 
     <input type="file" on-change="on_change">
@@ -42,6 +42,13 @@
       },
       duration: {
         type:Number
+      },
+      title: {
+        type:String
+      },
+      images: {
+        type:Array,
+        value: function () { return []; }
       }
     },
 
@@ -52,10 +59,29 @@
       this.src = objectUrl;
       var myVideoPlayer = this.$.vid;
       myVideoPlayer.addEventListener('loadedmetadata', function() {
-        this.fire('duration',myVideoPlayer.duration)
+        this.duration= myVideoPlayer.duration;
       }.bind(this));
 
       this.$.upload.send(file);
+    },
+
+    on_complete: function (event) {
+      event.stopPropagation();
+      data = event.detail.dataId.Job.Output;
+      url_cloudfront = event.detail.dataId.mycloudfront;
+      this.title = data.Key;
+      segmentcount = parseInt(this.duration/data.SegmentDuration);
+      for (var i =1 ; i <= segmentcount; i++) {
+        image = url_cloudfront + this.folder + "image/" + this.title + "-0000" + i +".png";
+        this.push('images',image);
+      }
+      videoObj = {
+        "title" : this.title,
+        "duration": this.duration,
+        "url" : url_cloudfront + this.folder + this.title + '.m3u8',
+        "images": this.images
+      }
+      this.fire('upload-video',videoObj);
     }
 
   });

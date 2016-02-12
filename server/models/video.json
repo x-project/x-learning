@@ -19,6 +19,9 @@
     },
     "duration": {
       "type": "Number"
+    },
+    "images": {
+      "type": "Array"
     }
   },
   "validations": [],

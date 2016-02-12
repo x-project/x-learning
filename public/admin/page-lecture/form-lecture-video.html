@@ -8,7 +8,7 @@
 
     <form class="form" on-change="on_change">
       <input-s3-video collection="videos" folder="{{folder}}"
-        response="{{video}}" error="{{error}}" on-complete="on_response" on-duration="on_duration">
+        response="{{video}}" error="{{error}}">
       </input-s3-video>
     </form>
 
@@ -23,35 +23,18 @@
     properties:{
       folder: {
         type: Object
-      },
-      title: {
-        type: String
-      },
-      duration: {
-        type: Number
       }
     },
-
+    
     attached:function(){
       this.folder = 'courses/' + this.data.course.id + '/' + this.data.lecture.id + '/'
     },
 
     on_change:function(){
-      console.log(this.data.video.id)
       if(this.data.video.id){
         this.$.ajax_delete_video.url='/api/lectures/'+ this.data.lecture.id + '/video';
         this.$.ajax_delete_video.generateRequest();
       }
-    },
-    on_duration:function(event){
-      this.duration = event.detail;
-    },
-
-    on_response: function (event) {
-      event.stopPropagation();
-      console.log(event)
-      this.title = event.detail.dataId.Job.Input.Key;
-      this.fire('upload-video', {"title" : this.title, "duration": this.duration, "url" :'http://d265dc9zzasikr.cloudfront.net/'+ this.folder + this.title + '.m3u8'});
     }
 
   });
