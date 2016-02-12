@@ -6,16 +6,25 @@
 
 <dom-module id="part-lecture-others">
   <template>
-    <style include="style-panel"></style>
     <style include="style-table"></style>
     <style include="style-basic"></style>
 
+    <style>
+   /*   .text-left{
+        background-color: #fff;
+      }*/
+      .text{
+        color:#fff;
+      }
+      .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #333;
+      }
+    </style>
+
     <api-model-find id="find" collection="courses" on-response="on_response" response="{{course}}"></api-model-find>
 
-    <div class="panel">
-      <h3>Lectures</h3>
        <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table class="table  table-hover">
           <thead>
             <tr>
             </tr>
@@ -23,14 +32,14 @@
           <tbody>
             <template id="lecture" is="dom-repeat" items="{{lectures}}" as="lecture">
               <tr class="text-left" on-click="on_click">
-                <th scope="row">Lecture {{index}}:</th>
-                <td>{{lecture.title}}</td>
+                <th scope="row" class="text">{{index}}.</th>
+                <td class="text">{{lecture.title}}</td>
+                <td class="text">{{lecture.video.duration}}</td>
               </tr>
             </template>
           </tbody>
         </table>
       </div>
-    </div>
 
   </template>
 </dom-module>
@@ -48,11 +57,15 @@
       lectures: {
         type: Array,
         value: function () { return []; }
+      },
+      now:{
+        type: Object,
+        value: function () { return {}; }
       }
     },
 
     attached:function(){
-        this.$.find.include = ['lectures'];
+        this.$.find.include = [{'lectures': ['video']}];
         this.$.find.where = {id: this.course.id}
         this.$.find.send();
     },
@@ -60,6 +73,12 @@
     on_response:function(){
       this.course = this.course[0];
       this.lectures = this.course.lectures;
+      this.lectures.forEach(function(lecture){
+        if(lecture.video.duration){
+            var time = moment(lecture.video.duration*1000)
+            lecture.video.duration = time.minutes() + 'mm:' + time.seconds() +"ss";
+          }
+      })
     },
 
     on_click: function(event){
