@@ -7,7 +7,7 @@
     <div class="panel">
       <template is="dom-if" if="{{data.video.id}}">
         <h3>Video lecture already exist</h3>
-        <deck-video src="{{data.video.url}}"></deck-video>
+        <deck-video video="{{data.video}}"></deck-video>
         <h3>Change video lecture</h3>
         <form-lecture-video data="{{data}}"></form-lecture-video>
       </template>
