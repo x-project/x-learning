@@ -28,7 +28,7 @@
           <a is="app-link" class="btn btn-link" href="/courses/{{data.course.id}}">back to course</a>
         </div>
         <div class="row">
-          <deck-video class="video col-sm-7" src="{{data.lecture.video.url}}"></deck-video>
+          <deck-video class="video col-sm-7" video="{{data.lecture.video}}"></deck-video>
           <part-lecture-others class="other_lecture col-sm-4" course="{{data.course}}"></part-lecture-others>
         </div>
       </div>
