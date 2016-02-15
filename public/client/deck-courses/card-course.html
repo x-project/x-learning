@@ -1,6 +1,7 @@
 <link rel="import" href="../../components/iron-image/iron-image.html">
 <link rel="import" href="../../styles/style-card/style-card.html">
 <link rel="import" href="../input-rating/input-rating-4.html">
+<link rel="import" href="../../components/text-view/text-view.html">
 
 <dom-module id="card-course">
   <template>
@@ -8,7 +9,7 @@
     <style>
       :host {
         display: inline-block;
-        padding: 10px 5px;
+        padding: 18px 8px;
         width: 25%;
         color: #333;
         box-sizing: border-box;
@@ -23,7 +24,7 @@
       .card-title {
         margin: 6px 0px;
         text-decoration: none;
-        font-size: 15px;
+        font-size: 18px;
         font-family: font-light;
       }
 
@@ -39,20 +40,38 @@
       }
 
       .card-rating {
+        display: none;
         margin: 6px 0px;    
-
         --rating-star : {
           font-size: 12px;
           padding: 2px;
         };
       }
 
+      .detail{
+         margin: 6px 0;
+        display: flex;
+        @apply(--layout-horizontal);
+        @apply(--layout-justified)
+      }
       .card-detail {
         margin: 6px 0;
+        font-family: font-light;
+        font-size: 14px;
       }
-
       .usd:before {
         content: "$";
+      }
+      .love:before{
+        content: "♡";
+      }
+      .love:after{
+        content: "%";
+      }
+
+      .love:hover {
+        /*content: "♥";*/
+        color: rgb(218, 47, 18);
       }
     
     </style>
@@ -65,9 +84,12 @@
         <h4 class="card-title">
           <a class="link" href="/courses/{{course.id}}">{{course.title}}</a>
         </h4>
-        <p class="card-text">{{course.description}}</p>
+        <text-view class="card-text" limit="60" text={{course.description}}></text-view>
         <input-rating-4 class="card-rating" value="{{rating}}"></input-rating-4>
-        <h4 class="card-detail"><span class="usd">{{course.cost}}</span></h2>
+        <div class="detail">
+          <span class="usd">{{course.cost}}</span>
+          <span class="love">{{rating}}</span>
+        </div>
       </div>
     </div>
 
@@ -90,7 +112,11 @@
     },
 
     attached:function(){
-      this.rating = this.course.score_review/this.course.total_review;
+      if(this.course.score_review){
+        this.rating = this.course.score_review/this.course.total_review *10;
+      }else{
+        this.rating = 0;
+      }
     },
 
     on_click:function(event){
