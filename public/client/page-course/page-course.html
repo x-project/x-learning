@@ -8,6 +8,7 @@
 <link rel="import" href="../deck-video/deck-video.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
+<link rel="import" href="../x-tabs/x-tabs-nav.html">
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../styles/style-button/style-button.html">
 <link rel="import" href="../../styles/style-navs/style-navs.html">
@@ -25,6 +26,7 @@
       padding: 30px 0;
       background-color: #f1f1f1;
       min-height: 400px;
+      margin-bottom: 50px;
     }
 
     .row{
@@ -155,34 +157,26 @@
         </div>
       </div>
       <div class="container">
-        <nav class="nav nav-tabs" on-click="on_click_nav">
-          <ul class="nav">
-            <li class="nav-item nav-link active" data-tab="overview">Overview</li>
-            <li class="nav-item nav-link active" data-tab="reviews">Reviews</li>
-            <li class="nav-item nav-link active" data-tab="others">Others</li>
-            <li class="nav-item nav-link active" data-tab="lectures">Lectures</li>
-            <li class="nav-item nav-link active" data-tab="webinars">Webinars</li>
-            <li class="nav-item nav-link active" data-tab="document">Document</li>
-          </ul>
-        </nav>
+
+        <x-tabs-nav tabs='["overview", "reviews", "others", "lectures", "webinars", "document"]' current="{{current}}"></x-tabs-nav>
 
         <x-tabs id="tabs" current="{{current}}">
-          <x-tab name="overview">
+          <x-tab tab name="overview">
             <part-course-overview course="{{data.course}}"></part-course-overview>
           </x-tab>
-          <x-tab name="lectures">
+          <x-tab tab name="lectures">
             <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
           </x-tab>
-          <x-tab name="webinars">
+          <x-tab tab name="webinars">
             <part-course-webinars course="{{data.course}}" webinars="{{data.webinars}}"></part-course-webinars>        
           </x-tab>
-          <x-tab name="document">
+          <x-tab tab name="document">
             <part-course-documents course="{{data.course}}"></part-course-documents>
           </x-tab>
-          <x-tab name="reviews">
+          <x-tab tab name="reviews">
             <part-course-reviews course="{{data.course}}"></part-course-reviews>
           </x-tab>
-          <x-tab name="others">
+          <x-tab tab name="others">
             <part-course-other-course teacher="{{data.course.teacher_id}}"></part-course-other-course>
           </x-tab>
         </x-tabs>
@@ -201,16 +195,7 @@
       data: {
         type: Object,
         value: function () { return {}; }
-      },
-      current: {
-        type: String,
-        value: 'overview'
-      },
-    },
-
-    on_click_nav: function (event) {
-      var name = event.target.dataset.tab;
-      this.set('current', name);
+      }
     },
 
     on_try_buy:function(event){

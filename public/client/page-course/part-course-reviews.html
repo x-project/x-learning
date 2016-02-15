@@ -1,19 +1,15 @@
 <link rel="import" href="../../components/api-model/api-model.html">
-<link rel="import" href="../part-reviews/part-reviews.html">
+<link rel="import" href="../deck-reviews/deck-reviews.html">
+<script src="/components/moment/moment.js"></script>
+
 <dom-module id="part-course-reviews">
   <template>
-    <style include="style-panel"></style>
 
     <api-model-find id="find_reviews" collection="reviews"
       response="{{reviews}}">
     </api-model-find>
 
-    <div class="panel">
-      <h3>Reviews</h3>
-        <part-reviews reviews="{{reviews}}" product="{{course}}"
-          on-change-discussion="on_change_discussion">
-        </part-reviews>
-    </div>
+    <deck-reviews reviews="{{reviews}}"></deck-reviews>
 
   </template>
 </dom-module>
