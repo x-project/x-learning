@@ -138,7 +138,9 @@
     },
 
     attached:function(){
-      this.member_data = this.data.member.birthday.split('T')[0];
+      console.log(this.data.member)
+      if(this.data.member.birthday)
+        this.member_data = this.data.member.birthday.split('T')[0];
 
       this.reviews = this.data.member.reviews.map(function (review, index) {
         return {
