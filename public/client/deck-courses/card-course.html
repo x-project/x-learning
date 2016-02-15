@@ -114,7 +114,7 @@
 
     attached:function(){
       if(this.course.score_review){
-        this.rating = this.course.score_review/this.course.total_review *10;
+        this.rating = parseInt(this.course.score_review/this.course.total_review *10);
       }else{
         this.rating = 0;
       }
