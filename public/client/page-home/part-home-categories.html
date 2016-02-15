@@ -4,16 +4,25 @@
 <dom-module id="part-home-categories">
   <template>
     <style>
-      .link {
-        display:block;
-        font-size: 13px;
-        color: #333;
-        font-family: font-light;
-        font-style: normal;
-        font-weight: 300;
-        letter-spacing: 0.75px;
-        text-decoration: blink;
-      }
+    :host{
+      display: block;
+    }
+    .link {
+      display: block;
+      font-size: 15px;
+      color: #333;
+      font-family: font-light;
+      font-style: normal;
+      font-weight: 300;
+      letter-spacing: 0.75px;
+      text-decoration: blink;
+      margin-bottom: 12px;
+    }
+    .category{
+      display: block;
+      margin-top: 20px;
+    }
+
     </style>
     
     <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>

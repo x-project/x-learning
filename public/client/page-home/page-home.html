@@ -12,17 +12,26 @@
   <template>
     <style include="style-grid"></style>
     <style>
+    :host{
+      display: block;
+    }
     .title {
       font-size: 13px;
-      color: #a4a4a4;
-      font-family: font-light;
+      color: #333;
+      font-family: font-bold;
       font-style: normal;
       font-weight: 300;
       text-transform: uppercase;
       letter-spacing: 0.75px;
+      margin-bottom: 5px;
+      margin-top: 26px;    
     }
     .sidebar{
       position: fixed;
+    }
+    .category{
+      display: block;
+      margin-top: 20px;
     }
 
     </style>
@@ -37,7 +46,7 @@
           <div class="col col-sm-2">
             <div class="sidebar">
               <h2 class="title">Categories</h2> 
-              <part-home-categories></part-home-categories>
+              <part-home-categories class="category"></part-home-categories>
             </div>
           </div>
           <div class="col col-sm-10">
