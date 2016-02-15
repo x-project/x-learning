@@ -1,0 +1,39 @@
+<link rel="import" href="card-review.html">
+
+<dom-module id="deck-reviews">
+  <template>
+    <style>
+      :host {
+        margin: 10px -5px;
+      }
+    </style>
+
+    <div class="row">
+      <template is="dom-repeat" items="{{reviews}}" as="review" filter="filter_rating">
+        <card-review review="{{review}}"></card-review>
+      </template>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'deck-reviews',
+
+    properties: {
+      reviews: {
+        type: Array,
+        value: function () { return []; }
+      }
+    },
+
+    filter_rating:function(review){
+      console.log(review)
+      review.date=moment(review.date).format('MMMM Do YYYY');
+      review.rating_perc=review.rating *10;
+      return review;
+    }
+
+  });
+</script>

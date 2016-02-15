@@ -1,7 +1,13 @@
 <link rel="import" href="../deck-courses/deck-courses.html">
 
 <dom-module id="part-home-courses">
-  <template>    
+  <template>  
+    <style>
+      deck-courses {
+        margin-top: -20px;
+      }
+    </style>
+
     <api-model-find id="find" collection="courses" where='{"publish": true}' include=["cover"] response="{{courses}}"></api-model-find>
 
     <deck-courses courses="{{courses}}"></deck-courses>

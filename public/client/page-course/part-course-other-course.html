@@ -3,14 +3,11 @@
 
 <dom-module id="part-course-other-course">
   <template>
-    <style include="style-panel"></style>
  
     <api-model-find id="find" collection="courses" response="{{courses}}" on-response="on_response"></api-model-find>
 
-    <div class="panel">      
-      <h2 class="title">Other course of {{teacher.fullname}}</h2>  
-      <deck-courses courses="{{courses}}"></deck-courses>
-    </div>
+    <h2 class="title">Other course of {{teacher.fullname}}</h2>  
+    <deck-courses courses="{{courses}}"></deck-courses>
     
   </template>
 </dom-module>

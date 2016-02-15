@@ -265,7 +265,7 @@
       this.get_model({
           collection: 'managers',
           modelId: context.params.profile_id,
-          include: [{'teaching': ['cover','review']}]
+          include: [{'teaching': ['cover',{'review':['member']}]}]
         })
         .then(function (model) {
           context.page = 'page-teacher';
