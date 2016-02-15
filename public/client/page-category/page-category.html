@@ -11,12 +11,18 @@
     <style>
     .title {
       font-size: 13px;
-      color: #a4a4a4;
-      font-family: font-light;
+      color: #333;
+      font-family: font-bold;
       font-style: normal;
       font-weight: 300;
       text-transform: uppercase;
       letter-spacing: 0.75px;
+      margin-bottom: 5px;
+      margin-top: 26px;    
+    }
+    .category{
+      display: block;
+      margin-top: 20px;
     }
     </style>
     <layout-client mode="waterfall-tall">
@@ -24,7 +30,7 @@
       <div class="row">  
         <div class="col-sm-2">
         <h2 class="title">Category/{{data.category.title}}</h2> 
-          <part-home-categories></part-home-categories>
+          <part-home-categories class="category"></part-home-categories>
         </div>
         <div class="col-sm-9">
             <h2 class="title">Courses</h2>
