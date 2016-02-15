@@ -1,0 +1,75 @@
+<dom-module id="part-course-overview">
+  <template>
+    <style>
+      .title {
+      font-size: 16px;
+      color: #333;
+      font-family: font-bold;
+      font-style: normal;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 0.75px;
+      margin-bottom: 5px;
+      margin-top: 26px;    
+    }
+    .description{
+      font-family: font-normal;
+      line-height: 1.5em;
+      font-weight: 400;
+      color: #494d55;
+    }
+    .sub-title{
+      font-size: 14px;
+      color: #333;
+      font-family: font-bold;
+      font-style: normal;
+      font-weight: 300;
+      letter-spacing: 0.75px;
+      margin-bottom: 5px;
+      margin-top: 26px; 
+    }
+    .items{
+      font-size: 12px;
+      color: #333;
+    }
+    </style>
+    <h2 class="title">About This Class</h2>
+    <h3 class="description">
+      {{course.description}}
+    </h3>
+      <div class="skill">
+        <h3 class="sub-title">At the end of my course, students will be able to</h3>
+          <template is="dom-repeat" items="{{course.skill}}" as="skill">
+            <li>
+              <h4 class="items"> {{skill.item}}</h4>
+            </li>  
+          </template>    
+      </div>
+      <div class="need_skill">
+        <h3 class="sub-title">What students need to know or do before you start your course ?</h3>
+          <template is="dom-repeat" items="{{course.need_skill}}" as="need_skill">
+            <li>
+              <h4 class="items">{{need_skill.item}}</h4>
+            </li>
+          </template>    
+      </div>
+      <div class="audience">
+        <h3 class="sub-title">Who is advised to follow this course, and who is not ?</h3>
+          <template is="dom-repeat" items="{{course.audience}}" as="audience">
+            <li>
+              <h4 class="items">{{audience.item}}</h4>
+            </li>
+          </template>    
+      </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-course-overview',
+
+    properties: { },
+
+  });
+</script>

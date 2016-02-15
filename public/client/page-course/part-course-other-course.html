@@ -28,7 +28,7 @@
     },
 
     attached: function(){
-      this.$.find.include = ['teacher'];
+      this.$.find.include = ['teacher','cover'];
       this.$.find.where = { and: [{"teacher_id" : this.teacher},{"publish": true}] };
       this.$.find.perpage = 4;
       this.$.find.send();

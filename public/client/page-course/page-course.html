@@ -1,4 +1,4 @@
-<link rel="import" href="part-course-aims.html">
+<link rel="import" href="part-course-overview.html">
 <link rel="import" href="part-course-documents.html">
 <link rel="import" href="part-course-header.html">
 <link rel="import" href="part-course-lectures.html">
@@ -157,9 +157,9 @@
       <div class="container">
         <nav class="nav nav-tabs" on-click="on_click_nav">
           <ul class="nav">
+            <li class="nav-item nav-link active" data-tab="overview">Overview</li>
             <li class="nav-item nav-link active" data-tab="reviews">Reviews</li>
             <li class="nav-item nav-link active" data-tab="others">Others</li>
-            <li class="nav-item nav-link active" data-tab="aims">Aims</li>
             <li class="nav-item nav-link active" data-tab="lectures">Lectures</li>
             <li class="nav-item nav-link active" data-tab="webinars">Webinars</li>
             <li class="nav-item nav-link active" data-tab="document">Document</li>
@@ -167,8 +167,8 @@
         </nav>
 
         <x-tabs id="tabs" current="{{current}}">
-          <x-tab name="aims">
-            <part-course-aims course="{{data.course}}"></part-course-aims>
+          <x-tab name="overview">
+            <part-course-overview course="{{data.course}}"></part-course-overview>
           </x-tab>
           <x-tab name="lectures">
             <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
@@ -204,7 +204,7 @@
       },
       current: {
         type: String,
-        value: 'lectures'
+        value: 'overview'
       },
     },
 
