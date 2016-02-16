@@ -11,24 +11,23 @@
     <style include="style-table"></style>
     <style include="style-basic"></style>
 
-      <h3>Lectures</h3>
-       <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <template id="lecture" is="dom-repeat" items="{{lectures}}" as="lecture">
+            <tr class="text-left" on-click="on_click">
+              <th scope="row"><i class="fa fa-play-circle"></i> Lecture {{index}}</th>
+              <td>{{lecture.title}}</td>
+              <td>{{lecture.video.duration}}</td>
             </tr>
-          </thead>
-          <tbody>
-            <template id="lecture" is="dom-repeat" items="{{lectures}}" as="lecture">
-              <tr class="text-left" on-click="on_click">
-                <th scope="row"><i class="fa fa-play-circle"></i> Lecture {{index}}</th>
-                <td>{{lecture.title}}</td>
-                <td>{{lecture.video.duration}}</td>
-              </tr>
-            </template>
-          </tbody>
-        </table>
-      </div>
+          </template>
+        </tbody>
+      </table>
+    </div>
 
   </template>
 </dom-module>

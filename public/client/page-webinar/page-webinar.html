@@ -4,7 +4,40 @@
 
 <dom-module id="page-webinar">
   <template>
+  <style include="style-grid"></style>
+
   <style>
+  .blockmain{
+    position: relative;
+    overflow: hidden;
+    padding: 30px 0;
+    background-color: #f1f1f1;
+  }
+
+
+    .row{
+      box-sizing: border-box;
+      margin: 0;
+      min-height: 400px;
+    }
+
+  .media{
+    padding: 0;
+    background-color: #333;
+    box-sizing: border-box;
+  }
+  .info {
+    
+    background-color: #fff;
+    margin: 0px 0px;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+/*  .container {
+    @apply(--layout-vertical)
+  }*/
+
+
   .information{
     padding-left:30%;
   }
@@ -16,32 +49,42 @@
     padding-top: 20px;
   }
   .start {
-    padding-left:50%;
+    display: flex;
   }
   .video{
-    padding-left: 30%;
+    position: relative;
+    width: 100%;
   }
   </style>
-      <style include="style-button"></style>
+  <style include="style-button"></style>
 
     <layout-client>
-      <div class="information">
-        <h3 class="title">Title: {{data.title}}</h3>
-        <div class="countdown">
-          <h3>Start in :</h3>
-          <part-countdown class="count" date="{{data.data}}"></part-countdown>  
+      <div class="blockmain">     
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 media">
+              <template is="dom-if" if="{{!start}}">
+              <div class="vjs-big-play-button">
+                
+              </div>
+                <button class="start btn btn-secondary" on-click="on_click">Start webinar</button>  
+              </template>
+              <template is="dom-if" if="{{start}}">
+                <deck-p2p-client class="video" data="{{data}}"></deck-p2p-client>
+              </template>
+            </div>
+            <div class="col-md-4 info">
+                <h3 class="title">Title: {{data.title}}</h3>
+                <div class="countdown">
+                  <h3>Start in :</h3>
+                  <part-countdown class="count" date="{{data.data}}"></part-countdown>  
+                </div>
+            </div>
+          </div>
         </div>
-        <template is="dom-if" if="{{!start}}">
-          <button class="start btn btn-secondary" on-click="on_click">Start webinar</button>  
-        </template>
-        
       </div>
-      <template is="dom-if" if="{{start}}">
-        <deck-p2p-client class="video" data="{{data}}"></deck-p2p-client>
-      </template>
     </layout-client>
 
-  
   </template>
 </dom-module>
 <script>

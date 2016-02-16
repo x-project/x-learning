@@ -1,4 +1,5 @@
 <link rel="import" href="../table-view/table-view.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
 <link rel="import" href="../../styles/style-navs/style-navs.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
 
@@ -24,30 +25,32 @@
     <layout-client>
       <div class="container">
         <div class="general">
-            <div class="image">
-              <iron-image preload src="{{data.member.photo}}" sizing="cover"></iron-image> 
-            </div>
-            <div class="info">
+          <div class="image">
+            <iron-image preload src="{{data.member.photo}}" sizing="cover"></iron-image> 
+          </div>
+          <div class="info">
+                <div>
                   <i class="fa fa-envelope-o"></i>
-                  <h4 class="text">{{data.member.email}}</h4>
+                  <p class="text">{{data.member.email}}</p>
                 </div>
                 <div class="item">
                   <i class="fa fa-male"></i>
-                  <h4 class="text">{{data.member.gender}}</h4>
+                  <p class="text">{{data.member.gender}}</p>
                 </div>
                 <div class="item">
                   <i class="fa fa-phone"></i>
-                  <h4 class="text">{{data.member.phone}}</h4>
+                  <p class="text">{{data.member.phone}}</p>
                 </div>
                 <div class="item">
                   <i class="fa fa-map-o"></i>
-                  <h4 class="text">{{data.member.location}}</h4>
+                  <p class="text">{{data.member.location}}</p>
                 </div>
                 <div class="item">
                   <i class="fa fa-calendar"></i>
-                  <h4 class="text">{{member_data}}</h4>
+                  <p class="text">{{member_data}}</p>
                 </div>
-            </div>
+          </div>
+        </div>
 
         <div class="details">
           <x-tabs-nav tabs='["teaching", "reviews"]' current="{{current}}"></x-tabs-nav>
@@ -56,9 +59,7 @@
               <deck-courses courses="{{data.member.learning}}"></deck-courses>
             </div>
             <div tab name="reviews">
-              <template is="dom-repeat" items="{{data.manager.teaching}}" as="course">
-                <deck-reviews reviews="{{course.review}}"></deck-reviews>
-              </template>
+                <deck-reviews reviews="{{data.member.reviews}}"></deck-reviews>
             </div>
           </x-tabs>
         </div>
@@ -84,11 +85,7 @@
       reviews:{
         type: Array,
         value: function () { return []; }
-      },
-      current: {
-        type: String,
-        value: 'lectures'
-      },
+      }
     },
 
     attached:function(){
@@ -96,26 +93,10 @@
       if(this.data.member.birthday)
         this.member_data = this.data.member.birthday.split('T')[0];
 
-      this.reviews = this.data.member.reviews.map(function (review, index) {
-        return {
-          id: review.id,
-          course: review.course.title,
-          title: review.title,
-          text: review.text,
-          rating: String(review.rating/2),
-          close: review.closed,
-        index: '#' + index
-        };
-      })
     },
 
     on_click_edit: function(){
       page('/profile/setting')
-    },
-
-    on_click_nav: function (event) {
-      var name = event.target.dataset.tab;
-      this.set('current', name);
     },
 
     on_click:function(event){

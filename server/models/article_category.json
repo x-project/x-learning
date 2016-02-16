@@ -1,0 +1,20 @@
+{
+  "name": "Article_Category",
+  "plural": "article_categories",
+  "base": "PersistedModel",
+  "mongodb": {
+    "collection": "article_categories"
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "acls": [],
+  "methods": {}
+}

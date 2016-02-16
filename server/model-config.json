@@ -30,7 +30,12 @@
     "dataSource": "mongo",
     "public": false
   },
-
+  "Article": {
+    "dataSource": "mongo"
+  },
+  "Article_Category": {
+    "dataSource": "mongo"
+  },
   "Category": {
     "dataSource": "mongo"
   },
@@ -90,5 +95,5 @@
   },
   "InvitableUser": {
     "dataSource": "mongo"
-  } 
+  }
 }

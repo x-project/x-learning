@@ -1,0 +1,34 @@
+<link rel="import" href="../input-s3/input-s3.html">
+<dom-module id="form-article-image">
+  <template>
+
+    <input-s3 collection="images" folder="{{folder}}" on-response="on_response"></input-s3>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'form-article-image',
+
+    properties: {
+      article: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached: function(event){
+      this.folder = 'articles/' + this.article.id + "/";
+    },
+
+    on_response: function(event){
+      event.stopPropagation();
+      this.article.image={};
+      this.article.image.url = event.detail.url;
+      this.article.image.title = event.detail.title;
+      this.fire('try-save')
+    }
+
+  });
+</script>

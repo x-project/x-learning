@@ -1,0 +1,83 @@
+<link rel="import" href="../../styles/style-card/style-card.html">
+<link rel="import" href="../../components/text-view/text-view.html">
+
+<dom-module id="card-article">
+  <template>
+    <!-- /*<style include="style-card"></style>*/ -->
+    <style>
+      :host {
+        display: inline-block;
+        padding: 10px 5px;
+        width: 25%;
+        color: #333;
+        box-sizing: border-box;
+      }
+      .image {
+        background-color: #eee;
+        height: 120px;
+        width: 100%;
+      }
+      .card-title {
+        margin: 6px 0px;
+        text-decoration: none;
+        font-size: 18px;
+        font-family: font-light;
+      }
+      .card-title .link {
+        color: #333;
+        text-decoration: none;
+      }
+      .card-text {
+        margin: 6px 0px;
+        font-size: 15px;
+        font-family: font-light;
+      }
+
+      .card:hover {
+        cursor: pointer;
+        opacity: .5;
+      }
+
+      .detail{
+         margin: 6px 0;
+        display: flex;
+        @apply(--layout-horizontal);
+        @apply(--layout-justified)
+      }
+
+    </style>
+
+    <div class="card" on-click="on_click_card">
+      <div class="card-header">
+       <iron-image class="image" preload src="{{article.image.url}}" sizing="cover"></iron-image>
+      </div>
+      <div class="card-block">
+        <h4 class="card-title">{{article.title}}</h4>
+        <text-view text="{{article.summary}}" limit="30"></text-view>
+        <div class="detail">
+          <span class="by">{{article.author.fullname}}</span>
+        </div>
+      </div>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'card-article',
+
+    properties: {
+      article: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_click_card: function (event) {
+      event.stopPropagation();
+      page('/articles/' + this.article.id);
+    }
+
+  });
+</script>

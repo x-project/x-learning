@@ -3,6 +3,8 @@
 <link rel="import" href="../behavior-router/behavior-router.html">
 <link rel="import" href="../page-404/page-404.html">
 <link rel="import" href="../page-about/page-about.html">
+<link rel="import" href="../page-articles/page-articles.html">
+<link rel="import" href="../page-article/page-article.html">
 <link rel="import" href="../page-category/page-category.html">
 <link rel="import" href="../page-contact/page-contact.html">
 <link rel="import" href="../page-course/page-course.html">
@@ -95,6 +97,32 @@
 
     '/about': function (context) {
       context.page = 'page-about';
+      this.open(context);
+    },
+
+    '/articles': function (context) {
+      this.init(context)
+      context.page = 'page-articles';
+      this.open(context);
+    },
+
+    '/articles/:article_id': function (context) {
+      this.init(context)
+      this.get_model({
+        collection: 'articles',
+        modelId: context.params.article_id,
+        include: ['author', 'category']
+      })
+      .then(function (model) {
+        context.page = 'page-article';
+        context.data = {};
+        context.data.article = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (err) {
+        context.page = 'page-404';
+        this.open(context);
+      });
       this.open(context);
     },
 

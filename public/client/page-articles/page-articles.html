@@ -1,0 +1,67 @@
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../../api-model-find/api-model-find.html">
+<link rel="import" href="../layout-client/layout-client.html">
+<link rel="import" href="deck-articles.html">
+<link rel="import" href="part-nav-articles.html">
+
+<dom-module id="page-articles">
+  <template>
+    <style include="style-grid"></style>
+    <style>
+     .navs{
+      padding-top: 20px;
+     }
+  
+    </style>
+
+    <api-model-find id="find" collection="articles" include='["author","category"]'
+      response="{{articles}}"></api-model-find>
+
+    <api-model-find id="find_category" collection="article_categories" response="{{categories}}"></api-model-find>
+
+    <layout-client mode="waterfall-tall">
+      <div class="container">
+        <x-tabs-nav class="navs" tabs='{{_array(categories)}}' current="{{current}}"></x-tabs-nav>
+        <div class="deck">
+          <deck-articles articles="{{articles}}"></deck-articles>
+        </div>
+      </div>
+    </layout-client>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-articles',
+
+    properties: {
+      current: {
+        type: String,
+        observer: 'on_change_category'
+      }
+    },
+
+    attached: function () {
+      this.$.find.send();
+      this.$.find_category.send();
+    },
+
+    on_change_category: function () {
+      var category = this.categories.filter(function (category) {
+        return category.name == this.current;
+      }, this)[0];
+      var category_id = category ? category.id : '';
+      this.$.find.where = { category_id: category_id };
+      this.$.find.send();
+    },
+
+    _array: function (categories) {
+      return categories.map(function (category) {
+        return category.name;
+      });
+    }
+
+  });
+</script>

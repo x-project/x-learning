@@ -1,0 +1,54 @@
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="form-article-image.html">
+
+<dom-module id="part-article-image">
+  <template>
+    <style include="style-panel"></style>
+    <style>
+      .image {
+        background-color: #eee;
+        height: 100px;
+        width: 20%;
+      }
+    </style>
+
+    <api-s3-delete id="delete_photo" url="{{url}}" on-delete-completed="on_delete_completed"></api-s3-delete>
+
+    <div class="panel">
+      <h2 class="title">[[product_images_title_label]]</h2>
+      <template is="dom-if" if="{{article.image}}">
+        <iron-image class="image" preload src="{{article.image.url}}" sizing="contain"></iron-image>
+      </template>
+      <form-article-image article="{{article}}" on-change="on_change"></form-article-image>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-article-image',
+
+    properties: {
+      product_images_title_label: {
+        type: String,
+        value: 'Images'
+      },
+      article: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    on_change:function(){
+      console.log(this.article.id)
+      // if(this.article.image){
+
+      //   this.$.ajax_delete.url='/api/courses/'+ this.course.id + '/cover';
+      //   this.$.ajax_delete.generateRequest();
+      // }
+    }
+
+  });
+</script>

@@ -1,5 +1,7 @@
 <link rel="import" href="/components/api-model/api-model.html">
 <link rel="import" href="form-feedback.html">
+<script src="/components/moment/moment.js"></script>
+
 <dom-module id="part-feedback">
   <template>
 
@@ -36,6 +38,7 @@
     on_try_save: function  (event) {
       event.stopPropagation();
       this.review.closed = true;
+      this.review.date = moment();
       
       if(!this.course.total_review)
         this.course.total_review=0;

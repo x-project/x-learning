@@ -1,0 +1,127 @@
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-form/style-form.html">
+<link rel="import" href="../../styles/style-field/style-field.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="part-category-actions.html">
+<link rel="import" href="part-category-header.html">
+<link rel="import" href="part-category-info.html">
+<dom-module id="page-category">
+  <template>
+
+    <layout-admin on-try-save="on_try_save" on-try-delete="on_try_delete">
+      <h1>Category</h1>
+      <part-category-header category="{{category}}"></part-category-header>
+      <part-category-info category="{{category}}" error="{{error}}"></part-category-info>
+      <part-category-actions></part-category-actions>
+    </layout-admin>
+
+  </template>
+</dom-module>
+
+<script src="../../scripts/fetch/fetch.js"></script>
+
+<script>
+  Polymer({
+
+    is: 'page-category',
+
+    properties: {
+      category: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached: function () {
+      this.category = this.data.category;
+    },
+
+    on_try_save: function (event) {
+      event.stopPropagation();
+      if (!this.validate_model()) {
+        return;
+      }
+      if(this.category.id){
+        this.update_category();
+        return;
+      }
+      this.create_category();
+    },
+
+    update_category: function () {
+      Model.update('/api/article_categories/' + this.category.id, this.category)
+      .then(function (data) {
+        this.category = data;
+      }.bind(this))
+      .catch(function (error) {
+        this.error = error;
+      }.bind(this));
+    },
+
+    create_category: function () {
+      Model.create('/api/article_categories', this.category)
+      .then(function (data) {
+        this.category = data;
+        this.response_create();
+      }.bind(this))
+      .catch(function (error) {
+        this.error = error;
+      }.bind(this));
+    },
+
+    delete_model: function () {
+      Model.delete('/api/article_categories/' + this.category.id)
+      .then(function (data) {
+        this.category = data;
+        this.response_delete();
+      }.bind(this))
+      .catch(function (error) {
+        this.error = error;
+      }.bind(this));
+    },
+
+    response_delete: function () {
+      page('/admin/categories');
+    },
+
+    response_create: function () {
+      page('/admin/categories/' + this.category.id);
+    },
+
+    validate_model: function () {
+      event.stopPropagation();
+      var error = this.create_custom_err();
+      var check = true;
+      check = check & this.check_field('name', error, 'can\'t be blank');
+      this.set('error', error);
+      return check;
+    },
+
+    check_field: function (property, error, message) {
+      if (this.category[property] === undefined || this.category[property].length === 0) {
+        error.details.messages[property].push(message);
+        return false;
+      }
+      return true;
+    },
+
+    create_custom_err: function () {
+      var error = {};
+      error.details = {};
+      error.details.messages = {};
+      error.details.messages.name = [];
+      return error;
+    },
+
+    on_try_delete: function (event) {
+      event.stopPropagation();
+      this.delete_model();
+    }
+
+  });
+</script>

@@ -1,0 +1,42 @@
+<link rel="import" href="../field-long-text/field-long-text.html">
+<link rel="import" href="../field-text/field-text.html">
+<dom-module id="part-article-info">
+  <template>
+    <style include="style-panel"></style>
+
+    <div class="panel">
+      <h2 class="title">[[article_info_title_label]]</h2>
+      <field-text label="title" property="title" value="{{article.title}}" error="{{error}}"></field-text>
+      <field-long-text label="Summary" property="summary" value="{{article.summary}}"
+        error="{{error}}">
+      </field-long-text>
+      <field-long-text label="Content" property="content" value="{{article.content}}"
+        error="{{error}}">
+      </field-long-text>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-article-info',
+
+    properties: {
+      article_info_title_label: {
+        type: String,
+        value: 'Basic info'
+      },
+      article: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      },
+    }
+
+  });
+</script>

@@ -1,0 +1,33 @@
+<dom-module id="part-category-info">
+  <template>
+  <style include="style-panel"></style>
+
+  <div class="panel">
+    <h2 class="title">Info</h2>
+    <field-text label="Name" property="name" value="{{category.name}}" error="{{error}}"></field-text>
+    <field-long-text label="description" property="description" value="{{category.description}}"
+      error="{{error}}">
+    </field-long-text>
+  </div>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'part-category-info',
+
+    properties: {
+      category: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>
