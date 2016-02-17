@@ -29,15 +29,15 @@
       margin-bottom: 50px;
     }
 
-    .row{
+    .row {
       box-sizing: border-box;
       margin: 0;
       min-height: 400px;
     }
 
     .title{
-      margin:0;
-      font-size: 2.5vw;
+      margin: 10px 0;
+      font-size: 24px;
       font-style: normal;
       color: #000;
       font-family: font-light;
@@ -45,14 +45,14 @@
       font-weight: 300;
       letter-spacing: 0.75px;
     }
-    .teacher{
+    .teacher {
       font-style: normal;
       font-size: 1.2vw;
       margin-top: 3px;
       padding-bottom: 21px;
     }
 
-    .teacher .name{
+    .teacher .name {
       text-decoration: none;
     }
     .info {
@@ -62,7 +62,7 @@
       padding: 0 15px;
       box-sizing: border-box;
     }
-    .media{
+    .media {
       padding: 0;
       box-sizing: border-box;
     }
@@ -80,15 +80,15 @@
     }
 
     .price {
-      margin:0;
-      font-size: 39px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 36px;
       font-weight: 600;
     }
     .btn{
       width: 160px;
       padding: 14px 0;
       border-radius: 0;
-      margin-top: 20px;
       background-color: #09f;
       border-color: #09f;
     }
@@ -111,14 +111,14 @@
 
     .number .label {
       margin: 5px 0px;
-      font-size: 18px;
+      font-size: 16px;
     }
 
-    .number .value{
+    .number .value {
       margin: 0 17px;
-      font-size: 1.6vw;
+      font-size: 16px;
       text-align: center;
-      font-weight: bold;
+      font-family: font-bold;
     }
 
     .nav {
@@ -173,11 +173,12 @@
       </div>
       <div class="container">
 
-        <x-tabs-nav tabs='["overview", "reviews", "others", "lectures", "webinars", "document"]' current="{{current}}"></x-tabs-nav>
+        <x-tabs-nav tabs='["overview", "reviews", "lectures", "webinars", "document"]' current="{{current}}"></x-tabs-nav>
 
         <x-tabs id="tabs" current="{{current}}">
           <x-tab tab name="overview">
             <part-course-overview course="{{data.course}}"></part-course-overview>
+            <part-course-other-course teacher="{{data.course.teacher_id}}"></part-course-other-course>
           </x-tab>
           <x-tab tab name="lectures">
             <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
@@ -190,9 +191,6 @@
           </x-tab>
           <x-tab tab name="reviews">
             <part-course-reviews course="{{data.course}}"></part-course-reviews>
-          </x-tab>
-          <x-tab tab name="others">
-            <part-course-other-course teacher="{{data.course.teacher_id}}"></part-course-other-course>
           </x-tab>
         </x-tabs>
       </div>

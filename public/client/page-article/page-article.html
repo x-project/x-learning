@@ -8,20 +8,26 @@
       padding: 0 200px;
     }
     .image {
-        background-color: #eee;
-        height: 200px;
-        width: 100%;
+      background-color: #eee;
+      height: 200px;
+      width: 100%;
+    }
+    .summary,
+    .content {
+      line-height: 28px;
+    }
+    .published {
+      font-size: 14px;
     }
     </style>
+
     <layout-client>
       <div class="container">
-        <div class="">
-          <iron-image class="image" preload src="{{data.article.image.url}}" sizing="cover"></iron-image>
-        </div>
+        <iron-image class="image" preload src="{{data.article.image.url}}" sizing="cover"></iron-image>
         <div class="detail">
           <h1>{{data.article.title}}</h1>
-          <h3>{{data.article.summary}}</h3>
-          <p>{{data.article.content}}</p>
+          <h3 class="summary">{{data.article.summary}}</h3>
+          <div class="content">{{data.article.content}}</div>
           <h5 class="published">
             <span>published</span>
             <part-date date="{{data.article.published_at}}"></part-date>
@@ -34,17 +40,11 @@
 
 	</template>
 </dom-module>
+
 <script>
 	Polymer({
 
-		is: 'page-article',
-
-    properties: {
-      article: {
-        type: Object,
-        value: function () { return {}; }
-      }
-    }
+		is: 'page-article'
 
 	});
 </script>

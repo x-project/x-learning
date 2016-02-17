@@ -3,7 +3,20 @@
 
 <dom-module id="part-course-other-course">
   <template>
- 
+    <style>
+      .title {
+        font-size: 16px;
+        color: #333;
+        font-family: font-bold;
+        font-style: normal;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.75px;
+        margin-bottom: 5px;
+        margin-top: 26px;    
+      }
+    </style>
+   
     <api-model-find id="find" collection="courses" response="{{courses}}" on-response="on_response"></api-model-find>
 
     <h2 class="title">Other course of {{teacher.fullname}}</h2>  

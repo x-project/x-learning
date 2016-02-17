@@ -1,88 +1,100 @@
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../deck-p2p-client/deck-p2p-client.html">
 <link rel="import" href="../part-jumbotron/part-jumbotron.html">
 <link rel="import" href="../style-page/style-page.html">
 
 <dom-module id="page-webinar">
   <template>
-  <style include="style-grid"></style>
+    <style include="style-grid"></style>
+    <style include="style-button"></style>
+    <style>
+      .blockmain{
+        position: relative;
+        overflow: hidden;
+        padding: 30px 0;
+        background-color: #f1f1f1;
+      }
 
-  <style>
-  .blockmain{
-    position: relative;
-    overflow: hidden;
-    padding: 30px 0;
-    background-color: #f1f1f1;
-  }
+      .start {
+        @apply(--layout);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+        color: white;
+        height: 400px;
+      }
+      .start .button:before {
+        content: '▶';
+        font-size: 36px;
+      }
+      .start .button:hover {
+        cursor: pointer;
+        color: gold;
+      }
 
+      .row {
+        margin: 0;
+        height: 400px;
+      }
 
-    .row{
-      box-sizing: border-box;
-      margin: 0;
-      min-height: 400px;
-    }
+      .media {
+        background-color: #333;
+        padding: 0;
+      }
 
-  .media{
-    padding: 0;
-    background-color: #333;
-    box-sizing: border-box;
-  }
-  .info {
-    
-    background-color: #fff;
-    margin: 0px 0px;
-    padding: 0 15px;
-    box-sizing: border-box;
-  }
-/*  .container {
-    @apply(--layout-vertical)
-  }*/
+      .info {
+        background-color: #fff;
+      }
 
+      .video{
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
 
-  .information{
-    padding-left:30%;
-  }
-  .countdown{
-    display:flex;
-  }
-  .countdown .count {
-    padding-left:20px;
-    padding-top: 20px;
-  }
-  .start {
-    display: flex;
-  }
-  .video{
-    position: relative;
-    width: 100%;
-  }
-  </style>
-  <style include="style-button"></style>
+      [tabs] {
+        margin-top: 20px;
+      }
+    </style>
 
     <layout-client>
       <div class="blockmain">     
         <div class="container">
+
           <div class="row">
-            <div class="col-md-8 media">
+            <div class="col col-md-8 media">
               <template is="dom-if" if="{{!start}}">
-              <div class="vjs-big-play-button">
-                
-              </div>
-                <button class="start btn btn-secondary" on-click="on_click">Start webinar</button>  
+                <div class="start">
+                  <div class="button" on-click="on_click"></div>  
+                </div>
               </template>
               <template is="dom-if" if="{{start}}">
                 <deck-p2p-client class="video" data="{{data}}"></deck-p2p-client>
               </template>
             </div>
-            <div class="col-md-4 info">
-                <h3 class="title">Title: {{data.title}}</h3>
-                <div class="countdown">
-                  <h3>Start in :</h3>
-                  <part-countdown class="count" date="{{data.data}}"></part-countdown>  
-                </div>
+            <div class="col col-md-4 info">
+              <h3 class="title">{{data.title}}</h3>
+              <div class="countdown">
+                <span>Start in </span>
+                <part-countdown class="count" date="{{data.data}}"></part-countdown>  
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="container">
+        <x-tabs-nav tabs='["overview", "chat"]' current="{{current}}"></x-tabs-nav>
+        <x-tabs id="tabs" current="{{current}}">
+          <x-tab tab name="overview">
+            <h2>Description</h2>
+            <div>{{data.description}}</div>
+          </x-tab>
+          <x-tab tab name="chat">
+            <h2>TODO</h2>
+          </x-tab>
+        </x-tabs>
+      </div>
+
     </layout-client>
 
   </template>
