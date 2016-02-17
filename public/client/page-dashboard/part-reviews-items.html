@@ -1,0 +1,63 @@
+<link rel="import" href="../../components/app-link/app-link.html">
+<link rel="import" href="table-reviews.html">
+<dom-module id="part-reviews-items">
+  <template>
+    <style>
+      .review {
+        margin-top: 20px;
+      }
+    </style>
+
+    <api-model-find id="find" collection="reviews" response="{{reviews}}"
+       on-response="on_response" on-error="on_error">
+    </api-model-find>
+
+    <table-reviews reviews="{{reviews}}"><table-reviews>
+
+  </template>
+</dom-module>
+
+<script src="../../scripts/fetch/fetch.js"></script>
+
+<script>
+  Polymer({
+
+    is: 'part-reviews-items',
+
+    properties: {
+      reviews: {
+        type: Array,
+        value: function () { return []; }
+      },
+      session: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached: function  () {
+      if(Object.keys(this.session.user).length > 0) {
+        this.get_reviews();
+      }
+    },
+
+    get_reviews: function () {
+      Model.find('/api/reviews', this.get_filter_options())
+        .then(function (data) {
+          this.reviews = data;
+        }.bind(this))
+        .catch(function (error) {
+          console.log(error);
+        }.bind(this));
+    },
+
+    get_filter_options: function () {
+      return {
+        where: {member_id: this.session.id},
+        include: ["member","course"],
+        order: ['rating',]
+      };
+    }
+
+  });
+</script>

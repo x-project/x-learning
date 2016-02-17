@@ -2,20 +2,14 @@
 <link rel="import" href="part-feedback.html">
 <dom-module id="page-review">
   <template>
-    <style include="style-page"></style>
+    <style include="style-grid"></style>
     <style>
-      :host {
-        display: block;
-      }
-    .container:{
-      position: relative;
-      margin-left:30%;
-    }
+
     </style>
-    <layout-client>      
+    <layout-client mode="waterfall-tall">      
       <div class="container">
-      <h1 class="title">Review <span>{{data.review.course.title}}</span></h1>
-      <a is="app-link" href="/dashboard">Back to reviews</a>
+        <h1 class="title">Review <span>{{data.review.course.title}}</span></h1>
+        <a is="app-link" href="/dashboard">Back to reviews</a>
 
         <part-feedback review="{{data.review}}" course="{{data.review.course}}"></part-feedback>
       </div>

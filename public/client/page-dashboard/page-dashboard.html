@@ -1,7 +1,7 @@
-<link rel="import" href="../table-view/table-view.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
 <link rel="import" href="../../styles/style-navs/style-navs.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
+<link rel="import" href="part-reviews-items.html">
 
 <dom-module id="page-dashboard">
   <template>
@@ -14,11 +14,14 @@
       }
       .general .image iron-image {
         width: 150px;
-        height: 150px;
+        height: 200px;
       }
       .general .info {
         flex: 1;
         padding-left: 20px;
+      }
+      .general .info .text {
+            margin: 10px 20px;
       }
     </style>
 
@@ -29,37 +32,42 @@
             <iron-image preload src="{{data.member.photo}}" sizing="cover"></iron-image> 
           </div>
           <div class="info">
-                <div>
-                  <i class="fa fa-envelope-o"></i>
-                  <p class="text">{{data.member.email}}</p>
-                </div>
-                <div class="item">
-                  <i class="fa fa-male"></i>
-                  <p class="text">{{data.member.gender}}</p>
-                </div>
-                <div class="item">
-                  <i class="fa fa-phone"></i>
-                  <p class="text">{{data.member.phone}}</p>
-                </div>
-                <div class="item">
-                  <i class="fa fa-map-o"></i>
-                  <p class="text">{{data.member.location}}</p>
-                </div>
-                <div class="item">
-                  <i class="fa fa-calendar"></i>
-                  <p class="text">{{member_data}}</p>
-                </div>
+            <div>
+              <i class="fa fa-envelope-o"></i>
+              <h2 class="text">{{data.member.name}} {{data.member.last_name}}</h2>
+            </div>
+            <div>
+              <i class="fa fa-envelope-o"></i>
+              <p class="text">{{data.member.email}}</p>
+            </div>
+            <div class="item">
+              <i class="fa fa-male"></i>
+              <p class="text">{{data.member.gender}}</p>
+            </div>
+            <div class="item">
+              <i class="fa fa-phone"></i>
+              <p class="text">{{data.member.phone}}</p>
+            </div>
+            <div class="item">
+              <i class="fa fa-map-o"></i>
+              <p class="text">{{data.member.location}}</p>
+            </div>
+            <div class="item">
+              <i class="fa fa-calendar"></i>
+              <p class="text">{{member_data}}</p>
+            </div>
           </div>
         </div>
 
         <div class="details">
-          <x-tabs-nav tabs='["teaching", "reviews"]' current="{{current}}"></x-tabs-nav>
+          <x-tabs-nav tabs='["learning", "reviews"]' current="{{current}}"></x-tabs-nav>
           <x-tabs id="tabs" current="{{current}}">
-            <div tab name="teaching">
+            <div tab name="learning">
               <deck-courses courses="{{data.member.learning}}"></deck-courses>
             </div>
             <div tab name="reviews">
-                <deck-reviews reviews="{{data.member.reviews}}"></deck-reviews>
+              <part-reviews-items session="{{session}}"></part-reviews-items>
+              <!--   <deck-reviews reviews="{{data.member.reviews}}"></deck-reviews> -->
             </div>
           </x-tabs>
         </div>
