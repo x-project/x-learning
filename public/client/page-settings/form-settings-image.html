@@ -1,8 +1,30 @@
+<link rel="import" href="../../components/iron-image/iron-image.html">
 <link rel="import" href="../input-s3/input-s3.html">
+<link rel="import" href="../input-s3/api-s3-delete.html">
+
 <dom-module id="form-settings-image">
   <template>
+    <style>
+      :host {
+        display: inline-block;
+        padding: 5px;
+      }
 
-    <input-s3 collection="images" folder="{{folder}}"></input-s3>
+      .image {
+        background-color: #eee;
+        height: 100px;
+        width: 50%;
+      }
+    </style>
+    <api-s3-delete id="delete_photo" on-delete-completed="on_delete_completed"></api-s3-delete>
+
+    <api-model-update id="update" collection="members" model-id="{{user.id}}"
+      data="{{user}}" response="{{response}}" error="{{error}}">
+    </api-model-update>
+
+    <iron-image class="image" preload src="{{user.photo}}" sizing="contain"></iron-image>
+    
+    <input-s3 collection="images" folder="profile_image/" on-response="on_response"></input-s3>
 
   </template>
 </dom-module>
@@ -12,17 +34,31 @@
     is: 'form-settings-image',
 
     properties: {
-      member: {
-        type: Object,
-        value: function () { return {}; }
+      user: {
+        type: Object
       },
-      folder: {
+      photo_name:{
         type: String
       }
     },
 
-    attached: function(event){
-      this.folder = 'profile_image/';
+    attached:function(){
+      this.photo_name = this.user.photo.split('/').pop();
+    },
+
+    on_response: function(event){
+      if( this.user.photo != event.detail.url){
+        this.user.photo = event.detail.url;
+        file_name = 'profile_image/' + this.photo_name;
+        this.$.delete_photo.delete_file(file_name);
+      }else{
+        page('/profile/setting');
+      }
+    },
+
+    on_delete_completed : function(event){
+      this.$.update.send();
+      page('/profile/setting')
     }
 
   });

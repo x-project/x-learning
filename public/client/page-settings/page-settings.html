@@ -1,13 +1,11 @@
 <link rel="import" href="../layout-client/layout-client.html">
-<link rel="import" href="../style-page/style-page.html">
-<link rel="import" href="panel-settings-email.html">
-<link rel="import" href="panel-settings-profile.html">
-<link rel="import" href="panel-settings-password.html">
-<link rel="import" href="panel-settings-image.html">
+<link rel="import" href="form-settings-email.html">
+<link rel="import" href="form-settings-profile.html">
+<link rel="import" href="form-settings-password.html">
+<link rel="import" href="form-settings-image.html">
 
 <dom-module id="page-settings">
   <template>
-    <style include="style-page"></style>
     <style include="style-grid"></style>
     <style include="style-button"></style>
     <style>
@@ -20,33 +18,16 @@
     </style>
 
     <layout-client>
-     <div class="row">
-        <div class="col-sm-3 col-sm-push-1">
-          <div on-click="on_click_nav">
-            <nav on-click="on_click_nav">
-              <ul>
-                <li class="nav-link" data-tab="profile">Profile</li>
-                <li class="nav-link" data-tab="photo">Photo</li>
-                <li class="nav-link" data-tab="account">Account</li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-        <div class="col-sm-8">
-          <x-tabs id="tabs" current="{{current}}">
-            <x-tab name="profile">
-              <panel-settings-profile user="{{data.user}}" ></panel-settings-profile>
-            </x-tab>
-            <x-tab name="photo">
-              <panel-settings-image user="{{data.user}}"></panel-settings-image>
-            </x-tab>
-            <x-tab name="account">
-              <panel-settings-email user="{{data.user}}"></panel-settings-email>
-              <panel-settings-password user="{{data.user}}"></panel-settings-password>
-            </x-tab>
-          </x-tabs>
-        </div>
-        
+      <div class="container">
+        <form-settings-image user="{{data.user}}"></form-settings-image>
+
+        <form-settings-profile user="{{data.user}}" ></form-settings-profile>
+
+        <h3 class="title">Change email</h3>
+        <form-settings-email user="{{data.user}}"></form-settings-email>
+
+        <h3 class="title">Change password</h3>
+        <form-settings-password user="{{data.user}}"></form-settings-password>
       </div>
     </layout-client>
 
@@ -56,22 +37,6 @@
   Polymer({
 
     is: 'page-settings',
-
-    properties: {
-      data: {
-        type: Object,
-        value: function () { return {}; }
-      },
-      current: {
-        type: String,
-        value: 'profile'
-      }
-    },
-
-    on_click_nav: function (event) {
-      var name = event.target.dataset.tab;
-      this.set('current', name);
-    }
     
   });
 </script>

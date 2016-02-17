@@ -283,6 +283,27 @@
           this.redirect('/404');
         }.bind(this));
     },
+    
+    '/profile/setting': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
+      this.get_model({
+          collection: 'members',
+          modelId: this.session.get('user').id,
+        })
+        .then(function (model) {
+          context.page = 'page-settings';
+          context.data = {};
+          context.data.user = model;
+          this.open(context);
+        }.bind(this))
+        .catch(function (error) {
+          this.redirect('/404');
+        }.bind(this));
+    },
 
     '/profile/:profile_id': function (context) {
       this.init(context);
@@ -305,29 +326,6 @@
           this.redirect('/404');
         }.bind(this));
     },
-
-    '/profile/setting': function (context) {
-      this.init(context);
-      if (!this.auth(context)) {
-        page('/login');
-        return;
-      }
-      this.get_model({
-          collection: 'members',
-          modelId: this.session.get('user').id,
-        })
-        .then(function (model) {
-          context.page = 'page-settings';
-          context.data = {};
-          context.data.user = model;
-          this.open(context);
-        }.bind(this))
-        .catch(function (error) {
-          this.redirect('/404');
-        }.bind(this));
-    },
-
-
 
     '/login': function (context) {
       context.page = 'page-login';

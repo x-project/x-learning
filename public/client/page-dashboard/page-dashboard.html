@@ -5,7 +5,7 @@
 
 <dom-module id="page-dashboard">
   <template>
-     <style include="style-grid"></style>
+    <style include="style-grid"></style>
     <style include="style-navs"></style>
     <style>
       .general {
@@ -21,7 +21,8 @@
         padding-left: 20px;
       }
       .general .info .text {
-            margin: 10px 20px;
+        margin: 10px 20px;
+        display: inline-block;
       }
     </style>
 
@@ -33,7 +34,7 @@
           </div>
           <div class="info">
             <div>
-              <i class="fa fa-envelope-o"></i>
+              <i class="fa fa-pencil" on-click="on_click_edit"></i>
               <h2 class="text">{{data.member.name}} {{data.member.last_name}}</h2>
             </div>
             <div>
@@ -67,7 +68,6 @@
             </div>
             <div tab name="reviews">
               <part-reviews-items session="{{session}}"></part-reviews-items>
-              <!--   <deck-reviews reviews="{{data.member.reviews}}"></deck-reviews> -->
             </div>
           </x-tabs>
         </div>
@@ -97,7 +97,6 @@
     },
 
     attached:function(){
-      console.log(this.data.member)
       if(this.data.member.birthday)
         this.member_data = this.data.member.birthday.split('T')[0];
 
@@ -106,11 +105,6 @@
     on_click_edit: function(){
       page('/profile/setting')
     },
-
-    on_click:function(event){
-      if(!event.detail.close)
-        page('/review/' + event.detail.id);
-    }
 
   });
 </script>
