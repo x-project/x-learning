@@ -25,10 +25,10 @@
       "type": "Boolean"
     },
     "total_review": {
-      "type": "String"
+      "type": "Number"
     },
     "score_review": {
-      "type": "String"
+      "type": "Number"
     }
   },
   "relations": {

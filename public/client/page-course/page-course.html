@@ -46,7 +46,14 @@
       letter-spacing: 0.75px;
     }
     .teacher{
+      font-style: normal;
+      font-size: 1.2vw;
       margin-top: 3px;
+      padding-bottom: 21px;
+    }
+
+    .teacher .name{
+      text-decoration: none;
     }
     .info {
       @apply(--layout-vertical);
@@ -81,6 +88,9 @@
       width: 160px;
       padding: 14px 0;
       border-radius: 0;
+      margin-top: 20px;
+      background-color: #09f;
+      border-color: #09f;
     }
 
     .space{
@@ -101,10 +111,14 @@
 
     .number .label {
       margin: 5px 0px;
+      font-size: 18px;
     }
 
     .number .value{
       margin: 0 17px;
+      font-size: 1.6vw;
+      text-align: center;
+      font-weight: bold;
     }
 
     .nav {
@@ -130,26 +144,27 @@
             </div>
             <div class="col-md-4 info">
               <h2 class="title">{{data.course.title}}</h2>
-              <h4 class="teacher">Teacher <a href="/profile/{{data.course.teacher.id}}">{{data.course.teacher.fullname}}</a> </h4>
+              <div class="teacher">by <a class="name" href="/profile/{{data.course.teacher.id}}">{{data.course.teacher.fullname}}</a> 
+              </div>
               <div >
                 <h4 class="price">$ {{data.course.cost}}</h4> 
                 <button class="btn btn-primary" on-click="on_try_buy">BUY</button>
               </div>
+
               <div class="space">
               </div>
-
               <div class="numbers">
                 <div class="number">
                   <div class="value">{{data.course.language}}</div>
-                  <h4 class="label">Language</h4>
+                  <div class="label">Language</div>
                 </div>
                 <div class="number">
                   <div class="value">{{data.course.students.length}}</div>
-                  <h4 class="label">Students</h4>
+                  <div class="label">Students</div>
                 </div>
                 <div class="number">
                   <div class="value">{{data.course.lectures.length}}</div>
-                  <h4 class="label">Lectures</h4>
+                  <div class="label">Lectures</div>
                 </div> 
               </div>
             </div>
