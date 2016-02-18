@@ -8,7 +8,6 @@
 <link rel="import" href="../../styles/style-form/style-form.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
 
-<link rel="import" href="list-course-webinars.html">
 <link rel="import" href="part-course-actions.html">
 <link rel="import" href="part-course-header.html">
 <link rel="import" href="part-course-info.html">
@@ -17,6 +16,7 @@
 <link rel="import" href="part-course-lectures.html">
 <link rel="import" href="part-course-webinars.html">
 <link rel="import" href="part-course-document.html">
+<link rel="import" href="../x-tabs/x-tabs-nav.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
 
 <dom-module id="page-course">
@@ -42,47 +42,22 @@
     <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response_delete"></iron-ajax>
       
     <layout-admin>
-    <div class="row">
-      <div class="col-sm-3 ">
-        <nav on-click="on_click_nav">
-          <ul>
-            <li class="nav-link" data-tab="info">Info</li>
-            <li class="nav-link" data-tab="image">Image</li>
-            <li class="nav-link" data-tab="aims">Aims</li>
-            <li class="nav-link" data-tab="lectures">Lectures</li>
-            <li class="nav-link" data-tab="webinars">Webinars</li>
-            <li class="nav-link" data-tab="document">Document</li>
-          </ul>
-        </nav>
-      </div>     
-      <div class="col-sm-8" on-try-save="on_try_save" on-try-publish="on_try_publish"
-        on-try-preview="on_try_preview" on-try-delete="on_try_delete" on-try-delete-lecture="on_try_delete_lecture" on-try-delete-webinar="on_try_delete_webinar">
-          <h1>Course</h1>
+      <div class="row">
+        <div class="col col-sm-5">
           <part-course-header course="{{course}}"></part-course-header>
           <part-course-actions course="{{course}}"></part-course-actions>
-
-          <x-tabs id="tabs" current="{{current}}">
-            <x-tab name="info">
-              <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
-            </x-tab>
-            <x-tab name="image">
-              <part-course-image course="{{course}}"></part-course-image>
-            </x-tab>
-            <x-tab name="aims">
-              <part-course-aims course="{{course}}"></part-course-aims>
-            </x-tab>
-            <x-tab name="lectures">
-              <part-course-lectures course="{{course}}"></part-course-lectures>
-            </x-tab>
-            <x-tab name="webinars">
-              <part-course-webinars course="{{course}}"></part-course-webinars>
-            </x-tab>
-            <x-tab name="document">
-              <part-course-document course="{{course}}"></part-course-document>
-            </x-tab>
-          </x-tabs>
-          
+          <part-course-image course="{{course}}"></part-course-image>
+          <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
+        </div>
+        <div class="col col-sm-3">
+          <part-course-lectures course="{{course}}"></part-course-lectures>
+          <part-course-webinars course="{{course}}"></part-course-webinars>
+          <part-course-document course="{{course}}"></part-course-document>
+          <part-course-aims course="{{course}}"></part-course-aims>
+        </div>
       </div>
+      <div class="col-sm-8" on-try-save="on_try_save" on-try-publish="on_try_publish"
+        on-try-preview="on_try_preview" on-try-delete="on_try_delete" on-try-delete-lecture="on_try_delete_lecture" on-try-delete-webinar="on_try_delete_webinar">
       </div>
     </layout-admin>
     </div>
@@ -98,10 +73,6 @@
       data: {
         type: Object,
         value: function () { return {}; }
-      },
-      current: {
-        type: String,
-        value: 'info'
       },
       aims: {
         type: Object,
