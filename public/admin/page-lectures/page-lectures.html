@@ -1,0 +1,57 @@
+<link rel="import" href="../table-view/table-view.html">
+
+<dom-module id="page-lectures">
+  <template>
+    <style include="style-panel"></style>
+    <layout-admin>
+      <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response_delete"></iron-ajax>
+      <div class="panel">
+        <a is="app-link" href="/admin/courses/{{course.id}}/lecture/new">add lecture</a>
+        <table-view items="{{lectures}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
+        </table-view>
+      </div>
+    </layout-admin>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-lectures',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached:function(){
+      console.log(this.data)
+      this.lectures = this.course.lectures.map(function (lecture, index) {
+        return {
+          id: lecture.id,
+          title: lecture.title,
+          description: lecture.description,
+        index: '#' + index
+        };
+      })
+    },
+
+    on_click_delete:function(event){
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/lectures/'+ event.detail.id;
+      this.$.ajax_delete.generateRequest();
+    },
+
+    on_response_delete:function(){
+      page('/admin/courses/'+ this.course.id + '/lectures');
+    },
+
+    on_click: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+      page('/admin/courses/'+ this.course.id + '/lecture/' + event.detail.id);
+    }
+
+  });
+</script>

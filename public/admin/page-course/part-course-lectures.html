@@ -1,14 +1,10 @@
-<link rel="import" href="../table-view/table-view.html">
-
 <dom-module id="part-course-lectures">
   <template>
     <style include="style-panel"></style>
 
     <div class="panel">
-      <a is="app-link" href="/admin/courses/{{course.id}}/lectures/new">ADD LECTURE</a>
-      
-      <table-view items="{{lectures}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
-      </table-view>
+      <a is="app-link" href="/admin/courses/{{course.id}}/lectures">manage lecture</a>
+      <a is="app-link" href="/admin/courses/{{course.id}}/lecture/new">add lecture</a>
     </div>
 
   </template>
@@ -17,39 +13,6 @@
   Polymer({
 
     is: 'part-course-lectures',
-
-    properties: {
-      course: {
-        type: Object,
-        value: function () { return {}; }
-      }
-    },
-
-    attached:function(){
-      this.lectures = this.course.lectures.map(function (lecture, index) {
-        return {
-          id: lecture.id,
-          title: lecture.title,
-          description: lecture.description,
-        index: '#' + index
-        };
-      })
-    },
-
-    on_click_delete:function(event){
-      this.fire('try-delete-lecture',event.detail)
-    },
-
-    on_submit: function (event) {
-      event.stopPropagation();
-      event.preventDefault();
-    },
-
-    on_click: function (event) {
-      event.stopPropagation();
-      event.preventDefault();
-      page('/admin/courses/'+ this.course.id + '/lectures/' + event.detail.id);
-    }
 
   });
 </script>

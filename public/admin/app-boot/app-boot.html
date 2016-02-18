@@ -8,6 +8,7 @@
 <link rel="import" href="../page-category/page-category.html">
 <link rel="import" href="../page-course/page-course.html">
 <link rel="import" href="../page-courses/page-courses.html">
+<link rel="import" href="../page-documents/page-documents.html">
 <link rel="import" href="../page-lecture/page-lecture.html">
 <link rel="import" href="../page-lectures/page-lectures.html">
 <link rel="import" href="../page-settings/page-settings.html">
@@ -311,6 +312,28 @@
       }.bind(this));
     },
 
+    '/admin/courses/:course_id/documents': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'courses',
+        modelId: context.params.course_id,
+        include: ['documents']
+      })
+      .then(function (model) {
+        context.page = 'page-documents';
+        context.course = {};
+        context.course = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
+    },
+
     '/admin/courses/:course_id/preview': function (context) {
       this.init(context);
       if (!this.auth(context)) {
@@ -339,11 +362,23 @@
         page('/admin/login');
         return;
       }
-      context.page = 'page-lectures';
-      this.open(context);
+      this.get_model({
+        collection: 'courses',
+        modelId: context.params.course_id,
+        include: ['lectures']
+      })
+      .then(function (model) {
+        context.page = 'page-lectures';
+        context.course = {};
+        context.course = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
     },
 
-    '/admin/courses/:course_id/lectures/new': function (context) {
+    '/admin/courses/:course_id/lecture/new': function (context) {
       this.init(context);
       if (!this.auth(context)) {
         page('/admin/login');
@@ -365,7 +400,7 @@
       }.bind(this));
     },
 
-    '/admin/courses/:course_id/lectures/:lecture_id': function (context) {
+    '/admin/courses/:course_id/lecture/:lecture_id': function (context) {
       this.init(context);
       if (!this.auth(context)) {
         page('/admin/login');
@@ -402,6 +437,28 @@
         context.page = 'page-webinar';
         context.data = { webinar: {} };
         context.data.course = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        this.redirect('/404');
+      }.bind(this));
+    },
+
+    '/admin/courses/:course_id/webinars': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.get_model({
+        collection: 'courses',
+        modelId: context.params.course_id,
+        include: ['webinars']
+      })
+      .then(function (model) {
+        context.page = 'page-webinars';
+        context.course = {};
+        context.course = model;
         this.open(context);
       }.bind(this))
       .catch(function (error) {

@@ -26,7 +26,7 @@
 
     <layout-admin on-try-save="on_try_save" on-try-delete-lecture='on_try_delete_lecture'>
         <h1>Edit course: {{data.course.title}} lecture: {{data.lecture.title}}</h1>
-        <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/">back</a>
+        <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/lectures">back</a>
         <part-lecture-actions></part-lecture-actions>
         <part-lecture-info lecture="{{data.lecture}}"></part-lecture-info>
         <part-lecture-video data="{{data}}" on-upload-video="on_upload_video"></part-lecture-video>
@@ -58,7 +58,7 @@
         this.$.ajax_put.url='/api/courses/'+ this.data.course.id +'/lectures';
         this.$.ajax_put.generateRequest();
       }
-      page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
+      page('/admin/courses/'+ this.data.course.id +'/lecture/' + this.data.lecture.id)
     },
 
     on_try_delete_lecture: function (event) {
@@ -78,11 +78,11 @@
     },
 
     on_response_create: function(event){
-      page('/admin/courses/'+ this.data.course.id +'/lectures/' + this.data.lecture.id)
+      page('/admin/courses/'+ this.data.course.id +'/lecture/' + this.data.lecture.id)
     },
 
     on_response_delete: function(event){
-      page('/admin/courses/'+ this.data.course.id);
+      page('/admin/courses/'+ this.data.course.id + '/lectures');
     },
 
   });
