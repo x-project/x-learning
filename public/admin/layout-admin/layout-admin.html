@@ -5,18 +5,19 @@
   <template>
   <style include="style-grid"></style>
     <style>
-      .page {
-        min-height: 100vh;
+      .sidebar {
+        background-color: #333;
+      }
+      .row{
+        min-height: 100vh
       }
     </style>
 
     <div class="page">
-      <div class="container">
-        <div class="row">
-          <part-sidebar class="sidebar col col-sm-3"></part-sidebar>
-          <div class="main col col-sm-8">
-            <content></content>
-          </div>
+      <div class="row">
+        <part-sidebar class="sidebar col col-sm-2"></part-sidebar>
+        <div class="main col col-sm-10">
+          <content></content>
         </div>
       </div>
     </div>
