@@ -11,19 +11,19 @@
     <style include="style-form"></style>
     <style include="style-panel"></style>
     <div class="panel">
-    <form id="form" class="form" on-submit="on_submit">
-      <div class="field">
-        <label class="label">Title</label>
-        <input class="form-control" id="title" type="text" is="iron-input" bind-value="{{lecture.title}}">
-        <input-errors property="title" error="{{error.details}}"></input-errors>
-      </div>
-      <div class="field">
-        <label class="label">Description</label>
-          <iron-autogrow-textarea class="form-control" is="iron-input" bind-value="{{lecture.description}}" rows="4">
-          </iron-autogrow-textarea>
-        <input-errors property="description" error="{{error.details}}"></input-errors>
-      </div>
-    </form>
+      <form id="form" class="form" on-submit="on_submit">
+        <div class="field">
+          <label class="label">Title</label>
+          <input class="form-control" id="title" type="text" is="iron-input" bind-value="{{lecture.title}}">
+          <input-errors property="title" error="{{error.details}}"></input-errors>
+        </div>
+        <div class="field">
+          <label class="label">Description</label>
+            <iron-autogrow-textarea class="form-control" is="iron-input" bind-value="{{lecture.description}}" rows="4">
+            </iron-autogrow-textarea>
+          <input-errors property="description" error="{{error.details}}"></input-errors>
+        </div>
+      </form>
     </div>
   </template>
 </dom-module>

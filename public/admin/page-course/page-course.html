@@ -40,19 +40,19 @@
           
         <div class="row">
           <part-course-header course="{{course}}"></part-course-header>
+          <part-course-actions course="{{course}}"></part-course-actions>
         </div>  
         <div class="row">
           <div class="col col-sm-6">
-            <part-course-actions course="{{course}}"></part-course-actions>
             <part-course-image course="{{course}}"></part-course-image>
             <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
           </div>
           
           <div class="col col-sm-6">
-            <part-course-aims course="{{course}}"></part-course-aims>
             <part-course-lectures course="{{course}}"></part-course-lectures>
             <part-course-webinars course="{{course}}"></part-course-webinars>
             <part-course-document course="{{course}}"></part-course-document>
+            <part-course-aims course="{{course}}"></part-course-aims>
           </div>
         
         </div>
@@ -125,18 +125,6 @@
       this.$.ajax_delete.generateRequest();
       page('/admin/')
     },
-
-    // on_try_delete_lecture: function (event) {
-    //   event.stopPropagation();
-    //   this.$.ajax_delete.url='/api/lectures/'+ event.detail.id;
-    //   this.$.ajax_delete.generateRequest();
-    // },
-
-    // on_try_delete_webinar: function (event) {
-    //   event.stopPropagation();
-    //   this.$.ajax_delete.url='/api/webinars/'+ event.detail.id;
-    //   this.$.ajax_delete.generateRequest();
-    // },
 
     on_response_delete: function(event){
       page('/admin/courses/' + this.course.id);

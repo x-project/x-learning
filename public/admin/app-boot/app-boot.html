@@ -26,6 +26,7 @@
 <link rel="import" href="../page-coupons/page-coupons.html">
 <link rel="import" href="../page-coupon/page-coupon.html">
 <link rel="import" href="../page-webinars/page-webinars.html">
+<link rel="import" href="../page-webinars/page-webinars-home.html">
 <link rel="import" href="../page-signup/page-signup.html">
 
 <dom-module id="app-boot">
@@ -604,7 +605,7 @@
         include:[{'teaching': ['webinars']}]
       })
       .then(function (model) {
-        context.page = 'page-webinars';
+        context.page = 'page-webinars-home';
         context.data ={};
         context.data.manager = model;
         this.open(context);

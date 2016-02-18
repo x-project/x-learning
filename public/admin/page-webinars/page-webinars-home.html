@@ -1,0 +1,69 @@
+<link rel="import" href="../table-view/table-view.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+
+<dom-module id="page-webinars-home">
+  <template>
+    <style include="style-grid"></style>
+    <style include="style-panel"></style>
+
+    <layout-admin >
+      <div class="container">
+        <div class="panel">    
+          <table-view items="{{webinars}}" fields='["index","title"]' on-click="on_click" on-delete="on_click_delete"></table-view>
+        </div>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'page-webinars-home',
+
+    properties: {
+      data: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      webinars_list: {
+        type: Object,
+        value: function () { return []; }
+      },
+      webinars: {
+        type: Object,
+        value: function () { return []; }
+      }
+    },
+
+    attached:function(){
+      this.manager= this.data.manager;
+      this.teaching=this.manager.teaching;
+
+      this.teaching.forEach(function (course){
+        if(course.webinars){
+          course.webinars.forEach(function (webinar) {
+            this.webinars_list.push(webinar); 
+          }.bind(this))
+        }
+      }.bind(this));
+
+      this.webinars = this.webinars_list.map(function (webinar, index) {
+        return {
+          id: webinar.id,
+          title: webinar.title,
+          courseid: webinar.course_id,
+        index: '#' + index
+        };
+      });
+    },
+
+    on_click: function(event){
+      console.log(event.detail)
+      page("/admin/courses/"+event.detail.course_id +"/webinar/" + event.detail.id );
+    }
+
+  });
+</script>

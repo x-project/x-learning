@@ -2,7 +2,6 @@
 <link rel="import" href="../../components/api-user/api-user.html">
 <link rel="import" href="../input-s3/input-s3.html">
 <link rel="import" href="../input-s3-video/input-s3-video.html">
-<link rel="import" href="../style-page/style-page.html">
 <link rel="import" href="../style-panel/style-panel.html">
 
 <link rel="import" href="part-lecture-actions.html">
@@ -11,7 +10,6 @@
 
 <dom-module id="page-lecture">
   <template>
-    <style include="style-page"></style>
     <style include="style-panel"></style>
      
     <iron-ajax id="ajax_delete_lecture" method="DELETE" on-response="on_response_delete"></iron-ajax>
@@ -25,12 +23,13 @@
     </api-model-update>
 
     <layout-admin on-try-save="on_try_save" on-try-delete-lecture='on_try_delete_lecture'>
+      <div class="container">
         <h1>Edit course: {{data.course.title}} lecture: {{data.lecture.title}}</h1>
         <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/lectures">back</a>
         <part-lecture-actions></part-lecture-actions>
         <part-lecture-info lecture="{{data.lecture}}"></part-lecture-info>
-        <part-lecture-video data="{{data}}" on-upload-video="on_upload_video"></part-lecture-video>
-       
+        <part-lecture-video data="{{data}}" on-upload-video="on_upload_video"></part-lecture-video> 
+      </div>
     </layout-admin>
 
   </template>
