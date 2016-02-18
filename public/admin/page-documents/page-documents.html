@@ -1,0 +1,69 @@
+<link rel="import" href="form-page-document.html">
+<link rel="import" href="../../components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../input-s3/api-s3-delete.html">
+
+<dom-module id="page-documents">
+  <template>
+    <style include="style-panel"></style>
+    <style>
+      .title{
+        display: inline;
+      }
+      .fa{
+        display: inline;
+        margin-left: 20px
+      }
+    </style>
+    <layout-admin>
+      <div class="container">
+      <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response"></iron-ajax>
+        <div class="panel">
+          <table-view items="{{documents}}" fields='["index", "title"]' on-click="on_click" on-delete="on_click_delete">
+          </table-view>
+        </div>
+          
+        <form-page-document course="{{course}}" error="{{error}}"></form-page-document>
+      </div>
+    </layout-admin>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'page-documents',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached:function(){
+      this.documents = this.course.documents.map(function (document, index) {
+        return {
+          id: document.id,
+          title: document.title,
+          url: document.url,
+        index: '#' + index
+        };
+      })
+    },
+
+    on_click: function(event){
+      window.open(event.detail.url,'_blank');
+    },
+
+    on_click_delete: function(event){
+      event.stopPropagation();
+      console.log(event.detail)
+      this.$.ajax_delete.url='/api/documents/'+ event.detail.id;
+      this.$.ajax_delete.generateRequest();
+    },
+
+    on_response:function(){
+      page('/admin/courses/'+ this.course.id + '/documents');
+    }
+
+  });
+</script>

@@ -1,0 +1,54 @@
+<link rel="import" href="../input-s3/input-s3.html">
+
+<dom-module id="form-page-document">
+  <template>
+
+   <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" on-response="on_response_create"> </iron-ajax>
+
+    <input-s3 collection="images" folder="{{folder}}" on-response="on_response"></input-s3>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'form-page-document',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      folder: {
+        type: String
+      },
+      document: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached: function(event){
+      this.folder = 'courses/' + this.course.id + '/documents/';
+    },
+
+    on_response: function(event){
+      event.stopPropagation();
+      console.log(event.detail);
+      this.document = event.detail;
+      
+      this.$.ajax_put.body=JSON.stringify(this.document);
+      this.$.ajax_put.url='/api/courses/'+ this.course.id + '/documents';
+      this.$.ajax_put.generateRequest();
+    },
+
+    on_response_create: function(){
+      page('/admin/courses/'+ this.course.id + '/documents');
+    }
+
+  });
+</script>
