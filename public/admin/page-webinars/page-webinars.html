@@ -1,67 +1,52 @@
-<link rel="import" href="../table-view/table-view.html">
-
 <dom-module id="page-webinars">
   <template>
-    <style include="style-page"></style>
-    <style include="style-panel"></style>
-     
+    <style include="style-table"></style>
+    <style include="style-basic"></style>
 
-    <layout-admin >
-      <div>
-          <h1>Webinars</h1>
-      </div>
-      <table-view items="{{webinars}}" fields='["index","title"]' on-click="on_click" on-delete="on_click_delete">
+    <layout-admin>
+      <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response"></iron-ajax>
+      
+      <a is="app-link" href="/admin/courses/{{course.id}}/webinar/new">add webinar</a>
+      <table-view items="{{webinars}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
       </table-view>
     </layout-admin>
-
   </template>
 </dom-module>
-
 <script>
   Polymer({
 
     is: 'page-webinars',
 
     properties: {
-      data: {
+      course: {
         type: Object,
         value: function () { return {}; }
-      },
-      webinars_list: {
-        type: Object,
-        value: function () { return []; }
-      },
-      webinars: {
-        type: Object,
-        value: function () { return []; }
       }
     },
 
     attached:function(){
-      this.manager= this.data.manager;
-      this.teaching=this.manager.teaching;
-
-      this.teaching.forEach(function (course){
-        if(course.webinars){
-          course.webinars.forEach(function (webinar) {
-            this.webinars_list.push(webinar); 
-          }.bind(this))
-        }
-      }.bind(this));
-
-      this.webinars = this.webinars_list.map(function (webinar, index) {
+      this.webinars = this.course.webinars.map(function (webinar, index) {
         return {
           id: webinar.id,
           title: webinar.title,
-          course_id: webinar.course_id,
+          description: webinar.description,
         index: '#' + index
         };
-      });
+      })
     },
 
-    on_click: function(event){
-      console.log(event.detail)
-      page("/admin/courses/"+event.detail.course_id +"/webinar/" + event.detail.id );
+    on_click_delete:function(event){
+      event.stopPropagation();
+      this.$.ajax_delete.url='/api/webinars/'+ event.detail.id;
+      this.$.ajax_delete.generateRequest();
+    },
+
+    on_response:function(){
+      page('/admin/courses/'+ this.course.id + '/webinars');
+    },
+
+    on_click: function (event) {
+      page('/admin/courses/'+ this.course.id + '/webinar/' + event.detail.id);
     }
 
   });

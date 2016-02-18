@@ -22,7 +22,7 @@
     <layout-admin on-try-save="on_try_save" on-try-delete="on_try_delete" on-try-start="on_try_start">
         <h1>Create webinar: {{webinar.title}}</h1>
         <part-webinar-actions></part-webinar-actions>
-        <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/">back</a>
+        <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/webinars">back</a>
         <part-webinar-info webinar="{{webinar}}"></part-webinar-info>
 
     </layout-admin>
@@ -63,7 +63,7 @@
       event.stopPropagation();
       this.$.ajax_delete.url='/api/webinars/'+ this.webinar.id;
       this.$.ajax_delete.generateRequest();
-      page('/admin/courses/' + this.data.course.id);
+      page('/admin/courses/' + this.data.course.id + '/webinars');
     },
 
     on_try_start:function(event){
