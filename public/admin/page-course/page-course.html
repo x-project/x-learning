@@ -23,14 +23,7 @@
   <template>
     <style include="style-panel"></style>
     <style include="style-grid"></style>
-    <style>
-      .nav-link{
-        display: block;
-        font-weight: normal;
-        color: #0275d8;
-        border-radius: 0;
-      }
-    </style>
+   
     <app-session id="session"></app-session>
 
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{course}}" on-response="on_response_create"> </iron-ajax>
@@ -55,7 +48,7 @@
             <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
           </div>
           
-          <div class="col col-sm-5">
+          <div class="col col-sm-6">
             <part-course-aims course="{{course}}"></part-course-aims>
             <part-course-lectures course="{{course}}"></part-course-lectures>
             <part-course-webinars course="{{course}}"></part-course-webinars>

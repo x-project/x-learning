@@ -1,22 +1,27 @@
 <link rel="import" href="components/app-session/app-session.html">
 <link rel="import" href="../table-view/table-view.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
 
 <dom-module id="page-courses">
   <template>
-    <style include="style-button"></style>
+    <style include="style-grid"></style>
+    <style include="style-panel"></style>
 
     <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
 
     <layout-admin>
-      <div>
-        <h1>My Courses</h1>
-      </div>
-      <div class="panel">      
-        <a is="app-link" class="btn btn-link" href="/admin/courses/new">Create new course</a>
+      <div class="container">
+        <div class="panel">      
+          <div class="title">
+            <h1>My Courses</h1>
+          </div>
+          <a is="app-link" class="btn btn-link" href="/admin/courses/new">Create new course</a>
 
-        <table-view items="{{teaching}}" fields='["index", "title","description","publish"]' on-click="on_click" on-delete="on_click_delete">
-          <h2 class="title">Courses</h2> 
-        </table-view>
+          <table-view items="{{teaching}}" fields='["index", "title","description","publish"]' on-click="on_click" on-delete="on_click_delete">
+            <h2 class="title">Courses</h2> 
+          </table-view>
+        </div>
       </div>
     </layout-admin>
 
