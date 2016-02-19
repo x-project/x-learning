@@ -2,16 +2,16 @@
 
 <dom-module id="page-students">
   <template>
-    <style include="style-page"></style>
     <style include="style-panel"></style>
      
-
-    <layout-admin >
-      <div>
-          <h1>Students</h1>
+    <layout-admin>
+      <div class="toolbar">
+        <h1>Students</h1>
       </div>
-      <table-view items="{{students}}" fields='["index", "Name","Lastname","Course"]' on-click="on_click" on-delete="on_click_delete">
-      </table-view>
+      <div class="main">
+        <table-view items="{{students}}" fields='["index", "Name","Lastname","Course"]' on-click="on_click" on-delete="on_click_delete">
+        </table-view>
+      </div>
     </layout-admin>
 
   </template>

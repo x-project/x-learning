@@ -17,15 +17,14 @@
     </api-model-create>
 
     <layout-admin on-try-invite="on_try_invite">
-      <part-invite-header></part-invite-header>
-      <part-invite-member member="{{member}}" error="{{error}}"></part-invite-member>
-      <part-invite-actions></part-invite-actions>
-
-      <!--
-      <template is="dom-if" if="{{error_occurs}}">
-        <div class="error-box">Error! <span>{{response.message}}</span></div>
-      </template>
-      -->
+      <div class="toolbar">
+        <h1>Invite</h1>
+      </div>
+      <div class="main">
+        <part-invite-header></part-invite-header>
+        <part-invite-member member="{{member}}" error="{{error}}"></part-invite-member>
+        <part-invite-actions></part-invite-actions>
+      </div>
     </layout-admin>
 
   </template>

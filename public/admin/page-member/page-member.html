@@ -8,8 +8,12 @@
     <app-session id="session"></app-session>
 
     <layout-admin>
-      <h2>Member</h2>
-      <form-member member="{{member}}" token="{{token}}"></form-member>
+     <div class="toolbar">
+        <h2>Member {{member.fullname}}</h2>
+      </div>
+      <div class="main">
+        <form-member member="{{member}}" token="{{token}}"></form-member>
+      </div>
     </layout-admin>
   </template>
 </dom-module>

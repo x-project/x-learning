@@ -1,7 +1,5 @@
-<link rel="import" href="../../components/app-link/app-link.html">
-<link rel="import" href="../../components/iron-input/iron-input.html">
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
-<script src="../../components/peerjs/peer.js"></script>
+
 <dom-module id="deck-p2p-client">
   <template>
     <style>
@@ -10,49 +8,28 @@
       }
 
       video {
-        width: 500px;
-        height: auto;
-      }
-
-      #container {
-        @apply(--layout-horizontal);
-      }
-
-      #videos {
-        @apply(--layout-flex);
-      }
-      
-      #actions {
-        @apply(--layout-flex);
+        width: 100%;
+        height: 400px;
       }
     </style>
   
-    <div id="container">
-      <div id="videos">
-        <video src="{{my_stream}}" muted="true" autoplay></video>
-      </div>
+    <video src="{{my_stream}}" muted="true" autoplay></video>
 
-      <div id="actions">
-        <template is="dom-if" if="{{error}}">
-          <p>Failed to access the webcam and microphone.</p>
-          <button class="btn btn-warning" on-click="on_click_retry">retry call</button>
-        </template>
-      </div>
+    <div id="actions">
+      <template is="dom-if" if="{{error}}">
+        <p>Failed to access the webcam and microphone.</p>
+        <button class="btn btn-warning" on-click="on_click_retry">retry call</button>
+      </template>
     </div>
 
   </template>
 </dom-module>
+
+<script src="../../components/peerjs/peer.js"></script>
 <script>
   Polymer({
 
     is: 'deck-p2p-client',
-
-    properties: {
-      others: {
-        type: Array,
-        value: function () { return []; }
-      }
-    },
 
     detached:function(event){
       this.peer.destroy();
@@ -73,7 +50,7 @@
         || navigator.mozGetUserMedia;
    
       // var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
-      var peer = this.peer = new Peer({host: 'localhost', port: 9000, path: '/peerjs'});
+      var peer = this.peer = new Peer({host: '192.168.161.203', port: 9000, path: '/peerjs'});
 
       this.start();
     },

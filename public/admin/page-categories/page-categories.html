@@ -14,14 +14,18 @@
   <template>
 
     <layout-admin>
-      <h1>Categories</h1>
-      <part-categories-actions></part-categories-actions>
-      <part-collections-search></part-collections-search>
-      <part-collections-stats></part-collections-stats>
-      <part-categories-items categories="{{categories}}"></part-categories-items>
-      <part-categories-pages on-change-page="on_change_page" perpage="{{perpage}}"
-        count="{{count}}">
-      </part-categories-pages>
+     <div class="toolbar">
+        <h1>Categories</h1>
+        <part-categories-actions></part-categories-actions>
+      </div>
+      <div class="main">
+        <part-collections-search></part-collections-search>
+        <part-collections-stats></part-collections-stats>
+        <part-categories-items categories="{{categories}}"></part-categories-items>
+        <part-categories-pages on-change-page="on_change_page" perpage="{{perpage}}"
+          count="{{count}}">
+        </part-categories-pages>
+      </div>
     </layout-admin>
 
   </template>

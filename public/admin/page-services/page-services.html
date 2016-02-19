@@ -16,18 +16,21 @@
 <dom-module id="page-services">
 
   <template>
-      <layout-admin on-updated="on_updated">
-
-    <part-services-aws services="{{services}}"></part-services-aws>
-    <part-services-plivo services="{{services}}"></part-services-plivo>
-    <part-services-braintree services="{{services}}"></part-services-braintree>
-    <part-services-google services="{{services}}"></part-services-google>
-    <part-services-facebook services="{{services}}"></part-services-facebook>
-    <part-services-mandrill services="{{services}}"></part-services-mandrill>
-    <part-services-phone services="{{services}}"></part-services-phone>
-    <part-services-secret-keys services="{{services}}"></part-services-secret-keys>
-    <part-services-email services="{{services}}"></part-services-email>
-
+    <layout-admin on-updated="on_updated">
+      <div class="toolbar">
+        <h1>My services</h1>
+      </div>
+      <div class="main">
+        <part-services-aws services="{{services}}"></part-services-aws>
+        <part-services-plivo services="{{services}}"></part-services-plivo>
+        <part-services-braintree services="{{services}}"></part-services-braintree>
+        <part-services-google services="{{services}}"></part-services-google>
+        <part-services-facebook services="{{services}}"></part-services-facebook>
+        <part-services-mandrill services="{{services}}"></part-services-mandrill>
+        <part-services-phone services="{{services}}"></part-services-phone>
+        <part-services-secret-keys services="{{services}}"></part-services-secret-keys>
+        <part-services-email services="{{services}}"></part-services-email>
+      </div>
     </layout-admin>
   </template>
 </dom-module>

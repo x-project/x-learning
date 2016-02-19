@@ -23,6 +23,26 @@
   <template>
     <style include="style-panel"></style>
     <style include="style-grid"></style>
+    <style>
+  /*  .toolbar {
+      position: absolute;
+      width: 100%;
+      right: 0;
+    }
+
+    .fixed.row {
+      position: fixed;
+      z-index: 1;
+      width: 100%;
+      background-color: rgba(255,255,255,0.95);
+      box-shadow: 0 1px 2px #ccc;
+    }
+
+    .main {
+      padding-top: 100px;
+    }*/
+
+    </style>
    
     <app-session id="session"></app-session>
 
@@ -36,26 +56,25 @@
       
     <layout-admin on-try-save="on_try_save" on-try-publish="on_try_publish"
         on-try-preview="on_try_preview" on-try-delete="on_try_delete">
-      <div class="container">
-          
-        <div class="row">
-          <part-course-header course="{{course}}"></part-course-header>
-          <part-course-actions course="{{course}}"></part-course-actions>
-        </div>  
-        <div class="row">
-          <div class="col col-sm-6">
-            <part-course-image course="{{course}}"></part-course-image>
-            <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
-          </div>
-          
-          <div class="col col-sm-6">
-            <part-course-lectures course="{{course}}"></part-course-lectures>
-            <part-course-webinars course="{{course}}"></part-course-webinars>
-            <part-course-document course="{{course}}"></part-course-document>
-            <part-course-aims course="{{course}}"></part-course-aims>
-          </div>
-        
+      <div class="toolbar">
+        <div class="col col-sm-8">
+          <h2>Course / {{course.title}}</h2>
         </div>
+        <part-course-actions course="{{course}}"></part-course-actions> 
+      </div>
+
+      <div class="row main">
+        <div class="col col-sm-8">
+          <part-course-image course="{{course}}"></part-course-image>
+          <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
+        </div>
+        
+        <div class="col col-sm-4">
+          <part-course-lectures course="{{course}}"></part-course-lectures>
+          <part-course-webinars course="{{course}}"></part-course-webinars>
+          <part-course-document course="{{course}}"></part-course-document>
+          <part-course-aims course="{{course}}"></part-course-aims>
+        </div>        
       </div>
     </layout-admin>
     </div>

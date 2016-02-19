@@ -9,12 +9,16 @@
   <template>
 
     <layout-admin>
-      <h1>Coupons</h1>
-      <part-coupons-actions></part-coupons-actions>
-      <part-coupons-items coupons="{{coupons}}"></part-coupons-items>
-      <part-coupons-pages on-change-page="on_change_page" perpage="{{perpage}}"
-        count="{{count}}">
-      </part-coupons-pages>
+      <div class="toolbar">
+        <h1>Coupons</h1>
+      </div>
+      <div class="main">
+        <part-coupons-actions></part-coupons-actions>
+        <part-coupons-items coupons="{{coupons}}"></part-coupons-items>
+        <part-coupons-pages on-change-page="on_change_page" perpage="{{perpage}}"
+          count="{{count}}">
+        </part-coupons-pages>
+      </div>
     </layout-admin>
 
   </template>

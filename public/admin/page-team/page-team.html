@@ -16,10 +16,14 @@
     </api-model-find>
 
     <layout-admin>
-      <h2>Team</h2>
-      <part-team-actions manager="{{manager}}"></part-team-actions>
-      <part-team-members manager="{{manager}}" members="{{members}}"></part-team-members>
-      <part-team-invites manager="{{manager}}" invites="{{invites}}"></part-team-invites>
+     <div class="toolbar">
+        <h2>Team</h2>
+        <part-team-actions manager="{{manager}}"></part-team-actions>
+      </div>
+      <div class="main">
+        <part-team-members manager="{{manager}}" members="{{members}}"></part-team-members>
+        <part-team-invites manager="{{manager}}" invites="{{invites}}"></part-team-invites>
+      </div>
     </layout-admin>
 
   </template>

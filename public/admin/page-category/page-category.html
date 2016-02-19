@@ -10,10 +10,12 @@
   <template>
 
     <layout-admin on-try-save="on_try_save" on-try-delete="on_try_delete">
-      <h1>Category</h1>
-      <part-category-header category="{{category}}"></part-category-header>
-      <part-category-info category="{{category}}" error="{{error}}"></part-category-info>
-      <part-category-actions></part-category-actions>
+     <div class="toolbar">
+        <part-category-header category="{{category}}"></part-category-header>
+      </div>
+      <div class="main">
+        <part-category-info category="{{category}}" error="{{error}}"></part-category-info>
+      </div>
     </layout-admin>
 
   </template>

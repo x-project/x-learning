@@ -15,13 +15,15 @@
       }
     </style>
     <layout-admin>
-      <div class="container">
-      <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response"></iron-ajax>
+      <div class="toolbar">
+        <h1>Documents</h1>
+      </div>
+      <div class="main">
+        <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response"></iron-ajax>
         <div class="panel">
           <table-view items="{{documents}}" fields='["index", "title"]' on-click="on_click" on-delete="on_click_delete">
           </table-view>
-        </div>
-          
+        </div>  
         <form-page-document course="{{course}}" error="{{error}}"></form-page-document>
       </div>
     </layout-admin>

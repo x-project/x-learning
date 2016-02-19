@@ -24,7 +24,9 @@
     "video.js": "videojs#~5.2.1",
     "peerjs": "~0.3.14",
     "moment": "~2.10.6",
-    "paper-toolbar": "PolymerElements/paper-toolbar#~1.1.4"
+    "paper-toolbar": "PolymerElements/paper-toolbar#~1.1.4",
+    "paper-drawer-panel": "PolymerElements/paper-drawer-panel#~1.0.6",
+    "paper-icon-button": "PolymerElements/paper-icon-button#~1.0.6"
   },
   "ignore": [
     "**/.*",

@@ -8,12 +8,16 @@
   <template>
 
     <layout-admin>
-      <h2>Articles</h2>
-      <part-articles-actions></part-articles-actions>
-      <part-articles-items articles="{{articles}}"></part-articles-items>
-      <part-articles-pages on-change-page="on_change_page" perpage="{{perpage}}"
-        count="{{count}}">
-      </part-articles-pages>
+     <div class="toolbar">
+        <h2>Articles</h2>
+      </div>
+      <div class="main">
+        <part-articles-actions></part-articles-actions>
+        <part-articles-items articles="{{articles}}"></part-articles-items>
+        <part-articles-pages on-change-page="on_change_page" perpage="{{perpage}}"
+          count="{{count}}">
+        </part-articles-pages>
+      </div>
     </layout-admin>
 
   </template>

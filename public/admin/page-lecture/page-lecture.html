@@ -23,8 +23,10 @@
     </api-model-update>
 
     <layout-admin on-try-save="on_try_save" on-try-delete-lecture='on_try_delete_lecture'>
-      <div class="container">
+     <div class="toolbar">
         <h1>Edit course: {{data.course.title}} lecture: {{data.lecture.title}}</h1>
+      </div>
+      <div class="main">
         <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/lectures">back</a>
         <part-lecture-actions></part-lecture-actions>
         <part-lecture-info lecture="{{data.lecture}}"></part-lecture-info>

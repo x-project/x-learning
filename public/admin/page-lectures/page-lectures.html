@@ -3,12 +3,18 @@
 <dom-module id="page-lectures">
   <template>
     <style include="style-panel"></style>
+    <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response_delete"></iron-ajax>
+    
     <layout-admin>
-      <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response_delete"></iron-ajax>
-      <div class="panel">
-        <a is="app-link" href="/admin/courses/{{course.id}}/lecture/new">add lecture</a>
-        <table-view items="{{lectures}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
-        </table-view>
+     <div class="toolbar">
+        <h1>Lectures</h1>
+      </div>
+      <div class="main">
+        <div class="panel">
+          <a is="app-link" href="/admin/courses/{{course.id}}/lecture/new">add lecture</a>
+          <table-view items="{{lectures}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
+          </table-view>
+        </div>
       </div>
     </layout-admin>
   </template>
