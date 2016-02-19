@@ -1,6 +1,7 @@
 <link rel="import" href="../../styles/style-button/style-button.html">
 <link rel="import" href="../../styles/style-form/style-form.html">
 <link rel="import" href="../../styles/style-field/style-field.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
 <link rel="import" href="../../styles/style-label/style-label.html">
 <link rel="import" href="part-services-braintree.html">
 <link rel="import" href="part-services-aws.html">
@@ -12,15 +13,15 @@
 <link rel="import" href="part-services-secret-keys.html">
 <link rel="import" href="part-services-email.html">
 
-
 <dom-module id="page-services">
-
   <template>
+    <style include="style-grid"></style>
+
     <layout-admin on-updated="on_updated">
       <div class="toolbar">
         <h1>My services</h1>
       </div>
-      <div class="main">
+      <div class="main container">
         <part-services-aws services="{{services}}"></part-services-aws>
         <part-services-plivo services="{{services}}"></part-services-plivo>
         <part-services-braintree services="{{services}}"></part-services-braintree>
@@ -32,6 +33,7 @@
         <part-services-email services="{{services}}"></part-services-email>
       </div>
     </layout-admin>
+
   </template>
 </dom-module>
 

@@ -1,9 +1,12 @@
 <link rel="import" href="../../components/app-session/app-session.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="form-member.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+
 
 <dom-module id="page-member">
   <template>
+    <style include="style-grid"></style>
 
     <app-session id="session"></app-session>
 
@@ -11,7 +14,7 @@
      <div class="toolbar">
         <h2>Member {{member.fullname}}</h2>
       </div>
-      <div class="main">
+      <div class="main container">
         <form-member member="{{member}}" token="{{token}}"></form-member>
       </div>
     </layout-admin>

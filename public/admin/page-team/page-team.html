@@ -4,8 +4,11 @@
 <link rel="import" href="part-team-members.html">
 <link rel="import" href="part-team-actions.html">
 <link rel="import" href="part-team-invites.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+
 <dom-module id="page-team">
   <template>
+    <style include="style-grid"></style>
     <app-session id="session"></app-session>
 
     <api-model-find id="find_members" collection="managers" response="{{members}}">
@@ -20,7 +23,7 @@
         <h2>Team</h2>
         <part-team-actions manager="{{manager}}"></part-team-actions>
       </div>
-      <div class="main">
+      <div class="main container">
         <part-team-members manager="{{manager}}" members="{{members}}"></part-team-members>
         <part-team-invites manager="{{manager}}" invites="{{invites}}"></part-team-invites>
       </div>

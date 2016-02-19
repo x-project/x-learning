@@ -1,19 +1,25 @@
-<link rel="import" href="../deck-p2p-admin/deck-p2p-admin.html">
 <link rel="import" href="../../components/api-user/api-user.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../deck-p2p-admin/deck-p2p-admin.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 
 <dom-module id="part-webinar-video">
   <template>
-  <style>
-    
-  </style>
+    <style include="style-grid"></style>
+
     <api-model-update id="update" collection="webinars" model-id="{{data.webinar.id}}"
       data="{{data.webinar}}" response="{{response}}" error="{{error}}">
     </api-model-update>
     
     <layout-admin>
-      <deck-p2p-admin data="{{data.webinar}}" on-peer="on_peer" on-webinar-closed="webinar_closed"></deck-p2p-admin>
+      <div class="toolbar">
+        <h1>Webinars</h1>
+      </div>
+      <div class="main container">
+        <deck-p2p-admin data="{{data.webinar}}" on-peer="on_peer" on-webinar-closed="webinar_closed"></deck-p2p-admin>
+      </div>
     </layout-admin>
+    
   </template>
 </dom-module>
 <script>

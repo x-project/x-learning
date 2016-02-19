@@ -1,15 +1,17 @@
 <link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../../components/api-user/api-user.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
 <link rel="import" href="../input-s3/input-s3.html">
 <link rel="import" href="../input-s3-video/input-s3-video.html">
-<link rel="import" href="../style-panel/style-panel.html">
-
 <link rel="import" href="part-lecture-actions.html">
 <link rel="import" href="part-lecture-info.html">
 <link rel="import" href="part-lecture-video.html">
 
+
 <dom-module id="page-lecture">
   <template>
+    <style include="style-grid"></style>
     <style include="style-panel"></style>
      
     <iron-ajax id="ajax_delete_lecture" method="DELETE" on-response="on_response_delete"></iron-ajax>
@@ -26,7 +28,7 @@
      <div class="toolbar">
         <h1>Edit course: {{data.course.title}} lecture: {{data.lecture.title}}</h1>
       </div>
-      <div class="main">
+      <div class="main container">
         <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/lectures">back</a>
         <part-lecture-actions></part-lecture-actions>
         <part-lecture-info lecture="{{data.lecture}}"></part-lecture-info>

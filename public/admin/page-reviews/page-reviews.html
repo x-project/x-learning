@@ -1,16 +1,15 @@
 <link rel="import" href="../table-view/table-view.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
 
 <dom-module id="page-reviews">
   <template>
-    <style include="style-page"></style>
-    <style include="style-panel"></style>
-     
+    <style include="style-grid"></style>
 
     <layout-admin>
      <div class="toolbar">
         <h1>Reviews</h1>
       </div>
-      <div class="main">
+      <div class="main container">
         <table-view items="{{teaching}}" fields='["title","total_review","score_review"]' on-click="on_click" on-delete="on_click_delete">
           <h2 class="title">Courses</h2> 
         </table-view>

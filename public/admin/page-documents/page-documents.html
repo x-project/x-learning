@@ -1,9 +1,12 @@
-<link rel="import" href="form-page-document.html">
+<link rel="import" href="../../styles/style-grid/style-grid.html">
 <link rel="import" href="../../components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../input-s3/api-s3-delete.html">
+<link rel="import" href="form-page-document.html">
+
 
 <dom-module id="page-documents">
   <template>
+    <style include="style-grid"></style>
     <style include="style-panel"></style>
     <style>
       .title{
@@ -18,7 +21,7 @@
       <div class="toolbar">
         <h1>Documents</h1>
       </div>
-      <div class="main">
+      <div class="main container">
         <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response"></iron-ajax>
         <div class="panel">
           <table-view items="{{documents}}" fields='["index", "title"]' on-click="on_click" on-delete="on_click_delete">
