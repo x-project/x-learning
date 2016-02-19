@@ -49,20 +49,21 @@
         <part-course-actions course="{{course}}"></part-course-actions> 
       </div>
 
-      <div class="row main">
-        <div class="col col-sm-8">
-          <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
-        </div>
-        
-        <div class="col col-sm-4">
-            <part-course-image course="{{course}}"></part-course-image>
-          <div class="panel">
-            <a href="/admin/courses/{{course.id}}/documents">manage documents</a>
-            <a href="/admin/courses/{{course.id}}/lectures">manage lecture</a>
-            <a href="/admin/courses/{{course.id}}/webinars">manage webinars</a>
+      <div class="main container">
+        <div class="row">
+          <div class="col col-sm-8">
+            <part-course-info course="{{course}}" error="{{error}}"></part-course-info>
+            <part-course-aims course="{{course}}"></part-course-aims>
           </div>
-          <part-course-aims course="{{course}}"></part-course-aims>
-        </div>        
+          <div class="col col-sm-4">
+            <part-course-image course="{{course}}"></part-course-image>
+            <div class="panel">
+              <a href="/admin/courses/{{course.id}}/documents">manage documents</a>
+              <a href="/admin/courses/{{course.id}}/lectures">manage lecture</a>
+              <a href="/admin/courses/{{course.id}}/webinars">manage webinars</a>
+            </div>
+          </div>        
+        </div>
       </div>
     </layout-admin>
     </div>

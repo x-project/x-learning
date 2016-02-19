@@ -1,15 +1,17 @@
+<link rel="import" href="../../styles/style-panel/style-panel.html">
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../deck-reviews/deck-reviews.html">
 
 <dom-module id="page-review">
   <template>
     <style include="style-grid"></style>
+    <style include="style-panel"></style>
 
     <layout-admin>  
       <div class="toolbar">
         <h1>Reviews of Course</h1>
       </div>    
-      <div class="main container">
+      <div class="main container panel">
          <deck-reviews reviews="{{reviews}}"></deck-reviews>
       </div>
     </layout-client>

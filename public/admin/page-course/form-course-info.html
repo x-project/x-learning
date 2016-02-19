@@ -1,14 +1,11 @@
-<link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
-<link rel="import" href="/components/iron-input/iron-input.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
+<link rel="import" href="/components/paper-input/paper-textarea.html">
 <link rel="import" href="search-course-category.html">
 
 <dom-module id="form-course-info">
   <template>
     <style include="style-form"></style>
     <style>
-      input, iron-autogrow-textarea {
-        box-sizing: border-box;
-      }
       search-course-category {
         --input-search: {
           @apply(--form-control);
@@ -19,26 +16,15 @@
 
     <form on-submit="on_submit">
       <div class="field">
-        <label class="label">Title</label>
-        <input class="form-control" id="title" type="text" is="iron-input" bind-value="{{course.title}}">
-        <input-errors property="title" error="{{error.details}}"></input-errors>
-      </div>
-      <div class="field">
-        <label class="label">Description</label>
-        <div class="detail">
-          <iron-autogrow-textarea class="form-control" is="iron-input" bind-value="{{course.description}}" rows="4">
-          </iron-autogrow-textarea>
-        </div>
+        <paper-input label="Title" id="title" type="text" value="{{course.title}}"></paper-input>
+        
+        <paper-textarea label="Description" value="{{course.description}}"></paper-textarea>
         <input-errors property="description" error="{{error.details}}"></input-errors>
-      </div>
-      <div class="field">
-        <label class="label">Language</label>
-        <input class="form-control" id="language" type="text" is="iron-input" bind-value="{{course.language}}">
+       
+        <paper-input label="Language" id="title" type="text" value="{{course.language}}"></paper-input>
         <input-errors property="title" error="{{error.details}}"></input-errors>
-      </div>
-      <div class="field">
-        <label class="label">Cost</label>
-        <input class="form-control" id="cost" type="text" is="iron-input" bind-value="{{course.cost}}">
+
+        <paper-input label="Cost" id="title" type="number" value="{{course.cost}}"></paper-input>
         <input-errors property="cost" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">

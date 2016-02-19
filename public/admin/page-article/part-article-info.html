@@ -1,18 +1,15 @@
-<link rel="import" href="../field-long-text/field-long-text.html">
-<link rel="import" href="../field-text/field-text.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
+<link rel="import" href="/components/paper-input/paper-textarea.html">
+
 <dom-module id="part-article-info">
   <template>
     <style include="style-panel"></style>
 
     <div class="panel">
       <h2 class="title">[[article_info_title_label]]</h2>
-      <field-text label="title" property="title" value="{{article.title}}" error="{{error}}"></field-text>
-      <field-long-text label="Summary" property="summary" value="{{article.summary}}"
-        error="{{error}}">
-      </field-long-text>
-      <field-long-text label="Content" property="content" value="{{article.content}}"
-        error="{{error}}">
-      </field-long-text>
+      <paper-textarea label="Titlte" value="{{article.title}}"></paper-textarea>
+      <paper-textarea label="Summary" value="{{article.summary}}"></paper-textarea>
+      <paper-textarea label="Content" value="{{article.content}}"></paper-textarea>
     </div>
 
   </template>

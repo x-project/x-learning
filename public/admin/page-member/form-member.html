@@ -1,20 +1,23 @@
 <link rel="import" href="../../components/api-model-update/api-model-update.html">
 <link rel="import" href="../../styles/style-form/style-form.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
 <link rel="import" href="../field-text/field-text.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
+
 <dom-module id="form-member">
   <template>
     <style include="style-form"></style>
+    <style include="style-panel"></style>
 
     <api-model-update id="update" access-token="{{token}}"
       collection="managers" model-id="{{member.id}}" data="{{member}}">
     </api-model-update>
-
-    <form class="form" on-submit="on_submit">
-      <field-text label="Full name" property="fullname" value="{{member.fullname}}"
-        error="{{error}}">
-      </field-text>
-      <input type="submit" class="button" value="update">
-    </form>
+    <div class="panel">
+      <form class="form" on-submit="on_submit">
+        <paper-input label="Full name" value="{{member.fullname}}"></paper-input>
+        <input type="submit" class="button" value="update">
+      </form>
+    </div>
 
   </template>
 </dom-module>

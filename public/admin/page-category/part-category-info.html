@@ -1,13 +1,13 @@
+<link rel="import" href="/components/paper-input/paper-input.html">
+<link rel="import" href="/components/paper-input/paper-textarea.html">
+
 <dom-module id="part-category-info">
   <template>
   <style include="style-panel"></style>
 
   <div class="panel">
-    <h2 class="title">Info</h2>
-    <field-text label="Name" property="name" value="{{category.name}}" error="{{error}}"></field-text>
-    <field-long-text label="description" property="description" value="{{category.description}}"
-      error="{{error}}">
-    </field-long-text>
+    <paper-input label="Name" id="title" type="text" value="{{category.name}}"></paper-input>    
+    <paper-textarea label="Description" value="{{category.description}}"></paper-textarea>
   </div>
 
   </template>

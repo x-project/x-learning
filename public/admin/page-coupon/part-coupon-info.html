@@ -1,15 +1,13 @@
-<link rel="import" href="../field-long-text/field-long-text.html">
-<link rel="import" href="../field-text/field-text.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
+<link rel="import" href="/components/paper-input/paper-textarea.html">
 <dom-module id="part-coupon-info">
   <template>
     <style include="style-panel"></style>
 
     <div class="panel">
       <h2 class="title">[[coupon_info_title_label]]</h2>
-      <field-text label="Name" property="name" value="{{coupon.name}}" error="{{error}}"></field-text>
-      <field-long-text label="description" property="description" value="{{coupon.description}}"
-        error="{{error}}">
-      </field-long-text>
+      <paper-input label="Title" id="title" type="text" value="{{coupon.name}}"></paper-input>  
+      <paper-textarea label="Description" value="{{coupon.description}}"></paper-textarea>
     </div>
 
   </template>
