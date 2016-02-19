@@ -17,11 +17,11 @@
         <h1>Coupons</h1>
       </div>
       <div class="main container">
-        <part-coupons-actions></part-coupons-actions>
         <part-coupons-items coupons="{{coupons}}"></part-coupons-items>
         <part-coupons-pages on-change-page="on_change_page" perpage="{{perpage}}"
           count="{{count}}">
         </part-coupons-pages>
+        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
       </div>
     </layout-admin>
 
@@ -83,7 +83,12 @@
     on_change_page: function (event) {
       this.page = event.detail.current - 1;
       this.get_coupons();
+    },
+    
+    on_click_add:function(){
+     page('/admin/coupons/new');
     }
+
 
   });
 </script>

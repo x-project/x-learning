@@ -23,9 +23,17 @@
         <h1>Invite</h1>
       </div>
       <div class="main container">
-        <part-invite-header></part-invite-header>
-        <part-invite-member member="{{member}}" error="{{error}}"></part-invite-member>
-        <part-invite-actions></part-invite-actions>
+       <div class="row">
+          <div class="col col-sm-2">
+          </div>
+          <div class="col col-sm-6">
+            <part-invite-header></part-invite-header>
+            <part-invite-member member="{{member}}" error="{{error}}"></part-invite-member>
+            <part-invite-actions></part-invite-actions>   
+          </div>
+          <div class="col col-sm-3">
+          </div>
+        </div>
       </div>
     </layout-admin>
 

@@ -17,9 +17,8 @@
     <style include="style-grid"></style>
 
     <layout-admin>
-     <div class="toolbar">
+      <div class="toolbar">
         <h1>Categories</h1>
-        <part-categories-actions></part-categories-actions>
       </div>
       <div class="main container">
         <part-collections-search></part-collections-search>
@@ -28,6 +27,7 @@
         <part-categories-pages on-change-page="on_change_page" perpage="{{perpage}}"
           count="{{count}}">
         </part-categories-pages>
+        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
       </div>
     </layout-admin>
 
@@ -83,6 +83,10 @@
       console.log("ciao")
       this.page = event.detail.current - 1;
       this.get_categories();
+    },
+
+    on_click_add:function(){
+     page('/admin/categories/new');
     }
 
   });

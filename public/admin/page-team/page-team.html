@@ -5,26 +5,28 @@
 <link rel="import" href="part-team-actions.html">
 <link rel="import" href="part-team-invites.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
-
+<link rel="import" href="../../styles/style-page/style-page.html">
 <dom-module id="page-team">
   <template>
     <style include="style-grid"></style>
+    <style include="style-page"></style>  
+
     <app-session id="session"></app-session>
 
     <api-model-find id="find_members" collection="managers" response="{{members}}">
     </api-model-find>
 
-    <api-model-find id="find_invites" collection="invites" include=["sender"]
+    <api-model-find id="find_invites" collection="invites" include='["sender"]'
       response="{{invites}}">
     </api-model-find>
 
     <layout-admin>
      <div class="toolbar">
-        <h2>Team</h2>
-        <part-team-actions manager="{{manager}}"></part-team-actions>
+        <h2 class="title">Team</h2>
       </div>
       <div class="main container">
         <part-team-members manager="{{manager}}" members="{{members}}"></part-team-members>
+        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
         <part-team-invites manager="{{manager}}" invites="{{invites}}"></part-team-invites>
       </div>
     </layout-admin>
@@ -60,6 +62,10 @@
 
       this.$.find_invites.accessToken = admin_token;
       this.$.find_invites.send();
+    },
+
+    on_click_add:function(){
+      page('/admin/invites/new');
     }
 
   });

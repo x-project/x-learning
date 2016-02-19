@@ -2,6 +2,7 @@
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/app-session/app-session.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../../styles/style-page/style-page.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="part-webinar-actions.html">
@@ -10,6 +11,8 @@
 <dom-module id="page-webinar">
   <template>
     <style include="style-grid"></style>
+    <style include="style-page"></style>
+
     <app-session id="session"></app-session>
     
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{webinar}}" on-response="on_response_create"> </iron-ajax>
@@ -23,11 +26,19 @@
     <layout-admin on-try-save="on_try_save" on-try-delete="on_try_delete" on-try-start="on_try_start">
       <div class="toolbar">
         <h1>Create webinar: {{webinar.title}}</h1>
+        <part-webinar-actions></part-webinar-actions>
       </div>
       <div class="main container">
-        <part-webinar-actions></part-webinar-actions>
-        <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/webinars">back</a>
-        <part-webinar-info webinar="{{webinar}}"></part-webinar-info>
+       <div class="row">
+          <div class="col col-sm-3">
+          </div>
+          <div class="col col-sm-6">
+            <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/webinars">back</a>
+            <part-webinar-info webinar="{{webinar}}"></part-webinar-info>
+          </div>
+          <div class="col col-sm-3">
+          </div>
+        </div>
       </div>
     </layout-admin>
 

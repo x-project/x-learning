@@ -1,18 +1,20 @@
 <link rel="import" href="../table-view/table-view.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
 
 <dom-module id="page-reviews">
   <template>
     <style include="style-grid"></style>
+    <style include="style-panel"></style>
 
     <layout-admin>
      <div class="toolbar">
         <h1>Reviews</h1>
       </div>
       <div class="main container">
-        <table-view items="{{teaching}}" fields='["title","total_review","score_review"]' on-click="on_click" on-delete="on_click_delete">
-          <h2 class="title">Courses</h2> 
-        </table-view>
+        <div class="panel">   
+          <table-view items="{{teaching}}" fields='["title","total_review","score_review"]' on-click="on_click"></table-view>
+        </div>
       </div>
     </layout-admin>
 
@@ -38,21 +40,11 @@
     attached:function(){
       this.manager= this.data.manager;
       this.teaching=this.manager.teaching;
-      // console.log(this.teaching)
+    },
 
-
-      // this.review = this.teaching.map(function (course, index) {
-      //   if(course.total_review){
-      //     return {
-      //       id: course.id,
-      //       Name: course.name,
-      //       NumberReview: course.total_review,
-      //       Review: course.score_review
-      //     };
-      //   }else{
-      //     return{};
-      //   }
-      // });
+    on_click:function(event){
+      console.log(event.detail.id)
+      page('/admin/review/course/' + event.detail.id)
     }
 
   });

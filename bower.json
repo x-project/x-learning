@@ -27,7 +27,7 @@
     "paper-toolbar": "PolymerElements/paper-toolbar#~1.1.4",
     "paper-drawer-panel": "PolymerElements/paper-drawer-panel#~1.0.6",
     "paper-icon-button": "PolymerElements/paper-icon-button#~1.0.6",
-    "vaadin-grid": "~1.0.0"
+    "paper-fab": "PolymerElements/paper-fab#~1.2.0"
   },
   "ignore": [
     "**/.*",

@@ -15,7 +15,15 @@
         <h2>Member {{member.fullname}}</h2>
       </div>
       <div class="main container">
-        <form-member member="{{member}}" token="{{token}}"></form-member>
+        <div class="row">
+          <div class="col col-sm-3">
+          </div>
+          <div class="col col-sm-6">
+            <form-member member="{{member}}" token="{{token}}"></form-member>
+          </div>
+          <div class="col col-sm-3">  
+          </div>
+        </div>
       </div>
     </layout-admin>
   </template>

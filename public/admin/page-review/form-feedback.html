@@ -1,0 +1,74 @@
+<link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../../styles/style-form/style-form.html">
+<link rel="import" href="../input-rating/input-rating-4.html">
+<dom-module id="form-feedback">
+  <template>
+    <style include="style-form">
+      form[read]{
+        pointer-events: none;
+      }
+    </style>
+
+    <form id="form" role="form" read$="{{read}}" on-submit="on_submit">
+      <div class="field">
+        <label class="label">Rating</label>
+        <input-rating-4 value="{{review.rating}}" editable></input-rating-4>
+      </div>
+      <div class="field">
+        <label class="label">Title</label>
+        <input class="input" type="text" is="iron-input" bind-value="{{review.title}}">
+      </div>
+      <div class="field">
+        <label class="label">Text</label>
+        <iron-autogrow-textarea is="iron-input" bind-value="{{review.text}}" rows="4"></iron-autogrow-textarea>
+      </div>
+      <input id="submit" type="submit" value="submit"/>
+    </form>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'form-feedback',
+
+    properties: {
+      review: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      read: {
+        type: Boolean,
+        value: false
+      }
+    },
+
+    attached: function () {
+      if (this.review.closed) {
+        this.feedback_completed();
+      }
+    },
+
+    feedback_completed: function () {
+      this.$.submit.hidden = true;
+      this.set('read', true);
+    },
+
+    on_rating: function (event) {
+      event.stopPropagation();
+      var rating = event.detail;
+      this.review.rating = rating;
+    },
+
+    on_submit: function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+      if (this.review.rating === 0) {
+        alert('rating can be greater than zero');
+        return;
+      }
+      this.fire('try-save');
+    }
+
+  });
+</script>

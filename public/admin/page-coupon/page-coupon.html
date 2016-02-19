@@ -21,11 +21,18 @@
         <part-coupon-header coupon="{{coupon}}"></part-coupon-header>
       </div>
       <div class="main container">
-        <part-coupon-info coupon="{{coupon}}" error="{{error}}"></part-coupon-info>
-        <part-coupon-discount coupon="{{coupon}}" error="{{error}}"></part-coupon-discount>
-        <part-coupon-period coupon="{{coupon}}" error="{{error}}"
-          on-change-date="on_change_date">
-        </part-coupon-period>
+       <div class="row">
+          <div class="col col-sm-3">
+          </div>
+          <div class="col col-sm-6">
+            <part-coupon-info coupon="{{coupon}}" error="{{error}}"></part-coupon-info>
+            <part-coupon-discount coupon="{{coupon}}" error="{{error}}"></part-coupon-discount>
+            <part-coupon-period coupon="{{coupon}}" error="{{error}}"
+              on-change-date="on_change_date">
+            </part-coupon-period>
+          </div>
+        <div class="col col-sm-3">
+        </div>
       </div>
     </layout-admin>
 

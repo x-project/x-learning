@@ -1,6 +1,8 @@
 <link rel="import" href="../table-view/table-view.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../components/paper-fab/paper-fab.html">
+
 
 <dom-module id="page-webinars">
   <template>
@@ -14,9 +16,9 @@
       </div>
       <div class="main container">
         <div class="panel">   
-          <a is="app-link" href="/admin/courses/{{course.id}}/webinar/new">add webinar</a>
-          <table-view items="{{webinars}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete"></table-view>
+          <table-view items="{{webinars}}" fields='["index", "title","description", "data"]' on-click="on_click" on-delete="on_click_delete"></table-view>
         </div>
+        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
       </div>
     </layout-admin>
   </template>
@@ -39,6 +41,7 @@
           id: webinar.id,
           title: webinar.title,
           description: webinar.description,
+          data: moment(webinar.data).format('MMMM Do YYYY, h:mm a'),
         index: '#' + index
         };
       })
@@ -56,6 +59,10 @@
 
     on_click: function (event) {
       page('/admin/courses/'+ this.course.id + '/webinar/' + event.detail.id);
+    },
+
+    on_click_add:function(){
+     page('/admin/courses/' + this.course.id + '/webinar/new');
     }
 
   });

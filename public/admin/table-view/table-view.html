@@ -19,10 +19,9 @@
       <table class="table table-striped table-hover">
         <thead>
           <tr on-click="on_click_row">
-          <template is="dom-repeat" items="{{fields}}" as="field">
+            <template is="dom-repeat" items="{{fields}}" as="field">
               <th>{{field}}</th>
             </template>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -33,10 +32,6 @@
                   <text-view text="{{_value(item,field)}}" limit="30"></text-view>
                 </td>
               </template>
-              <td>
-                <i class="fa fa-pencil" on-click="on_click_edit"></i>
-                <i class="fa fa-trash-o" on-click="on_click_delete"></i>
-              </td>
             </tr>
           </template>
         </tbody>

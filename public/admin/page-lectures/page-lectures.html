@@ -1,7 +1,6 @@
 <link rel="import" href="../table-view/table-view.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
 
-
 <dom-module id="page-lectures">
   <template>
     <style include="style-grid"></style>
@@ -14,10 +13,10 @@
       </div>
       <div class="main container">
         <div class="panel">
-          <a is="app-link" href="/admin/courses/{{course.id}}/lecture/new">add lecture</a>
           <table-view items="{{lectures}}" fields='["index", "title","description"]' on-click="on_click" on-delete="on_click_delete">
           </table-view>
         </div>
+        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
       </div>
     </layout-admin>
   </template>
@@ -60,6 +59,10 @@
       event.stopPropagation();
       event.preventDefault();
       page('/admin/courses/'+ this.course.id + '/lecture/' + event.detail.id);
+    },
+
+    on_click_add:function(){
+      page('/admin/courses/'+ this.course.id + '/lecture/new')
     }
 
   });

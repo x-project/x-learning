@@ -22,15 +22,22 @@
         <h1>My services</h1>
       </div>
       <div class="main container">
-        <part-services-aws services="{{services}}"></part-services-aws>
-        <part-services-plivo services="{{services}}"></part-services-plivo>
-        <part-services-braintree services="{{services}}"></part-services-braintree>
-        <part-services-google services="{{services}}"></part-services-google>
-        <part-services-facebook services="{{services}}"></part-services-facebook>
-        <part-services-mandrill services="{{services}}"></part-services-mandrill>
-        <part-services-phone services="{{services}}"></part-services-phone>
-        <part-services-secret-keys services="{{services}}"></part-services-secret-keys>
-        <part-services-email services="{{services}}"></part-services-email>
+        <div class="row">
+          <div class="col col-sm-6">
+            <part-services-aws services="{{services}}"></part-services-aws>
+            <part-services-plivo services="{{services}}"></part-services-plivo>
+            <part-services-braintree services="{{services}}"></part-services-braintree>
+            <part-services-email services="{{services}}"></part-services-email>
+          </div>
+          <div class="col col-sm-6">
+            <part-services-google services="{{services}}"></part-services-google>
+            <part-services-facebook services="{{services}}"></part-services-facebook>
+            <part-services-mandrill services="{{services}}"></part-services-mandrill>
+            <part-services-phone services="{{services}}"></part-services-phone>
+            <part-services-secret-keys services="{{services}}"></part-services-secret-keys>
+          
+          </div>
+        </div>
       </div>
     </layout-admin>
 

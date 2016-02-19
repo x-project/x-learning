@@ -1,3 +1,4 @@
+<link rel="import" href="../../components/paper-fab/paper-fab.html">
 <link rel="import" href="../../styles/style-button/style-button.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
@@ -5,6 +6,8 @@
 <link rel="import" href="part-articles-actions.html">
 <link rel="import" href="part-articles-items.html">
 <link rel="import" href="part-articles-pages.html">
+
+
 <dom-module id="page-articles">
   <template>
     <style include="style-grid"></style>
@@ -14,11 +17,11 @@
         <h2>Articles</h2>
       </div>
       <div class="main container">
-        <part-articles-actions></part-articles-actions>
         <part-articles-items articles="{{articles}}"></part-articles-items>
         <part-articles-pages on-change-page="on_change_page" perpage="{{perpage}}"
           count="{{count}}">
         </part-articles-pages>
+        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
       </div>
     </layout-admin>
 
@@ -79,6 +82,10 @@
       this.perpage = 4;
       this.page = event.detail.current - 1;
       this.get_articles();
+    },
+
+    on_click_add:function(){
+     page('/admin/articles/new');
     }
 
   });

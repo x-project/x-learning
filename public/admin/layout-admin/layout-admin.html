@@ -7,7 +7,7 @@
 <link rel="import" href="../../components/paper-toolbar/paper-toolbar.html">
 <dom-module id="layout-admin">
   <template>
-  <style include="style-grid"></style>
+    <style include="style-grid"></style>
     <style>
       /*.sidebar {
         background-color: #333;
@@ -38,11 +38,10 @@
       }
 
       .content {
-        height: 100vh;
+        height: 100%;
+        padding-top: 20px;
       }
-      paper-toolbar .toolbar {
-        display: flex;
-      }
+  
     </style>
 
     <paper-drawer-panel id="drawerPanel" responsive-width="920px">
@@ -56,7 +55,7 @@
         <!-- Main Toolbar -->
         <paper-toolbar>
           <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-          <content class="toolbar" select=".toolbar"></content>
+          <content select=".toolbar"></content>
         </paper-toolbar>
 
         <!-- Main Content -->

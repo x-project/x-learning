@@ -1,6 +1,8 @@
 <link rel="import" href="../table-view/table-view.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../components/paper-fab/paper-fab.html">
+
 
 <dom-module id="page-webinars-home">
   <template>
@@ -11,10 +13,11 @@
       <div class="toolbar">
         <h1>Webinars</h1>
       </div>
-      <div class="main">
+      <div class="main container">
         <div class="panel">    
-          <table-view items="{{webinars}}" fields='["index","title"]' on-click="on_click" on-delete="on_click_delete"></table-view>
+          <table-view items="{{webinars}}" fields='["index","title","description", "data"]' on-click="on_click" on-delete="on_click_delete"></table-view>
         </div>
+        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
       </div>
     </layout-admin>
 
@@ -57,6 +60,8 @@
         return {
           id: webinar.id,
           title: webinar.title,
+          description:webinar.description,
+          data:moment(webinar.data).format('MMMM Do YYYY, h:mm a'),
           courseid: webinar.course_id,
         index: '#' + index
         };
@@ -66,6 +71,10 @@
     on_click: function(event){
       console.log(event.detail)
       page("/admin/courses/"+event.detail.course_id +"/webinar/" + event.detail.id );
+    },
+
+    on_click_add:function(){
+     page('/admin/');
     }
 
   });
