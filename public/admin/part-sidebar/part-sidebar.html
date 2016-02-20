@@ -1,132 +1,84 @@
 <link rel="stylesheet" type="text/css" href="../../fonts/icons/css/font-awesome.min.css">
+<link rel="import" href="../../components/paper-menu/paper-menu.html">
+<link rel="import" href="../../components/paper-menu/paper-submenu.html">
+
 <dom-module id="part-sidebar">
   <template>
-    <style>
-      :host {
+  <style>
+    :host {
         display: block;
-      }
+    }
+    .title{
+      padding: 10px 30px;
+    }
+    paper-menu{
+      background-color: #333;
+      color:#fff;
+      display: inline-flex;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
 
-      nav {
-        position: fixed;
-        padding: 4px 20px;
-      }
+    paper-menu paper-submenu{
+      padding: 5px 20px
+    }
+    paper-menu paper-item {
+      display: block;
+      padding: 10px 50px;
+      /*margin:  40px 10px;*/
+    }
+    paper-item {
+      display: block;
+      padding: 10px 20px;
+    }
 
-      .title .link {
-        text-decoration: none;
-        color: #777;
-        font-size: 14px;
-        text-transform: uppercase;
-        font-family: font-bold;
-      }
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
 
-      .links {
-        list-style: none;
-        padding: 0;
-      }
+    i{
+      padding: 0 10px;
+    }
 
-      .links .link {
-        display: inline-block;
-        text-decoration: none;
-        color: #fff;
-        margin-bottom: 12px;
-        font-size: 14px;
-      }
-      .links .link:hover {
-        color: #777;
-        font-family: font-bold;
-      }
 
-      .links .link .fa {
-        width: 26px;
-      }
-    </style>
+  </style>
     <api-user-logout id="logout" collection="managers" access-token="{{admin_token}}"
       on-response="on_logout" on-error="on_error">
     </api-user-logout>
 
-    <nav role="navigation">
+    <paper-menu class="menu-trigger">
       <h3 class="title"><a class="link" href="/admin">X-Learning</a></h3>
-      <ul class="links">
-        <li>
-          <a is="app-link" class="link" href="/admin/team">
-            <i class="fa fa-users"></i>
-            <span>Team</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="links">
-        <li>
-          <a is="app-link" class="link" href="/admin/">
-            <i class="fa fa-mortar-board"></i>
-            <span>Courses</span>
-          </a>
-        </li>
-        <li>
-          <a is="app-link" class="link" href="/admin/webinars">
-            <i class="fa fa-sitemap"></i>
-            <span>Webinars</span>
-          </a>
-        </li>
-        <li>
-          <a is="app-link" class="link" href="/admin/students">
-            <i class="fa fa-users"></i>
-            <span>Students</span>
-          </a>
-        </li>
-        <li>
-          <a is="app-link" class="link" href="/admin/reviews">
-            <i class="fa fa-home fa-lg" ></i>
-            <span>Reviews</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="links">
-        <li>
-          <a is="app-link" class="link" href="/admin/articles">
-            <i class="fa fa-newspaper-o"></i>
-            <span>Articles</span>
-          </a>
-        </li>
-        <li>
-          <a is="app-link" class="link" href="/admin/categories">
-            <i class="fa fa-sitemap"></i>
-            <span>Categories</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="links">
-        <li>
-          <a is="app-link" class="link" href="/admin/coupons">
-            <i class="fa fa-percent"></i>
-            <span>Coupons</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="links">
-        <li>
-          <a is="app-link" class="link" href="/admin/services">
-            <i class="fa fa-key"></i>
-            <span>Services</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="links">
-        <li>
-          <a is="app-link" class="link" href="/">
-            <i class="fa fa-home fa-lg"></i>
-            <span>Home</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="links">
-        <li>
-          <a is="app-link" class="link" on-click="on_click_logout">
-            <i class="fa fa-sign-out" ></i>
-            <span>Logout</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+      
+      <paper-submenu>
+        <paper-item class="menu-trigger"><i class="fa fa-user"></i>Account</paper-item>
+        <paper-menu class="menu-content sublist">
+          <paper-item><a href="/admin/team">Team</a></paper-item>
+          <paper-item><a href="/admin/services">Services</a></paper-item>
+        </paper-menu>
+      </paper-submenu>
+
+      <paper-submenu>
+        <paper-item class="menu-trigger"> <i class="fa fa-mortar-board"></i>Course</paper-item>
+        <paper-menu class="menu-content sublist">
+          <paper-item><a href="/admin/">Courses</a></paper-item>
+          <paper-item><a href="/admin/webinars">Webinars</a></paper-item>
+          <paper-item><a href="/admin/students">Stundents</a></paper-item>
+          <paper-item><a href="/admin/reviews">Reviews</a></paper-item>
+        </paper-menu>
+      </paper-submenu>
+      
+      <paper-submenu>
+        <paper-item class="menu-trigger"><i class="fa fa-newspaper-o"></i>Magazines</paper-item>
+        <paper-menu class="menu-content sublist">
+          <paper-item><a href="/admin/articles">Articles</a></paper-item>
+          <paper-item><a href="/admin/categories">Categories</a></paper-item>
+        </paper-menu>
+      </paper-submenu>
+      
+      <paper-item><i class="fa fa-home fa-lg"></i><a href="/">Home</paper-item>
+      <paper-item on-click="on_click_logout"><i class="fa fa-sign-out" ></i>Logout</paper-item>
+    </paper-menu>
 
   </template>
 </dom-module>
