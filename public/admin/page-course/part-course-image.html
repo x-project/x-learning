@@ -8,7 +8,7 @@
       .image {
         background-color: #eee;
         height: 100px;
-        width: 20%;
+        width: 100%;
       }
     </style>
 
@@ -17,7 +17,7 @@
     <div class="panel">
       <h3>Image</h3>
       <template is="dom-if" if="{{course.cover}}">
-        <iron-image class="image" preload src="{{course.cover.url}}" sizing="contain"></iron-image>
+        <iron-image class="image" preload src="{{course.cover.url}}" sizing="cover"></iron-image>
         <h4>Change course image:</h4>
       </template>
       <form-course-image on-change="on_change" course="{{course}}" on-response="on_response" error="{{error}}"></form-course-image>

@@ -1,54 +1,79 @@
 <link rel="stylesheet" type="text/css" href="../../fonts/icons/css/font-awesome.min.css">
 <link rel="import" href="../../components/paper-menu/paper-menu.html">
 <link rel="import" href="../../components/paper-menu/paper-submenu.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
 
 <dom-module id="part-sidebar">
   <template>
-  <style>
-    :host {
+    <style include="style-panel"></style>
+
+    <style>
+      :host {
+          display: block;
+      }
+      .title{
+        font-size: 30px;
+        padding-top: 0px;
+        margin-left: 60px;
+      }
+      .menu-trigger{
+        font-size: 15px;
+      }
+      .panel{
+        background-color: #333;
+        box-shadow: 0px -3px 0px #999;
+        padding: 0px;
+      }
+      paper-menu{
+        background-color: #333;
+        color:#fff;
+        display: inline-flex;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+      paper-item{
         display: block;
-    }
-    .title{
-      padding: 10px 30px;
-    }
-    paper-menu{
-      background-color: #333;
-      color:#fff;
-      display: inline-flex;
-      font-size: 14px;
-      text-transform: uppercase;
-    }
+        margin-top: 25px;
+        margin-left: 50px;
+        /*margin: 40px 50px;*/
+      }
 
-    paper-menu paper-submenu{
-      padding: 5px 20px
-    }
-    paper-menu paper-item {
-      display: block;
-      padding: 10px 50px;
-      /*margin:  40px 10px;*/
-    }
-    paper-item {
-      display: block;
-      padding: 10px 20px;
-    }
+      paper-item:hover{
+        cursor: pointer;
+      }
 
-    a {
-      color: #fff;
-      text-decoration: none;
-    }
-
-    i{
-      padding: 0 10px;
-    }
+      paper-menu .menu-trigger {
+        display: block;
+        /*padding: 10px 50px;*/
+        /*margin:  40px 10px;*/
+      }
+      paper-submenu .sublist paper-item {
+        display: block;
+        margin-left: 80px;
+        margin-top: 10px;  
+      }
 
 
-  </style>
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+      a:hover{
+        cursor: pointer;
+      }
+
+      i{
+        padding: 0 10px;
+      }
+
+
+    </style>
     <api-user-logout id="logout" collection="managers" access-token="{{admin_token}}"
       on-response="on_logout" on-error="on_error">
     </api-user-logout>
 
-    <paper-menu class="menu-trigger">
       <h3 class="title"><a class="link" href="/admin">X-Learning</a></h3>
+    <paper-menu class="menu-trigger panel">
       
       <paper-submenu>
         <paper-item class="menu-trigger"><i class="fa fa-user"></i>Account</paper-item>
