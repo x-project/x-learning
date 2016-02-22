@@ -23,13 +23,9 @@
     <app-session id="session"></app-session>
 
     <form class="panel-form" on-submit="on_submit">
-      <div class="field">
-        <paper-input label="[[services_public_key_label]]" type="text" value="{{service.public_key}}"></paper-input>
-      </div>
-      <label class="label">private key</label>
-      <input-secret private_key="{{service.private_key}}"></input-secret>
+      <paper-input label="[[services_public_key_label]]" type="text" value="{{service.public_key}}"></paper-input>
+      <input-secret label="Private Key" private_key="{{service.private_key}}"></input-secret>
       <button id="update" type="submit" class="btn btn-secondary">update</button>
-    </div>
 
     <div class="password" show$="{{show}}">
       <div class="panel-form">

@@ -20,19 +20,10 @@
     <app-session id="session"></app-session>
 
     <form class="panel-form" on-submit="on_submit">
-      <div class="field">
         <paper-input label="Public key" type="text" value="{{service.public_key}}"></paper-input>
-      </div>
-      <div class="field">
-        <label class="label">private key</label>
-        <input-secret private_key="{{service.private_key}}"></input-secret>
-        <input-errors property="braintree_private_key" error="{{error.details}}"></input-errors>
-      </div>
-      <div class="field">
+        <input-secret label="Private Key" private_key="{{service.private_key}}"></input-secret>
         <paper-input label="Merchant id" type="text" value="{{service.merchant_id}}"></paper-input>
-       
-      </div>
-      <button id="update" type="submit" class="btn btn-secondary">update</button>
+        <button id="update" type="submit" class="btn btn-secondary">update</button>
     </form>
 
     <div class="password" show$="{{show}}">

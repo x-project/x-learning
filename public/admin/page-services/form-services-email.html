@@ -19,18 +19,10 @@
     <app-session id="session"></app-session>
 
     <form class="panel-form" on-submit="on_submit">
-      <div class="field">
         <paper-input label="Email" type="text" value="{{service.email}}"></paper-input>
-      </div>
-      <div class="field">
-        <label class="label">[[services_password_email_label]]</label>
-        <input-secret private_key="{{service.email_password}}"></input-secret>
-        <input-errors property="email_password" error="{{error.details}}"></input-errors>
-      </div>
-      <div class="field">
+        <input-secret label="Password" private_key="{{service.email_password}}"></input-secret>
         <paper-input label="Service Email" type="text" value="{{service.email_service}}"></paper-input>
-      </div>
-      <button id="update" type="submit" class="btn btn-secondary">update</button>
+        <button id="update" type="submit" class="btn btn-secondary">update</button>
     </form>
 
     <div class="password" show$="{{show}}">
