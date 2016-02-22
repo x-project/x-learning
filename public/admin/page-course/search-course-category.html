@@ -1,4 +1,7 @@
 <link rel="import" href="../../components/api-model/api-model.html">
+<link rel="import" href="../../components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../components/paper-item/paper-item.html">
+
 <dom-module id="search-course-category">
   <template>
     <style>
@@ -24,10 +27,21 @@
        }
        
     </style>
-        <style include="style-form"></style>
+    <style include="style-form"></style>
 
 
     <api-model-find id="find" collection="categories" response="{{categories}}"></api-model-find>
+   
+
+<!--     <paper-dropdown-menu label="Category" on-focus="on_edit_category">
+      <paper-listbox class="dropdown-content">
+        <template id="categories" is="dom-repeat" items="{{categories}}">
+          <paper-item on-click="on_selected">{{item.title}}</paper-item>
+        </template>
+      </paper-listbox>
+    </paper-dropdown-menu> -->
+
+
 
     <div class="field ">
       <label class="label">Category</label>
@@ -38,7 +52,7 @@
 
     <div class="items">
       <template id="categories" is="dom-repeat" items="{{categories}}">
-          <div class="item" on-click="on_click_select">
+          <div class="item" on-click="on_selected">
             <span>{{item.title}}</span>
           </div>
         <div>
@@ -77,10 +91,8 @@
       this.$.find.send();
     },
 
-    on_click_select: function (event) {
-      event.stopPropagation();
+    on_selected: function (event) {
       var category = this.$.categories.itemForElement(event.target);
-     
       if(this.selected.id!= category.id){
         this.title=category.title;
         this.selected = category;

@@ -13,7 +13,7 @@
       }
       .title{
         font-size: 30px;
-        padding-top: 0px;
+        padding-top: 10px;
         margin-left: 60px;
       }
       .menu-trigger{
@@ -21,7 +21,7 @@
       }
       .panel{
         background-color: #333;
-        box-shadow: 0px -3px 0px #999;
+        box-shadow: 0px 0px 0px #999;
         padding: 0px;
       }
       paper-menu{
@@ -31,11 +31,11 @@
         font-size: 12px;
         text-transform: uppercase;
       }
-      paper-item{
+      paper-menu paper-item{
         display: block;
-        margin-top: 25px;
-        margin-left: 50px;
-        /*margin: 40px 50px;*/
+        min-height: 18px;
+        margin-top: 10px;
+        margin-left: 30px;
       }
 
       paper-item:hover{
@@ -49,8 +49,9 @@
       }
       paper-submenu .sublist paper-item {
         display: block;
-        margin-left: 80px;
-        margin-top: 10px;  
+        margin-left: 60px;
+        margin-top: 5px;
+        min-height: 18px;
       }
 
 
@@ -72,7 +73,7 @@
       on-response="on_logout" on-error="on_error">
     </api-user-logout>
 
-      <h3 class="title"><a class="link" href="/admin">X-Learning</a></h3>
+    <h3 class="title"><a class="link" href="/admin">X-Learning</a></h3>
     <paper-menu class="menu-trigger panel">
       
       <paper-submenu>
