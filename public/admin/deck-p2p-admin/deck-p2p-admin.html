@@ -10,8 +10,8 @@
       }
 
       #teacher {
-        width: 500px;
-        height: auto;
+        width: 100%;
+        height: 500px;
       }
 
       #students{
@@ -32,17 +32,16 @@
       }
     </style>
   
-    <h2>Realtime {{data.title}}</h2>
     <div id="container">
       <div id="videos">
         <video id="teacher" src="{{my_stream}}" muted="true" autoplay></video>
       </div>
 
-      <div id="actions">
+      <!-- <div id="actions">
         <template is="dom-if" if="{{error}}">
           <p>Failed to access the webcam and microphone.</p>
           <button class="btn btn-warning" on-click="on_click_retry">retry call</button>
-        </template>
+        </template> -->
 
         <!-- <div>
           <template id="others" is="dom-repeat" items="{{others}}" as="other">

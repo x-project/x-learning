@@ -12,12 +12,20 @@
     </api-model-update>
     
     <layout-admin>
-      <div class="toolbar">
-        <h1>Webinars</h1>
+
+     <div class="toolbar">
+        <h1>Webinars: {{data.webinar.title}}</h1>
       </div>
       <div class="main container">
-        <deck-p2p-admin data="{{data.webinar}}" on-peer="on_peer" on-webinar-closed="webinar_closed"></deck-p2p-admin>
-      </div>
+        <div class="row">
+          <div class="col col-sm-3">
+          </div>
+          <div class="col col-sm-6">
+           <deck-p2p-admin data="{{data.webinar}}" on-peer="on_peer" on-webinar-closed="webinar_closed"></deck-p2p-admin>
+          </div>
+          <div class="col col-sm-3">
+          </div>
+        </div>
     </layout-admin>
     
   </template>
@@ -36,9 +44,6 @@
       this.data.webinar.state="offline"
       this.$.update.send();
     }
-
-
-
 
   });
 </script>
