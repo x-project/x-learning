@@ -9,7 +9,14 @@
 <dom-module id="page-team">
   <template>
     <style include="style-grid"></style>
-    <style include="style-page"></style>  
+    <style include="style-page"></style>
+    <style>
+    .btn-new{
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        margin: 40px;
+    }
+    </style> 
 
     <app-session id="session"></app-session>
 
@@ -26,7 +33,9 @@
       </div>
       <div class="main container">
         <part-team-members manager="{{manager}}" members="{{members}}"></part-team-members>
-        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
+        <div class="btn-new">
+          <paper-fab icon="add" on-click="on_click_add"></paper-fab>
+        </div>
         <part-team-invites manager="{{manager}}" invites="{{invites}}"></part-team-invites>
       </div>
     </layout-admin>

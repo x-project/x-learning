@@ -15,6 +15,7 @@
 <dom-module id="page-categories">
   <template>
     <style include="style-grid"></style>
+    <style include="style-panel"></style>
 
     <layout-admin>
       <div class="toolbar">
@@ -27,7 +28,9 @@
         <part-categories-pages on-change-page="on_change_page" perpage="{{perpage}}"
           count="{{count}}">
         </part-categories-pages>
-        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
+        <div class="btn-new">
+          <paper-fab icon="add" on-click="on_click_add"></paper-fab>
+        </div>
       </div>
     </layout-admin>
 
