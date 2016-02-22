@@ -1,4 +1,5 @@
 <link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
 <link rel="import" href="../input-errors/input-errors.html">
 <link rel="import" href="../input-secret/input-secret.html">
 <dom-module id="form-services-braintree">
@@ -20,9 +21,7 @@
 
     <form class="panel-form" on-submit="on_submit">
       <div class="field">
-        <label class="label">[[service_braintree_public_key_label]]</label>
-        <input class="form-control" type="text" is="iron-input" bind-value="{{service.public_key}}">
-        <input-errors property="braintree_public_key" error="{{error.details}}"></input-errors>
+        <paper-input label="Public key" type="text" value="{{service.public_key}}"></paper-input>
       </div>
       <div class="field">
         <label class="label">private key</label>
@@ -30,9 +29,8 @@
         <input-errors property="braintree_private_key" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
-        <label class="label">[[service_braintree_mercant_id_label]]</label>
-        <input class="form-control" type="text" is="iron-input" bind-value="{{service.merchant_id}}">
-        <input-errors property="braintree_private_key" error="{{error.details}}"></input-errors>
+        <paper-input label="Merchant id" type="text" value="{{service.merchant_id}}"></paper-input>
+       
       </div>
       <button id="update" type="submit" class="btn btn-secondary">update</button>
     </form>
@@ -40,8 +38,7 @@
     <div class="password" show$="{{show}}">
       <div class="panel-form">
         <div class="field">
-          <label class="label">Password</label>
-          <input class="form-control" type="text" is="iron-input" bind-value="{{admin_password}}">
+          <paper-input label="Password" type="text" value="{{admin_password}}"></paper-input>
         </div>
         <button class="btn btn-secondary" on-click="on_click_submit">submit</button>
         <button class="btn btn-secondary" on-click="on_click_undo">undo</button>
@@ -88,7 +85,7 @@
 
     on_click_submit: function (event) {
       event.stopPropagation();
-      var admin = this.$.session.get('user');
+      var admin = this.$.session.get('admin_user');
       var data = {
         public_key: this.service.public_key,
         private_key: this.service.private_key,

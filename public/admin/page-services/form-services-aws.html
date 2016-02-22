@@ -1,6 +1,7 @@
 <link rel="import" href="../../components/app-session/app-session.html">
-<link rel="import" href="../input-errors/input-errors.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
 <link rel="import" href="../input-secret/input-secret.html">
+
 <dom-module id="form-services-aws">
   <template>
     <style include="style-button"></style>
@@ -19,10 +20,9 @@
     <app-session id="session"></app-session>
 
     <form class="panel-form" on-submit="on_submit">
+
       <div class="field">
-        <label class="label">[[service_aws_public_key_label]]</label>
-        <input class="form-control" type="text" is="iron-input" bind-value="{{service.public_key}}">
-        <input-errors property="aws_public_key" error="{{error.details}}"></input-errors>
+        <paper-input label="Public key" type="text" value="{{service.public_key}}"></paper-input>
       </div>
       <div class="field">
         <label class="label">private key</label>
@@ -30,29 +30,19 @@
         <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
       </div>
       <div class="field">
-        <label class="label">[[service_aws_bucket_label]]</label>
-        <input class="form-control" type="text" is="iron-input" bind-value="{{service.bucket}}">
-        <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
+        <paper-input label="Bucket" type="text" value="{{service.bucket}}"></paper-input>
       </div>
       <div class="field">
-        <label class="label">[[service_aws_region_label]]</label>
-        <input class="form-control" type="text" is="iron-input" bind-value="{{service.region}}">
-        <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
+        <paper-input label="Region" type="text" value="{{service.region}}"></paper-input>
       </div>
       <div class="field">
-        <label class="label">[[service_aws_cloudfront]]</label>
-        <input class="form-control" type="text" is="iron-input" bind-value="{{service.cloudfront}}">
-        <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
+        <paper-input label="Cloudfront" type="text" value="{{service.cloudfront}}"></paper-input>
       </div>
       <div class="field">
-        <label class="label">[[service_aws_pipeline_label]]</label>
-        <input class="form-control" type="text" is="iron-input" bind-value="{{service.pipeline_id}}">
-        <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
+        <paper-input label="Pipeline id" type="text" value="{{service.pipeline_id}}"></paper-input>
       </div>
       <div class="field">
-        <label class="label">[[service_aws_preset_label]]</label>
-        <input class="form-control" type="text" is="iron-input" bind-value="{{service.preset_id}}">
-        <input-errors property="aws_private_key" error="{{error.details}}"></input-errors>
+        <paper-input label="Preset id" type="text" value="{{service.preset_id}}"></paper-input>
       </div>
       <button id="update" type="submit" class="btn btn-secondary">update</button>
     </form>
@@ -60,8 +50,7 @@
     <div class="password" show$="{{show}}">
       <div class="panel-form">
         <div class="field">
-          <label class="label">Password</label>
-          <input class="form-control" type="text" is="iron-input" bind-value="{{admin_password}}">
+          <paper-input label="Password" type="text" value="{{admin_password}}"></paper-input>
         </div>
         <button class="btn btn-secondary" on-click="on_click_submit">submit</button>
         <button class="btn btn-secondary" on-click="on_click_undo">undo</button>
