@@ -1,111 +1,160 @@
 <link rel="stylesheet" type="text/css" href="../../fonts/icons/css/font-awesome.min.css">
 <link rel="import" href="../../components/paper-menu/paper-menu.html">
+<link rel="import" href="../../components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../../components/paper-menu/paper-submenu.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
 
 <dom-module id="part-sidebar">
   <template>
     <style include="style-panel"></style>
-
     <style>
       :host {
           display: block;
       }
-      .title{
-        font-size: 30px;
-        padding-top: 10px;
-        margin-left: 60px;
+
+      nav {
+        position: fixed;
+        padding: 4px 20px;
       }
-      .menu-trigger{
-        font-size: 15px;
-      }
-      .panel{
-        background-color: #333;
-        box-shadow: 0px 0px 0px #999;
-        padding: 0px;
-      }
-      paper-menu{
-        background-color: #333;
-        color:#fff;
-        display: inline-flex;
-        font-size: 12px;
+      .title .link{
+        text-decoration: none;
+        color: #fff;
+        font-size: 14px;
         text-transform: uppercase;
-      }
-      paper-menu paper-item{
-        display: block;
-        min-height: 18px;
-        margin-top: 10px;
-        margin-left: 30px;
+        font-family: font-bold;
       }
 
-      paper-item:hover{
-        cursor: pointer;
-      }
-
-      paper-menu .menu-trigger {
-        display: block;
-        /*padding: 10px 50px;*/
-        /*margin:  40px 10px;*/
-      }
-      paper-submenu .sublist paper-item {
-        display: block;
-        margin-left: 60px;
-        margin-top: 5px;
-        min-height: 18px;
-      }
-
-
-      a {
+      .links, .links .link{
         color: #fff;
         text-decoration: none;
+        padding: 10px, 0px;
+        list-style: none;
+        margin-bottom: 12px;
+        font-size: 14px;
       }
+      .links .link{
+        padding-left: 20px;
+
+      }
+      li{
+        padding-top: 10px;
+      }
+
+      .links .link:hover {
+        color: #777;
+        font-family: font-bold;
+      }
+
+      .links .link .fa {
+        width: 26px;
+      }
+
+      a {
+        list-style: none;
+        text-decoration: none;
+        color: #fff;
+      }
+
       a:hover{
         cursor: pointer;
+        color: #777;
+        font-family: font-bold;
       }
-
-      i{
-        padding: 0 10px;
-      }
-
 
     </style>
-    <api-user-logout id="logout" collection="managers" access-token="{{admin_token}}"
-      on-response="on_logout" on-error="on_error">
+    <api-user-logout id="logout" collection="managers" access-token="{{admin_token}}"on-response="on_logout" on-error="on_error">
     </api-user-logout>
 
-    <h3 class="title"><a class="link" href="/admin">X-Learning</a></h3>
+    <nav role="navigation">
+      <h3 class="title"><a class="link" href="/admin">X-Learning</a></h3>
+     
+      <ul class="links">
+        <li class="category">
+          <!-- <i class="fa fa-users"></i> -->
+          <i class="fa fa-key"></i>
+          <span>Project</span>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/team">
+            <span>Team</span>
+          </a>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/services">
+            <span>Services</span>
+          </a>
+        </li>
+      </ul>
 
-    <paper-menu class="panel" multi>
-      <paper-submenu>
-        <paper-item class="menu-trigger"><i class="fa fa-user"></i>Account</paper-item>
-        <paper-menu class="menu-content sublist">
-          <paper-item><a href="/admin/team">Team</a></paper-item>
-          <paper-item><a href="/admin/services">Services</a></paper-item>
-        </paper-menu>
-      </paper-submenu>
+      <ul class="links">
+        <li class="category">
+          <i class="fa fa-mortar-board"></i>
+          <span>School</span>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/">
+            <span>Courses</span>
+          </a>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/webinars">
+            <span>Webinars</span>
+          </a>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/students">
+            <span>Students</span>
+          </a>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/reviews">
+            <span>Reviews</span>
+          </a>
+        </li>
+      </ul>
 
-      <paper-submenu>
-        <paper-item class="menu-trigger"> <i class="fa fa-mortar-board"></i>Course</paper-item>
-        <paper-menu class="menu-content sublist">
-          <paper-item><a href="/admin/">Courses</a></paper-item>
-          <paper-item><a href="/admin/webinars">Webinars</a></paper-item>
-          <paper-item><a href="/admin/students">Stundents</a></paper-item>
-          <paper-item><a href="/admin/reviews">Reviews</a></paper-item>
-          <paper-item><a href="/admin/coupons">Coupons</a></paper-item>
-        </paper-menu>
-      </paper-submenu>
+      <ul class="links">
+        <li class="category">
+          <i class="fa fa-newspaper-o"></i>
+          <span>Magazine</span>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/articles">
+            <span>Articles</span>
+          </a>
+        </li>
+          <a is="app-link" class="link" href="/admin/categories">
+            <span>Categories</span>
+          </a>
+        </li>
+      </ul>
       
-      <paper-submenu>
-        <paper-item class="menu-trigger"><i class="fa fa-newspaper-o"></i>Magazines</paper-item>
-        <paper-menu class="menu-content sublist">
-          <paper-item><a href="/admin/articles">Articles</a></paper-item>
-          <paper-item><a href="/admin/categories">Categories</a></paper-item>
-        </paper-menu>
-      </paper-submenu>
+<!--       <ul class="links">
+        <li>
+          <a is="app-link" class="link" href="/admin/coupons">
+            <i class="fa fa-percent"></i>
+            <span>Coupons</span>
+          </a>
+        </li>
+      </ul> -->
       
-      <paper-item><i class="fa fa-home fa-lg"></i><a href="/">Home</paper-item>
-      <paper-item on-click="on_click_logout"><i class="fa fa-sign-out" ></i>Logout</paper-item>
-    </paper-menu>
+      <ul class="links">
+        <li class="category">
+          <a is="app-link" href="/">
+          <i class="fa fa-home fa-lg"></i>
+          <span>Home</span>
+        </li>
+      </ul>
+
+      <ul class="links">
+        <li class="category">
+          <a is="app-link" on-click="on_click_logout">
+          <i class="fa fa-sign-out" ></i>
+          <span>Logout</span>
+        </li>
+      </ul>
+      
+    </nav>
 
   </template>
 </dom-module>
