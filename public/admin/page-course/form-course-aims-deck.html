@@ -1,5 +1,4 @@
-<link rel="import" href="/components/iron-autogrow-textarea/iron-autogrow-textarea.html">
-<link rel="import" href="/components/iron-input/iron-input.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
 
 <dom-module id="form-course-aims-deck">
   <template>
@@ -27,16 +26,14 @@
   </style>
   <style include="style-form"></style>
   <style include="style-button"></style>
-
-      <input class="form-control" type="text" is="iron-input" bind-value="{{item}}">
-      <button class="btn btn-secondary" on-click="on_click_add">add</button>
-        <template is="dom-repeat" id='selected' items="{{selected}}" as="select">
-          <div class="pill">
-            <span>{{select.item}}</span>
-            <span on-click="on_click_delete" class="delete">x</span>
-          <div>
-        </template>
-
+    <paper-input label="{{label}}" id="title" type="text" value="{{item}}"></paper-input>
+    <button class="btn btn-secondary" on-click="on_click_add">add</button>
+    <template is="dom-repeat" id='selected' items="{{selected}}" as="select">
+      <div class="pill">
+        <span>{{select.item}}</span>
+        <span on-click="on_click_delete" class="delete">x</span>
+      <div>
+    </template>
   </template>
 </dom-module>
 <script>

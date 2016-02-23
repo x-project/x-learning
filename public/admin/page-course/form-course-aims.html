@@ -6,17 +6,11 @@
 <dom-module id="form-course-aims">
   <template>
     <style include="style-form"></style>
-      <div class="field">
-        <label class="label"> At the end of my course, students will be able to..</label>
-        <form-course-aims-deck on-change="on_change_skill" selected="{{course.skill}}"></form-course-aims-deck>
-      </div>
-      <div class="field">
-        <label class="label">Who is advised to follow this course, and who is not ?</label>
-        <form-course-aims-deck on-change="on_change_audience" selected="{{course.audience}}"></form-course-aims-deck>
-      </div>
-      <div class="field">
-        <label class="label">What students need to know or do before you start your course ?</label>
-        <form-course-aims-deck on-change="on_change_need_skill" selected="{{course.need_skill}}"></form-course-aims-deck>
+        <form-course-aims-deck label="At the end of my course, you will be able to" on-change="on_change_skill" selected="{{course.skill}}"></form-course-aims-deck>
+
+        <form-course-aims-deck label="Who is advised to follow this course?" on-change="on_change_audience" selected="{{course.audience}}"></form-course-aims-deck>
+
+        <form-course-aims-deck label="What you need to know before starting this course?" on-change="on_change_need_skill" selected="{{course.need_skill}}"></form-course-aims-deck>
       </div>
 
   </template>

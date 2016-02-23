@@ -273,10 +273,9 @@
         page('/admin/login');
         return;
       }
-      
-        context.page = 'page-coupon';
-       
-        this.open(context);
+      context.data={};
+      context.page = 'page-coupon'; 
+      this.open(context);
      
     },
 

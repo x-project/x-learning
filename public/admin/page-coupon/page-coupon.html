@@ -58,7 +58,8 @@
     },
 
     attached: function () {
-      this.coupon = this.data.coupon;
+      this.coupon = this.data.coupon || {};
+      console.log(this.coupon)
     },
 
     on_try_save: function (event) {

@@ -29,6 +29,11 @@
     }
   },
   "relations": {
+    "course": {
+      "type": "belongsTo",
+      "model": "Course",
+      "foreignKey": "course_id"
+    },
   },
   "acls": [],
   "methods": [],
