@@ -12,53 +12,51 @@
           display: block;
       }
 
-      nav {
-        position: fixed;
-        padding: 4px 20px;
+      .title{
+        padding-top: 30px
       }
+
       .title .link{
-        text-decoration: none;
         color: #fff;
-        font-size: 14px;
+        font-size: 16px;
         text-transform: uppercase;
-        font-family: font-bold;
+        font-family: font-light;
+        padding-left: 40px;
       }
+      .links {
+         list-style: none;
+      }
+      .links .link {
+         padding-left: 22px;
+         text-decoration: none;
+         color: #fff;
+       }
+       li {
+         padding-top: 15px;
 
-      .links, .links .link{
-        color: #fff;
-        text-decoration: none;
-        padding: 10px, 0px;
-        list-style: none;
-        margin-bottom: 12px;
-        font-size: 14px;
-      }
-      .links .link{
-        padding-left: 20px;
+       }
+       .link, .category, span:hover {
+          cursor: pointer;
+          color: black;
+       }
 
-      }
-      li{
-        padding-top: 10px;
-      }
+       .links .category span:hover,
+       .links .category i:hover,
+       .links .category:hover{
+        cursor: default;
+        color:#fff;
+       }
 
-      .links .link:hover {
-        color: #777;
-        font-family: font-bold;
-      }
-
-      .links .link .fa {
-        width: 26px;
-      }
+       .category {
+         color: #fff;
+       }
 
       a {
         list-style: none;
         text-decoration: none;
         color: #fff;
-      }
-
-      a:hover{
-        cursor: pointer;
-        color: #777;
-        font-family: font-bold;
+        font-family: font-light;
+        letter-spacing: 1px;
       }
 
     </style>
@@ -66,12 +64,13 @@
     </api-user-logout>
 
     <nav role="navigation">
-      <h3 class="title"><a class="link" href="/admin">X-Learning</a></h3>
+      <div class="title"><a class="link" href="/admin">X-Learning</a></div>
      
       <ul class="links">
         <li class="category">
           <!-- <i class="fa fa-users"></i> -->
-          <i class="fa fa-key"></i>
+          <!-- <i class="fa fa-key"></i> -->
+          <i class="fa fa-bar-chart-o"></i>
           <span>Project</span>
         </li>
         <li>
@@ -82,6 +81,11 @@
         <li>
           <a is="app-link" class="link" href="/admin/services">
             <span>Services</span>
+          </a>
+        </li>
+        <li>
+          <a is="app-link" class="link" href="/admin/dashboard">
+            <span>Dashboard</span>
           </a>
         </li>
       </ul>
@@ -123,6 +127,7 @@
             <span>Articles</span>
           </a>
         </li>
+        <li>
           <a is="app-link" class="link" href="/admin/categories">
             <span>Categories</span>
           </a>
@@ -141,8 +146,9 @@
       <ul class="links">
         <li class="category">
           <a is="app-link" href="/">
-          <i class="fa fa-home fa-lg"></i>
-          <span>Home</span>
+            <i class="fa fa-home fa-lg"></i>
+            <span>Home</span>
+          </a>
         </li>
       </ul>
 
@@ -151,9 +157,10 @@
           <a is="app-link" on-click="on_click_logout">
           <i class="fa fa-sign-out" ></i>
           <span>Logout</span>
+          </a>
         </li>
       </ul>
-      
+
     </nav>
 
   </template>
