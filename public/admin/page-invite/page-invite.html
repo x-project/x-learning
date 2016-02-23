@@ -12,6 +12,8 @@
 <dom-module id="page-invite">
   <template>
     <style include="style-grid"></style>
+    <style include="style-page"></style>
+
     <app-session id="session"></app-session>
 
     <api-model-create id="create" collection="invites" response="{{response}}"
@@ -20,7 +22,7 @@
 
     <layout-admin on-try-invite="on_try_invite">
       <div class="toolbar">
-        <h1>Invite</h1>
+        <h1 class="title">Invite</h1>
       </div>
       <div class="main container">
        <div class="row">

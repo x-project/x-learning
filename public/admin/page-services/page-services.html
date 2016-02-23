@@ -2,6 +2,7 @@
 <link rel="import" href="../../styles/style-form/style-form.html">
 <link rel="import" href="../../styles/style-field/style-field.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../../styles/style-page/style-page.html">
 <link rel="import" href="../../styles/style-label/style-label.html">
 <link rel="import" href="part-services-braintree.html">
 <link rel="import" href="part-services-aws.html">
@@ -16,10 +17,11 @@
 <dom-module id="page-services">
   <template>
     <style include="style-grid"></style>
+    <style include="style-page"></style>
 
     <layout-admin on-updated="on_updated">
       <div class="toolbar">
-        <h1>My services</h1>
+        <h1 class="title">My services</h1>
       </div>
       <div class="main container">
         <div class="row">

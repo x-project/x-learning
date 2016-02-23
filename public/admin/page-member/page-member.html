@@ -7,12 +7,13 @@
 <dom-module id="page-member">
   <template>
     <style include="style-grid"></style>
+    <style include="style-page"></style>
 
     <app-session id="session"></app-session>
 
     <layout-admin>
      <div class="toolbar">
-        <h2>Member {{member.fullname}}</h2>
+        <h2 class="title">Member {{member.fullname}}</h2>
       </div>
       <div class="main container">
         <div class="row">

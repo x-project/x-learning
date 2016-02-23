@@ -8,6 +8,8 @@
   <template>
     <style include="style-grid"></style>
     <style include="style-panel"></style>
+    <style include="style-page"></style>
+
     <style>
       .title{
         display: inline;
@@ -19,7 +21,7 @@
     </style>
     <layout-admin>
       <div class="toolbar">
-        <h1>Documents</h1>
+        <h1 class="title">Documents</h1>
       </div>
       <div class="main container">
         <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response"></iron-ajax>

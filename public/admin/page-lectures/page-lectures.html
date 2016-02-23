@@ -5,11 +5,13 @@
   <template>
     <style include="style-grid"></style>
     <style include="style-panel"></style>
+    <style include="style-page"></style>
+
     <iron-ajax id="ajax_delete" method="DELETE" on-response="on_response_delete"></iron-ajax>
     
     <layout-admin>
      <div class="toolbar">
-        <h1>Lectures</h1>
+        <h1 class="title">Lectures</h1>
       </div>
       <div class="main container">
         <div class="panel">
