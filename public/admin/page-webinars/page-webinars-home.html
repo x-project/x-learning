@@ -17,7 +17,9 @@
         <div class="panel">    
           <table-view items="{{webinars}}" fields='["index","title","description", "data"]' on-click="on_click" on-delete="on_click_delete"></table-view>
         </div>
-        <paper-fab icon="add" on-click="on_click_add"></paper-fab>
+        <div class="btn-new">
+          <paper-fab icon="add" on-click="on_click_add"></paper-fab>
+        </div>
       </div>
     </layout-admin>
 
