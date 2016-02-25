@@ -3,6 +3,8 @@
 <link rel="import" href="../../components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../../components/paper-menu/paper-submenu.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../components/api-user/api-user.html">
+
 
 <dom-module id="part-sidebar">
   <template>
@@ -60,6 +62,8 @@
       }
 
     </style>
+    <app-session id="session"></app-session>
+
     <api-user-logout id="logout" collection="managers" access-token="{{admin_token}}"on-response="on_logout" on-error="on_error">
     </api-user-logout>
 
@@ -170,8 +174,12 @@
 
     is: 'part-sidebar',
 
+    attached: function () {
+      this.admin_token = this.$.session.get('admin_token');
+      this.user = this.$.session.get('user');
+    },
+
     on_click_logout: function (event) {
-      console.log(logout)
       event.stopPropagation();
       event.preventDefault();
       this.$.logout.send();

@@ -51,8 +51,7 @@
 
     <app-session id="session"></app-session>
 
-    <api-user-logout id="logout" collection="members" access-token="{{token}}"
-      on-response="on_logout" on-error="on_error">
+    <api-user-logout id="logout" collection="members" access-token="{{token}}" on-response="on_logout" on-error="on_error">
     </api-user-logout>
 
     <div id="header" class="container">
@@ -81,15 +80,18 @@
 <script>
   Polymer({
     is: 'part-header',
+    
     attached: function () {
       this.token = this.$.session.get('token');
       this.user = this.$.session.get('user');
     },
+
     on_click_logout: function (event) {
       event.stopPropagation();
       event.preventDefault();
       this.$.logout.send();
     },
+    
     on_logout: function (event) {
       event.stopPropagation();
       this.fire('logout');

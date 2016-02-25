@@ -31,11 +31,9 @@
 
     attached:function(){
       this.data.webinars.forEach(function(webinar){
-        console.log(webinar)
         webinar.cover=webinar.course.cover;
         this.push('webinars', webinar);
       }.bind(this));
-      console.log(this.webinars)
     }
 
   });
