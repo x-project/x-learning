@@ -36,7 +36,15 @@
           border-color: #324b80;
           width: 258px;
           margin-bottom: 10px;
-        } 
+        }
+      }
+      .form-separator{
+        border-top: 1px solid #e7e9ec;
+        height: 1px;
+        margin: 40px 0;
+        }
+      .form-separator p{
+        margin: -11px 121px;
       }
 
     </style>
@@ -54,7 +62,10 @@
           </button-connect-google>
           <button-connect-facebook class="button" client_id="{{client_facebook}}"
            on-response="on_connect" on-error="on_error">
-           </button-connect-facebook>
+          </button-connect-facebook>
+          <div class="form-separator">
+            <p>or</p>
+          </div>
           <form-login id="form" on-submit="on_submit"></form-login>
         </div>
         <div>
