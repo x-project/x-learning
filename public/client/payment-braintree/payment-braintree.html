@@ -6,6 +6,11 @@
   <template>
     <style include="style-alert"></style>
     <style include="style-panel"></style>
+    <style>
+    .panel{
+      width: 100%;
+    }
+    </style>
     <div class="panel">
       <form-braintree on-client-token-error="on_client_token_error"
         customer-id="{{customer_id}}" course="{{course}}" on-success="on_success_payment">

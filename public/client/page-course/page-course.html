@@ -5,11 +5,13 @@
 <link rel="import" href="part-course-reviews.html">
 <link rel="import" href="part-course-webinars.html">
 <link rel="import" href="part-course-other-course.html">
+<link rel="import" href="../page-payment/page-payment.html">
 <link rel="import" href="../deck-video/deck-video.html">
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../x-tabs/x-tabs.html">
 <link rel="import" href="../x-tabs/x-tabs-nav.html">
 <link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../styles/style-button/style-button.html">
 <link rel="import" href="../../styles/style-navs/style-navs.html">
 
@@ -126,7 +128,11 @@
       @apply(--layout-justified)
       margin-bottom: 0;
     }
-/*
+
+    paper-dialog{
+      --paper-dialog-background-color:#f1f1f1;
+    }
+    /*
     .nav-tabs .nav-item{
       margin: 0 10px;
       margin-bottom: 0;
@@ -170,7 +176,12 @@
             </div>
           </div>
         </div>
+
+        <paper-dialog id="dialog">
+          <page-payment data="{{data.course}}"></page-payment>
+        </paper-dialog>
       </div>
+
       <div class="container">
 
         <x-tabs-nav tabs='["overview", "reviews", "lectures", "webinars", "document"]' current="{{current}}"></x-tabs-nav>
@@ -212,7 +223,8 @@
     },
 
     on_try_buy:function(event){
-      page(this.data.course.id + '/payment');
+      this.$.dialog.toggle();      
+      // page(this.data.course.id + '/payment');
     }
 
   });
