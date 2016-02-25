@@ -1,24 +1,23 @@
 <link rel="import" href="../../components/api-user/api-user.html">
-<link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/app-session/app-session.html">
 <link rel="import" href="../../styles/style-grid/style-grid.html">
 <link rel="import" href="../../styles/style-page/style-page.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="part-webinar-actions.html">
-<link rel="import" href="part-webinar-info.html">
+<link rel="import" href="form-webinar-info.html">
 
 <dom-module id="page-webinar">
   <template>
     <style include="style-grid"></style>
     <style include="style-page"></style>
+    <style include="style-panel"></style>
 
     <app-session id="session"></app-session>
     
     <iron-ajax id="ajax_put" method="POST" handle-as="json" content-type="application/json" last-response="{{webinar}}" on-response="on_response_create"> </iron-ajax>
 
-    <api-model-update id="update" collection="webinars" model-id="{{webinar.id}}"
-      data="{{webinar}}" response="{{response}}" error="{{error}}">
+    <api-model-update id="update" collection="webinars" model-id="{{webinar.id}}" data="{{webinar}}" response="{{response}}" error="{{error}}">
     </api-model-update>
 
      <iron-ajax id="ajax_delete" method="DELETE"></iron-ajax>
@@ -29,12 +28,11 @@
         <part-webinar-actions></part-webinar-actions>
       </div>
       <div class="main container">
-       <div class="row">
+        <div class="row">
           <div class="col col-sm-1">
           </div>
-          <div class="col col-sm-10">
-            <a is="app-link" class="link" href="/admin/courses/{{data.course.id}}/webinars">back</a>
-            <part-webinar-info webinar="{{webinar}}"></part-webinar-info>
+          <div class="col col-sm-10 panel">
+            <form-webinar-info webinar="{{webinar}}" error="{{error}}"></form-webinar-info>
           </div>
           <div class="col col-sm-1">
           </div>
@@ -63,6 +61,7 @@
     on_try_save:function(event){
       event.stopPropagation();
       if(this.webinar.id){
+        this.webinar.state="false";
         this.$.update.send();
       }
       else{
