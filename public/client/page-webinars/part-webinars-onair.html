@@ -1,8 +1,8 @@
-<link rel="import" href="../deck-courses/deck-courses.html">
+<link rel="import" href="../deck-webinars/deck-webinars.html">
 
 <dom-module id="part-webinars-onair">
   <template>    
-    <deck-courses courses="{{webinars}}" on-select="on_select"></deck-courses>
+    <deck-webinars webinars="{{webinars}}" on-select="on_select"></deck-webinars>
   </template>
 </dom-module>
 
@@ -20,7 +20,7 @@
 
     on_select:function(event){
       event.stopPropagation();
-      event.preventDefault();      
+      event.preventDefault();  
       this.webinar=event.detail;
       if(this.webinar.state!="offline")
         page('/courses/'+ this.webinar.course_id + '/webinar/' +this.webinar.id )

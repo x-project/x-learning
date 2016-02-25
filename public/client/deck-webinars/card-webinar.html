@@ -1,0 +1,116 @@
+<link rel="import" href="../../components/iron-image/iron-image.html">
+<link rel="import" href="../../styles/style-card/style-card.html">
+<link rel="import" href="../../components/text-view/text-view.html">
+<link rel="import" href="../part-countdown/part-countdown.html">
+
+<dom-module id="card-webinar">
+  <template>
+    <!-- /*<style include="style-card"></style>*/ -->
+    <style>
+      :host {
+        display: inline-block;
+        padding: 18px 8px;
+        width: 25%;
+        color: #333;
+        box-sizing: border-box;
+      }
+
+      .image {
+        background-color: #eee;
+        height: 120px;
+        width: 100%;
+      }
+
+      .card-title {
+        margin: 6px 0px;
+        text-decoration: none;
+        font-size: 18px;
+        font-family: font-light;
+      }
+
+      .card-title .link {
+        color: #333;
+        text-decoration: none;
+      }
+
+      .card-text {
+        margin: 6px 0px;
+        font-size: 15px;
+        font-family: font-light;
+      }
+
+      .card-rating {
+        display: none;
+        margin: 6px 0px;    
+        --rating-star : {
+          font-size: 12px;
+          padding: 2px;
+        };
+      }
+
+      .detail{
+         margin: 6px 0;
+        display: flex;
+        @apply(--layout-horizontal);
+        @apply(--layout-justified)
+      }
+      .card-detail {
+        margin: 6px 0;
+        font-family: font-light;
+        font-size: 14px;
+      }
+      .usd:before {
+        content: "$";
+      }
+      .card:hover{
+        cursor: pointer;
+      }
+    
+    </style>
+
+    <div class="card" on-click="on_click">
+      <div class="card-header">
+        <iron-image class="image" preload src="{{course.cover.url}}" sizing="cover"></iron-image>
+      </div>
+      <div class="card-block">
+        <h4 class="card-title">
+          {{course.title}}
+        </h4>
+        <text-view class="card-text" limit="60" text={{course.description}}></text-view>
+        <div class="detail">
+          <span class="usd">{{course.course.cost}}</span>
+          <span class="start">Start in:
+            <part-countdown date="{{course.data}}"></part-countdown>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'card-webinar',
+
+    properties: {
+      course: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      rating: {
+        type:Number,
+        value:0
+      }
+    },
+
+    attached:function(){
+      
+    },
+
+    on_click:function(event){
+      this.fire('select',this.course)
+    }
+
+  });
+</script>
