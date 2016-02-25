@@ -1,7 +1,7 @@
 <link rel="import" href="../../components/api-user-login/api-user-login.html">
 <link rel="import" href="../../components/button-connect-google/button-connect-google.html">
 <link rel="import" href="../../components/button-connect-facebook/button-connect-facebook.html">
-<link rel="import" href="../layout-client/layout-client.html">
+<link rel="import" href="../layout-empty/layout-empty.html">
 <link rel="import" href="../../styles/style-page/style-page.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
 <link rel="import" href="../../styles/style-button/style-button.html">
@@ -13,40 +13,61 @@
     <style include="style-page"></style>
     <style include="style-panel"></style>
     <style include="style-button"></style>
-    <style type="text/css">
-    
+    <style>
+      :host {
+        display: block;
+      }
+      .title{
+        font-size: 24px;
+        text-align: center;
+      }
+      .panel{
+        width: 300px;
+      }
+      .button{
+        --button-connect-google:{
+          background-color: #DC4A32;
+          border-color: #DC4A32;
+          width: 258px;
+          margin-bottom: 10px;
+        } 
+        --button-connect-facebook:{
+          background: #3b5998;
+          border-color: #324b80;
+          width: 258px;
+          margin-bottom: 10px;
+        } 
+      }
+
     </style>
     <api-user-login id="login" credentials="{{credentials}}" collection="members"
       response="{{response}}" on-response="on_login" on-error="on_error">
     </api-user-login>
 
 
-    <layout-client>
-      <part-jumbotron class="jumbotron"></part-jumbotron>
-      <div class="container">
-        <div class="panel">
-        <a is="app-link" href="/">&larr;</a>
-          <div>
-            <a is="app-link"  class="btn btn-link" href="/passwordless_email">passwordless emal</a>
-            <a is="app-link"  class="btn btn-link" href="/passwordless_phone">passwordless phone</a>
-          </div>
-          <div>
-            <form-login id="form" on-submit="on_submit"></form-login>
-            <button-connect-google client_id="{{client_google}}"
-              on-response="on_connect" on-error="on_error">
-            </button-connect-google>
-            <button-connect-facebook client_id="{{client_facebook}}"
-             on-response="on_connect" on-error="on_error">
-             </button-connect-facebook>
-          </div>
-          <div>
-            <a is="app-link" class="btn btn-link" href="/signup">not registered?</a>
-            <a is="app-link" class="btn btn-link" href="/forgot">forgot password?</a>
-          </div>
+    <layout-empty>
+      <div class="panel">
+        <h3 class="title">Sign In</h3>
+        <div>
+          <button-connect-google class="button" client_id="{{client_google}}"
+            on-response="on_connect" on-error="on_error">
+          </button-connect-google>
+          <button-connect-facebook class="button" client_id="{{client_facebook}}"
+           on-response="on_connect" on-error="on_error">
+           </button-connect-facebook>
+          <form-login id="form" on-submit="on_submit"></form-login>
         </div>
-
+        <div>
+          <a is="app-link" class="btn btn-link" href="/forgot">Forgot password?</a>
+          <a is="app-link" class="btn btn-link" href="/signup">Sing Up</a>
+        </div>
+        <div>
+          <a is="app-link"  class="btn btn-link" href="/passwordless_email">passwordless email</a>
+          <a is="app-link"  class="btn btn-link" href="/passwordless_phone">passwordless phone</a>
+        </div>
       </div>
-    </layout-client>
+
+    </layout-empty>
 
   </template>
 </dom-module>
