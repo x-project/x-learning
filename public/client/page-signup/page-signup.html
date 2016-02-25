@@ -1,22 +1,18 @@
 <link rel="import" href="../../components/app-link/app-link.html">
 <link rel="import" href="../../components/api-user-signup/api-user-signup.html">
-<link rel="import" href="../layout-client/layout-client.html">
-<link rel="import" href="../style-page/style-page.html">
+<link rel="import" href="../layout-empty/layout-empty.html">
+<link rel="import" href="../style-panel/style-panel.html">
 <link rel="import" href="form-signup.html">
 
 <dom-module id="page-signup">
   <template>
-    <style include="style-page"></style>
+    <style include="style-panel"></style>
     <style>
       :host {
         display: block;
       }
-
-      #panel {
-        margin-top: 50px;
-      }
-      #panel a {
-        text-decoration: none;
+      .panel{
+        width: 300px;
       }
     </style>
 
@@ -25,9 +21,8 @@
       on-response="on_signup" on-error="on_error">
     </api-user-signup>
 
-    <layout-client>
-      <part-jumbotron class="jumbotron"></part-jumbotron>
-      <div class="container">
+    <layout-empty>
+      <div class="panel">
         <a is="app-link" href="/">&larr;</a>
         <h3>Signup</h3>
         <form-signup id="form" on-submit="on_submit"></form-signup>
@@ -35,9 +30,9 @@
           <div class="error-box">Error! <span>{{response.message}}</span></div>
         </template>
       </div>
+    </div>
 
-      </div>
-    </layout-client>
+    </layout-empty>
 
   </template>
 </dom-module>

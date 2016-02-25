@@ -1,23 +1,31 @@
 <link rel="import" href="../../components/polymer/polymer.html">
-<link rel="import" href="../../components/iron-input/iron-input.html">
+<link rel="import" href="/components/paper-input/paper-input.html">
+<link rel="import" href="../style-button/style-button.html">
+
 <dom-module id="form-signup">
+  <style include="style-button"></style>
   <style>
     :host {
       display: block;
     }
+    .btn{
+        text-transform: uppercase;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        font-size: 12px;
+      }
+      .buttons {
+        margin-top: 12px;
+        text-align: center;
+      }
   </style>
   <template>
-
     <form id="form" on-submit="on_submit">
-      <div class="field">
-        <label>email</label>
-        <input is="iron-input" type="text" placeholder="email" bind-value="{{credentials.email}}">
+      <paper-input label="Email" type="text" value="{{credentials.email}}"></paper-input>
+      <paper-input label="Password" type="password" value="{{credentials.password}}"></paper-input>
+      <div class="buttons">
+        <button class="btn btn-primary" type="submit">Sign Up</button>
       </div>
-      <div class="field">
-        <label>password</label>
-        <input is="iron-input" type="password" placeholder="password" bind-value="{{credentials.password}}">
-      </div>
-      <input type="submit" value="signup" />
     </form>
 
   </template>
@@ -30,17 +38,7 @@
     properties: {
       credentials: {
         type: Object,
-        value: function () { return {
-          email: 'alexx@ale.com',
-          password:'aaa',
-          name:'',
-          lastname:'',
-          photo:'',
-          location:'',
-          birthday:Date(),
-          gender:'',
-
-        }; },
+        value: function () { return {}; },
         notify: true
       }
     },
