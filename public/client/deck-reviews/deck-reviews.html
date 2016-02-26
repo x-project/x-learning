@@ -29,7 +29,6 @@
     },
 
     filter_rating:function(review){
-      console.log(review)
       review.date=moment(review.date).format('MMMM Do YYYY');
       review.rating_perc=review.rating *10;
       return review;

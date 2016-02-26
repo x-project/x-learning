@@ -59,6 +59,14 @@
       if (response.id != null) {
         this.session.set('user', event.detail.user);
         this.session.set('token', event.detail.id);
+        this.get_model({
+            collection: 'members',
+            modelId: event.detail.user.id,
+            include: ['learning']
+          })
+          .then(function (model) {
+            this.session.set('learning', model.learning);
+          }.bind(this));
         page('/');
       }
     },

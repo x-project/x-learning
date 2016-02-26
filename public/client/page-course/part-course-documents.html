@@ -37,7 +37,8 @@
     },
 
     on_click: function(event){
-      window.open(this.$.document.itemForElement(event.target).url,'_blank');
+      if(this.auth)
+        window.open(this.$.document.itemForElement(event.target).url,'_blank');
     }
 
   });

@@ -58,7 +58,8 @@
     },
 
     on_click: function(event){
-      page('/courses/'+ this.course.id + '/lectures/' + this.$.lecture.itemForElement(event.target).id);
+      if(this.auth)
+        page('/courses/'+ this.course.id + '/lectures/' + this.$.lecture.itemForElement(event.target).id);
     }
 
   });

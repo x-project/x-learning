@@ -26,10 +26,6 @@
 
     properties: {},
 
-    attached:function(){
-      console.log(this.data)
-    },
-
     on_success_pay:function(event){
       console.log(event)
       page('/courses/'+this.data.id)
