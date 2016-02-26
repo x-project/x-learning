@@ -23,6 +23,7 @@
 <link rel="import" href="../page-students/page-students.html">
 <link rel="import" href="../page-reviews/page-reviews.html">
 <link rel="import" href="../page-review/page-review.html">
+<link rel="import" href="../page-platform/page-platform.html">
 <link rel="import" href="../page-preview/page-preview.html">
 <link rel="import" href="../page-coupons/page-coupons.html">
 <link rel="import" href="../page-coupon/page-coupon.html">
@@ -633,6 +634,29 @@
         context.page = 'page-webinars-home';
         context.data ={};
         context.data.manager = model;
+        this.open(context);
+      }.bind(this))
+      .catch(function (error) {
+        console.log(error);
+        context.page = 'page-404';
+        context.data.error = error;
+        this.open(context);
+      }.bind(this));
+    },
+
+    '/admin/platform': function (context) {
+      this.init(context);
+      if (!this.auth(context)) {
+        page('/admin/login');
+        return;
+      }
+      this.find_model({
+        collection: 'platforms'
+      })
+      .then(function (model) {
+        context.page = 'page-platform';
+        context.data ={};
+        context.data.platform = model;
         this.open(context);
       }.bind(this))
       .catch(function (error) {

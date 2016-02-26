@@ -1,0 +1,43 @@
+{
+  "name": "Platform",
+  "plural": "platforms",
+  "mongodb": {
+    "collection": "platform"
+  },
+  "base": "PersistedModel",
+  "properties": {
+    "name": {
+      "type": "String",
+      "default": "x-learning",
+      "required": true
+    },
+    "description": {
+      "type": "String",
+      "required": true
+    },
+    "mobile_phone": {
+      "type": "String"
+    },
+    "office_phone": {
+      "type": "String"
+    },
+    "email": {
+      "type": "String",
+      "length": 64,
+      "required": true
+    },
+    "policy": {
+      "type": "String"
+    }
+  },
+  "relations": {
+    "image": {
+      "type": "hasOne",
+      "model": "Image",
+      "foreignKey": "image_id"
+    }
+  },
+  "acls": [],
+  "methods": [],
+  "validations": []
+}

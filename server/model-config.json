@@ -95,5 +95,8 @@
   },
   "InvitableUser": {
     "dataSource": "mongo"
+  },
+  "Platform": {
+    "dataSource": "mongo"
   }
 }

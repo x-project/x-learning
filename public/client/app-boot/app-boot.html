@@ -23,7 +23,7 @@
 <link rel="import" href="../page-teacher/page-teacher.html">
 <link rel="import" href="../page-webinar/page-webinar.html">
 <link rel="import" href="../page-webinars/page-webinars.html">
-<link rel="import" href="../page-test/page-test.html"> -->
+<link rel="import" href="../page-privacy/page-privacy.html">
 
 
 <dom-module id="app-boot">
@@ -392,7 +392,12 @@
     '/404': function (context) {
       context.page = 'page-404';
       this.open(context);
-    }
+    },
+
+    '/privacy': function (context) {
+      context.page = 'page-privacy';
+      this.open(context);
+    },
 
   });
 </script>
