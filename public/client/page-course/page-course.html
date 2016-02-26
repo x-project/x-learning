@@ -1,3 +1,13 @@
+<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-navs/style-navs.html">
+<link rel="import" href="../../components/app-session/app-session.html">
+<link rel="import" href="../page-payment/page-payment.html">
+<link rel="import" href="../deck-video/deck-video.html">
+<link rel="import" href="../layout-client/layout-client.html">
+<link rel="import" href="../x-tabs/x-tabs.html">
+<link rel="import" href="../x-tabs/x-tabs-nav.html">
 <link rel="import" href="part-course-overview.html">
 <link rel="import" href="part-course-documents.html">
 <link rel="import" href="part-course-header.html">
@@ -5,16 +15,6 @@
 <link rel="import" href="part-course-reviews.html">
 <link rel="import" href="part-course-webinars.html">
 <link rel="import" href="part-course-other-course.html">
-<link rel="import" href="../page-payment/page-payment.html">
-<link rel="import" href="../deck-video/deck-video.html">
-<link rel="import" href="../layout-client/layout-client.html">
-<link rel="import" href="../x-tabs/x-tabs.html">
-<link rel="import" href="../x-tabs/x-tabs-nav.html">
-<link rel="import" href="../../components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../../components/paper-dialog/paper-dialog.html">
-<link rel="import" href="../../styles/style-button/style-button.html">
-<link rel="import" href="../../styles/style-navs/style-navs.html">
-<link rel="import" href="../../components/app-session/app-session.html">
 
 <dom-module id="page-course">
   <template>
@@ -100,9 +100,9 @@
         border-color: #09f;
       }
 
-      .btn[auth]{
+  /*    .btn[auth]{
         visibility: hidden;
-      }
+      }*/
 
       .space{
         @apply(--layout-flex)
@@ -139,7 +139,7 @@
       }
 
       paper-dialog{
-        --paper-dialog-background-color:trasparent;
+        --paper-dialog-background-color:#fff;
       }
 
     </style>

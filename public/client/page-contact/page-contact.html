@@ -1,16 +1,10 @@
 <link rel="import" href="../layout-client/layout-client.html">
 <link rel="import" href="../part-footer/part-footer.html">
 <link rel="import" href="../part-header/part-header.html">
-<link rel="import" href="../part-jumbotron/part-jumbotron.html">
-<link rel="import" href="../style-page/style-page.html">
 <dom-module id="page-contact">
   <template>
-    <style include="style-page"></style>
 
     <layout-client>
-      <part-jumbotron class="jumbotron">
-        <h1>Contact</h1>
-      </part-jumbotron>
       <div class="container">
         <a href="{{mailto}}">{{data.store.email}}</a>
         <p>{{data.store.phone}}</p>
