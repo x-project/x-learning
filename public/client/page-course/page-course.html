@@ -14,6 +14,7 @@
 <link rel="import" href="../../components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../styles/style-button/style-button.html">
 <link rel="import" href="../../styles/style-navs/style-navs.html">
+<link rel="import" href="../../components/app-session/app-session.html">
 
 <dom-module id="page-course">
   <template>
@@ -22,124 +23,127 @@
     <style include="style-navs"></style>
 
     <style>
-    .blockmain{
-      position: relative;
-      overflow: hidden;
-      padding: 30px 0;
-      background-color: #f1f1f1;
-      min-height: 400px;
-      margin-bottom: 50px;
-    }
+      .blockmain{
+        position: relative;
+        overflow: hidden;
+        padding: 30px 0;
+        background-color: #f1f1f1;
+        min-height: 400px;
+        margin-bottom: 50px;
+      }
 
-    .row {
-      box-sizing: border-box;
-      margin: 0;
-      min-height: 400px;
-    }
+      .row {
+        box-sizing: border-box;
+        margin: 0;
+        min-height: 400px;
+      }
 
-    .title{
-      margin: 10px 0;
-      font-size: 24px;
-      font-style: normal;
-      color: #000;
-      font-family: font-light;
-      font-style: normal;
-      font-weight: 300;
-      letter-spacing: 0.75px;
-    }
-    .teacher {
-      font-style: normal;
-      font-size: 1.2vw;
-      margin-top: 3px;
-      padding-bottom: 21px;
-    }
+      .title{
+        margin: 10px 0;
+        font-size: 24px;
+        font-style: normal;
+        color: #000;
+        font-family: font-light;
+        font-style: normal;
+        font-weight: 300;
+        letter-spacing: 0.75px;
+      }
 
-    .teacher .name {
-      text-decoration: none;
-    }
-    .info {
-      @apply(--layout-vertical);
-      background-color: #fff;
-      margin: 0px 0px;
-      padding: 0 15px;
-      box-sizing: border-box;
-    }
-    .media {
-      padding: 0;
-      box-sizing: border-box;
-    }
+      .teacher {
+        font-style: normal;
+        font-size: 1.2vw;
+        margin-top: 3px;
+        padding-bottom: 21px;
+      }
 
-    .media .video{
-      background-color: black
-    }
+      .teacher .name {
+        text-decoration: none;
+      }
 
-    .video {
-        --video-style : {
-            width:100% !important;
-            height: 100% !important;
-            position:absolute;
-        };
-    }
+      .info {
+        @apply(--layout-vertical);
+        background-color: #fff;
+        margin: 0px 0px;
+        padding: 0 15px;
+        box-sizing: border-box;
+      }
 
-    .price {
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 36px;
-      font-weight: 600;
-    }
-    .btn{
-      width: 160px;
-      padding: 14px 0;
-      border-radius: 0;
-      background-color: #09f;
-      border-color: #09f;
-    }
+      .media {
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    .space{
-      @apply(--layout-flex)
-    }
+      .media .video{
+        background-color: black
+      }
+
+      .video {
+          --video-style : {
+              width:100% !important;
+              height: 100% !important;
+              position:absolute;
+          };
+      }
+
+      .price {
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 36px;
+        font-weight: 600;
+      }
+
+      .btn{
+        width: 160px;
+        padding: 14px 0;
+        border-radius: 0;
+        background-color: #09f;
+        border-color: #09f;
+      }
+
+      .btn[auth]{
+        visibility: hidden;
+      }
+
+      .space{
+        @apply(--layout-flex)
+      }
 
 
-    .numbers {
-      display: flex;
-      margin-top: 15px;
-      font-size: 1.2vw;
-      line-height: 1.3;
-      font-weight: 400;
-      text-transform: none;
-      color: #000;
-      @apply(--layout-justified)
-    }
+      .numbers {
+        display: flex;
+        margin-top: 15px;
+        font-size: 1.2vw;
+        line-height: 1.3;
+        font-weight: 400;
+        text-transform: none;
+        color: #000;
+        @apply(--layout-justified)
+      }
 
-    .number .label {
-      margin: 5px 0px;
-      font-size: 16px;
-    }
+      .number .label {
+        margin: 6px 10px;
+        font-size: 16px;
+      }
 
-    .number .value {
-      margin: 0 17px;
-      font-size: 16px;
-      text-align: center;
-      font-family: font-bold;
-    }
+      .number .value {
+        margin: 0 17px;
+        font-size: 16px;
+        text-align: center;
+        font-family: font-bold;
+      }
 
-    .nav {
-      display: flex;
-      @apply(--layout-justified)
-      margin-bottom: 0;
-    }
+      .nav {
+        display: flex;
+        @apply(--layout-justified)
+        margin-bottom: 0;
+      }
 
-    paper-dialog{
-      --paper-dialog-background-color:#f1f1f1;
-    }
-    /*
-    .nav-tabs .nav-item{
-      margin: 0 10px;
-      margin-bottom: 0;
-
-    }*/
+      paper-dialog{
+        --paper-dialog-background-color:trasparent;
+      }
 
     </style>
+    <app-session id="session"></app-session>
 
     <layout-client>
       <div class="blockmain">     
@@ -154,7 +158,7 @@
               </div>
               <div >
                 <h4 class="price">$ {{data.course.cost}}</h4> 
-                <button class="btn btn-primary" on-click="on_try_buy">BUY</button>
+                <button class="btn btn-primary" auth$="{{auth}}" on-click="on_try_buy">BUY</button>
               </div>
 
               <div class="space">
@@ -192,13 +196,13 @@
             <part-course-other-course teacher="{{data.course.teacher_id}}"></part-course-other-course>
           </x-tab>
           <x-tab tab name="lectures">
-            <part-course-lectures course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
+            <part-course-lectures auth="{{auth}}" course="{{data.course}}" lectures="{{data.lectures}}"></part-course-lectures>
           </x-tab>
           <x-tab tab name="webinars">
-            <part-course-webinars course="{{data.course}}" webinars="{{data.webinars}}"></part-course-webinars>        
+            <part-course-webinars auth="{{auth}}" course="{{data.course}}" webinars="{{data.webinars}}"></part-course-webinars>        
           </x-tab>
           <x-tab tab name="document">
-            <part-course-documents course="{{data.course}}"></part-course-documents>
+            <part-course-documents auth="{{auth}}" course="{{data.course}}"></part-course-documents>
           </x-tab>
           <x-tab tab name="reviews">
             <part-course-reviews course="{{data.course}}"></part-course-reviews>
@@ -219,10 +223,35 @@
       data: {
         type: Object,
         value: function () { return {}; }
+      },
+      learning:{
+        type: Array,
+        value: function () { return []; }
+      },
+      auth:{
+        type:Boolean,
+        value: false
       }
     },
 
+    attached:function(){
+      this.learning = this.$.session.get('learning')
+      this.authorized(this.learning);
+    },
+
+    authorized:function(learning){
+      var array = learning.map(function (course) {
+        return course.id;
+      });
+      
+      var index =array.indexOf(this.data.course.id)
+      if(index!=-1)
+        this.auth=true;
+
+    },
+
     on_try_buy:function(event){
+      this.$.dialog.withBackdrop="true";
       this.$.dialog.toggle();      
       // page(this.data.course.id + '/payment');
     }
