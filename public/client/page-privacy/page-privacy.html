@@ -1,14 +1,13 @@
 <link rel="import" href="../layout-client/layout-client.html">
-<link rel="import" href="../part-footer/part-footer.html">
-<link rel="import" href="../part-header/part-header.html">
+
 <dom-module id="page-privacy">
   <template>
     <style include="style-grid"></style>
     
     <layout-client mode="waterfall-tall">
       <div class="container">
-        <a href="{{mailto}}">{{data.store.email}}</a>
-        <p>{{data.store.phone}}</p>
+        <h1>Policy</h1>
+          <p>{{platform.policy}}</p>
       </div>
     </layout-client>
 
@@ -17,15 +16,7 @@
 <script>
   Polymer({
 
-    is: 'page-privacy',
-
-    observer: [
-      'update(data.store.email)'
-    ],
-
-    update: function () {
-      this.set('mailto', 'mailto:' + this.data.store.email);
-    }
+    is: 'page-privacy'
 
   });
 </script>

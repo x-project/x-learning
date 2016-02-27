@@ -83,13 +83,6 @@
       this.open(context);
     },
 
-    '/test': function (context) {
-            this.init(context);
-
-      context.page = 'page-test';
-      this.open(context);
-    },
-
     '/': function (context) {
       this.init(context);
       if (!this.auth(context)) {
@@ -104,8 +97,24 @@
     },
 
     '/about': function (context) {
-      context.page = 'page-about';
-      this.open(context);
+      this.init(context)
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
+      this.find_model({
+        collection: 'platforms'
+      })
+      .then(function (model) {
+        context.page = 'page-about';
+        context.platform = {};
+        context.platform = model[0];
+        this.open(context);
+      }.bind(this))
+      .catch(function (err) {
+        context.page = 'page-404';
+        this.open(context);
+      });
     },
 
     '/articles': function (context) {
@@ -135,8 +144,24 @@
     },
 
     '/contact': function (context) {
-      context.page = 'page-contact';
-      this.open(context);
+      this.init(context)
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
+      this.find_model({
+        collection: 'platforms'
+      })
+      .then(function (model) {
+        context.page = 'page-contact';
+        context.platform = {};
+        context.platform = model[0];
+        this.open(context);
+      }.bind(this))
+      .catch(function (err) {
+        context.page = 'page-404';
+        this.open(context);
+      });
     },
 
     '/categories/:category_id': function (context) {
@@ -395,8 +420,24 @@
     },
 
     '/privacy': function (context) {
-      context.page = 'page-privacy';
-      this.open(context);
+      this.init(context)
+      if (!this.auth(context)) {
+        page('/login');
+        return;
+      }
+      this.find_model({
+        collection: 'platforms'
+      })
+      .then(function (model) {
+        context.page = 'page-privacy';
+        context.platform = {};
+        context.platform = model[0];
+        this.open(context);
+      }.bind(this))
+      .catch(function (err) {
+        context.page = 'page-404';
+        this.open(context);
+      });
     },
 
   });
