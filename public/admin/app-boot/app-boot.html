@@ -651,12 +651,13 @@
         return;
       }
       this.find_model({
-        collection: 'platforms'
+        collection: 'platforms',
+        one:true
       })
       .then(function (model) {
         context.page = 'page-platform';
         context.data ={};
-        context.data.platform = model;
+        context.data.platform = model[0];
         this.open(context);
       }.bind(this))
       .catch(function (error) {

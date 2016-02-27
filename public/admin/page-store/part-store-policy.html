@@ -1,0 +1,32 @@
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../field-long-text/field-long-text.html">
+<dom-module id="part-store-policy">
+  <template>
+    <style include="style-panel"></style>
+
+    <h2 class="title">[[policy_label]]</h2>
+    <div class="panel">
+      <field-long-text label="Policy" property="policy" value="{{store.policy}}" error="{{error}}">
+      </field-long-text>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-store-policy',
+
+    properties: {
+      policy_label: {
+        type: String,
+        value: 'Policy'
+      },
+      store: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>

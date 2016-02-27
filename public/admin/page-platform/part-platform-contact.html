@@ -1,0 +1,60 @@
+<link rel="import" href="../../components/gold-phone-input/gold-phone-input.html">
+<link rel="import" href="../../components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+
+<link rel="import" href="../input-phone/input-phone.html">
+<dom-module id="part-platform-contact">
+  <template>
+    <style include="style-panel"></style>
+    <style>
+      .mobile {
+        --input-phone-prefix: {
+          @apply(--form-control);
+        };
+        --input-phone-number: {
+          @apply(--form-control);
+        };
+      }
+      .office {
+        --input-phone-prefix: {
+          @apply(--form-control);
+        };
+        --input-phone-number: {
+          @apply(--form-control);
+        };
+      }
+      gold-email-input {
+        --paper-input-container-input: {
+          font-size: inherit;
+          font-family: inherit;
+        };
+      }
+    </style>
+
+    <h2 class="title">Contact</h2>
+    <div class="panel">
+      <gold-email-input label="Email" value="{{platform.email}}"></gold-email-input>
+      <gold-phone-input label="Mobile Phone" value ="{{platform.mobile_phone}}" country-code=""></gold-phone-input>
+      <gold-phone-input label="Office Phone" value ="{{platform.office_phone}}" country-code=""></gold-phone-input>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-platform-contact',
+
+    properties: {
+      platform: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>

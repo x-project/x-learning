@@ -69,6 +69,7 @@
       request.collection = params.collection;
       request.where = params.where || {};
       request.include = params.include || [];
+      request.one=params.one;
       return new Promise(function (resolve, reject) {
         request.addEventListener('response', function (event) {
           resolve(request.response);

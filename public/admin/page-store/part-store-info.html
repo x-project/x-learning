@@ -1,0 +1,37 @@
+<link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../field-long-text/field-long-text.html">
+<link rel="import" href="../field-text/field-text.html">
+<dom-module id="part-store-info">
+  <template>
+    <style include="style-panel"></style>
+
+    <h2 class="title">Basic Info</h2>
+    <div class="panel">
+      <field-text label="Full name" property="name" value="{{store.name}}"
+        error="{{error}}">
+      </field-text>
+      <field-long-text label="description" property="description" value="{{store.description}}"
+        error="{{error}}">
+      </field-long-text>
+    </div>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'part-store-info',
+
+    properties: {
+      store: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    }
+
+  });
+</script>

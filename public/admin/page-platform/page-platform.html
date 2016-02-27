@@ -1,0 +1,127 @@
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
+<link rel="import" href="../../styles/style-page/style-page.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="part-platform-contact.html">
+<!-- <link rel="import" href="part-platform-image.html"> -->
+<link rel="import" href="part-platform-info.html">
+<link rel="import" href="part-platform-policy.html">
+<dom-module id="page-platform">
+  <template>
+    <style include="style-grid"></style>
+    <style include="style-button"></style>
+    <style include="style-page"></style>
+
+    <layout-admin on-try-save="on_try_save">
+      <div class="toolbar">
+        <h1 class="title">Platform / {{platform.fullname}}</h1>
+        <button class="btn btn-secondary" on-click="on_try_save">save</button>
+      </div>
+      <div class="main container">
+        <div class="row">
+          <div class="col col-sm-8">
+            <part-platform-info platform="{{platform}}" error="{{error}}"></part-platform-info>
+            <part-platform-policy platform="{{platform}}" error="{{error}}"></part-platform-policy>
+          </div>
+          <div class="col col-sm-4">
+            <part-platform-contact platform="{{platform}}" error="{{error}}"></part-platform-contact>
+            <part-platform-image platform="{{platform}}"></part-platform-image>
+          </div>
+        </div>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+
+<script src="../../scripts/fetch/fetch.js"></script>
+
+<script>
+  Polymer({
+
+    is: 'page-platform',
+
+    properties: {
+      platform: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached: function () {
+      this.platform = this.data.platform;
+      console.log(this.platform)
+    },
+
+    on_try_save: function (event) {
+      event.stopPropagation();
+      if (!this.validate_model()) {
+        return;
+      }
+      this.update_model();
+    },
+
+    update_model: function () {
+      Model.update('/api/platforms/' + this.platform.id, this.platform)
+        .then(function (data) {
+          this.platform = data;
+        }.bind(this))
+        .catch(function (error) {
+          this.error = error;
+        }.bind(this));
+     page('/admin/platform/');   
+    },
+
+    response_create: function () {
+      page('/admin/platform');
+    },
+
+    validate_model: function () {
+      event.stopPropagation();
+      var check = true;
+      var error = this.create_custom_err();
+      check = check & this.check_field('name', error, 'can\'t be blank');
+      check = check & this.check_email(this.platform.email, error, 'invalid email');
+      check = check & this.check_field('description', error, 'can\'t be blank');
+      this.set('error', error);
+      return true;
+    },
+
+    create_custom_err: function () {
+      var error = {};
+      error.details = {};
+      error.details.messages = {};
+      error.details.messages.name = [];
+      error.details.messages.email = [];
+      error.details.messages.description = [];
+      return error;
+    },
+
+    check_field: function (property, error, message) {
+      if (this.platform[property] === undefined || this.platform[property].length === 0) {
+        error.details.messages[property].push(message);
+        return false;
+      }
+      return true;
+    },
+
+
+   check_email: function (email, error, message) {
+      var regex_email = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+      if (!regex_email.test(email)) {
+        error.details.messages.email.push(message);
+        return false;
+      }
+      return true;
+    },
+
+    on_try_edit: function (event) {
+      event.stopPropagation();
+    }
+
+  });
+</script>

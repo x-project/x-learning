@@ -1,0 +1,131 @@
+<link rel="import" href="../../styles/style-grid/style-grid.html">
+<link rel="import" href="../../styles/style-page/style-page.html">
+<link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="part-store-actions.html">
+<!-- <link rel="import" href="part-store-contact.html"> -->
+<link rel="import" href="part-store-header.html">
+<link rel="import" href="part-store-image.html">
+<link rel="import" href="part-store-info.html">
+<link rel="import" href="part-store-payment-system.html">
+<link rel="import" href="part-store-policy.html"> -->
+<dom-module id="page-platform">
+  <template>
+    <style include="style-grid"></style>
+    <style include="style-page"></style>
+
+    <layout-admin on-try-save="on_try_save">
+      <div class="toolbar">
+        <h1 class="title">Store / {{store.name}}</h1>
+        <part-store-header store="{{store}}"></part-store-header>
+      </div>
+      <div class="main container">
+        <div class="row">
+          <div class="col col-sm-8">
+            <part-store-info store="{{store}}" error="{{error}}"></part-store-info>
+            <part-store-contact store="{{store}}" error="{{error}}"></part-store-contact>
+            <part-store-policy store="{{store}}" error="{{error}}"></part-store-policy>
+          </div>
+          <div class="col col-sm-4">
+            <part-store-image store="{{store}}"></part-store-image>
+            <part-store-payment-system store="{{store}}"></part-store-payment-system>
+          </div>
+        </div>
+      </div>
+    </layout-admin>
+
+  </template>
+</dom-module>
+
+<script src="../../scripts/fetch/fetch.js"></script>
+
+<script>
+  Polymer({
+
+    is: 'page-platform',
+
+    properties: {
+      store: {
+        type: Object,
+        value: function () { return {}; }
+      },
+      error: {
+        type: Object,
+        value: function () { return {}; }
+      }
+    },
+
+    attached: function () {
+      this.store = this.data.store;
+    },
+
+    on_try_save: function (event) {
+      event.stopPropagation();
+      if (!this.validate_model()) {
+        return;
+      }
+      this.update_model();
+    },
+
+    update_model: function () {
+      Model.update('/api/stores/' + this.store.id, this.store)
+        .then(function (data) {
+          this.store = data;
+        }.bind(this))
+        .catch(function (error) {
+          this.error = error;
+        }.bind(this));
+    },
+
+    response_create: function () {
+      page('/admin/store');
+    },
+
+    validate_model: function () {
+      event.stopPropagation();
+      var check = true;
+      var error = this.create_custom_err();
+      check = check & this.check_field('name', error, 'can\'t be blank');
+      check = check & this.check_email(this.store.email, error, 'invalid email');
+      check = check & this.check_field('description', error, 'can\'t be blank');
+      this.set('error', error);
+      return true;
+    },
+
+    create_custom_err: function () {
+      var error = {};
+      error.details = {};
+      error.details.messages = {};
+      error.details.messages.name = [];
+      error.details.messages.email = [];
+      error.details.messages.description = [];
+      return error;
+    },
+
+    check_field: function (property, error, message) {
+      if (this.store[property] === undefined || this.store[property].length === 0) {
+        error.details.messages[property].push(message);
+        return false;
+      }
+      return true;
+    },
+
+
+   check_email: function (email, error, message) {
+      var regex_email = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+      if (!regex_email.test(email)) {
+        error.details.messages.email.push(message);
+        return false;
+      }
+      return true;
+    },
+
+    on_try_edit: function (event) {
+      event.stopPropagation();
+    },
+
+    on_update_store: function () {
+      page('/admin/store/');
+    }
+
+  });
+</script>

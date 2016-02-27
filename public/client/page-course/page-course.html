@@ -181,7 +181,7 @@
           </div>
         </div>
 
-        <paper-dialog id="dialog">
+        <paper-dialog id="dialog" with-backdrop>
           <page-payment data="{{data.course}}"></page-payment>
         </paper-dialog>
       </div>
@@ -251,7 +251,6 @@
     },
 
     on_try_buy:function(event){
-      this.$.dialog.withBackdrop="true";
       this.$.dialog.toggle();      
       // page(this.data.course.id + '/payment');
     }
