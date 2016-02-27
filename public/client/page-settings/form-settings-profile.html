@@ -1,24 +1,21 @@
+<link rel="import" href="../../components/paper-input/paper-input.html">
 <link rel="import" href="../../components/api-model/api-model.html">
-<link rel="import" href="../../components/iron-input/iron-input.html">
 <link rel="import" href="../../components/paper-radio-group/paper-radio-group.html">
-<link rel="import" href="../style-form/style-form.html">
+<link rel="import" href="../styles/style-form/style-form.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
 <dom-module id="form-settings-profile">
   <template>
     <style include="style-form"></style>
+    <style include="style-button"></style>
 
     <api-model-update id="ajax" collection="members" model-id="{{user.id}}"
       on-response="on_response" on-error="on_error">
     </api-model-update>
 
     <form id="form" class="form" on-submit="on_submit">
-      <div class="field">
-        <label class="label">fullname</label>
-        <input class="input" is="iron-input" type="text" bind-value="{{user.name}}">
-      </div>
-      <div class="field">
-        <label class="label">birthday</label>
-        <input class="input" is="iron-input" type="date" bind-value="{{user.birthday}}">
-      </div>
+      <paper-input label="Name" id="title" type="text" value="{{user.name}}"></paper-input>
+      <paper-input label="Last Name" id="title" type="text" value="{{user.last_name}}"></paper-input>
+      <paper-input label="Birthday" id="title" type="datetime-local" value="{{user.birthday}}"></paper-input>  
       <div class="field">
         <label class="label">Gender</label>
         <paper-radio-group selected="{{user.gender}}">
@@ -30,9 +27,7 @@
         <label class="label">location</label>
         <input class="input" is="iron-input" type="text" bind-value="{{user.location}}">
       </div>
-      <div class="field">
-        <input class="button" type="submit" value="update" />
-      </div>
+      <button class="btn btn-secondary" on-click="on_submit">Update</button>
     </form>
 
   </template>

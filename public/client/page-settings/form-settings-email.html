@@ -1,10 +1,13 @@
 <link rel="import" href="../../components/api-model/api-model.html">
 <link rel="import" href="../../components/iron-input/iron-input.html">
 <link rel="import" href="../../components/app-session/app-session.html">
-<link rel="import" href="../style-form/style-form.html">
+<link rel="import" href="../../styles/style-form/style-form.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
+
 <dom-module id="form-settings-email">
   <template>
     <style include="style-form"></style>
+    <style include="style-button"></style>
 
     <app-session id="session"></app-session>
 
@@ -27,21 +30,11 @@
     </template>
 
     <form id="form" on-submit="on_submit" on-keyup="on_keyup">
-      <div class="field">
-        <label class="label">new email</label>
-        <input class="input" is="iron-input" type="email" bind-value="{{input.email}}">
-      </div>
-      <div class="field">
-        <label class="label">confirm email</label>
-        <input class="input" is="iron-input" type="email" bind-value="{{input.confirm}}">
-      </div>
-      <div class="field">
-        <label class="label">password</label>
-        <input class="input" is="iron-input" type="password" bind-value="{{input.password}}">
-      </div>
-      <div class="field">
-        <input class="button" type="submit" value="change" />
-      </div>
+      <paper-input label="New Email" type="text" value="{{input.email}}"></paper-input>
+      <paper-input label="Confirm Email" type="text" value="{{input.confirm}}"></paper-input>
+      <paper-input label="Password" type="password" value="{{input.password}}"></paper-input>
+    
+      <button class="btn btn-secondary" on-click="on_submit">Change</button>
     </form>
 
   </template>
