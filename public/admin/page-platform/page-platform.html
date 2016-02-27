@@ -3,7 +3,6 @@
 <link rel="import" href="../../styles/style-page/style-page.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
 <link rel="import" href="part-platform-contact.html">
-<!-- <link rel="import" href="part-platform-image.html"> -->
 <link rel="import" href="part-platform-info.html">
 <link rel="import" href="part-platform-policy.html">
 <dom-module id="page-platform">
@@ -14,7 +13,7 @@
 
     <layout-admin on-try-save="on_try_save">
       <div class="toolbar">
-        <h1 class="title">Platform / {{platform.fullname}}</h1>
+        <h1 class="title">Platform / {{platform.name}}</h1>
         <button class="btn btn-secondary" on-click="on_try_save">save</button>
       </div>
       <div class="main container">
