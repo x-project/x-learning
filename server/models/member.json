@@ -25,7 +25,8 @@
       "type": "String"
     },
     "photo": {
-      "type": "String"
+      "type": "String",
+      "default": "http://d265dc9zzasikr.cloudfront.net/profile_image/no-image.png"
     },
     "location": {
       "type": "String"
