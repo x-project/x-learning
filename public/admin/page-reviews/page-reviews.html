@@ -14,7 +14,7 @@
       </div>
       <div class="main container">
         <div class="panel">   
-          <table-view items="{{teaching}}" fields='["title","total_review","score_review"]' on-click="on_click"></table-view>
+          <table-view items="{{teaching}}" fields='["title","review","total_review"]' on-click="on_click"></table-view>
         </div>
       </div>
     </layout-admin>
@@ -40,7 +40,24 @@
 
     attached:function(){
       this.manager= this.data.manager;
-      this.teaching=this.manager.teaching;
+
+      this.teaching = this.manager.teaching.map(function (course, index) {
+        if(course.total_review>0){
+          var average = course.score_review/course.total_review;
+          var total = course.total_review;
+        }else{
+          var average = 0;
+          var total = 0;
+        }
+        
+        return {
+          id: course.id,
+          title: course.title,
+          review: average.toString(),
+          total_review: total.toString(),
+        index: '#' + index
+        };
+      })
     },
 
     on_click:function(event){
