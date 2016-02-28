@@ -2,19 +2,27 @@
 <link rel="import" href="../../styles/style-grid/style-grid.html">
 <link rel="import" href="../deck-p2p-admin/deck-p2p-admin.html">
 <link rel="import" href="../layout-admin/layout-admin.html">
+<link rel="import" href="../../styles/style-page/style-page.html">
 
 <dom-module id="part-webinar-video">
   <template>
     <style include="style-grid"></style>
+    <style include="style-page"></style>
+    <style include="style-button"></style>
 
     <api-model-update id="update" collection="webinars" model-id="{{data.webinar.id}}"
       data="{{data.webinar}}" response="{{response}}" error="{{error}}">
     </api-model-update>
+
+    <api-model-update id="update_closed" collection="webinars" model-id="{{data.webinar.id}}"
+      data="{{data.webinar}}" response="{{response}}" on-response="on_response" error="{{error}}">
+    </api-model-update>
     
     <layout-admin>
 
-     <div class="toolbar">
-        <h1>Webinars: {{data.webinar.title}}</h1>
+      <div class="toolbar">
+        <h1 class="title">Webinars: {{data.webinar.title}}</h1>
+        <button class="btn btn-secondary" on-click="on_click">Stop webinar</button>
       </div>
       <div class="main container">
         <div class="row">
@@ -35,6 +43,7 @@
 
     is: 'part-webinar-video',
 
+
     on_peer: function(event){
       this.data.webinar.peer_id=event.detail;
       this.$.update.send();
@@ -42,7 +51,17 @@
 
     webinar_closed: function(){
       this.data.webinar.state="offline"
-      this.$.update.send();
+      this.$.update_closed.send();
+    },
+
+    on_click: function (event){
+      event.stopPropagation();
+      this.data.webinar.state="offline"
+      this.$.update_closed.send();
+    },
+
+    on_response: function(event){
+      page('/admin/courses/' + this.data.course.id + '/webinar/' + this.data.webinar.id)
     }
 
   });

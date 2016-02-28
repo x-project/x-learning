@@ -3,7 +3,7 @@
   <style include="style-button"></style>
 
     <button class="btn btn-secondary" on-click="on_click">save</button>
-    <button class="btn btn-secondary" on-click="on_click_preview">preview</button>
+    <a is="app-link" class="btn btn-secondary" href="/courses/{{course.id}}" target="_blank">view</a>
     <template is="dom-if" if="{{!course.publish}}">
       <button class="btn btn-secondary" on-click="on_click_publish">publish</button>
     </template>

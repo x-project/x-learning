@@ -81,12 +81,14 @@
     },
 
     on_try_start:function(event){
+      event.stopPropagation();
       this.webinar.state="online";
       this.$.update.send();
       page('/admin/courses/'+ this.data.course.id + '/webinar/' +this.webinar.id + '/start');
     },
     
     on_response_create:function(){
+      event.stopPropagation();
       page('/admin/courses/'+ this.data.course.id + '/webinar/' +this.webinar.id);
     }
    

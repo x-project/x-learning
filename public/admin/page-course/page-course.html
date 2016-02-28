@@ -123,11 +123,6 @@
       page('/admin/courses/' + this.course.id);
     },
 
-    on_try_preview: function (event) {
-      event.stopPropagation();
-      page('/admin/courses/' + this.course.id + "/preview")
-    },
-
     on_try_delete: function (event) {
       event.stopPropagation();
       this.$.ajax_delete.url='/api/courses/'+ this.course.id ;
