@@ -63,6 +63,7 @@
       event.stopPropagation();
       if (!this.validate_model()) {
         console.log("non valido")
+        page('/admin/articles/' + this.article.id);
         return;
       }
       if(this.article.id){

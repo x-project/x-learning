@@ -73,6 +73,7 @@
       Model.update('/api/article_categories/' + this.category.id, this.category)
       .then(function (data) {
         this.category = data;
+        this.response_update();
       }.bind(this))
       .catch(function (error) {
         this.error = error;
@@ -106,6 +107,10 @@
     },
 
     response_create: function () {
+      page('/admin/categories/' + this.category.id);
+    },
+
+    response_update: function () {
       page('/admin/categories/' + this.category.id);
     },
 

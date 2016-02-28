@@ -8,7 +8,6 @@
 <link rel="import" href="part-categories-actions.html">
 <link rel="import" href="part-categories-items.html">
 <link rel="import" href="part-categories-pages.html">
-<link rel="import" href="part-categories-search.html">
 <link rel="import" href="part-categories-stats.html">
 
 
@@ -23,8 +22,6 @@
         <h1 class="title">Categories</h1>
       </div>
       <div class="main container">
-        <part-collections-search></part-collections-search>
-        <part-collections-stats></part-collections-stats>
         <part-categories-items categories="{{categories}}"></part-categories-items>
         <part-categories-pages on-change-page="on_change_page" perpage="{{perpage}}"
           count="{{count}}">
@@ -84,7 +81,6 @@
     },
 
     on_change_page: function (event) {
-      console.log("ciao")
       this.page = event.detail.current - 1;
       this.get_categories();
     },
