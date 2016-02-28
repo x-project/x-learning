@@ -73,6 +73,12 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
+      "property": "updateAttributes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
       "property": "__create__teaching"
     }
   ],

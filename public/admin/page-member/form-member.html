@@ -1,6 +1,7 @@
 <link rel="import" href="../../components/api-model-update/api-model-update.html">
 <link rel="import" href="../../styles/style-form/style-form.html">
 <link rel="import" href="../../styles/style-panel/style-panel.html">
+<link rel="import" href="../../styles/style-button/style-button.html">
 <link rel="import" href="../field-text/field-text.html">
 <link rel="import" href="/components/paper-input/paper-input.html">
 
@@ -8,14 +9,16 @@
   <template>
     <style include="style-form"></style>
     <style include="style-panel"></style>
+    <style include="style-button"></style>
 
     <api-model-update id="update" access-token="{{token}}"
-      collection="managers" model-id="{{member.id}}" data="{{member}}">
+      collection="managers" model-id="{{member.id}}" data="{{member}}" on-response="on_complete">
     </api-model-update>
+
     <div class="panel">
       <form class="form" on-submit="on_submit">
         <paper-input label="Full name" value="{{member.fullname}}"></paper-input>
-        <input type="submit" class="button" value="update">
+        <button class="btn btn-secondary" on-click="on_submit">Update</button>
       </form>
     </div>
 
@@ -40,6 +43,10 @@
     on_submit: function (event) {
       event.preventDefault();
       this.$.update.send();
+    },
+
+    on_complete:function(){
+      page('/admin/team');
     }
 
   });
