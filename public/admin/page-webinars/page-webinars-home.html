@@ -65,14 +65,13 @@
           title: webinar.title,
           description:webinar.description,
           data:moment(webinar.data).format('MMMM Do YYYY, h:mm a'),
-          courseid: webinar.course_id,
+          course_id: webinar.course_id,
         index: '#' + index
         };
       });
     },
 
     on_click: function(event){
-      console.log(event.detail)
       page("/admin/courses/"+event.detail.course_id +"/webinar/" + event.detail.id );
     },
 
