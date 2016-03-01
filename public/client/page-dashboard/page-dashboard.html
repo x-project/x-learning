@@ -64,7 +64,7 @@
           <x-tabs-nav tabs='["learning", "reviews"]' current="{{current}}"></x-tabs-nav>
           <x-tabs id="tabs" current="{{current}}">
             <div tab name="learning">
-              <deck-courses courses="{{data.member.learning}}"></deck-courses>
+              <deck-courses courses="{{data.member.learning}}" on-select="on_select"></deck-courses>
             </div>
             <div tab name="reviews">
               <part-reviews-items session="{{session}}"></part-reviews-items>
@@ -105,6 +105,10 @@
     on_click_edit: function(){
       page('/profile/setting')
     },
+
+    on_select:function(event){
+      page('/courses/' + event.detail.id)
+    }
 
   });
 </script>

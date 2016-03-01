@@ -20,7 +20,7 @@
     <api-model-find id="find" collection="courses" response="{{courses}}" on-response="on_response"></api-model-find>
 
     <h2 class="title">Other course of {{teacher.fullname}}</h2>  
-    <deck-courses courses="{{courses}}"></deck-courses>
+    <deck-courses courses="{{courses}}" on-select="on_select"></deck-courses>
     
   </template>
 </dom-module>
@@ -46,6 +46,10 @@
 
     on_response: function(event){
       this.teacher = this.courses[0].teacher;
+    },
+
+    on_select:function(event){
+      page('/courses/' + event.detail.id)
     }
 
   });

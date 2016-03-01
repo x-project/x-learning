@@ -40,7 +40,7 @@
           <x-tabs-nav tabs='["teaching", "reviews"]' current="{{current}}"></x-tabs-nav>
           <x-tabs id="tabs" current="{{current}}">
             <div tab name="teaching">
-              <deck-courses courses="{{data.manager.teaching}}"></deck-courses>
+              <deck-courses courses="{{data.manager.teaching}}" on-select="on_select"></deck-courses>
             </div>
             <div tab name="reviews">
               <template is="dom-repeat" items="{{data.manager.teaching}}" as="course">
@@ -58,7 +58,11 @@
 <script>
   Polymer({
 
-    is: 'page-teacher'
+    is: 'page-teacher',
+
+    on_select:function(event){
+      page('/courses/' + event.detail.id)
+    }
 
   });
 </script>

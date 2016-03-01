@@ -34,7 +34,7 @@
         </div>
         <div class="col-sm-9">
             <h2 class="title">Courses</h2>
-            <deck-courses courses="{{data.courses}}"></deck-courses>
+            <deck-courses courses="{{data.courses}}" on-select="on_select"></deck-courses>
         </div>
       </div>
     </div>
@@ -52,6 +52,10 @@
         type: Object,
         value: function () { return {}; }
       }
+    },
+
+    on_select:function(event){
+      page('/courses/' + event.detail.id)
     }
 
   });

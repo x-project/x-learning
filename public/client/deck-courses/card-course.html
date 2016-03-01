@@ -20,12 +20,17 @@
         height: 120px;
         width: 100%;
       }
+      
+      .card:hover{
+        cursor: pointer;
+      }
 
       .card-title {
         margin: 6px 0px;
         text-decoration: none;
         font-size: 18px;
         font-family: font-light;
+        min-height: 41px;
       }
 
       .card-title .link {
@@ -82,10 +87,11 @@
         <iron-image class="image" preload src="{{course.cover.url}}" sizing="cover"></iron-image>
       </div>
       <div class="card-block">
-        <h4 class="card-title">
-          <a class="link" href="/courses/{{course.id}}">{{course.title}}</a>
+        <h4 class="card-title" limit="5">
+          <!-- <a class="link" href="/courses/{{course.id}}">{{course.title}}</a> -->
+          <text-view limit="45" text={{course.title}}></text-view>
         </h4>
-        <text-view class="card-text" limit="60" text={{course.description}}></text-view>
+        <text-view class="card-text" limit="55" text={{course.description}}></text-view>
         <input-rating-4 class="card-rating" value="{{rating}}"></input-rating-4>
         <div class="detail">
           <span class="usd">{{course.cost}}</span>

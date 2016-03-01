@@ -52,7 +52,7 @@
           <div class="col col-sm-10">
             <h2 class="title">Courses</h2>             
             <part-home-find on-try-find="on_try_find"></part-home-find>
-            <part-home-courses courses="{{data.courses}}"></part-home-courses>
+            <part-home-courses courses="{{data.courses}}" on-select="on_select"></part-home-courses>
           </div>
         </div>
       </div>
@@ -81,6 +81,10 @@
     on_response:function(event){
       this.courses=event.detail;
       page('/', event.detail);
+    },
+
+    on_select:function(event){
+      page('/courses/' + event.detail.id)
     }
 
   });
