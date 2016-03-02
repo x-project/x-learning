@@ -2,11 +2,6 @@
   "name": "Video",
   "plural": "videos",
   "base": "PersistedModel",
-  "strict": false,
-  "idInjection": false,
-  "options": {
-    "validateUpsert": true
-  },
   "mongodb": {
     "collection": "videos"
   },
@@ -21,7 +16,7 @@
       "type": "Number"
     },
     "images": {
-      "type": "Array"
+      "type": ["String"]
     }
   },
   "validations": [],

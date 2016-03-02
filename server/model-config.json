@@ -51,7 +51,16 @@
   "Image": {
     "dataSource": "mongo"
   }, 
+  "Invite": {
+    "dataSource": "mongo"
+  },
+  "InvitableUser": {
+    "dataSource": "mongo"
+  },
   "Lecture": {
+    "dataSource": "mongo"
+  },
+  "Manager": {
     "dataSource": "mongo"
   },
   "Member":{
@@ -61,6 +70,9 @@
     "dataSource": "mongo"
   },
   "Payment": {
+    "dataSource": "mongo"
+  },
+  "Platform": {
     "dataSource": "mongo"
   },
   "Review": {
@@ -85,18 +97,6 @@
     "dataSource": "mongo"
   },
   "Webinar": {
-    "dataSource": "mongo"
-  },
-  "Manager": {
-    "dataSource": "mongo"
-  },
-  "Invite": {
-    "dataSource": "mongo"
-  },
-  "InvitableUser": {
-    "dataSource": "mongo"
-  },
-  "Platform": {
     "dataSource": "mongo"
   }
 }
