@@ -24,7 +24,7 @@
         background-image: url('https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg');
         background-position: center;
         background-size: 100%;
-        --paper-toolbar-transition: 0.50s;
+        --paper-toolbar-transition: 0.10s;
       }
       part-header {
         background-color: transparent;
@@ -34,6 +34,13 @@
         background-color: transparent;
         --link-color:{color:#fff;};
       }
+
+      paper-header-panel:not([mode="waterfall-tall"]) paper-toolbar {
+        box-shadow: 1px 1px 6px #b2b3b7;
+       /* background-color: transparent;
+        --link-color:{color:#fff;};*/
+      }
+
 
       paper-header-panel {
         height: 100vh;
