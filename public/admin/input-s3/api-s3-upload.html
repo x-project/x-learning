@@ -1,4 +1,4 @@
-<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../../components/iron-ajax/iron-ajax.html">
 <dom-module id="api-s3-upload">
   <template>
 
@@ -73,7 +73,7 @@
     },
 
     on_response_put: function (event) {
-      this.fire('response', {"title" : this.file.name, "url" :'http://d265dc9zzasikr.cloudfront.net/'+ this.folder + this.file.name });
+      this.fire('response', {"title" : this.file.name, "url" :'https://d265dc9zzasikr.cloudfront.net/'+ this.folder + this.file.name });
       event.stopPropagation();
     }
 
