@@ -77,9 +77,8 @@
       navigator.getUserMedia = navigator.getUserMedia 
         || navigator.webkitGetUserMedia 
         || navigator.mozGetUserMedia;
-   
       // var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
-      var peer = this.peer = new Peer( { host: 'localhost', port: 9000, path: '/peerjs'});
+      var peer = this.peer = new Peer( { host: window.location.hostname, port: 9000, path: '/peerjs'});
       peer.on('open', this.on_open.bind(this));
       peer.on('call', this.on_call.bind(this));
       peer.on('error', this.on_error.bind(this));

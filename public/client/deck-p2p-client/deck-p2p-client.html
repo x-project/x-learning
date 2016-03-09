@@ -49,8 +49,8 @@
         || navigator.webkitGetUserMedia 
         || navigator.mozGetUserMedia;
    
-      // var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3 });
-      var peer = this.peer = new Peer({host: '192.168.161.203', port: 9000, path: '/peerjs'});
+      // var peer = this.peer = new Peer({ key: '0auyh3o7cg2jra4i', debug: 3, secure:true });
+      var peer = this.peer = new Peer({host: window.location.hostname, port: 9000, path: '/peerjs'});
 
       this.start();
     },
